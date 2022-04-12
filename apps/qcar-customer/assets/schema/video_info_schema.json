@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "brand": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "filePath": {
+      "type": "string"
+    },
+    "imagePath": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "required": [
+    "brand",
+    "model",
+    "category",
+    "filePath",
+    "imagePath",
+    "name",
+    "description",
+    "tags"
+  ]
+}

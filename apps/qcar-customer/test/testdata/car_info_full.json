@@ -1,0 +1,71 @@
+{
+  "brand": "Toyota",
+  "model": "Corolla",
+  "imagePath": "Path/to/image.jpg",
+  "categories": [
+    {
+      "name": "Sicherheit",
+      "order": 1,
+      "description": "Hier geht alles um Sicherheit",
+      "imagePath": "Path/to/image.jpg",
+      "videos": [
+        {
+          "brand": "Toyota",
+          "model": "Corolla",
+          "filePath": "2-Zonen Klimaautomatik.mp4",
+          "imagePath": "2-Zonen Klimaautomatik.jpg",
+          "name": "2-Zonen Klimaautomatik",
+          "description": "Für gute Luft, sorgt die Klimaautomatik.",
+          "tags": [
+            "Luft",
+            "Zone",
+            "Klima",
+            "Automatisch",
+            "Scheibe",
+            "2"
+          ]
+        },
+        {
+          "brand": "Toyota",
+          "model": "Corolla",
+          "filePath": "3-Zonen Klimaautomatik.mp4",
+          "imagePath": "3-Zonen Klimaautomatik.jpg",
+          "name": "3-Zonen Klimaautomatik",
+          "description": "Für gute Luft, sorgt die Klimaautomatik.",
+          "tags": [
+            "Erde",
+            "DDR",
+            "Solo",
+            "Manuel",
+            "Dreieck",
+            "3"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Komfort",
+      "order": 1,
+      "description": "Hier geht alles um Sicherheit",
+      "imagePath": "Path/to/image.jpg",
+      "videos": [
+        {
+          "brand": "Toyota",
+          "model": "Corolla",
+          "filePath": "4-Zonen Klimaautomatik.mp4",
+          "imagePath": "4-Zonen Klimaautomatik.jpg",
+          "name": "4-Zonen Klimaautomatik",
+          "description": "Für gute Luft, sorgt die Klimaautomatik.",
+          "tags": [
+            "Luft",
+            "Zone",
+            "Klima",
+            "Automatisch",
+            "Scheibe",
+            "2"
+          ]
+        }
+      ]
+    }
+  ]
+}

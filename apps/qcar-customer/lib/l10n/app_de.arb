@@ -1,0 +1,26 @@
+{
+  "@_HOME_PAGE": {},
+  "homoPageTitle": "Home",
+  "homoPageSubGreetings": "Herzlich Willkommen in der Digitalen Auslieferung (Fahrzeugtutorial) für dein neues Auto!",
+  "homoPageMessage": "Diese App dient dazu dich in deinem Fahrzeug digital zu Orientieren, finde alles wichtige was du brauchst um sicher durch den Alltag zu kommen.",
+
+  "@_INTRO_PAGE": {},
+  "introPageTitle": "Willkommen",
+  "introPageMessage": "Bitte scannen Sie einen gültigen QR-Code um fortzufahren.",
+  "introPageMessageError": "Ungültiger QR-Code, bitte neu scannen.",
+  "introPageMessageScanning": "Daten werden geladen...",
+
+  "@_QR_SCAN_PAGE": {},
+  "qrScanPageTitle": "Bitte scannen",
+
+  "@_CAR_OVERVIEW_PAGE": {},
+  "carOverViewPageTitle": "Übersicht",
+
+  "@_SEARCH": {},
+  "searchStartText": "Sie können hier nach Videos suchen",
+  "searchEmptyText": "Leider wurde kein Ergebnisse gefunden",
+
+  "@_SETTINGS_PAGE": {},
+  "settingsPageTitle": "Einstellungen"
+
+}

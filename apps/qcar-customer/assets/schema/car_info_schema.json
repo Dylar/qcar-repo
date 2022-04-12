@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "brand": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "imagePath": {
+      "type": "string"
+    },
+    "categories": {
+      "type": "array",
+      "items": {}
+    }
+  },
+  "required": [
+    "brand",
+    "model",
+    "imagePath"
+  ]
+}

@@ -1,0 +1,6 @@
+Domain=test-domain.de
+Host=host.sicher.de
+Port=22
+Protokoll=SFTP
+User=TestUser
+PeWe=GanzSicher

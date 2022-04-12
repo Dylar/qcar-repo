@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "description": {
+      "type": "string"
+    },
+    "imagePath": {
+      "type": "string"
+    },
+    "videos": {
+      "type": "array",
+      "items": {}
+    }
+  },
+  "required": [
+    "name",
+    "order",
+    "description",
+    "imagePath"
+  ]
+}
