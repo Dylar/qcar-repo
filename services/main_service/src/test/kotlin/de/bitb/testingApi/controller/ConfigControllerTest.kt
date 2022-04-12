@@ -1,10 +1,10 @@
-package de.bitb.testingApi.controller
+package de.bitb.main_service.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import de.bitb.testingApi.getAndParse
-import de.bitb.testingApi.models.COLORS
-import de.bitb.testingApi.models.ConfigData
-import de.bitb.testingApi.models.ConfigType
+import de.bitb.main_service.getAndParse
+import de.bitb.main_service.models.COLORS
+import de.bitb.main_service.models.ConfigData
+import de.bitb.main_service.models.ConfigType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

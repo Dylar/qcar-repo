@@ -1,7 +1,7 @@
-package de.bitb.testingApi.service
+package de.bitb.main_service.service
 
-import de.bitb.testingApi.datasource.config.ConfigDataSource
-import de.bitb.testingApi.models.ConfigType
+import de.bitb.main_service.datasource.config.ConfigDataSource
+import de.bitb.main_service.models.ConfigType
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test

@@ -1,10 +1,10 @@
-package de.bitb.testingApi.datasource.config.mock
+package de.bitb.main_service.datasource.config.mock
 
-import de.bitb.testingApi.datasource.config.ConfigDataSource
-import de.bitb.testingApi.models.COLORS
-import de.bitb.testingApi.models.ConfigData
-import de.bitb.testingApi.models.ConfigType
-import de.bitb.testingApi.models.Configuration
+import de.bitb.main_service.datasource.config.ConfigDataSource
+import de.bitb.main_service.models.COLORS
+import de.bitb.main_service.models.ConfigData
+import de.bitb.main_service.models.ConfigType
+import de.bitb.main_service.models.Configuration
 import org.springframework.stereotype.Repository
 
 @Repository("mock")

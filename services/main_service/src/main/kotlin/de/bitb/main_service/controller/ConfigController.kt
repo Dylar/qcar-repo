@@ -1,9 +1,9 @@
-package de.bitb.testingApi.controller
+package de.bitb.main_service.controller
 
-import de.bitb.testingApi.exceptions.ConfigException
-import de.bitb.testingApi.models.ConfigData
-import de.bitb.testingApi.models.ConfigType
-import de.bitb.testingApi.service.ConfigService
+import de.bitb.main_service.exceptions.ConfigException
+import de.bitb.main_service.models.ConfigData
+import de.bitb.main_service.models.ConfigType
+import de.bitb.main_service.service.ConfigService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

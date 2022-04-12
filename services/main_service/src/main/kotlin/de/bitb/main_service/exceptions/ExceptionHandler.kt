@@ -1,4 +1,4 @@
-package de.bitb.testingApi.exceptions
+package de.bitb.main_service.exceptions
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

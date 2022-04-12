@@ -11,7 +11,7 @@ apply plugin: "kotlin"
 group = "de.bitb"
 version = "0.0.1"
 
-mainClassName = 'de.bitb.testingApi.TestingApiApplicationKt'
+mainClassName = 'de.bitb.main_service.MainApiApplicationKt'
 
 repositories {
     mavenCentral()

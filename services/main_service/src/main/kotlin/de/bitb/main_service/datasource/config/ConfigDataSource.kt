@@ -1,7 +1,7 @@
-package de.bitb.testingApi.datasource.config
+package de.bitb.main_service.datasource.config
 
-import de.bitb.testingApi.models.ConfigData
-import de.bitb.testingApi.models.Configuration
+import de.bitb.main_service.models.ConfigData
+import de.bitb.main_service.models.Configuration
 import org.springframework.stereotype.Repository
 
 interface ConfigDataSource {

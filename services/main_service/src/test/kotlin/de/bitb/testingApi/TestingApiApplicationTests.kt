@@ -1,4 +1,4 @@
-package de.bitb.testingApi
+package de.bitb.main_service
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

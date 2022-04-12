@@ -1,4 +1,4 @@
-package de.bitb.testingApi
+package de.bitb.main_service
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,10 +1,10 @@
-package de.bitb.testingApi.service
+package de.bitb.main_service.service
 
-import de.bitb.testingApi.datasource.config.ConfigDataSource
-import de.bitb.testingApi.exceptions.ConfigException
-import de.bitb.testingApi.models.COLORS
-import de.bitb.testingApi.models.ConfigData
-import de.bitb.testingApi.models.ConfigType
+import de.bitb.main_service.datasource.config.ConfigDataSource
+import de.bitb.main_service.exceptions.ConfigException
+import de.bitb.main_service.models.COLORS
+import de.bitb.main_service.models.ConfigData
+import de.bitb.main_service.models.ConfigType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service

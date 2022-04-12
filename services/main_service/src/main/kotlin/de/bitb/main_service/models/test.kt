@@ -1,4 +1,4 @@
-package de.bitb.testingApi.models
+package de.bitb.main_service.models
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 

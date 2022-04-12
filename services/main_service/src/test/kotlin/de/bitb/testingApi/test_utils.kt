@@ -1,4 +1,4 @@
-package de.bitb.testingApi
+package de.bitb.main_service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
