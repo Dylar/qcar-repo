@@ -5,7 +5,6 @@ import 'package:qcar_customer/core/app.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
-
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
