@@ -24,6 +24,7 @@ class _DebugPageState extends State<DebugPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Text("Irgendwas"),
           wrapWidget(_DebugInfoText("Env:", "${EnvironmentConfig.ENV}")),
           wrapWidget(_DebugInfoText("Domain:", "${EnvironmentConfig.domain}")),
           wrapWidget(_DebugInfoText("Host:", "${EnvironmentConfig.host}")),
