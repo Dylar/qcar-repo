@@ -3,8 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.5.6"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    id("com.palantir.docker-run") version "0.30.0"
-    id("com.palantir.docker") version "0.30.0"
     kotlin("jvm") version "1.5.31"
     kotlin("plugin.spring") version "1.5.31"
 }
@@ -38,13 +36,13 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-val imageName: String = "qcar/backend:$version"
-
-docker {
-    name = imageName
-    files("build/libs/${tasks.bootJar.get().archiveFileName.get()}")
-    buildArgs(mapOf("JAR_FILE" to tasks.bootJar.get().archiveFileName.get()))
-}
+//val imageName: String = "qcar/backend:$version"
+//
+//docker {
+//    name = imageName
+//    files("build/libs/${tasks.bootJar.get().archiveFileName.get()}")
+//    buildArgs(mapOf("JAR_FILE" to tasks.bootJar.get().archiveFileName.get()))
+//}
 
 //tasks.dockerRun
 //dockerRun {
