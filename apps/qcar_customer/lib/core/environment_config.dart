@@ -6,7 +6,7 @@ enum FLAVOR { TEST }
 class EnvironmentConfig {
   static const APP_NAME = String.fromEnvironment(
     'APP_NAME',
-    defaultValue: "Car manual",
+    defaultValue: "QCar",
   );
   static const FLAVOR = String.fromEnvironment('FLAVOR');
   static const ENV = String.fromEnvironment(
