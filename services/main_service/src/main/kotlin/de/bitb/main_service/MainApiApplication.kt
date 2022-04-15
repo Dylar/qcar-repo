@@ -25,6 +25,7 @@ open class TestingApiApplication {
     @Throws(Exception::class)
     open fun run(restTemplate: RestTemplate): CommandLineRunner =
         CommandLineRunner {
+
 //                args: Array<String?>? ->
 //            val quote = restTemplate.getForObject(url, Quote::class.java)
 //            log.info(quote.toString())
