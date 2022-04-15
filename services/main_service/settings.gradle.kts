@@ -1,1 +1,1 @@
-rootProject.name = "qcar-backend"
+rootProject.name = "qcar_main_service"

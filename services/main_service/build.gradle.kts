@@ -16,6 +16,8 @@ repositories {
 }
 
 dependencies {
+
+
     implementation("org.springframework.boot:spring-boot-starter-web:2.5.5")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -35,6 +37,17 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+//bootBuildImage {
+//    imageName = "mycompany/mygroup/myproject:1.0.1"
+//    publish = true
+//    docker {
+//        publishRegistry {
+//            url = "http://172.2.3.5:9000/"
+//            username = "user"
+//            password = "pass"
+//        }
+//    }
+//}
 
 //val imageName: String = "qcar/backend:$version"
 //

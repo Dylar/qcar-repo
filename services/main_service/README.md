@@ -1,5 +1,5 @@
 Create jar + run local:
-    ./gradlew build && java -jar build/libs/qcar-backend-0.0.1.jar
+    ./gradlew build && java -jar build/libs/qcar_main_service-0.0.1.jar
 
 Docker:
 <!--     docker build -t kotlin .; docker run -p 4000:8080 kotlin -->

@@ -1,3 +1,5 @@
+.gradle
+
 *.g.dart
 .env
 Podfile.lock
