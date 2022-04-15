@@ -8,19 +8,23 @@ gcloud artifacts repositories create qcar-backend-repo\
 
 -----------
 
-export GIT_REPO=https://github.com/Dylar/qcar-repo.git
+export PROJECT_ID=qcar-backend
+export REPO_NAME=qcar-repo
+export GIT_REPO=https://github.com/Dylar/${REPO_NAME}.git
 export DOCKER_REPO=${PROJECT_ID}-repo
 export REGION=europe-west1
 export ZONE=europe-west1-b
-export PROJECT_ID=qcar-backend
 export SERVICE_NAME=main_service
 export SERVICE_VERSION=0.0.1
+export JAR_PATH=build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar
 
 git clone ${GIT_REPO}
 cd ${GIT_REPO}
 
 #docker shit
 docker build -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}:${SERVICE_VERSION} .
+docker build --build-arg JAR_FILE=${JAR_PATH} -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}:${SERVICE_VERSION} ./services/${SERVICE_NAME}
+
 docker images
 gcloud auth configure-docker ${REGION}-docker.pkg.dev
 docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}:${SERVICE_VERSION}
