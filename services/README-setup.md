@@ -16,14 +16,13 @@ export REGION=europe-west1
 export ZONE=europe-west1-b
 export SERVICE_NAME=main_service
 export SERVICE_VERSION=0.0.1
-export JAR_PATH=build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar
+export JAR_PATH=/build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar
 
 git clone ${GIT_REPO}
-cd ${GIT_REPO}
+cd ${REPO_NAME}
 
-#docker shit
-docker build -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}:${SERVICE_VERSION} .
-docker build --build-arg JAR_FILE=${JAR_PATH} -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}:${SERVICE_VERSION} ./services/${SERVICE_NAME}
+#docker shit - do this in the service folder
+docker build --build-arg JAR_FILE=${JAR_PATH} -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}:${SERVICE_VERSION} .
 
 docker images
 gcloud auth configure-docker ${REGION}-docker.pkg.dev
@@ -43,7 +42,7 @@ kubectl autoscale deployment ${SERVICE_NAME} --cpu-percent=80 --min=1 --max=5
 kubectl get pods
 
 #expose
-kubectl expose deployment ${PROJECT_ID} --name=${SERVICE_NAME} --type=LoadBalancer --port 80 --target-port 8080
+kubectl expose deployment ${PROJECT_ID} --name=${SERVICE_NAME} --type=LoadBalancer --port 8080 --target-port 8080
 kubectl get service
 
 #update

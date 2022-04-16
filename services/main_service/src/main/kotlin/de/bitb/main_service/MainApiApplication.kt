@@ -10,12 +10,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 fun main(args: Array<String>) {
-    runApplication<TestingApiApplication>(*args)
+    runApplication<MainApiApplication>(*args)
 }
 
 @SpringBootApplication
-open class TestingApiApplication {
-    private val log: Logger = LoggerFactory.getLogger(TestingApiApplication::class.java)
+open class MainApiApplication {
+    private val log: Logger = LoggerFactory.getLogger(MainApiApplication::class.java)
 //    private val url = "https://quoters.apps.pcfone.io/api/random"
 
     @Bean
@@ -25,6 +25,7 @@ open class TestingApiApplication {
     @Throws(Exception::class)
     open fun run(restTemplate: RestTemplate): CommandLineRunner =
         CommandLineRunner {
+            log.info("Run MainApiApplication")
 
 //                args: Array<String?>? ->
 //            val quote = restTemplate.getForObject(url, Quote::class.java)

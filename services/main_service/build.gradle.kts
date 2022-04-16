@@ -15,14 +15,28 @@ repositories {
 	mavenCentral()
 }
 
+extra["springCloudGcpVersion"] = "3.2.1"
+extra["springCloudVersion"] = "2021.0.1"
+
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web:2.5.5")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+    implementation("org.springframework.cloud:spring-cloud-gcp-data-spanner")
+    implementation("com.google.cloud:spring-cloud-gcp-starter")
+    implementation("org.springframework.boot:spring-boot-starter-web:2.5.5")
+    implementation("org.springframework.cloud:spring-cloud-gcp-starter-logging")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.5")
     testImplementation("io.mockk:mockk:1.12.0")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("com.google.cloud:spring-cloud-gcp-dependencies:${property("springCloudGcpVersion")}")
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 
 tasks.withType<KotlinCompile> {
@@ -35,30 +49,3 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-//bootBuildImage {
-//    imageName = "mycompany/mygroup/myproject:1.0.1"
-//    publish = true
-//    docker {
-//        publishRegistry {
-//            url = "http://172.2.3.5:9000/"
-//            username = "user"
-//            password = "pass"
-//        }
-//    }
-//}
-
-//val imageName: String = "qcar/backend:$version"
-//
-//docker {
-//    name = imageName
-//    files("build/libs/${tasks.bootJar.get().archiveFileName.get()}")
-//    buildArgs(mapOf("JAR_FILE" to tasks.bootJar.get().archiveFileName.get()))
-//}
-
-//tasks.dockerRun
-//dockerRun {
-//    name project.name
-//            image imageName
-//            ports '8080:8080'
-//    clean true
-//}
