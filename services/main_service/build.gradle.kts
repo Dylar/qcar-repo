@@ -23,10 +23,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    implementation("org.springframework.cloud:spring-cloud-gcp-data-spanner")
     implementation("com.google.cloud:spring-cloud-gcp-starter")
     implementation("org.springframework.boot:spring-boot-starter-web:2.5.5")
-    implementation("org.springframework.cloud:spring-cloud-gcp-starter-logging")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.5")
     testImplementation("io.mockk:mockk:1.12.0")

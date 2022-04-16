@@ -23,6 +23,7 @@ export DOCKER_IMAGE=${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERV
 
 git clone ${GIT_REPO}
 cd ${REPO_NAME}
+gradle build
 
 #docker shit - do this in the service folder
 docker build --build-arg JAR_FILE=${JAR_PATH} --build-arg PORT=${PORT} -t ${DOCKER_IMAGE} .
