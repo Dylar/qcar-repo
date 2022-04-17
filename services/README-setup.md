@@ -23,10 +23,10 @@ export DOCKER_IMAGE=${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERV
 
 git clone ${GIT_REPO}
 cd ${REPO_NAME}
-gradle build
 
 #docker shit - do this in the service folder
-docker build --build-arg JAR_FILE=${JAR_PATH} --build-arg PORT=${PORT} -t ${DOCKER_IMAGE} .
+gradle build
+docker build --build-arg JAR_FILE=${JAR_PATH} -t ${DOCKER_IMAGE} .
 docker images
 gcloud auth configure-docker ${REGION}-docker.pkg.dev
 docker push ${DOCKER_IMAGE}
@@ -55,7 +55,7 @@ kubectl set image deployment/${SERVICE_NAME} ${SERVICE_NAME}=${DOCKER_IMAGE}-2
 watch kubectl get pods
 
 #delete service
-kubectl delete service ${SERVICE_NAME}
+kubectl delete service ${SERVICE_DEPLOYMENT}
 
 #delete cluster
 gcloud container clusters delete ${PROJECT_ID}-cluster --zone ${ZONE}
