@@ -2,7 +2,6 @@
 
 
 -----------
-declare -i PORT
 
 export PROJECT_ID=qcar-backend
 export REPO_NAME=qcar-repo
@@ -14,11 +13,11 @@ export SERVICE_NAME=main_service
 export SERVICE_DEPLOYMENT=main-service
 export SERVICE_VERSION=0.0.1
 export JAR_PATH=/build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar
-export PORT=8080
 export DOCKER_IMAGE=${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}:${SERVICE_VERSION}
 
 git clone ${GIT_REPO}
 cd ${REPO_NAME}
+sh scripts/update-gradle-cloud-shell.sh
 
 gcloud artifacts repositories create ${DOCKER_REPO}\
     --repository-format=docker \
@@ -44,11 +43,11 @@ kubectl create deployment ${SERVICE_DEPLOYMENT} --image=${DOCKER_IMAGE}
 kubectl scale deployment ${SERVICE_DEPLOYMENT} --replicas=3
 kubectl autoscale deployment ${SERVICE_DEPLOYMENT} --cpu-percent=80 --min=1 --max=5
 kubectl get pods
-kubectl run ${SERVICE_DEPLOYMENT} --image=${DOCKER_IMAGE} --port=${PORT}
+kubectl run ${SERVICE_DEPLOYMENT} --image=${DOCKER_IMAGE} --port=8080
 kubectl get deployments
 
 #expose
-kubectl expose deployment ${SERVICE_DEPLOYMENT} --name=${SERVICE_DEPLOYMENT} --type=LoadBalancer --port ${PORT} --target-port ${PORT}
+kubectl expose deployment ${SERVICE_DEPLOYMENT} --name=${SERVICE_DEPLOYMENT} --type=LoadBalancer --port 8080 --target-port 8080
 kubectl get service
 
 #update

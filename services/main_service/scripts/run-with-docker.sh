@@ -8,7 +8,7 @@ JAR_PATH="build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar"
 #SERVICE_VERSION must be the same as in build.gradle
 ./gradlew build &&
 docker build --build-arg JAR_FILE="$JAR_PATH" -t "$SERVICE_NAME" . &&
-CONTAINER_ID=$(docker images --filter="reference=$SERVICE_NAME" --quiet) &&
-docker run -p "$PORT":"$PORT" "$CONTAINER_ID" &&
-#docker run -d -p ${PORT}:${PORT} "$CONTAINER_ID" --host 0.0.0.0 &&
+IMAGE_ID=$(docker images --filter="reference=$SERVICE_NAME" --quiet) &&
+docker run -p "$PORT":"$PORT" "IMAGE_ID" &&
+#docker run -d -p ${PORT}:${PORT} "IMAGE_ID" --host 0.0.0.0 &&
 docker ps
