@@ -1,12 +1,8 @@
 
 
-gcloud artifacts repositories create qcar-backend-repo\
-    --repository-format=docker \
-    --location=europe-west1 \
-    --description=“Qcar backend docker repository”
-
 
 -----------
+declare -i PORT
 
 export PROJECT_ID=qcar-backend
 export REPO_NAME=qcar-repo
@@ -23,6 +19,11 @@ export DOCKER_IMAGE=${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERV
 
 git clone ${GIT_REPO}
 cd ${REPO_NAME}
+
+gcloud artifacts repositories create ${DOCKER_REPO}\
+    --repository-format=docker \
+    --location=${REGION} \
+    --description=“Qcar backend docker repository”
 
 #docker shit - do this in the service folder
 gradle build
