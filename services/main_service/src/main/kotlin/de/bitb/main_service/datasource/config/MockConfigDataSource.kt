@@ -1,6 +1,5 @@
-package de.bitb.main_service.datasource.config.mock
+package de.bitb.main_service.datasource.config
 
-import de.bitb.main_service.datasource.config.ConfigDataSource
 import de.bitb.main_service.models.COLORS
 import de.bitb.main_service.models.ConfigData
 import de.bitb.main_service.models.ConfigType

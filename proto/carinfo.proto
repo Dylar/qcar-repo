@@ -1,0 +1,16 @@
+
+message CarInfo {
+  required string document_path = 1;
+  required string error = 2;
+}
+
+//enum PrintChangeStatus {
+//  PRINT_IN_EDIT = 0;
+//  PRINT_READY_FOR_EXPORT = 1;
+//  PRINT_RECEIVED = 2;
+//  PRINT_EXPORT_FAILED = 3;
+//  PRINT_INTERNAL_FAILED = 4;
+//  PRINT_EXPORT_SUCCEEDED = 5;
+//  PRINT_EDIT_CONFLICT = 6;
+//  PRINT_EDIT_SUCCEEDED = 7;
+//}

@@ -1,9 +1,8 @@
 package de.bitb.main_service.datasource.mock
 
 import allSatisfyKt
-import de.bitb.main_service.datasource.config.mock.MockConfigDataSource
+import de.bitb.main_service.datasource.config.MockConfigDataSource
 import de.bitb.main_service.models.ConfigType
-import de.bitb.main_service.models.Configuration
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
