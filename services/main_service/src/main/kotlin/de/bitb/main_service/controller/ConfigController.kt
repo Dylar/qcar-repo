@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("api/v1/config")
+@RequestMapping(CONFIG_URL_V1)
 class ConfigController(private val service: ConfigService) {
 
     @ExceptionHandler(ConfigException::class)

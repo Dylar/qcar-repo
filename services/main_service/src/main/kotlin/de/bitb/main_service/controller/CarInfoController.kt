@@ -2,15 +2,13 @@ package de.bitb.main_service.controller
 
 import de.bitb.main_service.exceptions.ConfigException
 import de.bitb.main_service.models.CarInfo
-import de.bitb.main_service.models.ConfigData
-import de.bitb.main_service.models.SellInfo
 import de.bitb.main_service.service.CarInfoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("api/v1/carinfo")
+@RequestMapping(CAR_INFO_URL_V1)
 class CarInfoController(private val service: CarInfoService) {
 
     @ExceptionHandler(ConfigException::class)

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("api/v1/sellinfo")
+@RequestMapping(SELL_INFO_URL_V1)
 class SellInfoController(private val service: SellInfoService) {
 
     @ExceptionHandler(ConfigException::class)

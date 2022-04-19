@@ -34,7 +34,7 @@ internal class ConfigControllerTest @Autowired constructor(
         @Test
         fun `return color config`() {
             val type = ConfigType.COLOR.name
-            val response: ConfigData = mockMvc.getAndParse("$CONFIG_URL/$type", ConfigData::class.java)
+            val response: ConfigData = mockMvc.getAndParse("$CONFIG_URL_V1/$type", ConfigData::class.java)
 
             assertThat(response.type).isEqualTo(ConfigType.COLOR)
             assertThat(COLORS.valueOf(response.value as String)).isEqualTo(COLORS.TEAL_GREEN)
@@ -43,7 +43,7 @@ internal class ConfigControllerTest @Autowired constructor(
         @Test
         fun `return color NOT FOUND`() {
             val type = ConfigType.UNKNOWN.name
-            mockMvc.get("$CONFIG_URL/$type")
+            mockMvc.get("$CONFIG_URL_V1/$type")
                 .andDo { print() }
                 .andExpect {
                     status { isNotFound() }
@@ -64,7 +64,7 @@ internal class ConfigControllerTest @Autowired constructor(
 //            val currentConfig: ConfigData = mockMvc.getAndParse("$CONFIG_URL/$type", ConfigData::class.java)
 
             //when
-            val call = mockMvc.post(CONFIG_URL) {
+            val call = mockMvc.post(CONFIG_URL_V1) {
                 contentType = MediaType.APPLICATION_JSON
                 content = mapper.writeValueAsString(newConfig)
             }
@@ -85,7 +85,7 @@ internal class ConfigControllerTest @Autowired constructor(
             assertThat(response.value).isEqualTo((newConfig.value as COLORS).name)
 
             //then
-            mockMvc.get("$CONFIG_URL/$type")
+            mockMvc.get("$CONFIG_URL_V1/$type")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -102,7 +102,7 @@ internal class ConfigControllerTest @Autowired constructor(
             val newConfig = ConfigData(ConfigType.COLOR, "Tja das is keine Color")
 
             //when //then
-            mockMvc.post(CONFIG_URL) {
+            mockMvc.post(CONFIG_URL_V1) {
                 contentType = MediaType.APPLICATION_JSON
                 content = mapper.writeValueAsString(newConfig)
             }.andDo { print() }
