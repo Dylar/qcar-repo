@@ -1,11 +1,12 @@
 import 'package:qcar_customer/core/helper/json_loader.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
-import 'package:qcar_customer/models/schema_validater.dart';
+import 'package:qcar_customer/models/schema_validator.dart';
 import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/models/video_info.dart';
 
-const String BASE_TESTDATA_PATH = "test/testdata/";
+// const String BASE_TESTDATA_PATH = "test/testdata/";
+const String BASE_TESTDATA_PATH = "../../testdata/";
 const String TEST_CAR_MAJA = "car_info_maja.json";
 const String TEST_CAR_FULL = "car_info_full.json";
 const String TEST_VIDEO_INFO = "video_info.json";

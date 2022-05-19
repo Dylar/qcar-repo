@@ -1,6 +1,7 @@
 package de.bitb.main_service.controller
 
-import de.bitb.main_service.exceptions.ConfigException
+import de.bitb.main_service.exceptions.SellInfoException
+import de.bitb.main_service.models.CarInfo
 import de.bitb.main_service.models.SellInfo
 import de.bitb.main_service.service.SellInfoService
 import org.springframework.http.HttpStatus
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping(SELL_INFO_URL_V1)
 class SellInfoController(private val service: SellInfoService) {
 
-    @ExceptionHandler(ConfigException::class)
-    fun handleConfigException(e: ConfigException): ResponseEntity<String> =
+    @ExceptionHandler(SellInfoException::class)
+    fun handleException(e: SellInfoException): ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
 
     @PostMapping

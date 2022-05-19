@@ -2,7 +2,5 @@
   "name": "Sicherheit",
   "order": 1,
   "description": "Hier geht alles um Sicherheit",
-  "imagePath": "Path/to/image.jpg",
-  "videos": [
-  ]
+  "imagePath": "Path/to/image.jpg"
 }

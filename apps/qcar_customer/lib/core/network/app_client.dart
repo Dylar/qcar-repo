@@ -7,7 +7,7 @@ import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
-import 'package:qcar_customer/models/schema_validater.dart';
+import 'package:qcar_customer/models/schema_validator.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:ssh2/ssh2.dart';
 

@@ -1,6 +1,5 @@
 package de.bitb.main_service.datasource.car_info
 
-import de.bitb.main_service.exceptions.CarInfoException
 import de.bitb.main_service.models.*
 import org.springframework.stereotype.Repository
 
@@ -8,13 +7,34 @@ import org.springframework.stereotype.Repository
 class MockCarInfoDataSource : CarInfoDataSource {
 
     private val carInfoDB = mutableListOf<CarInfo>()
+    private val techInfoDB = mutableListOf<TechInfo>()
 
-    override fun getCarInfo(brand: String, model: String): CarInfo =
+    override fun getCarInfo(brand: String, model: String): CarInfo? =
             carInfoDB.find { it.brand == brand && it.model == model }
-                    ?: throw CarInfoException.UnknownCarException(brand, model)
 
-    override fun addCarInfo(carInfo: CarInfo) {
-        carInfoDB.replaceAll { if (it.brand == carInfo.brand && it.model == carInfo.model) carInfo else it }
+    override fun addCarInfo(info: CarInfo) {
+        if (carInfoDB.contains(info)) {
+            carInfoDB.replaceAll {
+                if (it.brand == info.brand && it.model == info.model) info
+                else it
+            }
+        } else {
+            carInfoDB.add(info)
+        }
+    }
+
+    override fun getTechInfo(brand: String, model: String): TechInfo? =
+            techInfoDB.find { it.brand == brand && it.model == model }
+
+    override fun addTechInfo(info: TechInfo) {
+        if (techInfoDB.contains(info)) {
+            techInfoDB.replaceAll {
+                if (it.brand == info.brand && it.model == info.model) info
+                else it
+            }
+        } else {
+            techInfoDB.add(info)
+        }
     }
 
 }

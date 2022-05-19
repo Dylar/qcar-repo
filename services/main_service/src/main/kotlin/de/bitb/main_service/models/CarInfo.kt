@@ -4,7 +4,6 @@ data class CarInfo(
         val brand: String,
         val model: String,
         val imagePath: String,
-        val categories: List<CategoryInfo>
 )
 
 data class CategoryInfo(
@@ -12,13 +11,17 @@ data class CategoryInfo(
         val order: String,
         val description: String,
         val imagePath: String,
-        val videos: List<VideoInfo>
 )
 
 data class VideoInfo(
+        val brand: String,
+        val model: String,
+        val category: String,
         val name: String,
+        val description: String,
         val filePath: String,
         val imagePath: String,
-        val description: String,
         val tags: List<String>
 )
+
+data class TechInfo(val brand: String, val model: String)
