@@ -15,13 +15,13 @@ internal class MockSellInfoDataSourceTest {
     private val dataSource = MockSellInfoDataSource()
 
     @Test
-    fun `get no sell info from data source - throw UnknownKeyException`() {
+    fun `get no sell info from data source`() {
         //given
         val key = "bullshit"
         //when
-        val exception: Exception = assertThrows { dataSource.getSellInfo(key) }
+        val exception = dataSource.getSellInfo(key)
         //then
-        assertThat(exception is SellInfoException.UnknownKeyException)
+        assertThat(exception == null)
     }
 
     @Test

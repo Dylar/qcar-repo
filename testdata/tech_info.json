@@ -1,6 +1,4 @@
 {
   "brand": "Toyota",
-  "model": "Corolla",
-  "co2_emission": "6/l",
-  "tire_label": "96db"
+  "model": "Corolla"
 }

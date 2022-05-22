@@ -1,12 +1,10 @@
 package de.bitb.main_service.datasource.mock
 
 import de.bitb.main_service.builder.buildCarInfo
+import de.bitb.main_service.builder.buildTechInfo
 import de.bitb.main_service.datasource.car_info.MockCarInfoDataSource
-import de.bitb.main_service.exceptions.CarInfoException
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import java.lang.Exception
 
 
 internal class MockCarInfoDataSourceTest {
@@ -14,27 +12,52 @@ internal class MockCarInfoDataSourceTest {
     private val dataSource = MockCarInfoDataSource()
 
     @Test
-    fun `get no car info from data source - throw UnknownCarException`() {
+    fun `get no car info from data source`() {
         //given
-        val carInfo = buildCarInfo()
+        val info = buildCarInfo()
         //when
-        val exceptionBullshit: Exception = assertThrows { dataSource.getCarInfo("bullshit", "bullshit") }
-        val exceptionBrandBullshit: Exception = assertThrows { dataSource.getCarInfo("bullshit", carInfo.model) }
-        val exceptionModelBullshit: Exception = assertThrows { dataSource.getCarInfo(carInfo.brand, "bullshit") }
+        val exceptionBullshit = dataSource.getCarInfo("bullshit", "bullshit")
+        val exceptionBrandBullshit = dataSource.getCarInfo("bullshit", info.model)
+        val exceptionModelBullshit = dataSource.getCarInfo(info.brand, "bullshit")
         //then
-        assertThat(exceptionBullshit is CarInfoException.UnknownCarException)
-        assertThat(exceptionBrandBullshit is CarInfoException.UnknownCarException)
-        assertThat(exceptionModelBullshit is CarInfoException.UnknownCarException)
+        assertThat(exceptionBullshit == null)
+        assertThat(exceptionBrandBullshit == null)
+        assertThat(exceptionModelBullshit == null)
     }
 
     @Test
     fun `get car info by brand and model from data source`() {
         //given
-        val saveInfo = buildCarInfo()
-        dataSource.addCarInfo(saveInfo)
+        val saveInfo = buildTechInfo()
+        dataSource.addTechInfo(saveInfo)
         //when
-        val carInfo = dataSource.getCarInfo(saveInfo.brand, saveInfo.model)
+        val info = dataSource.getTechInfo(saveInfo.brand, saveInfo.model)
         //then
-        assertThat(carInfo === saveInfo)
+        assertThat(info === saveInfo)
+    }
+
+    @Test
+    fun `get no tech info from data source`() {
+        //given
+        val info = buildTechInfo()
+        //when
+        val exceptionBullshit = dataSource.getTechInfo("bullshit", "bullshit")
+        val exceptionBrandBullshit = dataSource.getTechInfo("bullshit", info.model)
+        val exceptionModelBullshit = dataSource.getTechInfo(info.brand, "bullshit")
+        //then
+        assertThat(exceptionBullshit == null)
+        assertThat(exceptionBrandBullshit == null)
+        assertThat(exceptionModelBullshit == null)
+    }
+
+    @Test
+    fun `get tech info by brand and model from data source`() {
+        //given
+        val saveInfo = buildTechInfo()
+        dataSource.addTechInfo(saveInfo)
+        //when
+        val info = dataSource.getTechInfo(saveInfo.brand, saveInfo.model)
+        //then
+        assertThat(info === saveInfo)
     }
 }
