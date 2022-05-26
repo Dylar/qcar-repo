@@ -13,9 +13,20 @@ export SERVICE_NAME=main_service
 export SERVICE_DEPLOYMENT=main-service
 export SERVICE_VERSION=0.0.5
 export JAR_PATH=/build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar
-export DOCKER_IMAGE=${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}:${SERVICE_VERSION}
+export DOCKER_IMAGE_NAME=${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}
+export DOCKER_IMAGE=${DOCKER_IMAGE_NAME}:${SERVICE_VERSION}
 
-git clone ${GIT_REPO} (or: git pull origin -branch-)
+#show all running images
+kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |sort
+
+#on update
+git pull origin master
+gradle build
+docker build --build-arg JAR_FILE=${JAR_PATH} -t ${DOCKER_IMAGE} .
+docker push ${DOCKER_IMAGE}
+
+#on fresh start
+git clone ${GIT_REPO}
 cd ${REPO_NAME}
 sh scripts/update-gradle-cloud-shell.sh
 
@@ -51,7 +62,7 @@ kubectl expose deployment ${SERVICE_DEPLOYMENT} --name=${SERVICE_DEPLOYMENT} --t
 kubectl get service
 
 #update
-kubectl set image deployment/${SERVICE_NAME} ${SERVICE_NAME}=${DOCKER_IMAGE}
+kubectl set image deployment/${SERVICE_DEPLOYMENT} ${DOCKER_IMAGE_NAME}=${DOCKER_IMAGE}
 watch kubectl get pods
 
 #delete service
