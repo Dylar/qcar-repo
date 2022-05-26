@@ -20,6 +20,8 @@ extra["springCloudVersion"] = "2021.0.1"
 
 dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+")
+    implementation("com.fasterxml.jackson.module:jackson-module-jsonSchema:2.9.0")
+
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 

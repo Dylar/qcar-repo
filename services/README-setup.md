@@ -24,6 +24,7 @@ git pull origin master
 gradle build
 docker build --build-arg JAR_FILE=${JAR_PATH} -t ${DOCKER_IMAGE} .
 docker push ${DOCKER_IMAGE}
+kubectl set image deployment/${SERVICE_DEPLOYMENT} ${DOCKER_IMAGE_NAME}=${DOCKER_IMAGE}
 
 #on fresh start
 git clone ${GIT_REPO}
