@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "de.bitb"
-version = "0.0.4"
+version = "0.0.5"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
@@ -35,6 +35,10 @@ dependencyManagement {
         mavenBom("com.google.cloud:spring-cloud-gcp-dependencies:${property("springCloudGcpVersion")}")
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
     }
+}
+
+springBoot {
+    buildInfo()
 }
 
 tasks.withType<KotlinCompile> {

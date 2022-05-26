@@ -1,21 +1,27 @@
 package de.bitb.main_service
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.info.BuildProperties
 import org.springframework.boot.runApplication
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.web.client.RestTemplate
+
 
 fun main(args: Array<String>) {
     runApplication<MainApiApplication>(*args)
 }
 
 @SpringBootApplication
-open class MainApiApplication {
+open class MainApiApplication @Autowired constructor(
+    val buildProperties: BuildProperties,
+) {
+
     private val log: Logger = LoggerFactory.getLogger(MainApiApplication::class.java)
 
     @Bean
@@ -25,6 +31,6 @@ open class MainApiApplication {
     @Throws(Exception::class)
     open fun run(restTemplate: RestTemplate): CommandLineRunner =
         CommandLineRunner {
-            log.info("Run MainApiApplication")
+            log.info("Run MainApiApplication: v${buildProperties.version}")
         }
 }

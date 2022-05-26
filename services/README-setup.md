@@ -11,11 +11,11 @@ export REGION=europe-west1
 export ZONE=europe-west1-b
 export SERVICE_NAME=main_service
 export SERVICE_DEPLOYMENT=main-service
-export SERVICE_VERSION=0.0.4
+export SERVICE_VERSION=0.0.5
 export JAR_PATH=/build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar
 export DOCKER_IMAGE=${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}:${SERVICE_VERSION}
 
-git clone ${GIT_REPO}
+git clone ${GIT_REPO} (or: git pull origin -branch-)
 cd ${REPO_NAME}
 sh scripts/update-gradle-cloud-shell.sh
 
