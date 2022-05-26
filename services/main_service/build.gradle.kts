@@ -27,6 +27,9 @@ dependencies {
 
     implementation("com.google.cloud:spring-cloud-gcp-starter")
     implementation("org.springframework.boot:spring-boot-starter-web:2.5.5")
+//    implementation("org.springframework.cloud:spring-cloud-gcp-data-firestore")
+//    implementation("org.springframework.cloud:spring-cloud-gcp-starter-data-firestore")
+    implementation("com.google.firebase:firebase-admin:8.1.0")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.5")
     testImplementation("io.mockk:mockk:1.12.0")

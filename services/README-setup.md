@@ -1,8 +1,9 @@
-
+https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app
 
 
 -----------
 
+export GOOGLE_APPLICATION_CREDENTIALS="../qcar-firebase-adminsdk.json"
 export PROJECT_ID=qcar-backend
 export REPO_NAME=qcar-repo
 export GIT_REPO=https://github.com/Dylar/${REPO_NAME}.git

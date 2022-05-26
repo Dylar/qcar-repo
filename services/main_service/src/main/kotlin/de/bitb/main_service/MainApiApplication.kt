@@ -1,5 +1,8 @@
 package de.bitb.main_service
 
+import com.google.auth.oauth2.GoogleCredentials
+import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,6 +33,13 @@ open class MainApiApplication @Autowired constructor(
     @Throws(Exception::class)
     open fun run(restTemplate: RestTemplate): CommandLineRunner =
         CommandLineRunner {
+            val options = FirebaseOptions.builder()
+                .setCredentials(GoogleCredentials.getApplicationDefault())
+                .setProjectId("qcar-d8b88")//TODO make this anders
+//                .setDatabaseUrl("https://<DATABASE_NAME>.firebaseio.com/")
+                .build()
+
+            FirebaseApp.initializeApp(options)
             log.info("Run MainApiApplication: v${buildProperties.version}")
         }
 }
