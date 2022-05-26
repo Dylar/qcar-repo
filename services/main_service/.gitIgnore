@@ -11,6 +11,7 @@
 .attach_pid*
 .classpath
 .factorypath
+.gradle/
 .gradle
 .idea
 .metadata
