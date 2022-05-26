@@ -4,7 +4,7 @@
 .env
 Podfile.lock
 *.mocks.dart
-
+.gradle
 
 # Miscellaneous
 *.class
