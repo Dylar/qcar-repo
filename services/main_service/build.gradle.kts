@@ -12,7 +12,7 @@ version = "0.0.5"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 extra["springCloudGcpVersion"] = "3.2.1"
@@ -31,7 +31,14 @@ dependencies {
 //    implementation("org.springframework.cloud:spring-cloud-gcp-starter-data-firestore")
     implementation("com.google.firebase:firebase-admin:8.1.0")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.5")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.5") {
+        exclude(module = "junit")
+        exclude(module = "junit-vintage-engine")
+        exclude(module = "mockito-core")
+    }
+    testImplementation("com.ninja-squad:springmockk:3.1.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("io.mockk:mockk:1.12.0")
 }
 

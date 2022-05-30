@@ -1,65 +1,11 @@
 package de.bitb.main_service.datasource.car_info
 
-import com.google.api.core.ApiFuture
-import com.google.cloud.firestore.DocumentSnapshot
 import com.google.cloud.firestore.Firestore
-import com.google.cloud.firestore.WriteResult
+import de.bitb.main_service.datasource.FirestoreApi
 import de.bitb.main_service.models.CarInfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
-import java.util.concurrent.ExecutionException
 
-
-class CarInfoFirestoreApi<T> @Autowired constructor(
-    private val firestore: Firestore
-) {
-
-    private val log: Logger = LoggerFactory.getLogger(CarInfoFirestoreApi::class.java)
-    private val collectionName: String = "car_info"
-
-    private fun getDocumentPath(carInfo: CarInfo): String =
-        "$collectionName/${carInfo.brand}/${carInfo.model}"
-
-    @Throws(ExecutionException::class, InterruptedException::class)
-    private fun readDocument(brand: String, model: String): CarInfo? {
-        log.info("readDocument")
-        // you could reference document by this.firestore.collection("collectionName").document("objName") as well
-        val apiFuture: ApiFuture<DocumentSnapshot> = this.firestore.document("$collectionName/$brand/$model").get()
-        val documentSnapshot: DocumentSnapshot = apiFuture.get()
-        return documentSnapshot.toObject(CarInfo::class.java)
-    }
-
-    @Throws(ExecutionException::class, InterruptedException::class)
-    private fun writeDocument(info: CarInfo) {
-        log.info("writeDocument")
-        val path = getDocumentPath(info)
-        val apiFuture: ApiFuture<WriteResult> = firestore.document(path).set(info)
-        val writeResult: WriteResult = apiFuture.get()
-        log.info("Update time: {}", writeResult.updateTime)
-    }
-
-    @Throws(ExecutionException::class, InterruptedException::class)
-    private fun updateDocument(info: CarInfo) {
-        log.info("updateDocument")
-        val path = getDocumentPath(info)
-        val apiFuture: ApiFuture<WriteResult> = this.firestore.document(path)
-            .set(info)
-        val writeResult: WriteResult = apiFuture.get()
-        log.info("Update time: {}", writeResult.updateTime)
-    }
-
-    @Throws(ExecutionException::class, InterruptedException::class)
-    private fun deleteDocument(info: CarInfo) {
-        log.info("deleteDocument")
-        // document deletion does not delete its sub collections
-        // see https://firebase.google.com/docs/firestore/manage-data/delete-data#collections
-        val path = getDocumentPath(info)
-        val apiFuture: ApiFuture<WriteResult> = this.firestore.document(path).delete()
-        val writeResult: WriteResult = apiFuture.get()
-        log.info("Update time: {}", writeResult.getUpdateTime())
-    }
-}
 
 //@Throws(ExecutionException::class, InterruptedException::class)
 //private fun insertCarInfos() {
