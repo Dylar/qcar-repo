@@ -4,14 +4,14 @@ import de.bitb.main_service.models.VideoInfo
 import org.springframework.stereotype.Repository
 
 interface VideoInfoDataSource {
-    fun getVideoInfo(name:String) : VideoInfo?
+    fun getVideoInfo(brand: String, model: String, name: String): VideoInfo?
 
     fun addVideoInfo(info: VideoInfo)
 }
 
 @Repository("video_info_database")
 class DBVideoInfoInfoDataSource : VideoInfoDataSource {
-    override fun getVideoInfo(name: String): VideoInfo? {
+    override fun getVideoInfo(brand: String, model: String, name: String): VideoInfo? {
         TODO("Not yet implemented")
     }
 

@@ -13,14 +13,19 @@ class VideoInfoController(private val service: VideoInfoService) {
 
     @ExceptionHandler(VideoInfoException::class)
     fun handleException(e: VideoInfoException): ResponseEntity<String> =
-            ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+        ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
 
     @ExceptionHandler(VideoInfoException.UnknownVideoException::class)
     fun handleException(e: VideoInfoException.UnknownVideoException): ResponseEntity<String> =
-            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        ResponseEntity(e.message, HttpStatus.NOT_FOUND)
 
     @GetMapping("/{brand}/{model}/{name}")
-    fun getVideoInfo(@PathVariable brand: String, @PathVariable model: String, @PathVariable name: String): VideoInfo = service.getVideoInfo(name)
+    fun getVideoInfo(
+        @PathVariable brand: String,
+        @PathVariable model: String,
+        @PathVariable name: String
+    ): VideoInfo =
+        service.getVideoInfo(brand, model, name)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

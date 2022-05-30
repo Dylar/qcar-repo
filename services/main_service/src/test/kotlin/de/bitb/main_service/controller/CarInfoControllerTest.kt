@@ -121,7 +121,7 @@ internal class CarInfoControllerTest @Autowired constructor(
         @Test
         fun `send no data - throw exception`() {
             //when
-             mockMvc
+            mockMvc
                 .post(CAR_INFO_URL_V1) {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""

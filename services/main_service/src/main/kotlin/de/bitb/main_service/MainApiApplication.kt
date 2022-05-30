@@ -33,13 +33,14 @@ open class MainApiApplication @Autowired constructor(
     @Throws(Exception::class)
     open fun run(restTemplate: RestTemplate): CommandLineRunner =
         CommandLineRunner {
-            val options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.getApplicationDefault())
-                .setProjectId("qcar-d8b88")//TODO make this anders
+            if (FirebaseApp.getApps().isEmpty()) {
+                val options = FirebaseOptions.builder()
+                    .setCredentials(GoogleCredentials.getApplicationDefault())
+                    .setProjectId("qcar-d8b88")//TODO make this anders
 //                .setDatabaseUrl("https://<DATABASE_NAME>.firebaseio.com/")
-                .build()
-
-            FirebaseApp.initializeApp(options)
+                    .build()
+                FirebaseApp.initializeApp(options)
+            } 
             log.info("Run MainApiApplication: v${buildProperties.version}")
         }
 }

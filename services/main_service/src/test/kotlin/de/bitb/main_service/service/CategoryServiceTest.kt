@@ -1,14 +1,13 @@
 package de.bitb.main_service.service
 
-import de.bitb.main_service.builder.buildCarInfo
 import de.bitb.main_service.builder.buildCategoryInfo
+import de.bitb.main_service.builder.buildEmptyCategoryInfo
 import de.bitb.main_service.datasource.category_info.CategoryInfoDataSource
-import de.bitb.main_service.exceptions.CarInfoException
 import de.bitb.main_service.exceptions.CategoryInfoException
-import de.bitb.main_service.models.CategoryInfo
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.AssertionsForInterfaceTypes
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -60,5 +59,24 @@ internal class CategoryServiceTest {
         service.addCategoryInfo(testInfo)
         //then
         verify(exactly = 1) { dataSource.addCategoryInfo(testInfo) }
+    }
+
+    @Test
+    fun `try adding invalid category - throw exceptions`() {
+        var emptyInfo = buildEmptyCategoryInfo()
+        var exception: Exception = assertThrows { service.addCategoryInfo(emptyInfo) }
+        Assertions.assertThat(exception is CategoryInfoException.EmptyNameException)
+
+        emptyInfo = emptyInfo.copy(name = "Sicherheit")
+        exception = assertThrows { service.addCategoryInfo(emptyInfo) }
+        Assertions.assertThat(exception is CategoryInfoException.EmptyDescriptionException)
+
+        emptyInfo = emptyInfo.copy(description = "Hier gehts um KEINE Sicherheit")
+        exception = assertThrows { service.addCategoryInfo(emptyInfo) }
+        Assertions.assertThat(exception is CategoryInfoException.EmptyImagePathException)
+
+        emptyInfo = emptyInfo.copy(imagePath = "path/to/file")
+        service.addCategoryInfo(emptyInfo)
+        verify(exactly = 1) { dataSource.addCategoryInfo(emptyInfo) }
     }
 }

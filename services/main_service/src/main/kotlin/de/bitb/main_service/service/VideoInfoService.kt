@@ -12,14 +12,15 @@ import org.springframework.stereotype.Service
 
 @Service
 class VideoInfoService(
-        @Qualifier("video_info_database_mock") @Autowired val videoDS: VideoInfoDataSource,
+    @Qualifier("video_info_database_mock") @Autowired val videoDS: VideoInfoDataSource,
 ) {
 
     private val log: Logger = LoggerFactory.getLogger(VideoInfoService::class.java)
 
     @Throws(VideoInfoException.UnknownVideoException::class)
-    fun getVideoInfo(name: String): VideoInfo = videoDS.getVideoInfo(name)
-            ?: throw VideoInfoException.UnknownVideoException(name)
+    fun getVideoInfo(brand: String, model: String, name: String): VideoInfo =
+        videoDS.getVideoInfo(brand, model, name)
+            ?: throw VideoInfoException.UnknownVideoException(brand, model, name)
 
     @Throws(VideoInfoException::class)
     fun addVideoInfo(info: VideoInfo) {

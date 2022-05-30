@@ -66,22 +66,21 @@ internal class CarServiceTest {
 
     @Test
     fun `try adding invalid car - throw exceptions`() {
-
-        var emptyCarInfo = buildEmptyCarInfo()
-        var exception: Exception = assertThrows { service.addCarInfo(emptyCarInfo) }
+        var emptyInfo = buildEmptyCarInfo()
+        var exception: Exception = assertThrows { service.addCarInfo(emptyInfo) }
         assertThat(exception is CarInfoException.EmptyBrandException)
 
-        emptyCarInfo = emptyCarInfo.copy(brand = "Brand")
-        exception = assertThrows { service.addCarInfo(emptyCarInfo) }
+        emptyInfo = emptyInfo.copy(brand = "Brand")
+        exception = assertThrows { service.addCarInfo(emptyInfo) }
         assertThat(exception is CarInfoException.EmptyModelException)
 
-        emptyCarInfo = emptyCarInfo.copy(model = "model")
-        exception = assertThrows { service.addCarInfo(emptyCarInfo) }
+        emptyInfo = emptyInfo.copy(model = "model")
+        exception = assertThrows { service.addCarInfo(emptyInfo) }
         assertThat(exception is CarInfoException.EmptyImagePathException)
 
-        emptyCarInfo = emptyCarInfo.copy(imagePath = "path/to/file")
-        service.addCarInfo(emptyCarInfo)
-        verify(exactly = 1) { carDataSource.addCarInfo(emptyCarInfo) }
+        emptyInfo = emptyInfo.copy(imagePath = "path/to/file")
+        service.addCarInfo(emptyInfo)
+        verify(exactly = 1) { carDataSource.addCarInfo(emptyInfo) }
     }
 
     //TODO TECH outsourcen
