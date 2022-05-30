@@ -1,10 +1,13 @@
 package de.bitb.main_service.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.ninjasquad.springmockk.MockkBean
 import de.bitb.main_service.builder.buildCategoryInfo
 import de.bitb.main_service.builder.buildEmptyCategoryInfo
 import de.bitb.main_service.exceptions.CategoryInfoException
 import de.bitb.main_service.models.*
+import de.bitb.main_service.service.CarInfoService
+import de.bitb.main_service.service.CategoryInfoService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.TestInstance.*
@@ -19,8 +22,9 @@ import org.springframework.test.web.servlet.post
 @SpringBootTest
 @AutoConfigureMockMvc
 internal class CategoryInfoControllerTest @Autowired constructor(
-        val mockMvc: MockMvc,
-        val mapper: ObjectMapper,
+    private val mapper: ObjectMapper,
+    private val mockMvc: MockMvc,
+    @MockkBean(relaxed = true) private val service: CategoryInfoService
 ) {
 
     @Nested

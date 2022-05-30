@@ -20,9 +20,9 @@ import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.ExceptionHandler
 
 @Service
-class CarInfoService(
-        @Qualifier(CAR_REPOSITORY_IN_USE) @Autowired val carDS: CarInfoDataSource,
-        @Qualifier("sell_info_database_mock") @Autowired val sellDS: SellInfoDataSource
+class CarInfoService @Autowired constructor(
+        @Qualifier(CAR_REPOSITORY_IN_USE) val carDS: CarInfoDataSource,
+        @Qualifier("sell_info_database_mock") val sellDS: SellInfoDataSource
 ) {
     private val log: Logger = LoggerFactory.getLogger(CarInfoService::class.java)
 

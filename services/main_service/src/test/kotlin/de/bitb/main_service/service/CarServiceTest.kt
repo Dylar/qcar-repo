@@ -1,7 +1,7 @@
 package de.bitb.main_service.service
 
 import de.bitb.main_service.builder.buildCarInfo
-import de.bitb.main_service.builder.buildCarInfo
+import de.bitb.main_service.builder.buildEmptyCarInfo
 import de.bitb.main_service.builder.buildTechInfo
 import de.bitb.main_service.datasource.car_info.CarInfoDataSource
 import de.bitb.main_service.datasource.sell_info.SellInfoDataSource
@@ -10,25 +10,23 @@ import de.bitb.main_service.exceptions.TechInfoException
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.assertj.core.api.AssertionsForInterfaceTypes
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.lang.Exception
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.assertEquals
 
 internal class CarServiceTest {
 
-    private lateinit var carDataSource: CarInfoDataSource
-    private lateinit var sellDataSource: SellInfoDataSource
     private lateinit var service: CarInfoService
+    private lateinit var sellDataSource: SellInfoDataSource
+    private lateinit var carDataSource: CarInfoDataSource
 
     @BeforeEach
-    fun setUp(){
+    fun setUp() {
         carDataSource = mockk(relaxed = true)
         sellDataSource = mockk(relaxed = true)
-        every { carDataSource.getCarInfo(any(),any()) }.returns(null)
-        every { carDataSource.getTechInfo(any(),any()) }.returns(null)
         service = CarInfoService(carDataSource, sellDataSource)
     }
 
@@ -41,17 +39,19 @@ internal class CarServiceTest {
         val info = service.getCarInfo(testInfo.brand, testInfo.model)
         //then
         verify(exactly = 1) { carDataSource.getCarInfo(testInfo.brand, testInfo.model) }
-        assertThat("Car info not equal", info == testInfo)
+        assertEquals(info, testInfo)
     }
 
     @Test
     fun `get no car from datasource - throw UnknownCarException`() {
         //given
+        every { carDataSource.getCarInfo(any(), any()) }.returns(null)
         val testInfo = buildCarInfo()
         //when
-        val exceptionNoInfo: Exception = assertThrows { service.getCarInfo(testInfo.brand, testInfo.model) }
+        val exceptionNoInfo: Exception =
+            assertThrows { service.getCarInfo(testInfo.brand, testInfo.model) }
         //then
-        AssertionsForInterfaceTypes.assertThat(exceptionNoInfo is CarInfoException.UnknownCarException)
+        assertThat(exceptionNoInfo is CarInfoException.UnknownCarException)
     }
 
     @Test
@@ -65,6 +65,29 @@ internal class CarServiceTest {
     }
 
     @Test
+    fun `try adding invalid car - throw exceptions`() {
+
+        var emptyCarInfo = buildEmptyCarInfo()
+        var exception: Exception = assertThrows { service.addCarInfo(emptyCarInfo) }
+        assertThat(exception is CarInfoException.EmptyBrandException)
+
+        emptyCarInfo = emptyCarInfo.copy(brand = "Brand")
+        exception = assertThrows { service.addCarInfo(emptyCarInfo) }
+        assertThat(exception is CarInfoException.EmptyModelException)
+
+        emptyCarInfo = emptyCarInfo.copy(model = "model")
+        exception = assertThrows { service.addCarInfo(emptyCarInfo) }
+        assertThat(exception is CarInfoException.EmptyImagePathException)
+
+        emptyCarInfo = emptyCarInfo.copy(imagePath = "path/to/file")
+        service.addCarInfo(emptyCarInfo)
+        verify(exactly = 1) { carDataSource.addCarInfo(emptyCarInfo) }
+    }
+
+    //TODO TECH outsourcen
+
+
+    @Test
     fun `get tech from service`() {
         //given
         val testInfo = buildTechInfo()
@@ -73,17 +96,19 @@ internal class CarServiceTest {
         val info = service.getTechInfo(testInfo.brand, testInfo.model)
         //then
         verify(exactly = 1) { carDataSource.getTechInfo(testInfo.brand, testInfo.model) }
-        assertThat("Tech info not equal", info == testInfo)
+        assertEquals(info, testInfo)
     }
 
     @Test
     fun `get no tech from datasource - throw UnknownTechException`() {
         //given
+        every { carDataSource.getTechInfo(any(), any()) }.returns(null)
         val testInfo = buildTechInfo()
         //when
-        val exceptionNoInfo: Exception = assertThrows { service.getTechInfo(testInfo.brand, testInfo.model) }
+        val exceptionNoInfo: Exception =
+            assertThrows { service.getTechInfo(testInfo.brand, testInfo.model) }
         //then
-        AssertionsForInterfaceTypes.assertThat(exceptionNoInfo is TechInfoException.UnknownCarException)
+        assertThat(exceptionNoInfo is TechInfoException.UnknownCarException)
     }
 
     @Test
