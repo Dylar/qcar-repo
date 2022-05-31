@@ -12,7 +12,9 @@ import org.springframework.boot.info.BuildProperties
 import org.springframework.boot.runApplication
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Bean
+import org.springframework.core.env.Environment
 import org.springframework.web.client.RestTemplate
+import java.io.FileInputStream
 
 
 fun main(args: Array<String>) {
@@ -20,27 +22,29 @@ fun main(args: Array<String>) {
 }
 
 @SpringBootApplication
-open class MainApiApplication @Autowired constructor(
-    val buildProperties: BuildProperties,
+class MainApiApplication @Autowired constructor(
+    private val buildProperties: BuildProperties,
+    private val env: Environment
 ) {
 
     private val log: Logger = LoggerFactory.getLogger(MainApiApplication::class.java)
 
     @Bean
-    open fun restTemplate(builder: RestTemplateBuilder): RestTemplate = builder.build()
+    fun restTemplate(builder: RestTemplateBuilder): RestTemplate = builder.build()
 
     @Bean
     @Throws(Exception::class)
-    open fun run(restTemplate: RestTemplate): CommandLineRunner =
+    fun run(restTemplate: RestTemplate): CommandLineRunner =
         CommandLineRunner {
+            log.info("Run MainApiApplication: v${buildProperties.version}")
             if (FirebaseApp.getApps().isEmpty()) {
                 val options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.getApplicationDefault())
-                    .setProjectId("qcar-d8b88")//TODO make this anders
+//                    .setProjectId(env.getProperty("spring.cloud.gcp.project-id"))//TODO make this anders
+//                    .setCredentials(GoogleCredentials.fromStream(FileInputStream("../../../../../../../../qcar-firebase-adminsdk.json")))
 //                .setDatabaseUrl("https://<DATABASE_NAME>.firebaseio.com/")
                     .build()
                 FirebaseApp.initializeApp(options)
-            } 
-            log.info("Run MainApiApplication: v${buildProperties.version}")
+            }
         }
 }

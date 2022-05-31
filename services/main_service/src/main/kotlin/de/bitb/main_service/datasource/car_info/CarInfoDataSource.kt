@@ -26,14 +26,26 @@ interface CarInfoDataSource {
 class CarInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<CarInfo>() {
     override val log: Logger = LoggerFactory.getLogger(CarInfoFirestoreApi::class.java)
 
-    override val collectionName: String = "car_info"
+    override fun getDocumentPath(obj: CarInfo): String {
+        return createPath(obj.brand, obj.model)
+    }
+
+    fun createPath(brand: String, model: String): String {
+        return "car_info/${brand}_${model}"
+    }
 }
 
 @Component
 class TechInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<TechInfo>() {
     override val log: Logger = LoggerFactory.getLogger(TechInfoFirestoreApi::class.java)
 
-    override val collectionName: String = "tech_info"
+    override fun getDocumentPath(obj: TechInfo): String {
+        return createPath(obj.brand, obj.model)
+    }
+
+    fun createPath(brand: String, model: String): String {
+        return "tech_info/${brand}_${model}"
+    }
 }
 
 @Repository(CAR_REPOSITORY)
@@ -43,29 +55,23 @@ class DBCarInfoDataSource @Autowired constructor(
 ) : CarInfoDataSource {
     val log: Logger = LoggerFactory.getLogger(DBCarInfoDataSource::class.java)
 
-    private fun getPath(brand: String, model: String): String {
-        return "$brand/$model"
-    }
-
     override fun getCarInfo(brand: String, model: String): CarInfo? {
         log.info("getCarInfo")
-        val path = getPath(brand, model)
+        val path = carFirestoreApi.createPath(brand, model)
         return carFirestoreApi.readDocument(path)
     }
 
     override fun addCarInfo(info: CarInfo) {
         log.info("addCarInfo")
-        val path = getPath(info.brand, info.model)
-        carFirestoreApi.writeDocument(path, info)
+        carFirestoreApi.writeDocument(info)
     }
 
     override fun getTechInfo(brand: String, model: String): TechInfo? {
-        val path = getPath(brand, model)
+        val path = techFirestoreApi.createPath(brand, model)
         return techFirestoreApi.readDocument(path)
     }
 
     override fun addTechInfo(info: TechInfo) {
-        val path = getPath(info.brand, info.model)
-        techFirestoreApi.writeDocument(path, info)
+        techFirestoreApi.writeDocument(info)
     }
 }
