@@ -6,6 +6,10 @@ Podfile.lock
 *.mocks.dart
 caches
 wrapper
+.tmp
+native
+kotlin-profile
+daemon
 
 # Miscellaneous
 *.class
