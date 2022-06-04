@@ -13,14 +13,18 @@ class CategoryInfoController(private val service: CategoryInfoService) {
 
     @ExceptionHandler(CategoryInfoException::class)
     fun handleException(e: CategoryInfoException): ResponseEntity<String> =
-            ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+        ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
 
     @ExceptionHandler(CategoryInfoException.UnknownCategoryException::class)
     fun handleException(e: CategoryInfoException.UnknownCategoryException): ResponseEntity<String> =
-            ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+        ResponseEntity(e.message, HttpStatus.NOT_FOUND)
 
-    @GetMapping("/{name}")
-    fun getCategoryInfo(@PathVariable name: String): CategoryInfo = service.getCategoryInfo(name)
+    @GetMapping("/{brand}/{model}/{name}")
+    fun getCategoryInfo(
+        @PathVariable brand: String,
+        @PathVariable model: String,
+        @PathVariable name: String
+    ): CategoryInfo = service.getCategoryInfo(brand, model, name)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

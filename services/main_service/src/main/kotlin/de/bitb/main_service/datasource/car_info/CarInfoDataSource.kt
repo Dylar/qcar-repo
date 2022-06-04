@@ -31,7 +31,7 @@ class CarInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<CarI
     }
 
     fun createPath(brand: String, model: String): String {
-        return "car_info/${brand}_${model}"
+        return "car/${brand}/${model}"
     }
 }
 
@@ -44,7 +44,7 @@ class TechInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<Tec
     }
 
     fun createPath(brand: String, model: String): String {
-        return "tech_info/${brand}_${model}"
+        return "tech/${brand}/${model}"
     }
 }
 
@@ -56,13 +56,11 @@ class DBCarInfoDataSource @Autowired constructor(
     val log: Logger = LoggerFactory.getLogger(DBCarInfoDataSource::class.java)
 
     override fun getCarInfo(brand: String, model: String): CarInfo? {
-        log.info("getCarInfo")
         val path = carFirestoreApi.createPath(brand, model)
         return carFirestoreApi.readDocument(path)
     }
 
     override fun addCarInfo(info: CarInfo) {
-        log.info("addCarInfo")
         carFirestoreApi.writeDocument(info)
     }
 

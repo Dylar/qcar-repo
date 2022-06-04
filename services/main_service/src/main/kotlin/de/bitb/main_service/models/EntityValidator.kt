@@ -24,6 +24,12 @@ fun validateTechInfo(info: TechInfo) {
 }
 
 fun validateCategoryInfo(info: CategoryInfo) {
+    if (info.brand.isBlank()) {
+        throw CategoryInfoException.EmptyBrandException()
+    }
+    if (info.model.isBlank()) {
+        throw CategoryInfoException.EmptyModelException()
+    }
     if (info.name.isBlank()) {
         throw CategoryInfoException.EmptyNameException()
     }

@@ -1,5 +1,6 @@
 package de.bitb.main_service.service
 
+import de.bitb.main_service.datasource.video_info.VIDEO_REPOSITORY_IN_USE
 import de.bitb.main_service.datasource.video_info.VideoInfoDataSource
 import de.bitb.main_service.exceptions.VideoInfoException
 import de.bitb.main_service.models.VideoInfo
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class VideoInfoService(
-    @Qualifier("video_info_database_mock") @Autowired val videoDS: VideoInfoDataSource,
+    @Qualifier(VIDEO_REPOSITORY_IN_USE) @Autowired val videoDS: VideoInfoDataSource,
 ) {
 
     private val log: Logger = LoggerFactory.getLogger(VideoInfoService::class.java)

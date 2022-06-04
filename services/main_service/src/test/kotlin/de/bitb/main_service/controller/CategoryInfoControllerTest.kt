@@ -38,7 +38,7 @@ internal class CategoryInfoControllerTest @Autowired constructor(
         fun `get no category info`() {
             val info = buildCategoryInfo()
 
-            every { service.getCategoryInfo(any()) }
+            every { service.getCategoryInfo(any(), any(), any()) }
                 .answers {
                     val args = it.invocation.args
                     throw CategoryInfoException.UnknownCategoryException(
@@ -46,21 +46,21 @@ internal class CategoryInfoControllerTest @Autowired constructor(
                     )
                 }
 
-            mockMvc.get("$CATEGORY_INFO_URL_V1/${info.name}")
+            mockMvc.get("$CATEGORY_INFO_URL_V1/${info.brand}/${info.model}/${info.name}")
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
-            verify(exactly = 1) { service.getCategoryInfo(info.name) }
+            verify(exactly = 1) { service.getCategoryInfo(info.brand, info.model, info.name) }
         }
 
         @Test
         fun `get category info`() {
             val info = buildCategoryInfo()
 
-            every { service.getCategoryInfo(info.name) }
+            every { service.getCategoryInfo(info.brand, info.model, info.name) }
                 .answers { info }
 
-            mockMvc.get("$CATEGORY_INFO_URL_V1/${info.name}")
+            mockMvc.get("$CATEGORY_INFO_URL_V1/${info.brand}/${info.model}/${info.name}")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -70,7 +70,7 @@ internal class CategoryInfoControllerTest @Autowired constructor(
                     }
                 }
 
-            verify(exactly = 1) { service.getCategoryInfo(info.name) }
+            verify(exactly = 1) { service.getCategoryInfo(info.brand, info.model, info.name) }
         }
     }
 
@@ -114,7 +114,7 @@ internal class CategoryInfoControllerTest @Autowired constructor(
                 .andReturn().response.contentAsString
 
             verify(exactly = 1) { service.addCategoryInfo(info) }
-            assertThat(result).isEqualTo(CategoryInfoException.EmptyNameException().message)
+            assertThat(result).isEqualTo(CategoryInfoException.EmptyBrandException().message)
         }
 
         @Test

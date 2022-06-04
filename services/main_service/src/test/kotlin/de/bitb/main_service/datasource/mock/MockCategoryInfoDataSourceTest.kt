@@ -12,7 +12,7 @@ internal class MockCategoryInfoDataSourceTest {
     @Test
     fun `get no category info from data source`() {
         //when
-        val exceptionBullshit = dataSource.getCategoryInfo("bullshit")
+        val exceptionBullshit = dataSource.getCategoryInfo("bullshit", "bullshit", "bullshit")
         //then
         assertThat(exceptionBullshit == null)
     }
@@ -23,7 +23,7 @@ internal class MockCategoryInfoDataSourceTest {
         val saveInfo = buildCategoryInfo()
         dataSource.addCategoryInfo(saveInfo)
         //when
-        val info = dataSource.getCategoryInfo(saveInfo.name)
+        val info = dataSource.getCategoryInfo(saveInfo.brand, saveInfo.model, saveInfo.name)
         //then
         assertThat(info === saveInfo)
     }

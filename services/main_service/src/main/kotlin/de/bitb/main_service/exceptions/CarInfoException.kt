@@ -11,6 +11,8 @@ sealed class CarInfoException(msg: String) : Exception(msg) {
 
 sealed class CategoryInfoException(msg: String) : Exception(msg) {
     class UnknownCategoryException(name: String) : CategoryInfoException("Unknown category: $name")
+    class EmptyBrandException : CategoryInfoException("Brand is empty")
+    class EmptyModelException : CategoryInfoException("Model is empty")
     class EmptyNameException : CategoryInfoException("Name is empty")
     class EmptyDescriptionException : CategoryInfoException("Description is empty")
     class EmptyImagePathException : CategoryInfoException("Image path is empty")

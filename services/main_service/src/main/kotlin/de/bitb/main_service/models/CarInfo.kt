@@ -7,6 +7,8 @@ data class CarInfo(
 )
 
 data class CategoryInfo(
+        val brand: String = "",
+        val model: String = "",
         val name: String = "",
         val order: String = "",
         val description: String = "",

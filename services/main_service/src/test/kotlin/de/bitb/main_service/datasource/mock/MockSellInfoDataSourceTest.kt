@@ -2,13 +2,8 @@ package de.bitb.main_service.datasource.mock
 
 import de.bitb.main_service.builder.buildSellInfo
 import de.bitb.main_service.datasource.sell_info.MockSellInfoDataSource
-import de.bitb.main_service.exceptions.SellInfoException
-import de.bitb.main_service.models.SellInfo
-import org.assertj.core.api.Java6Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import java.lang.Exception
-
 
 internal class MockSellInfoDataSourceTest {
 
