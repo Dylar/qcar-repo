@@ -1,5 +1,6 @@
 #run in service folder - sh scripts/run-with-docker.sh
 
+#SERVICE_VERSION must be the same as in build.gradle
 SERVICE_VERSION="${1:-0.0.6}"
 SERVICE_NAME="$(basename $(pwd))"
 PORT=8088
@@ -8,7 +9,6 @@ CREDENTIALS_JSON="qcar-firebase-adminsdk.json"
 CREDENTIALS_PATH="src/main/resources/"
 CREDENTIALS=$CREDENTIALS_PATH$CREDENTIALS_JSON
 
-#SERVICE_VERSION must be the same as in build.gradle
 ./gradlew build &&
 docker build \
 --build-arg JAR_FILE="$JAR_PATH" \

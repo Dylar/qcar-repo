@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main-service-deployment
+  labels:
+    app: webserver
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      containers:
+        - name: main-service
+          image: europe-west1-docker.pkg.dev/qcar-backend/qcar-backend-repo/main_service
+          ports:
+            - containerPort: 80

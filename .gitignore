@@ -10,6 +10,8 @@ wrapper
 native
 kotlin-profile
 daemon
+secret.yaml
+*adminsdk.json
 
 # Miscellaneous
 *.class
