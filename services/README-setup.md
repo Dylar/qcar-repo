@@ -11,22 +11,22 @@ export REGION=europe-west1
 export ZONE=europe-west1-b
 export SERVICE_NAME=main_service
 export SERVICE_DEPLOYMENT=main-service
-export SERVICE_VERSION=0.0.6
-export SERVICE_VERSION_OLD=0.0.5
+export SERVICE_VERSION=0.0.7
+export SERVICE_VERSION_OLD=0.0.6
 export JAR_PATH=/build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar
 export DOCKER_REPO=${PROJECT_ID}-repo
-export DOCKER_IMAGE_NAME=${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}
-export DOCKER_IMAGE_OLD=${DOCKER_IMAGE_NAME}:${SERVICE_VERSION_OLD}
-export DOCKER_IMAGE=${DOCKER_IMAGE_NAME}:${SERVICE_VERSION}
+export DOCKER_IMAGE=${PROJECT_ID}/${SERVICE_NAME}:${SERVICE_VERSION}
+#export DOCKER_IMAGE_NAME=${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}
+#export DOCKER_IMAGE_OLD=${DOCKER_IMAGE_NAME}:${SERVICE_VERSION_OLD}
+#export DOCKER_IMAGE=${DOCKER_IMAGE_NAME}:${SERVICE_VERSION}
 
 #show all running images
 kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |sort
 
 #on update
 git pull origin master
-gradle build
-upload credentials file to service folder
-docker build --build-arg JAR_FILE=${JAR_PATH} --build-arg CREDENTIALS_FILE=${CREDENTIALS_FILE} -t ${DOCKER_IMAGE} .
+gradle build (in service folder)
+docker build --build-arg JAR_FILE=${JAR_PATH} -t ${DOCKER_IMAGE} .
 docker push ${DOCKER_IMAGE}
 to get container name: kubectl get --output=wide deployment/${SERVICE_DEPLOYMENT}
 kubectl set image deployment/${SERVICE_DEPLOYMENT} CONTAINER_NAME=${DOCKER_IMAGE}
@@ -72,7 +72,7 @@ kubectl expose deployment ${SERVICE_DEPLOYMENT} --name=${SERVICE_DEPLOYMENT} --t
 kubectl get service
 
 #update
-kubectl set image deployment/${SERVICE_DEPLOYMENT} ${DOCKER_IMAGE_NAME}=${DOCKER_IMAGE}
+kubectl set image deployment/${SERVICE_DEPLOYMENT} ${SERVICE_NAME}=${DOCKER_IMAGE}
 watch kubectl get pods
 
 #delete service

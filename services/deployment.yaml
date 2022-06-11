@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: main-service-deployment
+  name: qcar-services
   labels:
     app: webserver
 spec:
@@ -16,6 +16,20 @@ spec:
     spec:
       containers:
         - name: main-service
-          image: europe-west1-docker.pkg.dev/qcar-backend/qcar-backend-repo/main_service:latest
+          image: qcar-backend/main_service:0.0.7
           ports:
             - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: main-service
+spec:
+  selector:
+    app: webserver
+  ports:
+    - protocol: TCP
+      targetPort: 80
+      port: 8080
+      name: http
+  type: LoadBalancer
