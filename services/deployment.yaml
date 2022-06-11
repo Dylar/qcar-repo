@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: main-service
-          image: europe-west1-docker.pkg.dev/qcar-backend/qcar-backend-repo/main_service
+          image: europe-west1-docker.pkg.dev/qcar-backend/qcar-backend-repo/main_service:latest
           ports:
             - containerPort: 80
