@@ -5,7 +5,7 @@ metadata:
   labels:
     app: webserver
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: webserver
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: main-service
-          image: qcar-backend/main_service:0.0.7
+          image: europe-west1-docker.pkg.dev/qcar-backend/qcar-backend-repo/main_service:0.0.8
           ports:
             - containerPort: 80
 ---
@@ -28,8 +28,8 @@ spec:
   selector:
     app: webserver
   ports:
-    - protocol: TCP
+    - port: 8080
       targetPort: 80
-      port: 8080
+      protocol: TCP
       name: http
   type: LoadBalancer

@@ -11,14 +11,16 @@ export REGION=europe-west1
 export ZONE=europe-west1-b
 export SERVICE_NAME=main_service
 export SERVICE_DEPLOYMENT=main-service
-export SERVICE_VERSION=0.0.7
-export SERVICE_VERSION_OLD=0.0.6
+export SERVICE_VERSION=0.0.8
+export SERVICE_VERSION_OLD=0.0.7
 export JAR_PATH=/build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar
 export DOCKER_REPO=${PROJECT_ID}-repo
 export DOCKER_IMAGE=${PROJECT_ID}/${SERVICE_NAME}:${SERVICE_VERSION}
-#export DOCKER_IMAGE_NAME=${REGION}-docker.pkg.dev/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}
-#export DOCKER_IMAGE_OLD=${DOCKER_IMAGE_NAME}:${SERVICE_VERSION_OLD}
-#export DOCKER_IMAGE=${DOCKER_IMAGE_NAME}:${SERVICE_VERSION}
+export DOCKER_PREFIX=${REGION}-docker.pkg.dev
+export DOCKER_PATH=${DOCKER_PREFIX}/${PROJECT_ID}/${DOCKER_REPO}/${SERVICE_NAME}
+export DOCKER_IMAGE_NAME=${DOCKER_PATH}
+export DOCKER_IMAGE_OLD=${DOCKER_IMAGE_NAME}:${SERVICE_VERSION_OLD}
+export DOCKER_IMAGE=${DOCKER_IMAGE_NAME}:${SERVICE_VERSION}
 
 #show all running images
 kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |sort
