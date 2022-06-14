@@ -18,7 +18,7 @@ spec:
         - name: main-service
           image: europe-west1-docker.pkg.dev/qcar-backend/qcar-backend-repo/main_service:0.0.8
           ports:
-            - containerPort: 8080
+            - containerPort: 80
 ---
 kind: Service
 apiVersion: v1
@@ -29,7 +29,7 @@ spec:
     app: qcar
   ports:
     - port: 8080
-      targetPort: 8080
+      targetPort: 80
       protocol: TCP
       name: http
   type: LoadBalancer
