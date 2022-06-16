@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-      app: qcar
+        app: qcar
     spec:
       containers:
         name: main-service
@@ -26,7 +26,7 @@ spec:
               name: firestore-secret
               key: FIRESTORE_CREDENTIALS
 ---
-kind: Service
+kind: Servicew
 apiVersion: v1
 metadata:
   name: qcar-service
