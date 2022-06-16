@@ -1,7 +1,7 @@
 #run in service folder - sh scripts/run-with-docker.sh
 
 #SERVICE_VERSION must be the same as in build.gradle
-SERVICE_VERSION="${1:-0.0.8}"
+SERVICE_VERSION="${1:-0.0.9}"
 SERVICE_NAME="$(basename $(pwd))"
 PORT=8088
 JAR_PATH="build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar"

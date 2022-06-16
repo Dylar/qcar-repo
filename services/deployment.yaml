@@ -12,19 +12,19 @@ spec:
   template:
     metadata:
       labels:
-        app: qcar
+      app: qcar
     spec:
       containers:
-        - name: main-service
-          image: europe-west1-docker.pkg.dev/qcar-backend/qcar-backend-repo/main_service:0.0.8
-          ports:
-            - containerPort: 2203
-          env:
-           - name: GOOGLE_APPLICATION_CREDENTIALS
-             valueFrom:
-               secretRef:
-                 name: firestore-secret
-                 key: FIRESTORE_CREDENTIALS
+        name: main-service
+        image: europe-west1-docker.pkg.dev/qcar-backend/qcar-backend-repo/main_service:0.0.9
+        ports:
+          containerPort: 2203
+        env:
+          name: GOOGLE_APPLICATION_CREDENTIALS
+          valueFrom:
+            secretRef:
+              name: firestore-secret
+              key: FIRESTORE_CREDENTIALS
 ---
 kind: Service
 apiVersion: v1
@@ -34,8 +34,8 @@ spec:
   selector:
     app: qcar
   ports:
-    - port: 1110
-      targetPort: 2203
-      protocol: TCP
-      name: http
+    port: 1110
+    targetPort: 2203
+    protocol: TCP
+    name: http
   type: LoadBalancer
