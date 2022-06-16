@@ -26,7 +26,7 @@ spec:
               name: firestore-secret
               key: FIRESTORE_CREDENTIALS
 ---
-kind: Servicew
+kind: Service
 apiVersion: v1
 metadata:
   name: qcar-service
