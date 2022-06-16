@@ -22,7 +22,7 @@ spec:
         env:
         - name: GOOGLE_APPLICATION_CREDENTIALS
           valueFrom:
-            secretRef:
+            secretKeyRef:
               name: firestore-secret
               key: FIRESTORE_CREDENTIALS
 ---
