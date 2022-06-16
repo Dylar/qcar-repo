@@ -19,7 +19,7 @@ internal class TestApplication {
     var testRestTemplate = TestRestTemplate()
 
     @LocalServerPort
-    var serverPort: Int = 8080
+    var serverPort: Int = 2203
 
     private fun applicationUrl() = "http://localhost:$serverPort"
 

@@ -66,11 +66,11 @@ kubectl create deployment ${SERVICE_DEPLOYMENT} --image=${DOCKER_IMAGE}
 kubectl scale deployment ${SERVICE_DEPLOYMENT} --replicas=3
 kubectl autoscale deployment ${SERVICE_DEPLOYMENT} --cpu-percent=80 --min=1 --max=5
 kubectl get pods
-kubectl run ${SERVICE_DEPLOYMENT} --image=${DOCKER_IMAGE} --port=8080
+kubectl run ${SERVICE_DEPLOYMENT} --image=${DOCKER_IMAGE} --port=2203
 kubectl get deployments
 
 #expose
-kubectl expose deployment ${SERVICE_DEPLOYMENT} --name=${SERVICE_DEPLOYMENT} --type=LoadBalancer --port 8080 --target-port 8080
+kubectl expose deployment ${SERVICE_DEPLOYMENT} --name=${SERVICE_DEPLOYMENT} --type=LoadBalancer --port 2203 --target-port 2203
 kubectl get service
 
 #update
