@@ -21,10 +21,22 @@ spec:
         - containerPort: 2203
         env:
         - name: GOOGLE_APPLICATION_CREDENTIALS
-          valueFrom:
-            secretKeyRef:
-              name: firestore-secret
-              key: FIRESTORE_CREDENTIALS
+          value: "/opt/firebase/qcar-firebase-adminsdk.json"
+#          valueFrom:
+#            secretKeyRef:
+#              name: firestore-secret
+#              key: FIRESTORE_CREDENTIALS
+        volumeMounts:
+          # volumes to mount
+          - name: secret-volume # matches secret name
+            # path for this secret to be available at
+            mountPath: "/opt/firebase"
+            readOnly: true # no editing!
+      volumes:
+        # create volumes
+        - name: secret-volume # name to match for mounting
+          secret:
+            secretName: firebase-secret # name of secret
 ---
 kind: Service
 apiVersion: v1
