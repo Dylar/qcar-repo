@@ -21,21 +21,15 @@ spec:
         - containerPort: 2203
         env:
         - name: GOOGLE_APPLICATION_CREDENTIALS
-          valueFrom:
-            secretKeyRef:
-              name: firestore-path
-              key: FIRESTORE_CREDENTIALS
+          value: /opt/firebase
         volumeMounts:
-          # volumes to mount
-          - name: secret-volume # matches secret name
-            # path for this secret to be available at
-            mountPath: "/opt/firebase"
-            readOnly: true # no editing!
+          - name: secret-volume
+            mountPath: /opt/firebase
+            readOnly: true
       volumes:
-        # create volumes
-        - name: secret-volume # name to match for mounting
+        - name: secret-volume
           secret:
-            secretName: firebase-secret # name of secret
+            secretName: firestore-secret
 ---
 kind: Service
 apiVersion: v1
