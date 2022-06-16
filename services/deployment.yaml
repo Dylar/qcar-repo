@@ -34,8 +34,7 @@ spec:
   selector:
     app: qcar
   ports:
-    port: 1110
+  - port: 1110
     targetPort: 2203
     protocol: TCP
-    name: http
   type: LoadBalancer
