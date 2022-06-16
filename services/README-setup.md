@@ -46,6 +46,7 @@ gcloud artifacts repositories create ${DOCKER_REPO}\
 #secrets
 upload secret 
 kubectl apply -f ./secret.yaml
+https://medium.com/google-cloud/kubernetes-configmaps-and-secrets-with-firebase-426e5f4c8a36
 
 #docker shit - do this in the service folder
 gradle build
