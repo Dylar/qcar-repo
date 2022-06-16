@@ -21,10 +21,10 @@ spec:
         - containerPort: 2203
         env:
         - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /opt/firebase
+          value: "/opt/firebase/qcar-firebase-adminsdk.json"
         volumeMounts:
           - name: secret-volume
-            mountPath: /opt/firebase
+            mountPath: "/opt/firebase"
             readOnly: true
       volumes:
         - name: secret-volume
