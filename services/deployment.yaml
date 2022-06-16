@@ -15,12 +15,12 @@ spec:
         app: qcar
     spec:
       containers:
-        name: main-service
+      - name: main-service
         image: europe-west1-docker.pkg.dev/qcar-backend/qcar-backend-repo/main_service:0.0.9
         ports:
-          containerPort: 2203
+        - containerPort: 2203
         env:
-          name: GOOGLE_APPLICATION_CREDENTIALS
+        - name: GOOGLE_APPLICATION_CREDENTIALS
           valueFrom:
             secretRef:
               name: firestore-secret
