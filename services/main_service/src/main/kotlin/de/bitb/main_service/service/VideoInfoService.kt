@@ -19,8 +19,8 @@ class VideoInfoService(
     private val log: Logger = LoggerFactory.getLogger(VideoInfoService::class.java)
 
     @Throws(VideoInfoException.UnknownVideoException::class)
-    fun getVideoInfo(brand: String, model: String, name: String): VideoInfo =
-        videoDS.getVideoInfo(brand, model, name)
+    fun getVideoInfo(brand: String, model: String, category: String, name: String): VideoInfo =
+        videoDS.getVideoInfo(brand, model, category, name)
             ?: throw VideoInfoException.UnknownVideoException(brand, model, name)
 
     @Throws(VideoInfoException::class)

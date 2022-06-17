@@ -44,7 +44,7 @@ class TechInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<Tec
     }
 
     fun createPath(brand: String, model: String): String {
-        return "tech/${brand}/${model}"
+        return "car/${brand}/${model}"
     }
 }
 

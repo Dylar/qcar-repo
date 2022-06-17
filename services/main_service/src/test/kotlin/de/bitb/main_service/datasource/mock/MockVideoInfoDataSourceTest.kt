@@ -12,7 +12,7 @@ internal class MockVideoInfoDataSourceTest {
     @Test
     fun `get no video info from data source`() {
         //when
-        val exceptionBullshit = dataSource.getVideoInfo("bullshit", "bullshit", "bullshit")
+        val exceptionBullshit = dataSource.getVideoInfo("bullshit", "bullshit","bullshit", "bullshit")
         //then
         assertThat(exceptionBullshit == null)
     }
@@ -23,7 +23,7 @@ internal class MockVideoInfoDataSourceTest {
         val saveInfo = buildVideoInfo()
         dataSource.addVideoInfo(saveInfo)
         //when
-        val info = dataSource.getVideoInfo(saveInfo.brand, saveInfo.model, saveInfo.name)
+        val info = dataSource.getVideoInfo(saveInfo.brand, saveInfo.model, saveInfo.category, saveInfo.name)
         //then
         assertThat(info === saveInfo)
     }

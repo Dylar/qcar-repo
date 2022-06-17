@@ -16,7 +16,7 @@ const val VIDEO_REPOSITORY = "video_info_database"
 const val VIDEO_REPOSITORY_IN_USE = VIDEO_REPOSITORY
 
 interface VideoInfoDataSource {
-    fun getVideoInfo(brand: String, model: String, name: String): VideoInfo?
+    fun getVideoInfo(brand: String, model: String, category: String, name: String): VideoInfo?
 
     fun addVideoInfo(info: VideoInfo)
 }
@@ -26,11 +26,11 @@ class VideoFirestoreApi(override val firestore: Firestore) : FirestoreApi<VideoI
     override val log: Logger = LoggerFactory.getLogger(VideoFirestoreApi::class.java)
 
     override fun getDocumentPath(obj: VideoInfo): String {
-        return createPath(obj.brand, obj.model, obj.name)
+        return createPath(obj.brand, obj.model, obj.category, obj.name)
     }
 
-    fun createPath(brand: String, model: String, name: String): String {
-        return "video/${brand}_${model}/${name}"
+    fun createPath(brand: String, model: String, category: String, name: String): String {
+        return "car/${brand}/${model}/category/${category}/video/${name}"
     }
 }
 
@@ -38,8 +38,13 @@ class VideoFirestoreApi(override val firestore: Firestore) : FirestoreApi<VideoI
 class DBVideoInfoInfoDataSource @Autowired constructor(
     val firestoreApi: VideoFirestoreApi,
 ) : VideoInfoDataSource {
-    override fun getVideoInfo(brand: String, model: String, name: String): VideoInfo? {
-        val path = firestoreApi.createPath(brand, model, name)
+    override fun getVideoInfo(
+        brand: String,
+        model: String,
+        category: String,
+        name: String
+    ): VideoInfo? {
+        val path = firestoreApi.createPath(brand, model, category, name)
         return firestoreApi.readDocument(path)
     }
 

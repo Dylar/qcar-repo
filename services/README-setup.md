@@ -44,7 +44,8 @@ gcloud artifacts repositories create ${DOCKER_REPO}\
     --description=“Qcar backend docker repository”
 
 #secrets
-upload secret 
+echo -n 'SuperSecretShit' | base64
+upload secret
 kubectl apply -f ./secret.yaml
 https://medium.com/google-cloud/kubernetes-configmaps-and-secrets-with-firebase-426e5f4c8a36
 

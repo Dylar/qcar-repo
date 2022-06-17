@@ -32,7 +32,7 @@ class CategoryFirestoreApi(override val firestore: Firestore) : FirestoreApi<Cat
     }
 
     fun createPath(brand: String, model: String, name: String): String {
-        return "category/${brand}_${model}/${name}"
+        return "car/${brand}/${model}/category/${name}"
     }
 }
 

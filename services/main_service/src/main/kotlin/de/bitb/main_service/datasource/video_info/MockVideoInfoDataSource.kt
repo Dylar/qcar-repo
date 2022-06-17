@@ -8,14 +8,19 @@ class MockVideoInfoDataSource : VideoInfoDataSource {
 
     private val videoInfoDB = mutableListOf<VideoInfo>()
 
-    override fun getVideoInfo(brand: String, model: String, name: String): VideoInfo? {
-        return videoInfoDB.find { it.brand == brand && it.model == model && it.name == name }
+    override fun getVideoInfo(
+        brand: String,
+        model: String,
+        category: String,
+        name: String
+    ): VideoInfo? {
+        return videoInfoDB.find { it.brand == brand && it.model == model && it.category == category && it.name == name }
     }
 
     override fun addVideoInfo(info: VideoInfo) {
         if (videoInfoDB.contains(info)) {
             videoInfoDB.replaceAll {
-                if (it.name == info.name) info
+                if (it == info) info
                 else it
             }
         } else {

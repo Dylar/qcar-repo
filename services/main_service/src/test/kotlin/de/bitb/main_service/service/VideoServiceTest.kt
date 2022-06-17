@@ -23,7 +23,7 @@ internal class VideoServiceTest {
     @BeforeEach
     fun setUp() {
         dataSource = mockk(relaxed = true)
-        every { dataSource.getVideoInfo(any(), any(), any()) }.returns(null)
+        every { dataSource.getVideoInfo(any(), any(), any(), any()) }.returns(null)
         service = VideoInfoService(dataSource)
     }
 
@@ -31,16 +31,25 @@ internal class VideoServiceTest {
     fun `get video from service`() {
         //given
         val testInfo = buildVideoInfo()
-        every { dataSource.getVideoInfo(testInfo.brand, testInfo.model, testInfo.name) }.returns(
+        every {
+            dataSource.getVideoInfo(
+                testInfo.brand,
+                testInfo.model,
+                testInfo.category,
+                testInfo.name
+            )
+        }.returns(
             testInfo
         )
         //when
-        val info = service.getVideoInfo(testInfo.brand, testInfo.model, testInfo.name)
+        val info =
+            service.getVideoInfo(testInfo.brand, testInfo.model, testInfo.category, testInfo.name)
         //then
         verify(exactly = 1) {
             dataSource.getVideoInfo(
                 testInfo.brand,
                 testInfo.model,
+                testInfo.category,
                 testInfo.name
             )
         }
@@ -53,7 +62,14 @@ internal class VideoServiceTest {
         val testInfo = buildVideoInfo()
         //when
         val exceptionNoInfo: Exception =
-            assertThrows { service.getVideoInfo(testInfo.brand, testInfo.model, testInfo.name) }
+            assertThrows {
+                service.getVideoInfo(
+                    testInfo.brand,
+                    testInfo.model,
+                    testInfo.category,
+                    testInfo.name
+                )
+            }
         //then
         AssertionsForInterfaceTypes.assertThat(exceptionNoInfo is VideoInfoException.UnknownVideoException)
     }
@@ -107,11 +123,11 @@ internal class VideoServiceTest {
         exception = assertThrows { service.addVideoInfo(emptyInfo) }
         Assertions.assertThat(exception is VideoInfoException.EmptyTagsException)
 
-        emptyInfo = emptyInfo.copy(tags = listOf("","",""))
+        emptyInfo = emptyInfo.copy(tags = listOf("", "", ""))
         exception = assertThrows { service.addVideoInfo(emptyInfo) }
         Assertions.assertThat(exception is VideoInfoException.EmptyTagsException)
 
-        emptyInfo = emptyInfo.copy(tags = listOf("Gurt","for","Dummies"))
+        emptyInfo = emptyInfo.copy(tags = listOf("Gurt", "for", "Dummies"))
         service.addVideoInfo(emptyInfo)
         verify(exactly = 1) { dataSource.addVideoInfo(emptyInfo) }
     }
