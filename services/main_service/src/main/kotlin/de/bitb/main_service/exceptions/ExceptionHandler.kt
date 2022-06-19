@@ -33,22 +33,17 @@ class ExceptionHandler {
      */
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun processConversionException(e: HttpMessageNotReadableException): ResponseEntity<String>? {
-        var msg: String? = null
-        val cause = e.cause
-        if (cause is JsonParseException) {
-            msg = cause.originalMessage
-        } else if (cause is MismatchedInputException) {
-            msg = if (cause.path != null && cause.path.size > 0) {
-                "Invalid request field: " + cause.path[0].fieldName
-            } else {
-                "Invalid request message"
-            }
-        } else if (cause is JsonMappingException) {
-            msg = cause.originalMessage
-            if (cause.path != null && cause.path.size > 0) {
-                msg = "Invalid request field: " + cause.path[0].fieldName +
-                        ": " + msg
-            }
+        val msg = when (val cause = e.cause) {
+            is JsonParseException -> cause.originalMessage
+            is MismatchedInputException ->
+                if (cause.path != null && cause.path.size > 0)
+                    "Invalid request field: " + cause.path[0].fieldName
+                else "Invalid request message"
+            is JsonMappingException ->
+                if (cause.path != null && cause.path.size > 0)
+                    "Invalid request field: " + cause.path[0].fieldName + ": " + cause.originalMessage
+                else cause.originalMessage
+            else -> return handleAnything(e)
         }
         return ResponseEntity("Incorrect JSON format:\n${msg}", HttpStatus.BAD_REQUEST)
     }
