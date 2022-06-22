@@ -5,7 +5,7 @@ export REGION=europe-west1
 export ZONE=europe-west1-b
 export SERVICE_NAME=main_service
 export SERVICE_DEPLOYMENT=main-service
-export SERVICE_VERSION=0.0.10
+export SERVICE_VERSION=0.0.11
 export JAR_PATH=/build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar
 export DOCKER_REPO=${PROJECT_ID}-repo
 
@@ -24,6 +24,7 @@ git pull origin master
 gradle build (in service folder)
 docker build --build-arg JAR_FILE=${JAR_PATH} -t ${DOCKER_IMAGE} .
 docker push ${DOCKER_IMAGE}
+kubectl apply -f deployment.yaml
 
 #on fresh start
 (https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app)
