@@ -50,6 +50,22 @@ android {
         disable 'InvalidPackage'
     }
 
+    flavorDimensions "app"
+    productFlavors {
+
+        dev {
+            dimension "app"
+        }
+
+        stage {
+            dimension "app"
+        }
+
+        prod {
+            dimension "app"
+        }
+    }
+
     defaultConfig {
         multiDexEnabled true
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
@@ -73,6 +89,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildToolsVersion '33.0.0'
 }
 
 flutter {
@@ -82,7 +103,4 @@ flutter {
 dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    implementation platform('com.google.firebase:firebase-bom:30.0.1')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
 }

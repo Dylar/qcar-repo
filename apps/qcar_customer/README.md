@@ -9,14 +9,16 @@ Linter:
 Localization:
     if not resolved => Dart Analysis tab -> Restart Dart Analysis Server
 
-Run:
- flutter run --dart-define=ENV="DEV" --dart-define=FLAVOR="TEST"
- flutter run --dart-define=ENV="DEV",FLAVOR="TEST"
-
- Env: DEV,STAGE,PROD
- Flavors: TEST
-
 Build:
     flutter pub run build_runner build --delete-conflicting-outputs
     flutter packages get
     flutter packages pub run build_runner build --delete-conflicting-outputs (for testing)
+
+Run:
+    flutter run --dart-define=ENV="DEV" --dart-define=FLAVOR="TEST"
+    flutter run --dart-define=ENV="DEV",FLAVOR="TEST"
+    
+    flutter run --dart-define=ENV="DEV" --flavor dev
+    
+    Env: DEV,STAGE,PROD
+    Flavors: TEST

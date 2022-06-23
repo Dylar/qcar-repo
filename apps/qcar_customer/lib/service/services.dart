@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
-import 'package:qcar_customer/core/network/app_client.dart';
+import 'package:qcar_customer/core/network/firestore_client.dart';
+import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/car_info_service.dart';
 
 class Services extends InheritedWidget {
-  final AppClient appClient;
+  final LoadClient appClient;
   final SettingsDataSource settings;
 
   final CarInfoService carInfoService;
@@ -21,14 +22,14 @@ class Services extends InheritedWidget {
 
   factory Services.init({
     AppDatabase? db,
-    AppClient? appClient,
+    LoadClient? appClient,
     SettingsDataSource? settings,
     CarInfoService? carInfoService,
     Key? key,
     required Widget child,
   }) {
     final database = db ?? AppDatabase();
-    final client = appClient ?? AppClient();
+    final client = appClient ?? FirestoreClient();
     return Services(
       appClient: client,
       carInfoService:

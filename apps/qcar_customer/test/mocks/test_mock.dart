@@ -6,7 +6,7 @@ import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
 import 'package:qcar_customer/core/datasource/VideoInfoDataSource.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
-import 'package:qcar_customer/core/network/app_client.dart';
+import 'package:qcar_customer/core/network/crap_client.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/settings.dart';
 import 'package:qcar_customer/models/video_info.dart';
@@ -17,7 +17,7 @@ import 'http_client_mock.dart';
 
 HttpOverrides mockHttpOverrides() => MockHttpOverrides();
 
-AppClient mockAppClient() {
+CrapClient mockAppClient() {
   final client = MockAppClient();
   when(client.loadCarInfo(any, any)).thenAnswer((inv) async {
     final brand = inv.positionalArguments[0];

@@ -6,7 +6,7 @@ import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
 import 'package:qcar_customer/core/datasource/VideoInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
-import 'package:qcar_customer/core/network/app_client.dart';
+import 'package:qcar_customer/core/network/crap_client.dart';
 
 import '../../builder/app_builder.dart';
 import '../../builder/entity_builder.dart';
@@ -16,7 +16,7 @@ import '../../utils/test_l10n.dart';
 import '../../utils/test_navigation.dart';
 
 @GenerateMocks([
-  AppClient,
+  CrapClient,
   AppDatabase,
   SettingsDataSource,
   CarInfoDataSource,

@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
+import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/models/schema_validator.dart';
@@ -18,7 +19,7 @@ const String CLIENT_DISCONNECTED = "sftp_disconnected";
 
 enum FileType { UNKNOWN, JSON, VIDEO, IMAGE }
 
-class AppClient {
+class CrapClient implements LoadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
       ValueNotifier(Tuple(0, 0));
 

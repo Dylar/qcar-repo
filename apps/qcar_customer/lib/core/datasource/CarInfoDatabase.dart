@@ -13,6 +13,8 @@ mixin CarInfoDB implements CarInfoDatabase {
 
   @override
   Future<void> upsertCarInfo(CarInfo carInfo) async {
+    //TODO ONLY FOR TEST
+    carInfoBox.delete(carInfo.key);
     await carInfoBox.put(
       carInfo.brand + carInfo.model,
       carInfo,

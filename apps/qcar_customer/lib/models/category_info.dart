@@ -11,6 +11,8 @@ part 'category_info.g.dart';
 @HiveType(typeId: CATEGORY_INFO_TYPE_ID)
 class CategoryInfo extends HiveObject {
   CategoryInfo({
+    required this.brand,
+    required this.model,
     required this.name,
     required this.order,
     required this.description,
@@ -24,8 +26,10 @@ class CategoryInfo extends HiveObject {
           .toList();
 
   static CategoryInfo fromMap(Map<String, dynamic> map) => CategoryInfo(
+        brand: map[FIELD_BRAND] ?? "",
+        model: map[FIELD_MODEL] ?? "",
         name: map[FIELD_NAME] ?? "",
-        order: map[FIELD_ORDER] ?? 0,
+        order: int.tryParse(map[FIELD_ORDER] ?? '0') ?? 0,
         description: map[FIELD_DESC] ?? "",
         imagePath: map[FIELD_IMAGE_PATH] ?? "",
         videos: VideoInfo.fromList(
@@ -34,6 +38,8 @@ class CategoryInfo extends HiveObject {
       );
 
   Map<String, dynamic> toMap() => {
+        FIELD_BRAND: brand,
+        FIELD_MODEL: model,
         FIELD_NAME: name,
         FIELD_ORDER: order,
         FIELD_DESC: description,
@@ -46,13 +52,17 @@ class CategoryInfo extends HiveObject {
   String get picUrl => "https://${EnvironmentConfig.domain}/videos/$imagePath";
 
   @HiveField(1)
-  String name = "";
+  String brand = "";
   @HiveField(2)
-  int order = 0;
+  String model = "";
   @HiveField(3)
-  String description = "";
+  String name = "";
   @HiveField(4)
-  String imagePath = "";
+  int order = 0;
   @HiveField(5)
+  String description = "";
+  @HiveField(6)
+  String imagePath = "";
+  @HiveField(7)
   List<VideoInfo> videos = [];
 }

@@ -10,7 +10,8 @@ import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/player_config.dart';
 import 'package:qcar_customer/core/navigation/app_router.dart';
-import 'package:qcar_customer/core/network/app_client.dart';
+import 'package:qcar_customer/core/network/firestore_client.dart';
+import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/car_info_service.dart';
 import 'package:qcar_customer/service/services.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
@@ -37,7 +38,7 @@ class AppInfrastructure {
   });
 
   factory AppInfrastructure.load({
-    AppClient? client,
+    LoadClient? client,
     AppDatabase? database,
     SettingsDataSource? settingsDataSource,
     CarInfoDataSource? carInfoDataSource,
@@ -47,7 +48,7 @@ class AppInfrastructure {
     final carSource = carInfoDataSource ?? CarInfoDS(db);
     final videoSource = videoInfoDataSource ?? VideoInfoDS(db);
     final settingsSource = settingsDataSource ?? SettingsDS(db);
-    final appClient = client ?? AppClient();
+    final appClient = client ?? FirestoreClient();
     return AppInfrastructure(
       database: db,
       appClient: appClient,
@@ -59,7 +60,7 @@ class AppInfrastructure {
   }
 
   final AppDatabase database;
-  final AppClient appClient;
+  final LoadClient appClient;
   final SettingsDataSource settings;
   final CarInfoService carInfoService;
   final CarInfoDataSource carInfoDataSource;

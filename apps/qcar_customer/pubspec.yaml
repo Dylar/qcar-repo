@@ -50,6 +50,10 @@ dependencies:
   hive: ^2.0.5
   hive_flutter: ^1.1.0
 
+  # firebase
+  firebase_core: ^1.6.0
+  cloud_firestore: ^2.5.1
+
   # app dependency
   better_player: ^0.0.81
   qr_code_scanner: ^0.6.1
