@@ -25,12 +25,12 @@ Future<void> prepareTest() async {
 
 AppInfrastructure defaultTestInfra() {
   final db = MockAppDatabase();
-  final appClient = mockAppClient();
+  final loadClient = mockLoadClient();
   final settingsSource = mockSettings();
   final carSource = mockCarSource();
   final videoSource = mockVideoSource();
   return AppInfrastructure.load(
-      client: appClient,
+      client: loadClient,
       database: db,
       settingsDataSource: settingsSource,
       carInfoDataSource: carSource,

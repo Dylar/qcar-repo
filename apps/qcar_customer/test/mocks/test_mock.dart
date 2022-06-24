@@ -17,8 +17,8 @@ import 'http_client_mock.dart';
 
 HttpOverrides mockHttpOverrides() => MockHttpOverrides();
 
-CrapClient mockAppClient() {
-  final client = MockAppClient();
+CrapClient mockLoadClient() {
+  final client = MockCrapClient();
   when(client.loadCarInfo(any, any)).thenAnswer((inv) async {
     final brand = inv.positionalArguments[0];
     final model = inv.positionalArguments[1];

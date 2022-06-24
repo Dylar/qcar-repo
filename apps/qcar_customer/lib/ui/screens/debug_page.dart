@@ -18,7 +18,7 @@ class DebugPage extends StatefulWidget {
 class _DebugPageState extends State<DebugPage> {
   @override
   Widget build(BuildContext context) {
-    // final appClient = Services.of(context)!.appClient;
+    // final loadClient = Services.of(context)!.loadClient;
     return Scaffold(
       appBar: AppBar(title: Text("DEBUG")),
       body: Column(
@@ -34,7 +34,7 @@ class _DebugPageState extends State<DebugPage> {
       persistentFooterButtons: [
         // _DebugButton(
         //   "Load files",
-        //   () => appClient
+        //   () => loadClient
         //       .loadCarInfo("Toyota", "Corolla")
         //       .then((value) => setState(() => dir = value)),
         // ),

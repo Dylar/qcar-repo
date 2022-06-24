@@ -30,7 +30,7 @@ import '../ui/viewmodels/dir_vm.dart';
 class AppInfrastructure {
   AppInfrastructure({
     required this.database,
-    required this.appClient,
+    required this.loadClient,
     required this.settings,
     required this.carInfoService,
     required this.carInfoDataSource,
@@ -48,19 +48,19 @@ class AppInfrastructure {
     final carSource = carInfoDataSource ?? CarInfoDS(db);
     final videoSource = videoInfoDataSource ?? VideoInfoDS(db);
     final settingsSource = settingsDataSource ?? SettingsDS(db);
-    final appClient = client ?? FirestoreClient();
+    final loadClient = client ?? FirestoreClient();
     return AppInfrastructure(
       database: db,
-      appClient: appClient,
+      loadClient: loadClient,
       settings: settingsSource,
       carInfoDataSource: carSource,
       videoInfoDataSource: videoSource,
-      carInfoService: CarInfoService(appClient, carSource),
+      carInfoService: CarInfoService(loadClient, carSource),
     );
   }
 
   final AppDatabase database;
-  final LoadClient appClient;
+  final LoadClient loadClient;
   final SettingsDataSource settings;
   final CarInfoService carInfoService;
   final CarInfoDataSource carInfoDataSource;
@@ -116,7 +116,7 @@ class _AppState extends State<App> {
 
           final infra = widget.infrastructure;
           return Services(
-            appClient: infra.appClient,
+            loadClient: infra.loadClient,
             settings: infra.settings,
             carInfoService: infra.carInfoService,
             child: MultiProvider(
