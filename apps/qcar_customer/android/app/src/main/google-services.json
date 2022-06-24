@@ -36,9 +36,38 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1085425298479:android:9bd833dde71926b25d2ada",
+        "mobilesdk_app_id": "1:1085425298479:android:b68ab0efd72cf1d75d2ada",
         "android_client_info": {
-          "package_name": "de.bitb.qcar_customer.dev"
+          "package_name": "de.bitb.qcar_customer.DEV"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085425298479-bp5m2mcfbffq921j6b5uu3d7dpg60bjk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5d3m7NdmKUo2ealyJyjbSG2MkyxCO63U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085425298479-bp5m2mcfbffq921j6b5uu3d7dpg60bjk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085425298479:android:3ea517690a337bfd5d2ada",
+        "android_client_info": {
+          "package_name": "de.bitb.qcar_customer.STAGE"
         }
       },
       "oauth_client": [

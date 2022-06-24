@@ -53,15 +53,15 @@ android {
     flavorDimensions "app"
     productFlavors {
 
-        dev {
+        DEV {
             dimension "app"
         }
 
-        stage {
+        STAGE {
             dimension "app"
         }
 
-        prod {
+        PROD {
             dimension "app"
         }
     }
