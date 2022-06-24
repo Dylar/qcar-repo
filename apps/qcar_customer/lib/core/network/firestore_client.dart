@@ -30,9 +30,9 @@ class FirestoreClient implements LoadClient {
   String _videoCollPath(String? brand, String? model, String category) =>
       "${_categoryDocPath(brand, model, category)}/video";
 
-  String _videoDocPath(
-          String? brand, String? model, String category, String name) =>
-      "${_videoCollPath(brand, model, category)}/$name";
+  // String _videoDocPath(
+  //         String? brand, String? model, String category, String name) =>
+  //     "${_videoCollPath(brand, model, category)}/$name";
 
   Future<CarInfo> loadCarInfo(String? brand, String? model) async {
     // FirebaseFirestore.instance.doc(BACKEND_V1).get()

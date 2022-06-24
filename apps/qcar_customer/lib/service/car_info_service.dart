@@ -24,10 +24,10 @@ class CarInfoService {
   ValueNotifier<Tuple<double, double>> get progressValue =>
       _loadClient.progressValue;
 
-  Future<bool> _isOldCar(String brand, model) async {
-    final allCars = await carInfoDataSource.getAllCars();
-    return allCars.any((car) => car.brand == brand && car.model == model);
-  }
+  // Future<bool> _isOldCar(String brand, model) async {
+  //   final allCars = await carInfoDataSource.getAllCars();
+  //   return allCars.any((car) => car.brand == brand && car.model == model);
+  // }
 
   Future<bool> hasCars() async {
     final List<CarInfo> cars = await carInfoDataSource.getAllCars();

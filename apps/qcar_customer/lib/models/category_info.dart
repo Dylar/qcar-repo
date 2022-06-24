@@ -29,7 +29,7 @@ class CategoryInfo extends HiveObject {
         brand: map[FIELD_BRAND] ?? "",
         model: map[FIELD_MODEL] ?? "",
         name: map[FIELD_NAME] ?? "",
-        order: int.tryParse(map[FIELD_ORDER] ?? '0') ?? 0,
+        order: int.tryParse(map[FIELD_ORDER].toString() ?? '0') ?? 0,
         description: map[FIELD_DESC] ?? "",
         imagePath: map[FIELD_IMAGE_PATH] ?? "",
         videos: VideoInfo.fromList(
