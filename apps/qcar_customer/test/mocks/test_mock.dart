@@ -25,6 +25,7 @@ CrapClient mockAppClient() {
     final car = await buildCarInfo();
     car.brand = brand;
     car.model = model;
+
     //TODO maybe delete me if we got the urls right
     car.categories.forEach((category) {
       category.videos.forEach((vid) {
