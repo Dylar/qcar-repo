@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/app_theme.dart';
 import 'package:qcar_customer/core/tracking.dart';
 import 'package:qcar_customer/models/category_info.dart';
-import 'package:qcar_customer/ui/widgets/error_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:qcar_customer/ui/widgets/error_builder.dart';
 
 class DirListItem extends StatelessWidget {
   const DirListItem(this.dir);
@@ -67,12 +67,7 @@ class CarInfoPic extends StatelessWidget {
       child: Image.network(
         url,
         loadingBuilder: loadingWidget,
-        errorBuilder: (
-          BuildContext context,
-          Object error,
-          StackTrace? stackTrace,
-        ) =>
-            ErrorInfoWidget(error.toString()),
+        errorBuilder: buildImageError,
       ),
     );
   }

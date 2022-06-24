@@ -47,72 +47,73 @@ class FirestoreClient implements LoadClient {
   }
 
   Future<CarInfo> _getCar(String brand, String model) async {
-    final carInfo = await _getDocument(_carPath(brand, model))
+    progressValue.value = Tuple(100, 0);
+    return await _getDocument(_carPath(brand, model))
         .snapshots()
         .asyncMap<CarInfo>(
       (event) async {
         final car = CarInfo.fromMap(await event.data()!);
         car.imagePath = "${car.brand}/${car.model}/${car.imagePath}";
+        car.categories.addAll(await _getCategories(car));
         return car;
       },
     ).first;
-
-    await _getCategories(carInfo);
-    return carInfo;
   }
 
-  Future<void> _getCategories(CarInfo carInfo) async {
+  Future<List<CategoryInfo>> _getCategories(CarInfo carInfo) async {
     final path = _categoryCollPath(carInfo.brand, carInfo.model);
     final snapshots = await _getCollection(path).snapshots();
-    final categories = await snapshots
-        .asyncMap<List<CategoryInfo>>(
+    return await snapshots.asyncMap<List<CategoryInfo>>(
+      (event) {
+        final docs = event.docs;
+        final maxProgress = docs.length.toDouble();
+        progressValue.value = Tuple(maxProgress, 1);
+        return Future.wait(
+          docs.map((doc) {
+            final snapshots = doc.reference.snapshots();
+            return snapshots.asyncMap<CategoryInfo>(
+              (event) async {
+                final data = await event.data()!;
+                final category = CategoryInfo.fromMap(data);
+                category.videos.addAll(await _getVideos(category));
+                //TODO fix path
+                category.imagePath =
+                    "${category.brand}/${category.model}/${category.name}/${category.imagePath}";
+
+                progressValue.value =
+                    Tuple(maxProgress, progressValue.value.secondOrThrow + 1);
+                return category;
+              },
+            ).first;
+          }).toList(),
+        );
+      },
+    ).first;
+  }
+
+  Future<List<VideoInfo>> _getVideos(CategoryInfo category) async {
+    final path = _videoCollPath(category.brand, category.model, category.name);
+    final snapshots = await _getCollection(path).snapshots();
+    return await snapshots
+        .asyncMap<List<VideoInfo>>(
           (event) => Future.wait(
             event.docs.map((doc) {
               final snapshots = doc.reference.snapshots();
-              return snapshots.asyncMap<CategoryInfo>(
+              return snapshots.asyncMap<VideoInfo>(
                 (event) async {
                   final data = await event.data()!;
-                  final categorie = CategoryInfo.fromMap(data);
-                  categorie.imagePath =
-                      "${categorie.brand}/${categorie.model}/${categorie.name}/${categorie.imagePath}";
-                  return categorie;
+                  final video = VideoInfo.fromMap(data);
+                  //TODO fix path
+                  video.filePath =
+                      "${video.brand}/${video.model}/${video.category}/${video.name}/${video.filePath}";
+                  video.imagePath =
+                      "${video.brand}/${video.model}/${video.category}/${video.name}/${video.imagePath}";
+                  return video;
                 },
               ).first;
             }).toList(),
           ),
         )
         .first;
-    carInfo.categories.addAll(categories);
-    await _getVideos(categories);
-  }
-
-  Future<void> _getVideos(List<CategoryInfo> categories) async {
-    await Future.forEach<CategoryInfo>(categories, (category) async {
-      final path =
-          _videoCollPath(category.brand, category.model, category.name);
-      final snapshots = await _getCollection(path).snapshots();
-      final videos = await snapshots
-          .asyncMap<List<VideoInfo>>(
-            (event) => Future.wait(
-              event.docs.map((doc) {
-                final snapshots = doc.reference.snapshots();
-                return snapshots.asyncMap<VideoInfo>(
-                  (event) async {
-                    final data = await event.data()!;
-                    final video = VideoInfo.fromMap(data);
-                    //TODO fix path
-                    video.filePath =
-                        "${video.brand}/${video.model}/${video.category}/${video.name}/${video.filePath}";
-                    video.imagePath =
-                        "${video.brand}/${video.model}/${video.category}/${video.name}/${video.imagePath}";
-                    return video;
-                  },
-                ).first;
-              }).toList(),
-            ),
-          )
-          .first;
-      category.videos.addAll(videos);
-    });
   }
 }

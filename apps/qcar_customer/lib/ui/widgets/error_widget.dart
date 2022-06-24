@@ -1,16 +1,16 @@
-import 'package:qcar_customer/core/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:qcar_customer/core/app_theme.dart';
 
 import '../../core/tracking.dart';
 
 class ErrorInfoWidget extends StatelessWidget {
   const ErrorInfoWidget(this.error);
 
-  final String error;
+  final Object error;
 
   @override
   Widget build(BuildContext context) {
-    Logger.logE("ErrorInfoWidget: $error");
+    Logger.logE("ErrorInfoWidget: $error", printTrace: true);
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.red, width: 2),
@@ -21,7 +21,7 @@ class ErrorInfoWidget extends StatelessWidget {
         children: [
           Icon(Icons.error, color: BaseColors.red),
           Text(
-            error,
+            error.toString(),
             style: Theme.of(context)
                 .textTheme
                 .subtitle1!

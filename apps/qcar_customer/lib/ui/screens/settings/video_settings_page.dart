@@ -35,7 +35,7 @@ class _VideoSettingsPageState extends State<VideoSettingsPage> {
           future: widget.settings.getSettings(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return ErrorInfoWidget(snapshot.error.toString());
+              return ErrorInfoWidget(snapshot.error!);
             }
 
             if (snapshot.connectionState != ConnectionState.done) {

@@ -94,7 +94,7 @@ class _AppState extends State<App> {
         future: _loadApp,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return fixView(ErrorInfoWidget(snapshot.error.toString()));
+            return fixView(ErrorInfoWidget(snapshot.error!));
           }
 
           if (snapshot.connectionState != ConnectionState.done) {

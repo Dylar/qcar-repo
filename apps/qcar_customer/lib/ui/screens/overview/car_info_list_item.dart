@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/models/car_info.dart';
-import 'package:qcar_customer/ui/widgets/error_widget.dart';
+import 'package:qcar_customer/ui/widgets/error_builder.dart';
 
 import '../../../core/constants/debug.dart';
 
@@ -57,12 +57,7 @@ class CarInfoPic extends StatelessWidget {
       child: Image.network(
         url,
         loadingBuilder: loadingWidget,
-        errorBuilder: (
-          BuildContext context,
-          Object error,
-          StackTrace? stackTrace,
-        ) =>
-            ErrorInfoWidget("Error"),
+        errorBuilder: buildImageError,
       ),
     );
   }

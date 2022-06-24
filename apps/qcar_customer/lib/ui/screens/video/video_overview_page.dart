@@ -54,7 +54,7 @@ class _VideoOverviewPageState
         stream: viewModel.watchVideos(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return ErrorInfoWidget(snapshot.error.toString());
+            return ErrorInfoWidget(snapshot.error!);
           }
 
           return ScrollListView<VideoInfo>(

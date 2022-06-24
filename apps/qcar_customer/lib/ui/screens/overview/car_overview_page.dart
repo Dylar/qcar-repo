@@ -48,7 +48,7 @@ class _CarOverviewPageState
         stream: viewModel.watchCars(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return ErrorInfoWidget(snapshot.error.toString());
+            return ErrorInfoWidget(snapshot.error!);
           }
 
           return ScrollListView<CarInfo>(

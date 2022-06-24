@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:qcar_customer/ui/screens/video/video_page.dart';
-import 'package:qcar_customer/ui/widgets/error_widget.dart';
+import 'package:qcar_customer/ui/widgets/error_builder.dart';
 import 'package:qcar_customer/ui/widgets/highlight_text.dart';
 
 class VideoInfoListItem extends StatelessWidget {
@@ -60,12 +60,7 @@ class CarInfoPic extends StatelessWidget {
       child: Image.network(
         url,
         loadingBuilder: loadingWidget,
-        errorBuilder: (
-          BuildContext context,
-          Object error,
-          StackTrace? stackTrace,
-        ) =>
-            ErrorInfoWidget("Error"),
+        errorBuilder: buildImageError,
       ),
     );
   }

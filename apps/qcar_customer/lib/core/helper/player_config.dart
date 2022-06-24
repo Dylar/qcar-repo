@@ -8,7 +8,8 @@ BetterPlayerConfiguration playerConfigFromMap(Map<String, bool> map) {
     fullScreenByDefault: false,
     autoPlay: map["autoPlay"]!,
     looping: map["looping"]!,
-    errorBuilder: (context, error) => ErrorInfoWidget(error ?? "ERROR"),
+    errorBuilder: (context, error) =>
+        ErrorInfoWidget(error ?? "Unknown player error"),
     controlsConfiguration: BetterPlayerControlsConfiguration(
       showControls: map["showControlsOnInitialize"]!,
       showControlsOnInitialize: map["showControls"]!,
