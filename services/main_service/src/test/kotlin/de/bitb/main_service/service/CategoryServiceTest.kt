@@ -7,9 +7,8 @@ import de.bitb.main_service.exceptions.CategoryInfoException
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.AssertionsForInterfaceTypes
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -44,7 +43,7 @@ internal class CategoryServiceTest {
                 testInfo.name
             )
         }
-        assertThat("Category info not equal", info == testInfo)
+        assertThat(info == testInfo)
     }
 
     @Test
@@ -72,23 +71,23 @@ internal class CategoryServiceTest {
     fun `try adding invalid category - throw exceptions`() {
         var emptyInfo = buildEmptyCategoryInfo()
         var exception: Exception = assertThrows { service.addCategoryInfo(emptyInfo) }
-        Assertions.assertThat(exception is CategoryInfoException.EmptyBrandException)
+        assertThat(exception is CategoryInfoException.EmptyBrandException)
 
         emptyInfo = emptyInfo.copy(brand = "Toyota")
         exception = assertThrows { service.addCategoryInfo(emptyInfo) }
-        Assertions.assertThat(exception is CategoryInfoException.EmptyModelException)
+        assertThat(exception is CategoryInfoException.EmptyModelException)
 
         emptyInfo = emptyInfo.copy(model = "Corolla")
         exception = assertThrows { service.addCategoryInfo(emptyInfo) }
-        Assertions.assertThat(exception is CategoryInfoException.EmptyNameException)
+        assertThat(exception is CategoryInfoException.EmptyNameException)
 
         emptyInfo = emptyInfo.copy(name = "Sicherheit")
         exception = assertThrows { service.addCategoryInfo(emptyInfo) }
-        Assertions.assertThat(exception is CategoryInfoException.EmptyDescriptionException)
+        assertThat(exception is CategoryInfoException.EmptyDescriptionException)
 
         emptyInfo = emptyInfo.copy(description = "Hier gehts um KEINE Sicherheit")
         exception = assertThrows { service.addCategoryInfo(emptyInfo) }
-        Assertions.assertThat(exception is CategoryInfoException.EmptyImagePathException)
+        assertThat(exception is CategoryInfoException.EmptyImagePathException)
 
         emptyInfo = emptyInfo.copy(imagePath = "path/to/file")
         service.addCategoryInfo(emptyInfo)

@@ -1,9 +1,7 @@
 package de.bitb.main_service.datasource
 
 import com.google.api.core.ApiFuture
-import com.google.cloud.firestore.DocumentSnapshot
-import com.google.cloud.firestore.Firestore
-import com.google.cloud.firestore.WriteResult
+import com.google.cloud.firestore.*
 import de.bitb.main_service.controller.API_VERSION_V1
 import org.slf4j.Logger
 import java.util.concurrent.ExecutionException
@@ -17,61 +15,76 @@ abstract class FirestoreApi<T : Any> {
     fun addVersion(path: String) = "$API_VERSION_V1/$path"
 
     @Throws(ExecutionException::class, InterruptedException::class)
-    inline fun <reified T : Any> readDocument(objPath: String): T? {
+    inline fun <reified T : Any> readDocument(
+        collectionPath: String,
+        whereCondition: (CollectionReference) -> Query,
+    ): T? {
+        var path = ""
         return try {
-            val path = addVersion(objPath)
-            log.info("readDocument: $path")
-            // you could reference document by this.firestore.collection("collectionName").document("objName") as well
-//            val docPath = getDocumentPath(path)
-            val apiFuture: ApiFuture<DocumentSnapshot> =
-                this.firestore.document(path).get()
-            val documentSnapshot: DocumentSnapshot = apiFuture.get()
+            path = addVersion(collectionPath)
+            val apiFuture: ApiFuture<QuerySnapshot> =
+                whereCondition(firestore.collection(path)).get()
+            val documentSnapshot: DocumentSnapshot = apiFuture.get().documents.first()
             documentSnapshot.toObject(T::class.java)
         } catch (e: Exception) {
-            log.error(e.message)
+            log.error("readDocument; path: $path  error: ${e.message}")
+            null
+        }
+    }
+
+    @Throws(ExecutionException::class, InterruptedException::class)
+    inline fun <reified T : Any> findDocument(
+        collectionId: String,
+        whereCondition: (CollectionGroup) -> Query,
+    ): T? {
+        return try {
+            val apiFuture: ApiFuture<QuerySnapshot> =
+                whereCondition(firestore.collectionGroup(collectionId)).get()
+            val documentSnapshot: DocumentSnapshot = apiFuture.get().documents.first()
+            documentSnapshot.toObject(T::class.java)
+        } catch (e: Exception) {
+            log.error("findDocument; collectionId: $collectionId  error: ${e.message}")
             null
         }
     }
 
     @Throws(ExecutionException::class, InterruptedException::class)
     fun writeDocument(obj: T) {
+        var path = "PATH ERROR"
         try {
-            val path = addVersion(getDocumentPath(obj))
-            log.info("writeDocument: $path")
+            path = addVersion(getDocumentPath(obj))
             val apiFuture: ApiFuture<WriteResult> = firestore.document(path).set(obj)
-            val writeResult: WriteResult = apiFuture.get()
-            log.info("Update time: {}", writeResult.updateTime)
+            apiFuture.get()
         } catch (e: Exception) {
-            log.error(e.message)
+            log.error("writeDocument; path: $path  error: ${e.message}")
         }
     }
 
     @Throws(ExecutionException::class, InterruptedException::class)
     fun updateDocument(obj: T) {
+        var path = "PATH ERROR"
         try {
-            val path = addVersion(getDocumentPath(obj))
+            path = addVersion(getDocumentPath(obj))
             log.info("updateDocument: $path")
-            val apiFuture: ApiFuture<WriteResult> = this.firestore.document(path)
+            val apiFuture: ApiFuture<WriteResult> = firestore.document(path)
                 .set(obj)
-            val writeResult: WriteResult = apiFuture.get()
-            log.info("Update time: {}", writeResult.updateTime)
+            apiFuture.get()
         } catch (e: Exception) {
-            log.error(e.message)
+            log.error("updateDocument; path: $path  error: ${e.message}")
         }
     }
 
     @Throws(ExecutionException::class, InterruptedException::class)
     fun deleteDocument(obj: T) {
+        var path = ""
         try {
             // document deletion does not delete its sub collections
             // see https://firebase.google.com/docs/firestore/manage-data/delete-data#collections
-            val path = addVersion(getDocumentPath(obj))
-            log.info("deleteDocument: $path")
-            val apiFuture: ApiFuture<WriteResult> = this.firestore.document(path).delete()
-            val writeResult: WriteResult = apiFuture.get()
-            log.info("Update time: {}", writeResult.updateTime)
+            path = addVersion(getDocumentPath(obj))
+            val apiFuture: ApiFuture<WriteResult> = firestore.document(path).delete()
+            apiFuture.get()
         } catch (e: Exception) {
-            log.error(e.message)
+            log.error("deleteDocument; path: $path  error: ${e.message}")
         }
     }
 }

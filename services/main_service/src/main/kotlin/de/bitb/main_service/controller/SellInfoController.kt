@@ -16,8 +16,15 @@ class SellInfoController(private val service: SellInfoService) {
     fun handleException(e: SellInfoException): ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
 
+    @ExceptionHandler(SellInfoException.UnknownKeyException::class)
+    fun handleUnknownKeyException(e: SellInfoException): ResponseEntity<String> =
+        ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun addSellInfo(@RequestBody info: SellInfo) = service.addSellInfo(info)
+
+    @GetMapping("/{key}")
+    fun getSellInfo(@PathVariable key: String) = service.getSellInfo(key)
 
 }

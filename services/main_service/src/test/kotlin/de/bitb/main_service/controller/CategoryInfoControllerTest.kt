@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import de.bitb.main_service.builder.buildCategoryInfo
 import de.bitb.main_service.builder.buildEmptyCategoryInfo
+import de.bitb.main_service.builder.buildVideoInfo
 import de.bitb.main_service.exceptions.CategoryInfoException
 import de.bitb.main_service.models.*
 import de.bitb.main_service.service.CarInfoService
@@ -124,6 +125,25 @@ internal class CategoryInfoControllerTest @Autowired constructor(
                 .post(CATEGORY_INFO_URL_V1) {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
+                }
+                .andDo { print() }
+                .andExpect { status { isBadRequest() } }
+
+            verify(exactly = 0) { service.addCategoryInfo(any()) }
+        }
+
+        @Test
+        fun `send video data - throw exception`() {
+            val video = buildVideoInfo()
+
+            every { service.addCategoryInfo(any()) }
+                .answers { validateCategoryInfo(args.first() as CategoryInfo) }
+
+            //when
+            mockMvc
+                .post(CATEGORY_INFO_URL_V1) {
+                    contentType = MediaType.APPLICATION_JSON
+                    content = mapper.writeValueAsString(video)
                 }
                 .andDo { print() }
                 .andExpect { status { isBadRequest() } }

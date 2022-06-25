@@ -13,12 +13,10 @@ class MockCarInfoDataSource : CarInfoDataSource {
     private val techInfoDB = mutableListOf<TechInfo>()
 
     override fun getCarInfo(brand: String, model: String): CarInfo? {
-        log.info("getCarInfo")
         return carInfoDB.find { it.brand == brand && it.model == model }
     }
 
     override fun addCarInfo(info: CarInfo) {
-        log.info("addCarInfo")
         if (carInfoDB.contains(info)) {
             carInfoDB.replaceAll {
                 if (it.brand == info.brand && it.model == info.model) info

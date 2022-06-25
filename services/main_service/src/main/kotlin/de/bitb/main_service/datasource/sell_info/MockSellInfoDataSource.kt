@@ -5,7 +5,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 
-@Repository("sell_info_database_mock")
+@Repository(SELL_REPOSITORY_MOCK)
 class MockSellInfoDataSource : SellInfoDataSource {
 
     private val log: Logger = LoggerFactory.getLogger(MockSellInfoDataSource::class.java)

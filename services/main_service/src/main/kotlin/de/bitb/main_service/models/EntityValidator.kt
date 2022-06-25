@@ -81,7 +81,7 @@ fun validateSellInfo(info: SellInfo) {
     if (info.carDealer.isBlank()) {
         throw SellInfoException.EmptyCarDealerException()
     }
-    if (info.key.isBlank()) {
-        throw SellInfoException.EmptyKeyException()
+    if (info.key.isNotBlank()) {
+        throw SellInfoException.NotEmptyKeyException()
     }
 }

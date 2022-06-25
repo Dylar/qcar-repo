@@ -1,5 +1,6 @@
 package de.bitb.main_service.service
 
+import de.bitb.main_service.datasource.sell_info.SELL_REPOSITORY_IN_USE
 import de.bitb.main_service.datasource.sell_info.SellInfoDataSource
 import de.bitb.main_service.exceptions.CarInfoException
 import de.bitb.main_service.exceptions.SellInfoException
@@ -10,17 +11,26 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class SellInfoService(
-        @Qualifier("sell_info_database_mock") @Autowired val sellDS: SellInfoDataSource
+    @Qualifier(SELL_REPOSITORY_IN_USE) @Autowired val sellDS: SellInfoDataSource
 ) {
     private val log: Logger = LoggerFactory.getLogger(SellInfoService::class.java)
 
     @Throws(SellInfoException::class)
     fun addSellInfo(info: SellInfo) {
-        log.info("addSellInfo")
         validateSellInfo(info)
-        sellDS.addSellInfo(info)
+        sellDS.addSellInfo(generateKey(info))
+    }
+
+    private fun generateKey(info: SellInfo): SellInfo =
+        info.copy(key = UUID.randomUUID().toString())
+
+    @Throws(SellInfoException.UnknownKeyException::class)
+    fun getSellInfo(key: String): SellInfo {
+        return sellDS.getSellInfo(key)
+            ?: throw SellInfoException.UnknownKeyException(key)
     }
 }

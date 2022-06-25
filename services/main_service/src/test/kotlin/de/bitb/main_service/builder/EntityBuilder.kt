@@ -72,5 +72,5 @@ fun buildSellInfo(jsonFile: String = TEST_SELL_INFO): SellInfo {
     throw JSONValidationException.SellInfoValidationException(jsonFile)
 }
 
-fun buildEmptySellInfo(): SellInfo =
-        SellInfo("", "", "", "", "")
+fun buildInvalidSellInfo(): SellInfo =
+        SellInfo("", "", "", "", "THIS IS A KEY")

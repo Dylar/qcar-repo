@@ -7,5 +7,5 @@ sealed class SellInfoException(msg: String) : Exception(msg) {
     class EmptyModelException : SellInfoException("Model is empty")
     class EmptySellerException : SellInfoException("Seller is empty")
     class EmptyCarDealerException : SellInfoException("Car dealer is empty")
-    class EmptyKeyException : SellInfoException("Key is empty")
+    class NotEmptyKeyException : SellInfoException("Key is NOT empty")
 }

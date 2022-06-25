@@ -2,6 +2,7 @@ package de.bitb.main_service.service
 
 import de.bitb.main_service.datasource.car_info.CAR_REPOSITORY_IN_USE
 import de.bitb.main_service.datasource.car_info.CarInfoDataSource
+import de.bitb.main_service.datasource.sell_info.SELL_REPOSITORY_IN_USE
 import de.bitb.main_service.datasource.sell_info.SellInfoDataSource
 import de.bitb.main_service.exceptions.CarInfoException
 import de.bitb.main_service.exceptions.SellInfoException
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 @Service
 class CarInfoService @Autowired constructor(
         @Qualifier(CAR_REPOSITORY_IN_USE) val carDS: CarInfoDataSource,
-        @Qualifier("sell_info_database_mock") val sellDS: SellInfoDataSource
+        @Qualifier(SELL_REPOSITORY_IN_USE) val sellDS: SellInfoDataSource
 ) {
     private val log: Logger = LoggerFactory.getLogger(CarInfoService::class.java)
 

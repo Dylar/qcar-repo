@@ -39,7 +39,7 @@ class MainApiApplication @Autowired constructor(
                 val options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.getApplicationDefault())
 //                    .setProjectId(env.getProperty("spring.cloud.gcp.project-id"))//TODO make this anders
-//                    .setCredentials(GoogleCredentials.fromStream(FileInputStream("../../../../../../../../qcar-firebase-adminsdk.json")))
+//                    .setCredentials(GoogleCredentials.fromStream(FileInputStream("../../../../../../../../fire.json")))
 //                .setDatabaseUrl("https://<DATABASE_NAME>.firebaseio.com/")
                     .build()
                 FirebaseApp.initializeApp(options)

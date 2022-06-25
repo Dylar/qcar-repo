@@ -27,11 +27,11 @@ class CarInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<CarI
     override val log: Logger = LoggerFactory.getLogger(CarInfoFirestoreApi::class.java)
 
     override fun getDocumentPath(obj: CarInfo): String {
-        return createPath(obj.brand, obj.model)
+        return "${getCollectionPath(obj.brand)}/${obj.model}"
     }
 
-    fun createPath(brand: String, model: String): String {
-        return "car/${brand}/${model}"
+    fun getCollectionPath(brand: String): String {
+        return "car/${brand}"
     }
 }
 
@@ -40,11 +40,11 @@ class TechInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<Tec
     override val log: Logger = LoggerFactory.getLogger(TechInfoFirestoreApi::class.java)
 
     override fun getDocumentPath(obj: TechInfo): String {
-        return createPath(obj.brand, obj.model)
+        return "${getCollectionPath(obj.brand)}/${obj.model}"
     }
 
-    fun createPath(brand: String, model: String): String {
-        return "car/${brand}/${model}"
+    fun getCollectionPath(brand: String): String {
+        return "car/${brand}"
     }
 }
 
@@ -56,8 +56,10 @@ class DBCarInfoDataSource @Autowired constructor(
     val log: Logger = LoggerFactory.getLogger(DBCarInfoDataSource::class.java)
 
     override fun getCarInfo(brand: String, model: String): CarInfo? {
-        val path = carFirestoreApi.createPath(brand, model)
-        return carFirestoreApi.readDocument(path)
+        val path = carFirestoreApi.getCollectionPath(brand)
+        return carFirestoreApi.readDocument(path) {
+            it.whereEqualTo("model", model)
+        }
     }
 
     override fun addCarInfo(info: CarInfo) {
@@ -65,8 +67,10 @@ class DBCarInfoDataSource @Autowired constructor(
     }
 
     override fun getTechInfo(brand: String, model: String): TechInfo? {
-        val path = techFirestoreApi.createPath(brand, model)
-        return techFirestoreApi.readDocument(path)
+        val path = techFirestoreApi.getCollectionPath(brand)
+        return techFirestoreApi.readDocument(path) {
+            it.whereEqualTo("model", model)
+        }
     }
 
     override fun addTechInfo(info: TechInfo) {

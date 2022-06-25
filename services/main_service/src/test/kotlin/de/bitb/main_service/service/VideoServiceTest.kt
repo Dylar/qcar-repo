@@ -7,9 +7,8 @@ import de.bitb.main_service.exceptions.VideoInfoException
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.AssertionsForInterfaceTypes
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -53,7 +52,7 @@ internal class VideoServiceTest {
                 testInfo.name
             )
         }
-        assertThat("Video info not equal", info == testInfo)
+        assertThat(info == testInfo)
     }
 
     @Test
@@ -89,43 +88,43 @@ internal class VideoServiceTest {
     fun `try adding invalid video - throw exceptions`() {
         var emptyInfo = buildEmptyVideoInfo()
         var exception: Exception = assertThrows { service.addVideoInfo(emptyInfo) }
-        Assertions.assertThat(exception is VideoInfoException.EmptyBrandException)
+        assertThat(exception is VideoInfoException.EmptyBrandException)
 
         emptyInfo = emptyInfo.copy(brand = "Toyota")
         exception = assertThrows { service.addVideoInfo(emptyInfo) }
-        Assertions.assertThat(exception is VideoInfoException.EmptyModelException)
+        assertThat(exception is VideoInfoException.EmptyModelException)
 
         emptyInfo = emptyInfo.copy(model = "Corolla")
         exception = assertThrows { service.addVideoInfo(emptyInfo) }
-        Assertions.assertThat(exception is VideoInfoException.EmptyDescriptionException)
+        assertThat(exception is VideoInfoException.EmptyDescriptionException)
 
         emptyInfo = emptyInfo.copy(category = "Sicherheit")
         exception = assertThrows { service.addVideoInfo(emptyInfo) }
-        Assertions.assertThat(exception is VideoInfoException.EmptyNameException)
+        assertThat(exception is VideoInfoException.EmptyNameException)
 
         emptyInfo = emptyInfo.copy(name = "Gurt")
         exception = assertThrows { service.addVideoInfo(emptyInfo) }
-        Assertions.assertThat(exception is VideoInfoException.EmptyDescriptionException)
+        assertThat(exception is VideoInfoException.EmptyDescriptionException)
 
         emptyInfo = emptyInfo.copy(description = "Hier lernst du wie man einen Gurt anlegt")
         exception = assertThrows { service.addVideoInfo(emptyInfo) }
-        Assertions.assertThat(exception is VideoInfoException.EmptyImagePathException)
+        assertThat(exception is VideoInfoException.EmptyImagePathException)
 
         emptyInfo = emptyInfo.copy(imagePath = "path/to/file")
         exception = assertThrows { service.addVideoInfo(emptyInfo) }
-        Assertions.assertThat(exception is VideoInfoException.EmptyFilePathException)
+        assertThat(exception is VideoInfoException.EmptyFilePathException)
 
         emptyInfo = emptyInfo.copy(filePath = "path/to/file")
         exception = assertThrows { service.addVideoInfo(emptyInfo) }
-        Assertions.assertThat(exception is VideoInfoException.EmptyTagsException)
+        assertThat(exception is VideoInfoException.EmptyTagsException)
 
         emptyInfo = emptyInfo.copy(tags = listOf())
         exception = assertThrows { service.addVideoInfo(emptyInfo) }
-        Assertions.assertThat(exception is VideoInfoException.EmptyTagsException)
+        assertThat(exception is VideoInfoException.EmptyTagsException)
 
         emptyInfo = emptyInfo.copy(tags = listOf("", "", ""))
         exception = assertThrows { service.addVideoInfo(emptyInfo) }
-        Assertions.assertThat(exception is VideoInfoException.EmptyTagsException)
+        assertThat(exception is VideoInfoException.EmptyTagsException)
 
         emptyInfo = emptyInfo.copy(tags = listOf("Gurt", "for", "Dummies"))
         service.addVideoInfo(emptyInfo)

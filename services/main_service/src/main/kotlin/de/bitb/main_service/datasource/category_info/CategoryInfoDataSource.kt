@@ -7,6 +7,7 @@ import de.bitb.main_service.datasource.car_info.DBCarInfoDataSource
 import de.bitb.main_service.models.CarInfo
 import de.bitb.main_service.models.CategoryInfo
 import de.bitb.main_service.models.TechInfo
+import de.bitb.main_service.models.VideoInfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,11 +29,11 @@ class CategoryFirestoreApi(override val firestore: Firestore) : FirestoreApi<Cat
     override val log: Logger = LoggerFactory.getLogger(CategoryFirestoreApi::class.java)
 
     override fun getDocumentPath(obj: CategoryInfo): String {
-        return createPath(obj.brand, obj.model, obj.name)
+        return "${getCollectionPath(obj.brand, obj.model)}/${obj.name}"
     }
 
-    fun createPath(brand: String, model: String, name: String): String {
-        return "car/${brand}/${model}/category/${name}"
+    fun getCollectionPath(brand: String, model: String): String {
+        return "car/${brand}/${model}/category"
     }
 }
 
@@ -41,8 +42,10 @@ class DBCategoryInfoDataSource @Autowired constructor(
     val firestoreApi: CategoryFirestoreApi,
 ) : CategoryInfoDataSource {
     override fun getCategoryInfo(brand: String, model: String, name: String): CategoryInfo? {
-        val path = firestoreApi.createPath(brand, model, name)
-        return firestoreApi.readDocument(path)
+        val path = firestoreApi.getCollectionPath(brand, model)
+        return firestoreApi.readDocument(path) {
+            it.whereEqualTo("name", name)
+        }
     }
 
     override fun addCategoryInfo(info: CategoryInfo) {
