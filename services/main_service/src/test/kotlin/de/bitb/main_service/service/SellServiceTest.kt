@@ -2,9 +2,11 @@ package de.bitb.main_service.service
 
 import de.bitb.main_service.builder.buildInvalidSellInfo
 import de.bitb.main_service.builder.buildSellInfo
+import de.bitb.main_service.builder.buildVideoInfo
 import de.bitb.main_service.datasource.sell_info.SellInfoDataSource
 import de.bitb.main_service.exceptions.SellInfoException
 import de.bitb.main_service.models.SellInfo
+import de.bitb.main_service.models.SellVideo
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -98,6 +100,11 @@ internal class SellServiceTest {
         assertThat(exception is SellInfoException.NotEmptyKeyException)
 
         emptyInfo = emptyInfo.copy(key = "")
+        exception = assertThrows { service.addSellInfo(emptyInfo) }
+        assertThat(exception is SellInfoException.NoVideosException)
+
+        val video = buildVideoInfo().let { SellVideo(it.category, it.name) }
+        emptyInfo = emptyInfo.copy(videos = listOf(video))
         service.addSellInfo(emptyInfo)
         verify(exactly = 1) { dataSource.addSellInfo(any()) }
     }

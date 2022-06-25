@@ -28,7 +28,7 @@ fun buildCarInfo(jsonFile: String = TEST_CAR_INFO): CarInfo {
 //    throw JSONValidationException.CarInfoValidationException(jsonFile)
 }
 
-fun buildEmptyCarInfo(): CarInfo = CarInfo("", "", "")
+fun buildEmptyCarInfo(): CarInfo = CarInfo()
 
 fun buildCategoryInfo(jsonFile: String = TEST_CATEGORY_INFO): CategoryInfo {
     val json = loadTestFile(jsonFile)
@@ -39,8 +39,7 @@ fun buildCategoryInfo(jsonFile: String = TEST_CATEGORY_INFO): CategoryInfo {
 //    throw JSONValidationException.CarInfoValidationException(jsonFile)
 }
 
-fun buildEmptyCategoryInfo(): CategoryInfo =
-        CategoryInfo("", "", "", "")
+fun buildEmptyCategoryInfo(): CategoryInfo = CategoryInfo()
 
 fun buildVideoInfo(jsonFile: String = TEST_VIDEO_INFO): VideoInfo {
     val json = loadTestFile(jsonFile)
@@ -51,8 +50,7 @@ fun buildVideoInfo(jsonFile: String = TEST_VIDEO_INFO): VideoInfo {
 //    throw JSONValidationException.CarInfoValidationException(jsonFile)
 }
 
-fun buildEmptyVideoInfo(): VideoInfo =
-        VideoInfo("", "", "", "", "", "", "", listOf(""))
+fun buildEmptyVideoInfo(): VideoInfo = VideoInfo()
 
 fun buildTechInfo(jsonFile: String = TEST_TECH_INFO): TechInfo {
     val json = loadTestFile(jsonFile)
@@ -63,6 +61,8 @@ fun buildTechInfo(jsonFile: String = TEST_TECH_INFO): TechInfo {
 //    throw JSONValidationException.CarInfoValidationException(jsonFile)
 }
 
+fun buildInvalidSellInfo(): SellInfo = SellInfo(key = "THIS IS A KEY")
+
 fun buildSellInfo(jsonFile: String = TEST_SELL_INFO): SellInfo {
     val json = loadTestFile(jsonFile)
     val isValid = validateSellInfoJson(json)
@@ -71,6 +71,3 @@ fun buildSellInfo(jsonFile: String = TEST_SELL_INFO): SellInfo {
     }
     throw JSONValidationException.SellInfoValidationException(jsonFile)
 }
-
-fun buildInvalidSellInfo(): SellInfo =
-        SellInfo("", "", "", "", "THIS IS A KEY")

@@ -84,4 +84,7 @@ fun validateSellInfo(info: SellInfo) {
     if (info.key.isNotBlank()) {
         throw SellInfoException.NotEmptyKeyException()
     }
+    if (info.videos.isEmpty()) {
+        throw SellInfoException.NoVideosException()
+    }
 }

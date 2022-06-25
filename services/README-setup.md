@@ -5,7 +5,7 @@ export REGION=europe-west1
 export ZONE=europe-west1-b
 export SERVICE_NAME=main_service
 export SERVICE_DEPLOYMENT=main-service
-export SERVICE_VERSION=0.0.11
+export SERVICE_VERSION=0.0.12
 export JAR_PATH=/build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar
 export DOCKER_REPO=${PROJECT_ID}-repo
 

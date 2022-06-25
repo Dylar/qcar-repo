@@ -10,8 +10,6 @@ data class SellInfo(
 )
 
 data class SellVideo(
-    val brand: String = "",
-    val model: String = "",
     val category: String = "",
     val name: String = "",
 )

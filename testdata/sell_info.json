@@ -3,5 +3,11 @@
   "model": "Corolla",
   "seller": "Maximus der Große",
   "carDealer": "Toyota in Hamburg",
-  "key": "SuperGeheimerKeyDerBestaetigtDassDieAnUnsAbdrueckenMuessen"
+  "key": "SuperGeheimerKeyDerBestaetigtDassDieAnUnsAbdrueckenMuessen",
+  "videos": [
+    {
+      "category": "Komfort",
+      "name": "2-Zonen Klimaautomatik"
+    }
+  ]
 }
