@@ -3,7 +3,6 @@ package de.bitb.main_service.datasource.car_info
 import com.google.cloud.firestore.Firestore
 import de.bitb.main_service.datasource.FirestoreApi
 import de.bitb.main_service.models.CarInfo
-import de.bitb.main_service.models.TechInfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,9 +16,6 @@ const val CAR_REPOSITORY_IN_USE = CAR_REPOSITORY
 interface CarInfoDataSource {
     fun getCarInfo(brand: String, model: String): CarInfo?
     fun addCarInfo(info: CarInfo)
-
-    fun getTechInfo(brand: String, model: String): TechInfo?
-    fun addTechInfo(info: TechInfo)
 }
 
 @Component
@@ -35,45 +31,21 @@ class CarInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<CarI
     }
 }
 
-@Component
-class TechInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<TechInfo>() {
-    override val log: Logger = LoggerFactory.getLogger(TechInfoFirestoreApi::class.java)
-
-    override fun getDocumentPath(obj: TechInfo): String {
-        return "${getCollectionPath(obj.brand)}/${obj.model}"
-    }
-
-    fun getCollectionPath(brand: String): String {
-        return "car/${brand}"
-    }
-}
-
 @Repository(CAR_REPOSITORY)
 class DBCarInfoDataSource @Autowired constructor(
-    val carFirestoreApi: CarInfoFirestoreApi,
-    val techFirestoreApi: TechInfoFirestoreApi
+    val firestoreApi: CarInfoFirestoreApi,
 ) : CarInfoDataSource {
     val log: Logger = LoggerFactory.getLogger(DBCarInfoDataSource::class.java)
 
     override fun getCarInfo(brand: String, model: String): CarInfo? {
-        val path = carFirestoreApi.getCollectionPath(brand)
-        return carFirestoreApi.readDocument(path) {
+        val path = firestoreApi.getCollectionPath(brand)
+        return firestoreApi.readDocument(path) {
             it.whereEqualTo("model", model)
         }
     }
 
     override fun addCarInfo(info: CarInfo) {
-        carFirestoreApi.writeDocument(info)
+        firestoreApi.writeDocument(info)
     }
 
-    override fun getTechInfo(brand: String, model: String): TechInfo? {
-        val path = techFirestoreApi.getCollectionPath(brand)
-        return techFirestoreApi.readDocument(path) {
-            it.whereEqualTo("model", model)
-        }
-    }
-
-    override fun addTechInfo(info: TechInfo) {
-        techFirestoreApi.writeDocument(info)
-    }
 }

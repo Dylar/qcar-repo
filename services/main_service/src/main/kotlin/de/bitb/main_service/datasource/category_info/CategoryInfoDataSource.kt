@@ -2,12 +2,7 @@ package de.bitb.main_service.datasource.category_info
 
 import com.google.cloud.firestore.Firestore
 import de.bitb.main_service.datasource.FirestoreApi
-import de.bitb.main_service.datasource.car_info.CarInfoFirestoreApi
-import de.bitb.main_service.datasource.car_info.DBCarInfoDataSource
-import de.bitb.main_service.models.CarInfo
 import de.bitb.main_service.models.CategoryInfo
-import de.bitb.main_service.models.TechInfo
-import de.bitb.main_service.models.VideoInfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

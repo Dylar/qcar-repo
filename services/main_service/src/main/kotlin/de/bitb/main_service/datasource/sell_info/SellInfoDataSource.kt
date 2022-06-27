@@ -28,7 +28,7 @@ class SellInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<Sel
     }
 
     fun getCollectionPath(dealer: String, seller: String, model: String): String {
-        return "seller/$dealer/$seller/sales"
+        return "dealer/$dealer/$seller/sales"
     }
 
     fun keyCollection(): String = "sales"

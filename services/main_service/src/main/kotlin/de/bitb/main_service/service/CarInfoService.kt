@@ -6,11 +6,8 @@ import de.bitb.main_service.datasource.sell_info.SELL_REPOSITORY_IN_USE
 import de.bitb.main_service.datasource.sell_info.SellInfoDataSource
 import de.bitb.main_service.exceptions.CarInfoException
 import de.bitb.main_service.exceptions.SellInfoException
-import de.bitb.main_service.exceptions.TechInfoException
 import de.bitb.main_service.models.CarInfo
-import de.bitb.main_service.models.TechInfo
 import de.bitb.main_service.models.validateCarInfo
-import de.bitb.main_service.models.validateTechInfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -49,16 +46,4 @@ class CarInfoService @Autowired constructor(
         carDS.addCarInfo(info)
     }
 
-    @Throws(TechInfoException.UnknownCarException::class)
-    fun getTechInfo(brand: String, model: String): TechInfo {
-        log.info("getTechInfo")
-        return carDS.getTechInfo(brand, model)
-                ?: throw TechInfoException.UnknownCarException(brand, model)
-    }
-
-    fun addTechInfo(info: TechInfo) {
-        log.info("addTechInfo")
-        validateTechInfo(info)
-        carDS.addTechInfo(info)
-    }
 }

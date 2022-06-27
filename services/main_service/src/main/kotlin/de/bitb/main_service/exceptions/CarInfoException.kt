@@ -31,11 +31,3 @@ sealed class VideoInfoException(msg: String) : Exception(msg) {
     class EmptyImagePathException : VideoInfoException("Image path is empty")
     class EmptyTagsException : VideoInfoException("No tags found")
 }
-
-sealed class TechInfoException(msg: String) : Exception(msg) {
-    class UnknownCarException(brand: String, model: String) :
-        TechInfoException("Unknown car - $brand, $model")
-
-    class EmptyBrandException : TechInfoException("Brand is empty")
-    class EmptyModelException : TechInfoException("Model is empty")
-}

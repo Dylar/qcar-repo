@@ -1,9 +1,7 @@
 package de.bitb.main_service.controller
 
 import de.bitb.main_service.exceptions.CarInfoException
-import de.bitb.main_service.exceptions.SellInfoException
 import de.bitb.main_service.models.CarInfo
-import de.bitb.main_service.models.TechInfo
 import de.bitb.main_service.service.CarInfoService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

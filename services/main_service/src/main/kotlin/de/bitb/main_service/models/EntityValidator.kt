@@ -14,15 +14,6 @@ fun validateCarInfo(info: CarInfo) {
     }
 }
 
-fun validateTechInfo(info: TechInfo) {
-    if (info.brand.isBlank()) {
-        throw TechInfoException.EmptyBrandException()
-    }
-    if (info.model.isBlank()) {
-        throw TechInfoException.EmptyModelException()
-    }
-}
-
 fun validateCategoryInfo(info: CategoryInfo) {
     if (info.brand.isBlank()) {
         throw CategoryInfoException.EmptyBrandException()

@@ -80,22 +80,6 @@ class CarInfoService {
   }
 
   Future<List<VideoInfo>> searchVideo(String query) async {
-    final lowerQuery = query.toLowerCase();
-    final cars = await carInfoDataSource.getAllCars();
-    final vids = <VideoInfo>[];
-    cars.first.categories.forEach((cat) {
-      if (cat.name.toLowerCase().contains(lowerQuery)) {
-        vids.addAll(cat.videos);
-      } else {
-        cat.videos.forEach((vid) {
-          final found = vid.name.toLowerCase().contains(lowerQuery) ||
-              vid.tags.any((tag) => tag.toLowerCase().contains(lowerQuery));
-          if (found) {
-            vids.add(vid);
-          }
-        });
-      }
-    });
-    return vids;
+    return await carInfoDataSource.findVideos(query);
   }
 }

@@ -25,5 +25,3 @@ data class VideoInfo(
         val imagePath: String = "",
         val tags: List<String> = listOf(),
 )
-
-data class TechInfo(val brand: String = "", val model: String = "")

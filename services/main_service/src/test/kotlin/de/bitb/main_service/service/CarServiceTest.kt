@@ -2,11 +2,9 @@ package de.bitb.main_service.service
 
 import de.bitb.main_service.builder.buildCarInfo
 import de.bitb.main_service.builder.buildEmptyCarInfo
-import de.bitb.main_service.builder.buildTechInfo
 import de.bitb.main_service.datasource.car_info.CarInfoDataSource
 import de.bitb.main_service.datasource.sell_info.SellInfoDataSource
 import de.bitb.main_service.exceptions.CarInfoException
-import de.bitb.main_service.exceptions.TechInfoException
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -81,42 +79,5 @@ internal class CarServiceTest {
         emptyInfo = emptyInfo.copy(imagePath = "path/to/file")
         service.addCarInfo(emptyInfo)
         verify(exactly = 1) { carDataSource.addCarInfo(emptyInfo) }
-    }
-
-    //TODO TECH outsourcen
-
-
-    @Test
-    fun `get tech from service`() {
-        //given
-        val testInfo = buildTechInfo()
-        every { carDataSource.getTechInfo(testInfo.brand, testInfo.model) }.returns(testInfo)
-        //when
-        val info = service.getTechInfo(testInfo.brand, testInfo.model)
-        //then
-        verify(exactly = 1) { carDataSource.getTechInfo(testInfo.brand, testInfo.model) }
-        assertEquals(info, testInfo)
-    }
-
-    @Test
-    fun `get no tech from datasource - throw UnknownTechException`() {
-        //given
-        every { carDataSource.getTechInfo(any(), any()) }.returns(null)
-        val testInfo = buildTechInfo()
-        //when
-        val exceptionNoInfo: Exception =
-            assertThrows { service.getTechInfo(testInfo.brand, testInfo.model) }
-        //then
-        assertThat(exceptionNoInfo is TechInfoException.UnknownCarException)
-    }
-
-    @Test
-    fun `add tech to service`() {
-        //given
-        val testInfo = buildTechInfo()
-        //when
-        service.addTechInfo(testInfo)
-        //then
-        verify(exactly = 1) { carDataSource.addTechInfo(testInfo) }
     }
 }

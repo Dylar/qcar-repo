@@ -10,7 +10,6 @@ class MockCarInfoDataSource : CarInfoDataSource {
     private val log: Logger = LoggerFactory.getLogger(MockCarInfoDataSource::class.java)
 
     private val carInfoDB = mutableListOf<CarInfo>()
-    private val techInfoDB = mutableListOf<TechInfo>()
 
     override fun getCarInfo(brand: String, model: String): CarInfo? {
         return carInfoDB.find { it.brand == brand && it.model == model }
@@ -24,20 +23,6 @@ class MockCarInfoDataSource : CarInfoDataSource {
             }
         } else {
             carInfoDB.add(info)
-        }
-    }
-
-    override fun getTechInfo(brand: String, model: String): TechInfo? =
-            techInfoDB.find { it.brand == brand && it.model == model }
-
-    override fun addTechInfo(info: TechInfo) {
-        if (techInfoDB.contains(info)) {
-            techInfoDB.replaceAll {
-                if (it.brand == info.brand && it.model == info.model) info
-                else it
-            }
-        } else {
-            techInfoDB.add(info)
         }
     }
 
