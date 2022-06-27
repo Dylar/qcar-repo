@@ -172,7 +172,7 @@ class _AppState extends State<App> {
 
     final hasCars = await infra.carInfoService.hasCars();
     if (hasCars) {
-      await infra.carInfoService.updateCarInfo();
+      await infra.carInfoService.refreshCarInfos();
     }
     return hasCars;
   }

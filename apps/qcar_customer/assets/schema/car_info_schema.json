@@ -10,10 +10,6 @@
     },
     "imagePath": {
       "type": "string"
-    },
-    "categories": {
-      "type": "array",
-      "items": {}
     }
   },
   "required": [

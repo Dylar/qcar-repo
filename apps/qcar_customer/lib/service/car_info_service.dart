@@ -24,10 +24,10 @@ class CarInfoService {
   ValueNotifier<Tuple<double, double>> get progressValue =>
       _loadClient.progressValue;
 
-  // Future<bool> _isOldCar(String brand, model) async {
-  //   final allCars = await carInfoDataSource.getAllCars();
-  //   return allCars.any((car) => car.brand == brand && car.model == model);
-  // }
+  Future<bool> _isOldCar(String brand, model) async {
+    final allCars = await carInfoDataSource.getAllCars();
+    return allCars.any((car) => car.brand == brand && car.model == model);
+  }
 
   Future<bool> hasCars() async {
     final List<CarInfo> cars = await carInfoDataSource.getAllCars();
@@ -38,6 +38,7 @@ class CarInfoService {
   }
 
   Future<VideoInfo> getIntroVideo() async {
+    //TODO get info from seller
     final cars = await carInfoDataSource.getAllCars();
     return cars.first.introVideoUrl;
   }
@@ -52,13 +53,13 @@ class CarInfoService {
 
       //TODO only for test
       final sellInfo = SellInfo.fromMap(scanJson);
-      // final isOldCar = await _isOldCar(sellInfo.brand, sellInfo.model);
-      // if (isOldCar) {
-      //   return Tuple(QrScanState.OLD, sellInfo);
-      // } else {
-      await _loadCarInfo(sellInfo.brand, sellInfo.model);
-      return Tuple(QrScanState.NEW, sellInfo);
-      // }
+      final isOldCar = await _isOldCar(sellInfo.brand, sellInfo.model);
+      if (isOldCar) {
+        return Tuple(QrScanState.OLD, sellInfo);
+      } else {
+        await _loadCarInfo(sellInfo.brand, sellInfo.model);
+        return Tuple(QrScanState.NEW, sellInfo);
+      }
     } on Exception catch (e) {
       Logger.logE("scan: ${e.toString()}");
     }
@@ -70,15 +71,12 @@ class CarInfoService {
     await carInfoDataSource.addCarInfo(car);
   }
 
-  Future updateCarInfo() async {
-    final List<CarInfo> cars = await carInfoDataSource.getAllCars();
-    await Future.forEach<CarInfo>(
-      cars,
-      (car) async {
-        Logger.logI("Update Car: ${car.brand} ${car.model}");
-        return await _loadCarInfo(car.brand, car.model);
-      },
-    );
+  Future refreshCarInfos() async {
+    final cars = await carInfoDataSource.getAllCars();
+    for (var car in cars) {
+      Logger.logI("Update Car: ${car.brand} ${car.model}");
+      return await _loadCarInfo(car.brand, car.model);
+    }
   }
 
   Future<List<VideoInfo>> searchVideo(String query) async {

@@ -6,7 +6,7 @@ import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
 import 'package:qcar_customer/core/datasource/VideoInfoDataSource.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
-import 'package:qcar_customer/core/network/crap_client.dart';
+import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/settings.dart';
 import 'package:qcar_customer/models/video_info.dart';
@@ -17,8 +17,8 @@ import 'http_client_mock.dart';
 
 HttpOverrides mockHttpOverrides() => MockHttpOverrides();
 
-CrapClient mockLoadClient() {
-  final client = MockCrapClient();
+LoadClient mockLoadClient() {
+  final client = MockLoadClient();
   when(client.loadCarInfo(any, any)).thenAnswer((inv) async {
     final brand = inv.positionalArguments[0];
     final model = inv.positionalArguments[1];
@@ -54,9 +54,9 @@ SettingsDataSource mockSettings() {
   return source;
 }
 
-CarInfoDataSource mockCarSource() {
+CarInfoDataSource mockCarSource({List<CarInfo> initialCars = const []}) {
   final source = MockCarInfoDataSource();
-  final cars = <CarInfo>[];
+  final cars = initialCars;
   when(source.getAllCars()).thenAnswer((_) async => cars);
   when(source.watchCarInfo()).thenAnswer((_) async* {
     yield cars;

@@ -28,6 +28,10 @@ class _AppBarState extends State<SearchAppBar> {
       title: Text(widget.title),
       actions: <Widget>[
         IconButton(
+          icon: Icon(Icons.refresh),
+          onPressed: () async => service.refreshCarInfos(),
+        ),
+        IconButton(
           icon: Icon(Icons.search),
           onPressed: () async => await showSearch(
             context: context,
