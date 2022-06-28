@@ -31,4 +31,11 @@ void main() {
     final isValid = await validateSellInfo(info.toMap());
     expect(isValid, true);
   });
+
+  test('validate sell key schema', () async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final key = await buildSellKey();
+    final isValid = await validateSellKey(key.toMap());
+    expect(isValid, true);
+  });
 }

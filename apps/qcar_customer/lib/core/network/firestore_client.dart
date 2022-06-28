@@ -4,6 +4,8 @@ import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
+import 'package:qcar_customer/models/sell_info.dart';
+import 'package:qcar_customer/models/sell_key.dart';
 import 'package:qcar_customer/models/video_info.dart';
 
 const String BACKEND_V1 = "v1";
@@ -33,6 +35,20 @@ class FirestoreClient implements LoadClient {
   // String _videoDocPath(
   //         String? brand, String? model, String category, String name) =>
   //     "${_videoCollPath(brand, model, category)}/$name";
+
+  Future<SellInfo> loadSellInfo(SellKey key) async {
+    // final response = await NetworkService.sendRequest(
+    //     requestType: RequestType.get, url: EnvironmentConfig.backendUrl);
+
+    return await FirebaseFirestore.instance
+        .collectionGroup("sales")
+        .where("key", isEqualTo: key.key)
+        .snapshots()
+        .asyncMap((coll) => coll.docs.first)
+        .asyncMap((doc) => doc.data())
+        .asyncMap((map) => SellInfo.fromMap(map))
+        .first;
+  }
 
   Future<CarInfo> loadCarInfo(String? brand, String? model) async {
     // FirebaseFirestore.instance.doc(BACKEND_V1).get()

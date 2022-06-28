@@ -26,7 +26,8 @@ class SellInfoService(
     }
 
     private fun generateKey(info: SellInfo): SellInfo =
-        info.copy(key = UUID.randomUUID().toString())
+//        info.copy(key = Base64.getEncoder().encodeToString(UUID.randomUUID().toString().toByteArray()))
+        info.copy(key = "V2VubkR1RGFzRW50c2NobMO8c3NlbHN0TWF4aSxiaXN0ZVNjaG9uR3V0OlAK")
 
     @Throws(SellInfoException.UnknownKeyException::class)
     fun getSellInfo(key: String): SellInfo {

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,6 +13,7 @@ import 'package:qcar_customer/core/helper/player_config.dart';
 import 'package:qcar_customer/core/navigation/app_router.dart';
 import 'package:qcar_customer/core/network/firestore_client.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
+import 'package:qcar_customer/service/auth_service.dart';
 import 'package:qcar_customer/service/car_info_service.dart';
 import 'package:qcar_customer/service/services.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
@@ -35,6 +37,7 @@ class AppInfrastructure {
     required this.carInfoService,
     required this.carInfoDataSource,
     required this.videoInfoDataSource,
+    required this.authService,
   });
 
   factory AppInfrastructure.load({
@@ -43,12 +46,15 @@ class AppInfrastructure {
     SettingsDataSource? settingsDataSource,
     CarInfoDataSource? carInfoDataSource,
     VideoInfoDataSource? videoInfoDataSource,
+    AuthenticationService? authenticationService,
   }) {
     final db = database ?? AppDatabase();
     final carSource = carInfoDataSource ?? CarInfoDS(db);
     final videoSource = videoInfoDataSource ?? VideoInfoDS(db);
     final settingsSource = settingsDataSource ?? SettingsDS(db);
     final loadClient = client ?? FirestoreClient();
+    final authService =
+        authenticationService ?? AuthenticationService(FirebaseAuth.instance);
     return AppInfrastructure(
       database: db,
       loadClient: loadClient,
@@ -56,6 +62,7 @@ class AppInfrastructure {
       carInfoDataSource: carSource,
       videoInfoDataSource: videoSource,
       carInfoService: CarInfoService(loadClient, carSource),
+      authService: authService,
     );
   }
 
@@ -65,6 +72,7 @@ class AppInfrastructure {
   final CarInfoService carInfoService;
   final CarInfoDataSource carInfoDataSource;
   final VideoInfoDataSource videoInfoDataSource;
+  final AuthenticationService authService;
 }
 
 class App extends StatefulWidget {
@@ -169,6 +177,8 @@ class _AppState extends State<App> {
       settings.videos = vidSettings;
       infra.settings.saveSettings(settings);
     }
+
+    await infra.authService.signInAnon();
 
     final hasCars = await infra.carInfoService.hasCars();
     if (hasCars) {

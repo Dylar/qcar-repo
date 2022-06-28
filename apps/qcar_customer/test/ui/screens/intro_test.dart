@@ -7,6 +7,7 @@ import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
 import 'package:qcar_customer/core/datasource/VideoInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
+import 'package:qcar_customer/service/auth_service.dart';
 
 import '../../builder/app_builder.dart';
 import '../../builder/entity_builder.dart';
@@ -21,6 +22,7 @@ import '../../utils/test_navigation.dart';
   SettingsDataSource,
   CarInfoDataSource,
   VideoInfoDataSource,
+  AuthenticationService,
   HttpClient,
   HttpHeaders,
   HttpClientRequest,
@@ -65,10 +67,11 @@ void main() {
     final infra = defaultTestInfra();
     await initNavigateToIntro(tester, infra: infra);
 
-    final key = await buildSellInfo();
+    final key = await buildSellKey();
+    final scan = key.encode();
     expect(find.text(l10n.introPageMessage), findsOneWidget);
     expect(find.text(l10n.introPageMessageScanning), findsNothing);
-    await scanOnIntroPage(tester, key.toJson(), settle: false);
+    await scanOnIntroPage(tester, scan, settle: false);
     expect(find.text(l10n.introPageMessage), findsNothing);
     expect(find.text(l10n.introPageMessageScanning), findsOneWidget);
     await tester.pump(Duration(milliseconds: 10));

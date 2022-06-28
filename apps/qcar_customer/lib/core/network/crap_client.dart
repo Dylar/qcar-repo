@@ -9,6 +9,8 @@ import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/models/schema_validator.dart';
+import 'package:qcar_customer/models/sell_info.dart';
+import 'package:qcar_customer/models/sell_key.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:ssh2/ssh2.dart';
 
@@ -234,6 +236,11 @@ class CrapClient implements LoadClient {
       "ZentralverriegelungmitschlüsselintegrierterFunkfernbedienungundBlinkderbestätigung/ZentralverriegelungmitschlüsselintegrierterFunkfernbedienungundBlinkderbestätigung"
     ].where((e) => e.toLowerCase().contains(name.toLowerCase())).isNotEmpty;
     return forbidden;
+  }
+
+  @override
+  Future<SellInfo> loadSellInfo(SellKey key) {
+    throw UnimplementedError();
   }
 }
 

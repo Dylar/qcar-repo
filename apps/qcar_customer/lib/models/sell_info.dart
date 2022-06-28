@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:qcar_customer/models/video_info.dart';
 
 import 'model_data.dart';
 
@@ -14,6 +15,7 @@ class SellInfo extends HiveObject {
     required this.model,
     required this.carDealer,
     required this.key,
+    required this.videos,
   });
 
   static SellInfo fromMap(Map<String, dynamic> map) => SellInfo(
@@ -22,6 +24,8 @@ class SellInfo extends HiveObject {
         seller: map[FIELD_SELLER] ?? "",
         carDealer: map[FIELD_CAR_DEALER] ?? "",
         key: map[FIELD_KEY] ?? "",
+        videos:
+            VideoInfo.fromList(map[FIELD_VIDEOS] ?? <Map<String, dynamic>>[]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -30,6 +34,7 @@ class SellInfo extends HiveObject {
         FIELD_SELLER: seller,
         FIELD_CAR_DEALER: carDealer,
         FIELD_KEY: key,
+        FIELD_VIDEOS: videos,
       };
 
   String toJson() => jsonEncode(toMap());
@@ -44,4 +49,6 @@ class SellInfo extends HiveObject {
   String carDealer = "";
   @HiveField(4)
   String key = "";
+  @HiveField(5)
+  List<VideoInfo> videos = [];
 }

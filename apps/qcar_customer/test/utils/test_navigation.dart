@@ -9,7 +9,7 @@ import 'test_checker.dart';
 import 'test_interactions.dart';
 
 Future<void> loadApp(WidgetTester tester, {AppInfrastructure? infra}) async {
-  // Build our app and trigger a frame.
+  // Build our app and trigger some frames.
   final appWidget = await buildTestApp(infra: infra);
   await tester.pumpWidget(appWidget);
   for (int i = 0; i < 5; i++) {
@@ -29,8 +29,8 @@ Future<void> initNavigateToHome(WidgetTester tester,
 
   final carsLoaded = await infra.carInfoService.hasCars();
   if (!carsLoaded) {
-    final key = await buildSellInfo();
-    await infra.carInfoService.onNewScan(key.toJson());
+    final key = await buildSellKey();
+    await infra.carInfoService.onNewScan(key.encode());
   }
   await loadApp(tester, infra: infra);
   checkHomePage();

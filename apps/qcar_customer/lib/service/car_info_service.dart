@@ -1,13 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/src/foundation/change_notifier.dart';
 import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/tracking.dart';
 import 'package:qcar_customer/models/car_info.dart';
-import 'package:qcar_customer/models/schema_validator.dart';
 import 'package:qcar_customer/models/sell_info.dart';
+import 'package:qcar_customer/models/sell_key.dart';
 import 'package:qcar_customer/models/video_info.dart';
 
 enum QrScanState { NEW, OLD, DAFUQ, WAITING, SCANNING }
@@ -46,13 +44,7 @@ class CarInfoService {
   Future<Tuple<QrScanState, SellInfo>> onNewScan(String scan) async {
     Logger.logI("scan: $scan");
     try {
-      Map<String, dynamic> scanJson = jsonDecode(scan);
-      if (!await validateSellInfo(scanJson)) {
-        throw Exception("sell key invalid");
-      }
-
-      //TODO only for test
-      final sellInfo = SellInfo.fromMap(scanJson);
+      final sellInfo = await _loadSellInfo(scan);
       final isOldCar = await _isOldCar(sellInfo.brand, sellInfo.model);
       if (isOldCar) {
         return Tuple(QrScanState.OLD, sellInfo);
@@ -61,7 +53,7 @@ class CarInfoService {
         return Tuple(QrScanState.NEW, sellInfo);
       }
     } on Exception catch (e) {
-      Logger.logE("scan: ${e.toString()}");
+      Logger.logE("scan error: ${e.toString()}");
     }
     return Tuple(QrScanState.DAFUQ, null);
   }
@@ -73,13 +65,18 @@ class CarInfoService {
 
   Future refreshCarInfos() async {
     final cars = await carInfoDataSource.getAllCars();
-    for (var car in cars) {
-      Logger.logI("Update Car: ${car.brand} ${car.model}");
+    for (final car in cars) {
+      Logger.logI("Refresh Car: ${car.brand} ${car.model}");
       return await _loadCarInfo(car.brand, car.model);
     }
   }
 
   Future<List<VideoInfo>> searchVideo(String query) async {
     return await carInfoDataSource.findVideos(query);
+  }
+
+  Future<SellInfo> _loadSellInfo(String scan) async {
+    final key = SellKey.fromScan(scan);
+    return await _loadClient.loadSellInfo(key);
   }
 }

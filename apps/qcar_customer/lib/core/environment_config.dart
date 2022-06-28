@@ -20,7 +20,9 @@ class EnvironmentConfig {
   static String get user => dotenv.env['User'] ?? "";
   static String get pewe => dotenv.env['PeWe'] ?? "";
 
-  static String get backendUrl => "http://34.77.80.106:1110";//dotenv.env['backend'] ?? "";
+  // static String get backendUrl => "http://34.77.80.106:1110";//dotenv.env['backend'] ?? "";
+  static String get backendUrl =>
+      "http://34.77.80.106:1110"; //dotenv.env['backend'] ?? "";
 
   static bool get isDev => ENV == Env.DEV.name;
 }
