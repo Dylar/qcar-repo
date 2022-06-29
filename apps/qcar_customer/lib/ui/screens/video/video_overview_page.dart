@@ -53,6 +53,7 @@ class _VideoOverviewPageState
     return StreamBuilder<List<VideoInfo>>(
         stream: viewModel.watchVideos(),
         builder: (context, snapshot) {
+          print("BUILD IT video overview");
           if (snapshot.hasError) {
             return ErrorInfoWidget(snapshot.error!);
           }

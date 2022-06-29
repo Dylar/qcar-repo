@@ -79,3 +79,12 @@ fun validateSellInfo(info: SellInfo) {
         throw SellInfoException.NoVideosException()
     }
 }
+
+fun validateSellerInfo(info: SellerInfo) {
+    if (info.dealer.isBlank()) {
+        throw SellerInfoException.EmptyCarDealerException()
+    }
+    if (info.name.isBlank()) {
+        throw SellerInfoException.EmptySellerException()
+    }
+}

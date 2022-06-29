@@ -29,7 +29,8 @@ class CarInfoDS implements CarInfoDataSource {
   @override
   Future<void> addCarInfo(CarInfo note) async {
     await _database.upsertCarInfo(note);
-    streamController.sink.add(await _database.getCarInfos());
+    final list = await _database.getCarInfos();
+    streamController.sink.add(list);
   }
 
   @override

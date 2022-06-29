@@ -5,7 +5,7 @@ import de.bitb.main_service.datasource.sell_info.MockSellInfoDataSource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class MockSellInfoDataSourceTest {
+internal class MockSellerInfoDataSourceTest {
 
     private val dataSource = MockSellInfoDataSource()
 

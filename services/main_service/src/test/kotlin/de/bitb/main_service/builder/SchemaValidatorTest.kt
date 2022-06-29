@@ -1,7 +1,6 @@
 package de.bitb.main_service.builder
 
 import de.bitb.main_service.models.validateCarInfo
-import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 //internal class SchemaValidatorTest {
