@@ -59,7 +59,7 @@ internal class SellerServiceTest {
 
         emptyInfo = emptyInfo.copy(name = "Maxi")
         exception = assertThrows { service.addSellerInfo(emptyInfo) }
-        assertThat(exception is SellerInfoException.EmptyCarDealerException)
+        assertThat(exception is SellerInfoException.EmptyDealerException)
 
         emptyInfo = emptyInfo.copy(dealer = "Hamburger Autos")
         service.addSellerInfo(emptyInfo)

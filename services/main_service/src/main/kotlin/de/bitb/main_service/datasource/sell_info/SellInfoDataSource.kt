@@ -24,7 +24,7 @@ class SellInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<Sel
     override val log: Logger = LoggerFactory.getLogger(SellInfoFirestoreApi::class.java)
 
     override fun getDocumentPath(obj: SellInfo): String {
-        return "${getCollectionPath(obj.carDealer, obj.seller, obj.model)}/${obj.key}"
+        return "${getCollectionPath(obj.dealer, obj.seller, obj.model)}/${obj.key}"
     }
 
     fun getCollectionPath(dealer: String, seller: String, model: String): String {

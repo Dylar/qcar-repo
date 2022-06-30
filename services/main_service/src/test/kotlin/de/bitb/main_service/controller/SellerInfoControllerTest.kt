@@ -113,7 +113,7 @@ internal class SellerInfoControllerTest @Autowired constructor(
                 .andReturn().response.contentAsString
 
             verify(exactly = 1) { service.addSellerInfo(info) }
-            assertThat(result).isEqualTo(SellerInfoException.EmptyCarDealerException().message)
+            assertThat(result).isEqualTo(SellerInfoException.EmptyDealerException().message)
         }
 
         @Test

@@ -4,7 +4,7 @@ data class SellInfo(
     val brand: String = "",
     val model: String = "",
     val seller: String = "",
-    val carDealer: String = "",
+    val dealer: String = "",
     val key: String = "",
     val videos: List<SellVideo> = listOf()
 )

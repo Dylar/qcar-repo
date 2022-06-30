@@ -9,7 +9,7 @@ const FIELD_KEY = "key";
 const FIELD_PATH = "path";
 
 const FIELD_SELLER = "seller";
-const FIELD_CAR_DEALER = "carDealer";
+const FIELD_DEALER = "dealer";
 
 const FIELD_BRAND = "brand";
 const FIELD_MODEL = "model";

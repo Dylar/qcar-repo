@@ -69,8 +69,8 @@ fun validateSellInfo(info: SellInfo) {
     if (info.seller.isBlank()) {
         throw SellInfoException.EmptySellerException()
     }
-    if (info.carDealer.isBlank()) {
-        throw SellInfoException.EmptyCarDealerException()
+    if (info.dealer.isBlank()) {
+        throw SellInfoException.EmptyDealerException()
     }
     if (info.key.isNotBlank()) {
         throw SellInfoException.NotEmptyKeyException()
@@ -82,9 +82,21 @@ fun validateSellInfo(info: SellInfo) {
 
 fun validateSellerInfo(info: SellerInfo) {
     if (info.dealer.isBlank()) {
-        throw SellerInfoException.EmptyCarDealerException()
+        throw SellerInfoException.EmptyDealerException()
     }
     if (info.name.isBlank()) {
         throw SellerInfoException.EmptySellerException()
+    }
+}
+
+fun validateIntroInfo(info: IntroInfo) {
+    if (info.brand.isBlank()) {
+        throw VideoInfoException.EmptyBrandException()
+    }
+    if (info.model.isBlank()) {
+        throw VideoInfoException.EmptyModelException()
+    }
+    if (info.filePath.isBlank()) {
+        throw VideoInfoException.EmptyFilePathException()
     }
 }

@@ -13,7 +13,7 @@ class SellInfo extends HiveObject {
     required this.seller,
     required this.brand,
     required this.model,
-    required this.carDealer,
+    required this.dealer,
     required this.key,
     required this.videos,
   });
@@ -22,7 +22,7 @@ class SellInfo extends HiveObject {
         brand: map[FIELD_BRAND] ?? "",
         model: map[FIELD_MODEL] ?? "",
         seller: map[FIELD_SELLER] ?? "",
-        carDealer: map[FIELD_CAR_DEALER] ?? "",
+        dealer: map[FIELD_DEALER] ?? "",
         key: map[FIELD_KEY] ?? "",
         videos:
             VideoInfo.fromList(map[FIELD_VIDEOS] ?? <Map<String, dynamic>>[]),
@@ -32,7 +32,7 @@ class SellInfo extends HiveObject {
         FIELD_BRAND: brand,
         FIELD_MODEL: model,
         FIELD_SELLER: seller,
-        FIELD_CAR_DEALER: carDealer,
+        FIELD_DEALER: dealer,
         FIELD_KEY: key,
         FIELD_VIDEOS: videos,
       };
@@ -46,7 +46,7 @@ class SellInfo extends HiveObject {
   @HiveField(2)
   String seller = "";
   @HiveField(3)
-  String carDealer = "";
+  String dealer = "";
   @HiveField(4)
   String key = "";
   @HiveField(5)

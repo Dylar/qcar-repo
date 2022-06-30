@@ -70,7 +70,7 @@ internal class SellServiceTest {
         assertThat(info.brand == testInfo.brand)
         assertThat(info.model == testInfo.model)
         assertThat(info.seller == testInfo.seller)
-        assertThat(info.carDealer == testInfo.carDealer)
+        assertThat(info.dealer == testInfo.dealer)
         assertThat(info.key != testInfo.key)
         assertThat(info.key.isNotBlank())
         assertThat(testInfo.key.isBlank())
@@ -93,9 +93,9 @@ internal class SellServiceTest {
 
         emptyInfo = emptyInfo.copy(seller = "Maxi")
         exception = assertThrows { service.addSellInfo(emptyInfo) }
-        assertThat(exception is SellInfoException.EmptyCarDealerException)
+        assertThat(exception is SellInfoException.EmptyDealerException)
 
-        emptyInfo = emptyInfo.copy(carDealer = "Hamburger Autos")
+        emptyInfo = emptyInfo.copy(dealer = "Hamburger Autos")
         exception = assertThrows { service.addSellInfo(emptyInfo) }
         assertThat(exception is SellInfoException.NotEmptyKeyException)
 
