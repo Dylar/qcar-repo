@@ -3,11 +3,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:mockito/mockito.dart';
 import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
+import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
-import 'package:qcar_customer/core/datasource/VideoInfoDataSource.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/models/car_info.dart';
+import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/models/sell_key.dart';
 import 'package:qcar_customer/models/settings.dart';
 import 'package:qcar_customer/models/video_info.dart';
@@ -21,12 +22,11 @@ HttpOverrides mockHttpOverrides() => MockHttpOverrides();
 
 LoadClient mockLoadClient() {
   final client = MockLoadClient();
-  when(client.loadCarInfo(any, any)).thenAnswer((inv) async {
-    final brand = inv.positionalArguments[0];
-    final model = inv.positionalArguments[1];
+  when(client.loadCarInfo(any)).thenAnswer((inv) async {
+    final info = inv.positionalArguments[0] as SellInfo;
     final car = await buildCarInfo();
-    car.brand = brand;
-    car.model = model;
+    car.brand = info.brand;
+    car.model = info.model;
 
     //TODO maybe delete me if we got the urls right
     car.categories.forEach((category) {
@@ -100,24 +100,15 @@ CarInfoDataSource mockCarSource({List<CarInfo>? initialCars}) {
   return source;
 }
 
-VideoInfoDataSource mockVideoSource() {
-  final source = MockVideoInfoDataSource();
-  final videos = <VideoInfo>[];
-  when(source.getVideos(any)).thenAnswer((inv) async {
-    final CarInfo car = inv.positionalArguments.first;
-    return videos.where((vid) {
-      return vid.vidUrl.contains(car.brand) && vid.vidUrl.contains(car.model);
-    }).toList();
-  });
-  when(source.hasVideosLoaded(any)).thenAnswer((inv) async {
-    final CarInfo car = inv.positionalArguments.first;
-    return videos.any((vid) {
-      return vid.vidUrl.contains(car.brand) && vid.vidUrl.contains(car.model);
-    });
-  });
-  when(source.upsertVideo(any)).thenAnswer((inv) async {
-    videos.add(inv.positionalArguments.first);
-    return true;
+SellInfoDataSource mockSellSource({List<SellInfo>? initialSellInfo}) {
+  final source = MockSellInfoDataSource();
+  final sells = initialSellInfo ?? [];
+  when(source.getAllSellInfos()).thenAnswer((_) async => sells);
+  when(source.addSellInfo(any)).thenAnswer((inv) async {
+    final car = inv.positionalArguments.first;
+    if (!sells.any((e) => e.brand == car.brand && e.model == car.model)) {
+      sells.add(car);
+    }
   });
   return source;
 }

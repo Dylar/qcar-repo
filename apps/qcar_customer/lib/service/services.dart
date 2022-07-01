@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
+import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/network/firestore_client.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
-import 'package:qcar_customer/service/car_info_service.dart';
+import 'package:qcar_customer/service/info_service.dart';
 
 class Services extends InheritedWidget {
   final LoadClient loadClient;
   final SettingsDataSource settings;
 
-  final CarInfoService carInfoService;
+  final InfoService carInfoService;
 
   const Services({
     required this.loadClient,
@@ -24,7 +25,7 @@ class Services extends InheritedWidget {
     AppDatabase? db,
     LoadClient? loadClient,
     SettingsDataSource? settings,
-    CarInfoService? carInfoService,
+    InfoService? carInfoService,
     Key? key,
     required Widget child,
   }) {
@@ -32,8 +33,8 @@ class Services extends InheritedWidget {
     final client = loadClient ?? FirestoreClient();
     return Services(
       loadClient: client,
-      carInfoService:
-          carInfoService ?? CarInfoService(client, CarInfoDS(database)),
+      carInfoService: carInfoService ??
+          InfoService(client, CarInfoDS(database), SellInfoDS(database)),
       settings: settings ?? SettingsDS(database),
       key: key,
       child: child,

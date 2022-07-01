@@ -12,6 +12,7 @@ kotlin-profile
 daemon
 secret.yaml
 *adminsdk.json
+fire.json
 
 # Miscellaneous
 *.class

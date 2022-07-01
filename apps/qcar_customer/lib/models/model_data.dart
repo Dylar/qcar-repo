@@ -3,13 +3,15 @@ const SETTINGS_TYPE_ID = 2;
 const VIDEO_INFO_TYPE_ID = 3;
 const SELL_INFO_TYPE_ID = 4;
 const CATEGORY_INFO_TYPE_ID = 5;
-const SELL_KEY_TYPE_ID = 5;
+const SELL_KEY_TYPE_ID = 6;
+const SELL_VIDEO_INFO_TYPE_ID = 7;
 
 const FIELD_KEY = "key";
 const FIELD_PATH = "path";
 
-const FIELD_SELLER = "seller";
 const FIELD_DEALER = "dealer";
+const FIELD_SELLER = "seller";
+const FIELD_INTRO = "intro";
 
 const FIELD_BRAND = "brand";
 const FIELD_MODEL = "model";

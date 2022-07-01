@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcar_customer/service/car_info_service.dart';
+import 'package:qcar_customer/service/info_service.dart';
 
 import '../builder/entity_builder.dart';
 import '../mocks/test_mock.dart';
@@ -10,7 +10,8 @@ void main() {
   test('hasCars - no cars in db', () async {
     final loadClient = mockLoadClient();
     final carDS = mockCarSource();
-    final service = CarInfoService(loadClient, carDS);
+    final sellDS = mockSellSource();
+    final service = InfoService(loadClient, carDS, sellDS);
 
     final hasCars = await service.hasCars();
     expect(hasCars, isFalse);
@@ -19,7 +20,8 @@ void main() {
   test('hasCars - cars in db', () async {
     final loadClient = mockLoadClient();
     final carDS = mockCarSource(initialCars: [await buildCarInfo()]);
-    final service = CarInfoService(loadClient, carDS);
+    final sellDS = mockSellSource();
+    final service = InfoService(loadClient, carDS, sellDS);
 
     final hasCars = await service.hasCars();
     expect(hasCars, isTrue);
@@ -30,7 +32,8 @@ void main() {
     final car = await buildCarInfo();
     final loadClient = mockLoadClient();
     final carDS = mockCarSource(initialCars: [car]);
-    final service = CarInfoService(loadClient, carDS);
+    final sellDS = mockSellSource();
+    final service = InfoService(loadClient, carDS, sellDS);
 
     final introVid = await service.getIntroVideo();
 

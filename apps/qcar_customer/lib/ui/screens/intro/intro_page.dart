@@ -1,13 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
-import 'package:qcar_customer/service/car_info_service.dart';
+import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
 import 'package:qcar_customer/ui/viewmodels/intro_vm.dart';
 import 'package:qcar_customer/ui/widgets/debug/debug_skip_button.dart';
 import 'package:qcar_customer/ui/widgets/qr_camera_view.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 
 class IntroPage extends View<IntroViewModel> {
   static const String routeName = "/introPage";

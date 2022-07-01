@@ -125,7 +125,9 @@ class CrapClient implements LoadClient {
     return dirs;
   }
 
-  Future<CarInfo> loadCarInfo(String? brand, String? model) async {
+  Future<CarInfo> loadCarInfo(SellInfo info) async {
+    final brand = info.brand;
+    final model = info.model;
     Logger.logI("Load car: $brand, $model");
     final carPath = "/Videos/$brand/$model/";
     final rootDir = await _loadFilesData(path: carPath);

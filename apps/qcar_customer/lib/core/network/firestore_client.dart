@@ -1,14 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/models/sell_key.dart';
+import 'package:qcar_customer/models/sell_video_info.dart';
 import 'package:qcar_customer/models/video_info.dart';
 
 const String BACKEND_V1 = "v1";
+
+const bool TOGGLE_EVERY = false;
 
 class FirestoreClient implements LoadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
@@ -32,15 +36,23 @@ class FirestoreClient implements LoadClient {
   String _videoCollPath(String? brand, String? model, String category) =>
       "${_categoryDocPath(brand, model, category)}/video";
 
-  // String _videoDocPath(
-  //         String? brand, String? model, String category, String name) =>
-  //     "${_videoCollPath(brand, model, category)}/$name";
+  String _videoDocPath(
+          String? brand, String? model, String category, String name) =>
+      "${_videoCollPath(brand, model, category)}/$name";
+
+  String _introDocPath(
+    String dealer,
+    String seller,
+    String? brand,
+    String? model,
+  ) =>
+      "$BACKEND_V1/dealer/$dealer/$seller/intros/${brand}_${model}";
 
   Future<SellInfo> loadSellInfo(SellKey key) async {
     // final response = await NetworkService.sendRequest(
     //     requestType: RequestType.get, url: EnvironmentConfig.backendUrl);
 
-    return await FirebaseFirestore.instance
+    final sellInfo = await FirebaseFirestore.instance
         .collectionGroup("sales")
         .where("key", isEqualTo: key.key)
         .snapshots()
@@ -48,21 +60,97 @@ class FirestoreClient implements LoadClient {
         .asyncMap((doc) => doc.data())
         .asyncMap((map) => SellInfo.fromMap(map))
         .first;
+    final introPath = _introDocPath(
+        sellInfo.dealer, sellInfo.seller, sellInfo.brand, sellInfo.model);
+    final intro = await _getDocument(introPath)
+        .snapshots()
+        .asyncMap<Map<String, dynamic>>((event) async => await event.data()!)
+        .asyncMap<SellVideoInfo>((map) async => SellVideoInfo.fromMap(map))
+        .first;
+    intro.filePath =
+        "https://${EnvironmentConfig.domain}/videos/${sellInfo.brand}/${sellInfo.model}/${intro.filePath}";
+    return sellInfo..intro = intro;
   }
 
-  Future<CarInfo> loadCarInfo(String? brand, String? model) async {
-    // FirebaseFirestore.instance.doc(BACKEND_V1).get()
-    brand = "Toyota";
-    model = "CorollaTSGR";
+  Future<CarInfo> loadCarInfo(SellInfo info) async {
     try {
-      return await _getCar(brand, model);
+      if (TOGGLE_EVERY) {
+        return await _getCarDELETEME(info.brand, info.model);
+      }
+      return await _getCar(info);
     } catch (e) {
       print("error: ${e}");
       throw e;
     }
   }
 
-  Future<CarInfo> _getCar(String brand, String model) async {
+  Future<CarInfo> _getCar(SellInfo info) async {
+    final maxProgress = info.videos.length.toDouble();
+    progressValue.value = Tuple(info.videos.length.toDouble(), 0);
+    return await _getDocument(_carPath(info.brand, info.model))
+        .snapshots()
+        .asyncMap<Map<String, dynamic>>((event) async => await event.data()!)
+        .asyncMap<CarInfo>((map) async => CarInfo.fromMap(map))
+        .asyncMap<CarInfo>(
+      (car) async {
+        car.imagePath = "${car.brand}/${car.model}/${car.imagePath}";
+
+        final map = <String, CategoryInfo>{};
+        for (final vid in info.videos) {
+          CategoryInfo? cat = map[vid.category];
+          if (cat == null) {
+            cat = await _getCategory(info, vid.category);
+            map[vid.category] = cat;
+          }
+          final video = await _getVideo(info, vid);
+          cat.videos.add(video);
+
+          progressValue.value =
+              Tuple(maxProgress, progressValue.value.secondOrThrow + 1);
+        }
+
+        car.categories.addAll(map.values);
+        return car;
+      },
+    ).first;
+  }
+
+  Future<CategoryInfo> _getCategory(SellInfo info, String category) async {
+    final path = _categoryDocPath(info.brand, info.model, category);
+    final snapshots = await _getDocument(path).snapshots();
+    return await snapshots
+        .asyncMap<Map<String, dynamic>>((event) async => await event.data()!)
+        .asyncMap<CategoryInfo>((map) async => CategoryInfo.fromMap(map))
+        .asyncMap<CategoryInfo>(
+      (category) async {
+        //TODO fix path
+        category.imagePath =
+            "${category.brand}/${category.model}/${category.name}/${category.imagePath}";
+
+        return category;
+      },
+    ).first;
+  }
+
+  Future<VideoInfo> _getVideo(SellInfo info, SellVideoInfo vid) async {
+    final path = _videoDocPath(info.brand, info.model, vid.category, vid.name);
+    final snapshots = await _getDocument(path).snapshots();
+    return await snapshots
+        .asyncMap<Map<String, dynamic>>((event) async => await event.data()!)
+        .asyncMap<VideoInfo>((map) async => VideoInfo.fromMap(map))
+        .asyncMap<VideoInfo>(
+      (video) async {
+        //TODO fix path
+        video.filePath =
+            "${video.brand}/${video.model}/${video.category}/${video.name}/${video.filePath}";
+        video.imagePath =
+            "${video.brand}/${video.model}/${video.category}/${video.name}/${video.imagePath}";
+        return video;
+      },
+    ).first;
+  }
+
+  Future<CarInfo> _getCarDELETEME(String brand, String model) async {
     progressValue.value = Tuple(100, 0);
     return await _getDocument(_carPath(brand, model))
         .snapshots()
@@ -70,13 +158,13 @@ class FirestoreClient implements LoadClient {
       (event) async {
         final car = CarInfo.fromMap(await event.data()!);
         car.imagePath = "${car.brand}/${car.model}/${car.imagePath}";
-        car.categories.addAll(await _getCategories(car));
+        car.categories.addAll(await _getCategoriesDELETEME(car));
         return car;
       },
     ).first;
   }
 
-  Future<List<CategoryInfo>> _getCategories(CarInfo carInfo) async {
+  Future<List<CategoryInfo>> _getCategoriesDELETEME(CarInfo carInfo) async {
     final path = _categoryCollPath(carInfo.brand, carInfo.model);
     final snapshots = await _getCollection(path).snapshots();
     return await snapshots.asyncMap<List<CategoryInfo>>(
@@ -91,7 +179,7 @@ class FirestoreClient implements LoadClient {
               (event) async {
                 final data = await event.data()!;
                 final category = CategoryInfo.fromMap(data);
-                category.videos.addAll(await _getVideos(category));
+                category.videos.addAll(await _getVideosDELETEME(category));
                 //TODO fix path
                 category.imagePath =
                     "${category.brand}/${category.model}/${category.name}/${category.imagePath}";
@@ -107,7 +195,7 @@ class FirestoreClient implements LoadClient {
     ).first;
   }
 
-  Future<List<VideoInfo>> _getVideos(CategoryInfo category) async {
+  Future<List<VideoInfo>> _getVideosDELETEME(CategoryInfo category) async {
     final path = _videoCollPath(category.brand, category.model, category.name);
     final snapshots = await _getCollection(path).snapshots();
     return await snapshots

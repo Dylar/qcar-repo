@@ -5,8 +5,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:qcar_customer/core/app_theme.dart';
 import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
+import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
-import 'package:qcar_customer/core/datasource/VideoInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/player_config.dart';
@@ -14,7 +14,7 @@ import 'package:qcar_customer/core/navigation/app_router.dart';
 import 'package:qcar_customer/core/network/firestore_client.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
-import 'package:qcar_customer/service/car_info_service.dart';
+import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/service/services.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
 import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
@@ -36,7 +36,7 @@ class AppInfrastructure {
     required this.settings,
     required this.carInfoService,
     required this.carInfoDataSource,
-    required this.videoInfoDataSource,
+    required this.sellInfoDataSource,
     required this.authService,
   });
 
@@ -45,12 +45,12 @@ class AppInfrastructure {
     AppDatabase? database,
     SettingsDataSource? settingsDataSource,
     CarInfoDataSource? carInfoDataSource,
-    VideoInfoDataSource? videoInfoDataSource,
+    SellInfoDataSource? sellInfoDataSource,
     AuthenticationService? authenticationService,
   }) {
     final db = database ?? AppDatabase();
     final carSource = carInfoDataSource ?? CarInfoDS(db);
-    final videoSource = videoInfoDataSource ?? VideoInfoDS(db);
+    final sellSource = sellInfoDataSource ?? SellInfoDS(db);
     final settingsSource = settingsDataSource ?? SettingsDS(db);
     final loadClient = client ?? FirestoreClient();
     final authService =
@@ -60,8 +60,8 @@ class AppInfrastructure {
       loadClient: loadClient,
       settings: settingsSource,
       carInfoDataSource: carSource,
-      videoInfoDataSource: videoSource,
-      carInfoService: CarInfoService(loadClient, carSource),
+      sellInfoDataSource: sellSource,
+      carInfoService: InfoService(loadClient, carSource, sellSource),
       authService: authService,
     );
   }
@@ -69,9 +69,9 @@ class AppInfrastructure {
   final AppDatabase database;
   final LoadClient loadClient;
   final SettingsDataSource settings;
-  final CarInfoService carInfoService;
+  final InfoService carInfoService;
   final CarInfoDataSource carInfoDataSource;
-  final VideoInfoDataSource videoInfoDataSource;
+  final SellInfoDataSource sellInfoDataSource;
   final AuthenticationService authService;
 }
 

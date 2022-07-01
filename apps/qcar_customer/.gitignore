@@ -2,7 +2,7 @@
 .env
 Podfile.lock
 *.mocks.dart
-
+fire.json
 
 # Miscellaneous
 *.class

@@ -28,14 +28,14 @@ AppInfrastructure defaultTestInfra() {
   final loadClient = mockLoadClient();
   final settingsSource = mockSettings();
   final carSource = mockCarSource();
-  final videoSource = mockVideoSource();
+  final sellSource = mockSellSource();
   final authService = mockAuthService();
   return AppInfrastructure.load(
     client: loadClient,
     database: db,
     settingsDataSource: settingsSource,
     carInfoDataSource: carSource,
-    videoInfoDataSource: videoSource,
+    sellInfoDataSource: sellSource,
     authenticationService: authService,
   );
 }

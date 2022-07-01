@@ -73,11 +73,11 @@ class _HomeVideoPageState extends ViewState<HomeVideoPage, HomeViewModel> {
           StreamBuilder<Settings>(
             stream: viewModel.watchSettings(),
             builder: (context, snapshot) {
-              if (!snapshot.hasData || viewModel.introVideo == null) {
+              if (!snapshot.hasData || viewModel.introUrl == null) {
                 return VideoDownload();
               }
               return VideoWidget(
-                url: viewModel.introVideo!.vidUrl,
+                url: viewModel.introUrl!,
                 settings: snapshot.data!,
               );
             },

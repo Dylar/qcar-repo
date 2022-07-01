@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:hive/hive.dart';
 import 'package:qcar_customer/models/category_info.dart';
-import 'package:qcar_customer/models/video_info.dart';
 
 import 'model_data.dart';
 
@@ -42,7 +41,4 @@ class CarInfo extends HiveObject {
   String imagePath = "";
   @HiveField(3)
   List<CategoryInfo> categories = [];
-
-  //TODO we need seller intro video or whatever
-  VideoInfo get introVideoUrl => categories.first.videos.first;
 }

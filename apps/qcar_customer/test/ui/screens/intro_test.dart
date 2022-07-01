@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
+import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
-import 'package:qcar_customer/core/datasource/VideoInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
@@ -21,7 +21,7 @@ import '../../utils/test_navigation.dart';
   AppDatabase,
   SettingsDataSource,
   CarInfoDataSource,
-  VideoInfoDataSource,
+  SellInfoDataSource,
   AuthenticationService,
   HttpClient,
   HttpHeaders,
