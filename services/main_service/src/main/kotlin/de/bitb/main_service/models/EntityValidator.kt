@@ -78,6 +78,11 @@ fun validateSellInfo(info: SellInfo) {
     if (info.videos.isEmpty()) {
         throw SellInfoException.NoVideosException()
     }
+    info.videos.forEach {
+        if (it.value.isEmpty()) {
+            throw SellInfoException.NoVideosForCategoryException(it.key)
+        }
+    }
 }
 
 fun validateSellerInfo(info: SellerInfo) {

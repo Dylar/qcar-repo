@@ -105,9 +105,9 @@ SellInfoDataSource mockSellSource({List<SellInfo>? initialSellInfo}) {
   final sells = initialSellInfo ?? [];
   when(source.getAllSellInfos()).thenAnswer((_) async => sells);
   when(source.addSellInfo(any)).thenAnswer((inv) async {
-    final car = inv.positionalArguments.first;
-    if (!sells.any((e) => e.brand == car.brand && e.model == car.model)) {
-      sells.add(car);
+    final info = inv.positionalArguments.first;
+    if (!sells.any((e) => e.brand == info.brand && e.model == info.model)) {
+      sells.add(info);
     }
   });
   return source;

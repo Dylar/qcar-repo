@@ -41,20 +41,20 @@ class InfoService {
   Future<String> getIntroVideo() async {
     //TODO get info from seller
     final sells = await _sellInfoDataSource.getAllSellInfos();
-    return sells.first.intro.filePath;
+    return sells.first.introFilePath;
   }
 
   Future<Tuple<QrScanState, SellInfo>> onNewScan(String scan) async {
     Logger.logI("scan: $scan");
     try {
       final sellInfo = await _loadSellInfo(scan);
-      await _sellInfoDataSource.addSellInfo(sellInfo);
 
       final isOldCar = await _isOldCar(sellInfo.brand, sellInfo.model);
       if (isOldCar) {
         return Tuple(QrScanState.OLD, sellInfo);
       } else {
         await _loadCarInfo(sellInfo);
+        await _sellInfoDataSource.addSellInfo(sellInfo);
         return Tuple(QrScanState.NEW, sellInfo);
       }
     } on Exception catch (e) {

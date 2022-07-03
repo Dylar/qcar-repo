@@ -27,19 +27,16 @@ void main() {
     expect(hasCars, isTrue);
   });
 
-  test('getIntroVideo - select first video', () async {
-    //TODO get from seller
+  test('getIntroVideo - get path from sell info', () async {
+    final sellInfo = await buildSellInfo();
     final car = await buildCarInfo();
     final loadClient = mockLoadClient();
     final carDS = mockCarSource(initialCars: [car]);
-    final sellDS = mockSellSource();
+    final sellDS = mockSellSource(initialSellInfo: [sellInfo]);
     final service = InfoService(loadClient, carDS, sellDS);
 
-    final introVid = await service.getIntroVideo();
-
-    final lastVid = car.categories.last.videos.first;
-    expect(lastVid.name == introVid.name, isFalse);
-    final firstVid = car.categories.first.videos.first;
-    expect(firstVid.name == introVid.name, isTrue);
+    final introPath = await service.getIntroVideo();
+    expect(introPath != "", isTrue);
+    expect(introPath == sellInfo.introFilePath, isTrue);
   });
 }

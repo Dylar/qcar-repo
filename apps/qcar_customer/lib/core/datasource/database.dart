@@ -5,7 +5,6 @@ import 'package:qcar_customer/core/datasource/SettingsDatabase.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/models/sell_info.dart';
-import 'package:qcar_customer/models/sell_video_info.dart';
 import 'package:qcar_customer/models/settings.dart';
 import 'package:qcar_customer/models/video_info.dart';
 
@@ -27,7 +26,6 @@ class AppDatabase with SettingsDB, SellInfoDB, CarInfoDB {
       Hive.registerAdapter(VideoInfoAdapter());
       Hive.registerAdapter(CategoryInfoAdapter());
       Hive.registerAdapter(SellInfoAdapter());
-      Hive.registerAdapter(SellVideoInfoAdapter());
       Hive.registerAdapter(SettingsAdapter());
     } catch (e) {
       Logger.logE("adapter already added");

@@ -5,9 +5,9 @@ import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
+import 'package:qcar_customer/models/model_data.dart';
 import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/models/sell_key.dart';
-import 'package:qcar_customer/models/sell_video_info.dart';
 import 'package:qcar_customer/models/video_info.dart';
 
 const String BACKEND_V1 = "v1";
@@ -65,11 +65,11 @@ class FirestoreClient implements LoadClient {
     final intro = await _getDocument(introPath)
         .snapshots()
         .asyncMap<Map<String, dynamic>>((event) async => await event.data()!)
-        .asyncMap<SellVideoInfo>((map) async => SellVideoInfo.fromMap(map))
+        .asyncMap<String>((map) async => map[FIELD_FILE_PATH])
         .first;
-    intro.filePath =
-        "https://${EnvironmentConfig.domain}/videos/${sellInfo.brand}/${sellInfo.model}/${intro.filePath}";
-    return sellInfo..intro = intro;
+    return sellInfo
+      ..introFilePath =
+          "https://${EnvironmentConfig.domain}/videos/${sellInfo.brand}/${sellInfo.model}/${intro}";
   }
 
   Future<CarInfo> loadCarInfo(SellInfo info) async {
@@ -93,23 +93,19 @@ class FirestoreClient implements LoadClient {
         .asyncMap<CarInfo>((map) async => CarInfo.fromMap(map))
         .asyncMap<CarInfo>(
       (car) async {
+        //TODO fix me in DB
         car.imagePath = "${car.brand}/${car.model}/${car.imagePath}";
-
-        final map = <String, CategoryInfo>{};
-        for (final vid in info.videos) {
-          CategoryInfo? cat = map[vid.category];
-          if (cat == null) {
-            cat = await _getCategory(info, vid.category);
-            map[vid.category] = cat;
+        for (final catName in info.videos.keys) {
+          final category = await _getCategory(info, catName);
+          car.categories.add(category);
+          for (final vidName in info.videos[catName]!) {
+            final video = await _getVideo(info, catName, vidName);
+            category.videos.add(video);
           }
-          final video = await _getVideo(info, vid);
-          cat.videos.add(video);
-
           progressValue.value =
               Tuple(maxProgress, progressValue.value.secondOrThrow + 1);
         }
 
-        car.categories.addAll(map.values);
         return car;
       },
     ).first;
@@ -123,7 +119,7 @@ class FirestoreClient implements LoadClient {
         .asyncMap<CategoryInfo>((map) async => CategoryInfo.fromMap(map))
         .asyncMap<CategoryInfo>(
       (category) async {
-        //TODO fix path
+        //TODO fix me in DB
         category.imagePath =
             "${category.brand}/${category.model}/${category.name}/${category.imagePath}";
 
@@ -132,15 +128,16 @@ class FirestoreClient implements LoadClient {
     ).first;
   }
 
-  Future<VideoInfo> _getVideo(SellInfo info, SellVideoInfo vid) async {
-    final path = _videoDocPath(info.brand, info.model, vid.category, vid.name);
+  Future<VideoInfo> _getVideo(
+      SellInfo info, String category, String video) async {
+    final path = _videoDocPath(info.brand, info.model, category, video);
     final snapshots = await _getDocument(path).snapshots();
     return await snapshots
         .asyncMap<Map<String, dynamic>>((event) async => await event.data()!)
         .asyncMap<VideoInfo>((map) async => VideoInfo.fromMap(map))
         .asyncMap<VideoInfo>(
       (video) async {
-        //TODO fix path
+        //TODO fix me in DB
         video.filePath =
             "${video.brand}/${video.model}/${video.category}/${video.name}/${video.filePath}";
         video.imagePath =

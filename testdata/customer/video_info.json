@@ -1,10 +1,10 @@
 {
   "brand": "Toyota",
-  "model": "Corolla",
-  "category": "Komfort",
-  "filePath": "2-Zonen Klimaautomatik.mp4",
-  "imagePath": "2-Zonen Klimaautomatik.jpg",
-  "name": "2-Zonen Klimaautomatik",
+  "model": "CorollaTSGR",
+  "category": "Sicherheit",
+  "filePath": "Motorhaube entriegelung.mp4",
+  "imagePath": "Motorhaube entriegelung.jpg",
+  "name": "Motorhaube entriegelung",
   "description": "Für gute Luft, sorgt die Klimaautomatik.",
   "tags": [
     "Luft", "Zone", "Klima", "Automatisch", "Scheibe", "2"

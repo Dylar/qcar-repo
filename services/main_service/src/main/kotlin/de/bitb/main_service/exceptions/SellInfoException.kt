@@ -25,4 +25,5 @@ sealed class SellInfoException(msg: String) : Exception(msg) {
     class EmptyDealerException : SellInfoException("Dealer is empty")
     class NotEmptyKeyException : SellInfoException("Key is NOT empty")
     class NoVideosException : SellInfoException("No videos")
+    class NoVideosForCategoryException(category: String) : SellInfoException("No videos for category $category")
 }

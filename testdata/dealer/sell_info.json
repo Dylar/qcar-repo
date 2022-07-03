@@ -1,13 +1,17 @@
 {
-  "dealer": "Toyota in Hamburg",
-  "seller": "Maximus der Große",
   "brand": "Toyota",
-  "model": "Corolla",
-  "key": "V2VubkR1RGFzRW50c2NobMO8c3NlbHN0TWF4aSxiaXN0ZVNjaG9uR3V0OlAK",
-  "videos": [
-    {
-      "category": "Komfort",
-      "name": "2-Zonen Klimaautomatik"
-    }
-  ]
+  "model": "CorollaTSGR",
+  "seller": "Maximus der Große",
+  "dealer": "Toyota in Hamburg",
+  "intro": "path/to/file.mp4",
+  "key": "",
+  "videos": {
+    "Sicherheit": [
+      "SmartKey, Keyless Go",
+      "Motorhaube entriegelung"
+    ],
+    "Transport": [
+      "Dachbox Vorrichung"
+    ]
+  }
 }

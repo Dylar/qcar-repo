@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:qcar_customer/models/sell_video_info.dart';
-import 'package:qcar_customer/models/video_info.dart';
 
 import 'model_data.dart';
 
@@ -16,20 +14,24 @@ class SellInfo extends HiveObject {
     required this.brand,
     required this.model,
     required this.dealer,
-    required this.intro,
+    required this.introFilePath,
     required this.videos,
   });
 
-  static SellInfo fromMap(Map<String, dynamic> map) => SellInfo(
-        key: map[FIELD_KEY] ?? "",
-        dealer: map[FIELD_DEALER] ?? "",
-        seller: map[FIELD_SELLER] ?? "",
-        brand: map[FIELD_BRAND] ?? "",
-        model: map[FIELD_MODEL] ?? "",
-        intro: map[FIELD_INTRO] ?? SellVideoInfo.empty(),
-        videos: SellVideoInfo.fromList(
-            map[FIELD_VIDEOS] ?? <Map<String, dynamic>>[]),
-      );
+  static SellInfo fromMap(Map<String, dynamic> map) {
+    final parsedVideosMap = Map<String, List<dynamic>>.from(
+            map[FIELD_VIDEOS] ?? <Map<String, dynamic>>{})
+        .map((key, value) => MapEntry(key, List<String>.from(value)));
+    return SellInfo(
+      key: map[FIELD_KEY] ?? "",
+      dealer: map[FIELD_DEALER] ?? "",
+      seller: map[FIELD_SELLER] ?? "",
+      brand: map[FIELD_BRAND] ?? "",
+      model: map[FIELD_MODEL] ?? "",
+      introFilePath: map[FIELD_INTRO] ?? "",
+      videos: parsedVideosMap,
+    );
+  }
 
   Map<String, dynamic> toMap() => {
         FIELD_KEY: key,
@@ -37,7 +39,7 @@ class SellInfo extends HiveObject {
         FIELD_SELLER: seller,
         FIELD_BRAND: brand,
         FIELD_MODEL: model,
-        FIELD_INTRO: intro,
+        FIELD_INTRO: introFilePath,
         FIELD_VIDEOS: videos,
       };
 
@@ -54,7 +56,7 @@ class SellInfo extends HiveObject {
   @HiveField(4)
   String model = "";
   @HiveField(5)
-  SellVideoInfo intro = SellVideoInfo.empty();
+  String introFilePath = "";
   @HiveField(6)
-  List<SellVideoInfo> videos = [];
+  Map<String, List<String>> videos = {};
 }
