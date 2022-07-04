@@ -1,19 +1,9 @@
-import 'package:provider/provider.dart';
 import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/models/settings.dart';
 import 'package:qcar_customer/service/info_service.dart';
 
 import '../../core/tracking.dart';
-
-class HomeViewModelProvider extends ChangeNotifierProvider<HomeProvider> {
-  HomeViewModelProvider(SettingsDataSource settings, InfoService carInfoService)
-      : super(create: (_) => HomeProvider(HomeVM(settings, carInfoService)));
-}
-
-class HomeProvider extends ViewModelProvider<HomeViewModel> {
-  HomeProvider(HomeViewModel viewModel) : super(viewModel);
-}
 
 abstract class HomeViewModel extends ViewModel {
   String? introUrl;
@@ -24,11 +14,13 @@ abstract class HomeViewModel extends ViewModel {
 class HomeVM extends HomeViewModel {
   HomeVM(
     this.settings,
-    this.carInfoService,
+    this.infoService,
   );
 
   final SettingsDataSource settings;
-  final InfoService carInfoService;
+  final InfoService infoService;
+
+  String? introUrl;
 
   @override
   void init() {
@@ -37,7 +29,7 @@ class HomeVM extends HomeViewModel {
   }
 
   Future<void> initVideo() async {
-    introUrl = await carInfoService.getIntroVideo();
+    introUrl = await infoService.getIntroVideo();
     Logger.logI("Intro: ${introUrl}");
     notifyListeners();
   }

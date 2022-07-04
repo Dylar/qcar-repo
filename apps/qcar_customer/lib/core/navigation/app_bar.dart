@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/service/services.dart';
 import 'package:qcar_customer/ui/screens/video/video_list_item.dart';
+import 'package:qcar_customer/ui/snackbars/snackbars.dart';
 import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
 
 class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
-  SearchAppBar(this.title, {Key? key})
+  SearchAppBar(this.title, this.screenUpdate, {Key? key})
       : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -15,6 +17,7 @@ class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Size preferredSize;
 
   final String title;
+  final ScreenUpdater screenUpdate;
 
   @override
   _AppBarState createState() => _AppBarState();
@@ -23,13 +26,17 @@ class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _AppBarState extends State<SearchAppBar> {
   @override
   Widget build(BuildContext context) {
-    final service = Services.of(context)!.carInfoService;
+    final service = Services.of(context)!.infoService;
     return AppBar(
       title: Text(widget.title),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.refresh),
-          onPressed: () async => service.refreshCarInfos(),
+          onPressed: () async {
+            await service.refreshCarInfos();
+            updatedSnackBar(context);
+            widget.screenUpdate.notifyListeners();
+          },
         ),
         IconButton(
           icon: Icon(Icons.search),

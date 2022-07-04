@@ -46,6 +46,8 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
       AppRouter.routeObserver
           .subscribe(this, ModalRoute.of(context)! as PageRoute);
     }
+
+    viewModel.notifyListeners = () => this.setState(() {});
   }
 
   @mustCallSuper
@@ -99,19 +101,14 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
       routes.listen((spec) => Navigate.to(context, spec));
 }
 
-abstract class ViewModelProvider<T extends ViewModel> extends ChangeNotifier {
-  ViewModelProvider(this.viewModel) {
-    viewModel.notifyListeners = () => notifyListeners();
-  }
-
-  T viewModel;
+abstract class ScreenUpdater {
+  late void Function() notifyListeners;
 }
 
-abstract class ViewModel {
+abstract class ViewModel extends ScreenUpdater {
   ViewModel();
 
   late StreamController<AppRouteSpec> _routeController;
-  late void Function() notifyListeners;
 
   /// This method is executed exactly once for each State object Flutter's
   /// framework creates.

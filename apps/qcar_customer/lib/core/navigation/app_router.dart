@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/service/services.dart';
 import 'package:qcar_customer/ui/screens/debug_page.dart';
@@ -136,46 +135,46 @@ Widget _navigateToVideoSettings(BuildContext context) {
 }
 
 Widget _navigateToIntro(BuildContext context) {
-  final vm = Provider.of<IntroProvider>(context);
-  return IntroPage.model(vm.viewModel);
+  final services = Services.of(context)!;
+  return IntroPage.model(IntroVM(services.infoService));
 }
 
 Widget _navigateToHome(BuildContext context) {
-  final vm = Provider.of<HomeProvider>(context);
-  return HomePage(vm.viewModel);
+  final services = Services.of(context)!;
+  return HomePage(HomeVM(services.settings, services.infoService));
 }
 
 Widget _navigateToCarOverview(BuildContext context) {
-  final vm = Provider.of<CarOverViewProvider>(context);
-  return CarOverviewPage.model(vm.viewModel);
+  final services = Services.of(context)!;
+  return CarOverviewPage.model(CarOverVM(services.infoService));
 }
 
 Widget _navigateToVideoOverview(
     BuildContext context, Map<String, dynamic> arguments) {
-  final vm = Provider.of<VideoOverViewProvider>(context);
-  vm.viewModel.selectedCar = arguments[VideoOverviewPage.ARG_CAR];
-  vm.viewModel.selectedDir = arguments[VideoOverviewPage.ARG_DIR];
-  return VideoOverviewPage.model(vm.viewModel);
+  final vm = VideoOverVM(
+    arguments[VideoOverviewPage.ARG_CAR],
+    arguments[VideoOverviewPage.ARG_DIR],
+  );
+  return VideoOverviewPage.model(vm);
 }
 
 Widget _navigateToQrScan(BuildContext context) {
-  final vm = Provider.of<QrProvider>(context);
-  return QrScanPage(vm.viewModel);
+  final services = Services.of(context)!;
+  return QrScanPage(QrVM(services.infoService));
 }
 
 Widget _navigateToDirs(BuildContext context, Map<String, dynamic> arguments) {
-  final vm = Provider.of<DirViewProvider>(context);
-  vm.viewModel.selectedCar = arguments[DirPage.ARG_CAR];
-  return DirPage.model(vm.viewModel);
+  final services = Services.of(context)!;
+  return DirPage.model(DirVM(services.infoService, arguments[DirPage.ARG_CAR]));
 }
 
 Widget _navigateToVideo(BuildContext context, Map<String, dynamic> arguments) {
   final width = MediaQuery.of(context).size.width;
   final height = MediaQuery.of(context).size.height;
-  final vm = Provider.of<VideoProvider>(context);
-  vm.viewModel.videoInfo = arguments[VideoPage.ARG_VIDEO];
+  final services = Services.of(context)!;
+  final vm = VideoVM(services.settings, arguments[VideoPage.ARG_VIDEO]);
   return VideoPage(
-    vm.viewModel,
+    vm,
     aspectRatio: width / height / 3, //16 / 9
   );
 }

@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
 import 'package:qcar_customer/core/app_theme.dart';
 import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
@@ -18,23 +17,16 @@ import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/service/services.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
 import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
-import 'package:qcar_customer/ui/viewmodels/car_overview_vm.dart';
-import 'package:qcar_customer/ui/viewmodels/home_vm.dart';
-import 'package:qcar_customer/ui/viewmodels/intro_vm.dart';
-import 'package:qcar_customer/ui/viewmodels/qr_vm.dart';
-import 'package:qcar_customer/ui/viewmodels/video_overview_vm.dart';
-import 'package:qcar_customer/ui/viewmodels/video_vm.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
 
 import '../ui/screens/home/home_page.dart';
-import '../ui/viewmodels/dir_vm.dart';
 
 class AppInfrastructure {
   AppInfrastructure({
     required this.database,
     required this.loadClient,
     required this.settings,
-    required this.carInfoService,
+    required this.infoService,
     required this.carInfoDataSource,
     required this.sellInfoDataSource,
     required this.authService,
@@ -61,7 +53,7 @@ class AppInfrastructure {
       settings: settingsSource,
       carInfoDataSource: carSource,
       sellInfoDataSource: sellSource,
-      carInfoService: InfoService(loadClient, carSource, sellSource),
+      infoService: InfoService(loadClient, carSource, sellSource),
       authService: authService,
     );
   }
@@ -69,7 +61,7 @@ class AppInfrastructure {
   final AppDatabase database;
   final LoadClient loadClient;
   final SettingsDataSource settings;
-  final InfoService carInfoService;
+  final InfoService infoService;
   final CarInfoDataSource carInfoDataSource;
   final SellInfoDataSource sellInfoDataSource;
   final AuthenticationService authService;
@@ -107,7 +99,7 @@ class _AppState extends State<App> {
 
           if (snapshot.connectionState != ConnectionState.done) {
             return fixView(LoadingStartPage(
-              widget.infrastructure.carInfoService.progressValue,
+              widget.infrastructure.infoService.progressValue,
             ));
           }
 
@@ -126,33 +118,22 @@ class _AppState extends State<App> {
           return Services(
             loadClient: infra.loadClient,
             settings: infra.settings,
-            carInfoService: infra.carInfoService,
-            child: MultiProvider(
-              providers: [
-                IntroViewModelProvider(infra.carInfoService),
-                HomeViewModelProvider(infra.settings, infra.carInfoService),
-                QrViewModelProvider(infra.carInfoService),
-                CarOverViewModelProvider(infra.carInfoService),
-                VideoOverViewModelProvider(),
-                DirViewModelProvider(),
-                VideoViewModelProvider(infra.settings),
+            infoService: infra.infoService,
+            child: MaterialApp(
+              title: env + EnvironmentConfig.APP_NAME,
+              theme: appTheme,
+              darkTheme: appTheme,
+              initialRoute: firstRoute,
+              onGenerateInitialRoutes: AppRouter.generateInitRoute,
+              onGenerateRoute: AppRouter.generateRoute,
+              navigatorObservers: [AppRouter.routeObserver],
+              supportedLocales: const [Locale('en'), Locale('de')],
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
               ],
-              child: MaterialApp(
-                title: env + EnvironmentConfig.APP_NAME,
-                theme: appTheme,
-                darkTheme: appTheme,
-                initialRoute: firstRoute,
-                onGenerateInitialRoutes: AppRouter.generateInitRoute,
-                onGenerateRoute: AppRouter.generateRoute,
-                navigatorObservers: [AppRouter.routeObserver],
-                supportedLocales: const [Locale('en'), Locale('de')],
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-              ),
             ),
           );
         });
@@ -180,9 +161,9 @@ class _AppState extends State<App> {
 
     await infra.authService.signInAnon();
 
-    final hasCars = await infra.carInfoService.hasCars();
+    final hasCars = await infra.infoService.hasCars();
     if (hasCars) {
-      await infra.carInfoService.refreshCarInfos();
+      await infra.infoService.refreshCarInfos();
     }
     return hasCars;
   }

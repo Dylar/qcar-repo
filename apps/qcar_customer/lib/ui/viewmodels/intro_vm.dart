@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/models/sell_info.dart';
@@ -8,66 +7,38 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../screens/home/home_page.dart';
 
-class IntroViewModelProvider extends ChangeNotifierProvider<IntroProvider> {
-  IntroViewModelProvider(InfoService carInfoService)
-      : super(create: (_) => IntroProvider(IntroVM(carInfoService)));
-}
-
-class IntroProvider extends ViewModelProvider<IntroViewModel> {
-  IntroProvider(IntroViewModel viewModel) : super(viewModel);
-}
-
 abstract class IntroViewModel extends ViewModel {
   ValueNotifier<Tuple<double, double>> get progressValue;
 
-  QrScanState get qrState;
+  SellInfo? sellInfo;
 
-  Barcode? get barcode;
-
-  SellInfo? get sellInfo;
+  Barcode? barcode;
+  QrScanState qrState = QrScanState.WAITING;
 
   void onScan(String scan);
 }
 
-class _IntroVMState {
-  QrScanState qrState = QrScanState.WAITING;
-  Barcode? barcode;
-  SellInfo? carInfo;
-}
-
 class IntroVM extends IntroViewModel {
-  InfoService carInfoService;
+  IntroVM(this.infoService);
 
-  IntroVM(this.carInfoService);
+  InfoService infoService;
 
-  final _IntroVMState _state = _IntroVMState();
-
-  @override
   ValueNotifier<Tuple<double, double>> get progressValue =>
-      carInfoService.progressValue;
-
-  @override
-  QrScanState get qrState => _state.qrState;
-
-  @override
-  Barcode? get barcode => _state.barcode;
-
-  @override
-  SellInfo? get sellInfo => _state.carInfo;
+      infoService.progressValue;
 
   @override
   void onScan(String scan) {
-    if (_state.qrState == QrScanState.SCANNING) {
+    if (qrState == QrScanState.SCANNING) {
       return;
     }
-    _state.qrState = QrScanState.SCANNING;
+    qrState = QrScanState.SCANNING;
     notifyListeners();
     //hint: yea we need a delay to disable the camera/qrscan
     Future.delayed(Duration(milliseconds: 10)).then((value) async {
-      final state = await carInfoService.onNewScan(scan);
-      _state.qrState = state.firstOrThrow;
-      _state.carInfo = state.second;
-      switch (_state.qrState) {
+      final state = await infoService.onNewScan(scan);
+      qrState = state.firstOrThrow;
+      sellInfo = state.second;
+      switch (qrState) {
         case QrScanState.OLD:
           //hint: only on debug accessible
           navigateTo(HomePage.replaceWith());

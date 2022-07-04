@@ -1,17 +1,10 @@
-import 'package:provider/provider.dart';
+import 'dart:async';
+
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
-import 'package:qcar_customer/models/video_info.dart';
+import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_page.dart';
-
-class DirViewModelProvider extends ChangeNotifierProvider<DirViewProvider> {
-  DirViewModelProvider() : super(create: (_) => DirViewProvider(DirVM()));
-}
-
-class DirViewProvider extends ViewModelProvider<DirViewModel> {
-  DirViewProvider(DirViewModel viewModel) : super(viewModel);
-}
 
 abstract class DirViewModel extends ViewModel {
   String get title;
@@ -24,23 +17,36 @@ abstract class DirViewModel extends ViewModel {
 }
 
 class DirVM extends DirViewModel {
-  DirVM();
+  DirVM(this._infoService, CarInfo selectedCar) {
+    this.selectedCar = selectedCar;
+  }
 
-  // final VideoInfoDataSource _videoSource;
+  final InfoService _infoService;
 
-  late CarInfo selectedCar;
-
-  List<VideoInfo> videos = [];
-
-  @override
   String get title => "${selectedCar.brand} ${selectedCar.model}";
 
+  late final StreamSubscription<List<CarInfo>> sub;
+
   @override
+  void init() {
+    super.init();
+    sub = _infoService.watchCarInfo().listen((cars) {
+      selectedCar = cars.firstWhere((car) =>
+          car.model == selectedCar.model && car.brand == selectedCar.brand);
+      notifyListeners();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    sub.cancel();
+  }
+
   List<CategoryInfo> getDirs() {
     return selectedCar.categories..sort((a, b) => a.order.compareTo(b.order));
   }
 
-  @override
   void selectDir(CategoryInfo dir) {
     navigateTo(VideoOverviewPage.pushIt(selectedCar, dir));
   }

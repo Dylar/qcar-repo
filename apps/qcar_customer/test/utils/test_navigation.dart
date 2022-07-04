@@ -27,10 +27,10 @@ Future<void> initNavigateToHome(WidgetTester tester,
     {AppInfrastructure? infra}) async {
   infra ??= defaultTestInfra();
 
-  final carsLoaded = await infra.carInfoService.hasCars();
+  final carsLoaded = await infra.infoService.hasCars();
   if (!carsLoaded) {
     final key = await buildSellKey();
-    await infra.carInfoService.onNewScan(key.encode());
+    await infra.infoService.onNewScan(key.encode());
   }
   await loadApp(tester, infra: infra);
   checkHomePage();

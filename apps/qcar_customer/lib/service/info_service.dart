@@ -25,6 +25,8 @@ class InfoService {
   ValueNotifier<Tuple<double, double>> get progressValue =>
       _loadClient.progressValue;
 
+  Stream<List<CarInfo>> watchCarInfo() => carInfoDataSource.watchCarInfo();
+
   Future<bool> _isOldCar(String brand, String model) async {
     final allCars = await carInfoDataSource.getAllCars();
     return allCars.any((car) => car.brand == brand && car.model == model);

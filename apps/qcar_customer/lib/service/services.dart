@@ -11,12 +11,12 @@ class Services extends InheritedWidget {
   final LoadClient loadClient;
   final SettingsDataSource settings;
 
-  final InfoService carInfoService;
+  final InfoService infoService;
 
   const Services({
     required this.loadClient,
     required this.settings,
-    required this.carInfoService,
+    required this.infoService,
     required Widget child,
     Key? key,
   }) : super(child: child);
@@ -25,7 +25,7 @@ class Services extends InheritedWidget {
     AppDatabase? db,
     LoadClient? loadClient,
     SettingsDataSource? settings,
-    InfoService? carInfoService,
+    InfoService? infoService,
     Key? key,
     required Widget child,
   }) {
@@ -33,7 +33,7 @@ class Services extends InheritedWidget {
     final client = loadClient ?? FirestoreClient();
     return Services(
       loadClient: client,
-      carInfoService: carInfoService ??
+      infoService: infoService ??
           InfoService(client, CarInfoDS(database), SellInfoDS(database)),
       settings: settings ?? SettingsDS(database),
       key: key,

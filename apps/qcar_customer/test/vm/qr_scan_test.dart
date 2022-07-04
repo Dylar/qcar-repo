@@ -4,7 +4,7 @@ void main() {
   // late QrViewModel viewModel;
 
   setUp(() {
-    // viewModel = QrVM(CarInfoService(CarInfoDS(AppDatabase())));
+    // viewModel = QrVM(InfoService(CarInfoDS(AppDatabase())));
   });
 
   group('QrViewModel', () {

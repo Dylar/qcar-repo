@@ -134,7 +134,7 @@ class _AppNavigationState extends State<AppNavigation> {
       case CarOverviewPage.routeName:
         Logger.logI("Videos tapped");
         final cars = await Services.of(context)!
-            .carInfoService
+            .infoService
             .carInfoDataSource
             .getAllCars();
         if (cars.length == 1) {

@@ -10,7 +10,7 @@ import 'package:qcar_customer/ui/viewmodels/car_overview_vm.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
 import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
 
-class CarOverviewPage extends View<CarOverViewModel> {
+class CarOverviewPage extends View<CarOverviewViewModel> {
   static const String routeName = "/carOverviewPage";
 
   static AppRouteSpec popAndPush() => AppRouteSpec(
@@ -23,15 +23,16 @@ class CarOverviewPage extends View<CarOverViewModel> {
         action: AppRouteAction.pushTo,
       );
 
-  CarOverviewPage.model(CarOverViewModel viewModel) : super.model(viewModel);
+  CarOverviewPage.model(CarOverviewViewModel viewModel)
+      : super.model(viewModel);
 
   @override
   State<CarOverviewPage> createState() => _CarOverviewPageState(viewModel);
 }
 
 class _CarOverviewPageState
-    extends ViewState<CarOverviewPage, CarOverViewModel> {
-  _CarOverviewPageState(CarOverViewModel viewModel) : super(viewModel);
+    extends ViewState<CarOverviewPage, CarOverviewViewModel> {
+  _CarOverviewPageState(CarOverviewViewModel viewModel) : super(viewModel);
 
   @override
   Widget build(BuildContext context) {

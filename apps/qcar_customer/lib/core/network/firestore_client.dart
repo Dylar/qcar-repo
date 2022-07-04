@@ -12,7 +12,7 @@ import 'package:qcar_customer/models/video_info.dart';
 
 const String BACKEND_V1 = "v1";
 
-const bool TOGGLE_EVERY = false;
+const bool TOGGLE_LOAD_EVERY = false;
 
 class FirestoreClient implements LoadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
@@ -74,7 +74,7 @@ class FirestoreClient implements LoadClient {
 
   Future<CarInfo> loadCarInfo(SellInfo info) async {
     try {
-      if (TOGGLE_EVERY) {
+      if (TOGGLE_LOAD_EVERY) {
         return await _getCarDELETEME(info.brand, info.model);
       }
       return await _getCar(info);

@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 import 'package:qcar_customer/core/navigation/app_navigation.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
@@ -10,8 +9,8 @@ import 'package:qcar_customer/ui/viewmodels/qr_vm.dart';
 import 'package:qcar_customer/ui/widgets/qr_camera_view.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
-class QrScanPage extends View<QrViewModel> {
-  QrScanPage(QrViewModel viewModel, {Key? key}) : super.model(viewModel);
+class QrScanPage extends View<QRViewModel> {
+  QrScanPage(QRViewModel viewModel, {Key? key}) : super.model(viewModel);
 
   static const String routeName = "/qrScanPage";
 
@@ -29,8 +28,8 @@ class QrScanPage extends View<QrViewModel> {
   State<QrScanPage> createState() => _QrScanPageState(viewModel);
 }
 
-class _QrScanPageState extends ViewState<QrScanPage, QrViewModel> {
-  _QrScanPageState(QrViewModel viewModel) : super(viewModel);
+class _QrScanPageState extends ViewState<QrScanPage, QRViewModel> {
+  _QrScanPageState(QRViewModel viewModel) : super(viewModel);
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +57,9 @@ class _QrScanPageState extends ViewState<QrScanPage, QrViewModel> {
   }
 
   Widget buildScanInfo() {
-    final vm = context.watch<QrProvider>().viewModel;
-    final state = vm.qrState;
-    final carInfo = vm.sellInfo;
-    final barcode = vm.barcode;
+    final state = viewModel.qrState;
+    final carInfo = viewModel.sellInfo;
+    final barcode = viewModel.barcode;
     String text;
     switch (state) {
       case QrScanState.NEW:

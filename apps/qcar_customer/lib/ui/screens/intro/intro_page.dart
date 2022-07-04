@@ -64,8 +64,7 @@ class _IntroScanPageState extends ViewState<IntroPage, IntroViewModel> {
                   },
                 ),
         ),
-        if (EnvironmentConfig.isDev)
-          SkipDebugButton(context.read<IntroProvider>().viewModel.onScan),
+        if (EnvironmentConfig.isDev) SkipDebugButton(viewModel.onScan),
       ],
     );
   }

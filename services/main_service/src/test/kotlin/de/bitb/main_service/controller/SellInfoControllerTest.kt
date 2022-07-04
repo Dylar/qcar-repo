@@ -34,7 +34,7 @@ internal class SellInfoControllerTest @Autowired constructor(
 
         @Test
         fun `get no sell info`() {
-            val info = buildSellInfo()
+            val info = buildSellInfo(TEST_SELL_INFO)
 
             every { service.getSellInfo(any()) }
                 .answers {
@@ -53,7 +53,7 @@ internal class SellInfoControllerTest @Autowired constructor(
 
         @Test
         fun `get sell info`() {
-            val info = buildSellInfo()
+            val info = buildSellInfo(TEST_SELL_INFO)
 
             every { service.getSellInfo(info.key) }
                 .answers { info }
@@ -118,7 +118,7 @@ internal class SellInfoControllerTest @Autowired constructor(
         @Test
         fun `try adding sell info with key - throw exception`() {
             //given
-            val info = buildSellInfo()
+            val info = buildSellInfo(TEST_SELL_INFO)
 
             every { service.addSellInfo(any()) }
                 .answers { validateSellInfo(args.first() as SellInfo) }

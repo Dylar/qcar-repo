@@ -1,5 +1,5 @@
 const DEBUG_CARINFO =
-    "{\"brand\":\"Toyota\",\"model\":\"CorollaTSGR\",\"seller\":\"Maximus der Gro\u00DFe\",\"dealer\":\"Toyota in Hamburg\",\"key\":\"SuperGeheimerKeyDerBest\u00E4tigtDassDieAnUnsAbdr\u00FCckenM\u00FCssen\"}";
+    "{\"brand\":\"Toyota\",\"model\":\"CorollaTSGR\",\"seller\":\"Maximus der Gro\u00DFe\",\"dealer\":\"Toyota in Hamburg\",\"key\":\"V2VubkR1RGFzRW50c2NobMO8c3NlbHN0TWF4aSxiaXN0ZVNjaG9uR3V0OlAK\"}";
 const DEBUG_INTRO_VID_URL =
     "https:\/\/media.istockphoto.com\/videos\/automotive-engineer-wearing-vr-headset-working-on-3d-electric-car-video-id1266909907";
 const DEBUG_PIC_URL =

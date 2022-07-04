@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/navigation/app_bar.dart';
 import 'package:qcar_customer/core/navigation/app_navigation.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
@@ -5,10 +6,8 @@ import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/ui/screens/dir/dir_list_item.dart';
+import 'package:qcar_customer/ui/viewmodels/dir_vm.dart';
 import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
-import 'package:flutter/material.dart';
-
-import '../../viewmodels/dir_vm.dart';
 
 class DirPage extends View<DirViewModel> {
   static const String routeName = "/dirPage";
@@ -32,7 +31,7 @@ class _DirPageState extends ViewState<DirPage, DirViewModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SearchAppBar(viewModel.title),
+      appBar: SearchAppBar(viewModel.title, viewModel),
       body: _buildBody(context),
       bottomNavigationBar: AppNavigation(DirPage.routeName),
     );

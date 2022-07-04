@@ -26,3 +26,12 @@ void showSettingsSavedSnackBar(BuildContext context) {
     ),
   );
 }
+
+void updatedSnackBar(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text('Aktualisiert'),
+      duration: Duration(seconds: 1),
+    ),
+  );
+}

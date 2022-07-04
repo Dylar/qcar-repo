@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 import 'package:qcar_customer/core/navigation/app_bar.dart';
 import 'package:qcar_customer/core/navigation/app_navigation.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
@@ -42,14 +41,13 @@ class _VideoOverviewPageState
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: SearchAppBar(viewModel.selectedDir.name),
+      appBar: SearchAppBar(viewModel.selectedDir.name, viewModel),
       body: _buildBody(context, l10n),
       bottomNavigationBar: AppNavigation(VideoOverviewPage.routeName),
     );
   }
 
   Widget _buildBody(BuildContext context, AppLocalizations l10n) {
-    final viewModel = context.read<VideoOverViewProvider>().viewModel;
     return StreamBuilder<List<VideoInfo>>(
         stream: viewModel.watchVideos(),
         builder: (context, snapshot) {

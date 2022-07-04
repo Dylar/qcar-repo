@@ -1,29 +1,17 @@
-import 'package:provider/provider.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/service/info_service.dart';
 
-class CarOverViewModelProvider
-    extends ChangeNotifierProvider<CarOverViewProvider> {
-  CarOverViewModelProvider(InfoService carInfoService)
-      : super(create: (_) => CarOverViewProvider(CarOverVM(carInfoService)));
-}
-
-class CarOverViewProvider extends ViewModelProvider<CarOverViewModel> {
-  CarOverViewProvider(CarOverViewModel viewModel) : super(viewModel);
-}
-
-abstract class CarOverViewModel extends ViewModel {
+abstract class CarOverviewViewModel extends ViewModel {
   Stream<List<CarInfo>> watchCars();
 }
 
-class CarOverVM extends CarOverViewModel {
-  InfoService carInfoService;
+class CarOverVM extends CarOverviewViewModel {
+  InfoService infoService;
 
-  CarOverVM(this.carInfoService);
+  CarOverVM(this.infoService);
 
-  @override
   Stream<List<CarInfo>> watchCars() {
-    return carInfoService.carInfoDataSource.watchCarInfo();
+    return infoService.carInfoDataSource.watchCarInfo();
   }
 }
