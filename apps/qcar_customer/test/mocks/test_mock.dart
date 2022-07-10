@@ -113,10 +113,8 @@ SellInfoDataSource mockSellSource({List<SellInfo>? initialSellInfo}) {
   return source;
 }
 
-AuthenticationService mockAuthService() {
+AuthenticationService mockAuthService({bool isLoggedIn = true}) {
   final service = MockAuthenticationService();
-  when(service.signInAnon()).thenAnswer((inv) async {
-    return "Signed in";
-  });
+  when(service.signInAnon()).thenAnswer((inv) async => isLoggedIn);
   return service;
 }

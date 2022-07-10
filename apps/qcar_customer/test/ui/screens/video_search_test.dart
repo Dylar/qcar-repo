@@ -14,7 +14,7 @@ void main() {
       (WidgetTester tester) async {
     prepareTest();
     final infra = defaultTestInfra();
-    await initNavigateToDir(tester, infra: infra);
+    await initNavigateToCategories(tester, infra: infra);
     await tapOnSearch(tester);
     final l10n = await getTestL10n();
     checkSearchPage(l10n);
@@ -25,7 +25,7 @@ void main() {
   testWidgets('Search Video - search video', (WidgetTester tester) async {
     prepareTest();
     final infra = defaultTestInfra();
-    await initNavigateToDir(tester, infra: infra);
+    await initNavigateToCategories(tester, infra: infra);
     await tapOnSearch(tester);
     final l10n = await getTestL10n();
     checkSearchPage(l10n);
@@ -50,7 +50,7 @@ void main() {
       (WidgetTester tester) async {
     prepareTest();
     final infra = defaultTestInfra();
-    await initNavigateToDir(tester, infra: infra);
+    await initNavigateToCategories(tester, infra: infra);
     await tapOnSearch(tester);
     final l10n = await getTestL10n();
     checkSearchPage(l10n);
@@ -64,7 +64,7 @@ void main() {
   testWidgets('Search Video - search tag videos', (WidgetTester tester) async {
     prepareTest();
     final infra = defaultTestInfra();
-    await initNavigateToDir(tester, infra: infra);
+    await initNavigateToCategories(tester, infra: infra);
     await tapOnSearch(tester);
     final l10n = await getTestL10n();
     checkSearchPage(l10n);

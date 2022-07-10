@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/app_theme.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
+import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
+import 'package:qcar_customer/ui/screens/categories/categories_page.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
-import 'package:qcar_customer/ui/screens/overview/car_overview_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_page.dart';
@@ -12,15 +13,14 @@ import 'package:qcar_customer/ui/snackbars/snackbars.dart';
 import 'package:qcar_customer/ui/widgets/loading_overlay.dart';
 
 import '../../service/services.dart';
-import '../../ui/screens/dir/dir_page.dart';
 import '../tracking.dart';
 
 final naviBarData = <Triple<List<String>, String, IconData>>[
   Triple([HomePage.routeName], "Home", Icons.home_outlined),
   Triple(
     [
-      CarOverviewPage.routeName,
-      DirPage.routeName,
+      CarsPage.routeName,
+      CategoriesPage.routeName,
       VideoOverviewPage.routeName,
       VideoPage.routeName,
     ],
@@ -131,18 +131,16 @@ class _AppNavigationState extends State<AppNavigation> {
         Logger.logI("Home tapped");
         routeSpec = HomePage.poopToRoot();
         break;
-      case CarOverviewPage.routeName:
+      case CarsPage.routeName:
         Logger.logI("Videos tapped");
         final cars = await Services.of(context)!
             .infoService
             .carInfoDataSource
             .getAllCars();
         if (cars.length == 1) {
-          routeSpec = DirPage.pushIt(cars.first);
+          routeSpec = CategoriesPage.pushIt(cars.first);
         } else {
-          routeSpec = thisIsHome
-              ? CarOverviewPage.pushIt()
-              : CarOverviewPage.popAndPush();
+          routeSpec = thisIsHome ? CarsPage.pushIt() : CarsPage.popAndPush();
         }
         break;
       case QrScanPage.routeName:

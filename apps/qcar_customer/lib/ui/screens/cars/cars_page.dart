@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:qcar_customer/core/app_theme.dart';
 import 'package:qcar_customer/core/navigation/app_navigation.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/models/car_info.dart';
-import 'package:qcar_customer/ui/screens/dir/dir_page.dart';
-import 'package:qcar_customer/ui/screens/overview/car_info_list_item.dart';
+import 'package:qcar_customer/ui/screens/cars/car_info_list_item.dart';
+import 'package:qcar_customer/ui/screens/categories/categories_page.dart';
 import 'package:qcar_customer/ui/viewmodels/car_overview_vm.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
 import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
 
-class CarOverviewPage extends View<CarOverviewViewModel> {
-  static const String routeName = "/carOverviewPage";
+class CarsPage extends View<CarsViewModel> {
+  static const String routeName = "/carsPage";
 
   static AppRouteSpec popAndPush() => AppRouteSpec(
         name: routeName,
@@ -23,16 +24,14 @@ class CarOverviewPage extends View<CarOverviewViewModel> {
         action: AppRouteAction.pushTo,
       );
 
-  CarOverviewPage.model(CarOverviewViewModel viewModel)
-      : super.model(viewModel);
+  CarsPage.model(CarsViewModel viewModel) : super.model(viewModel);
 
   @override
-  State<CarOverviewPage> createState() => _CarOverviewPageState(viewModel);
+  State<CarsPage> createState() => _CarsPageState(viewModel);
 }
 
-class _CarOverviewPageState
-    extends ViewState<CarOverviewPage, CarOverviewViewModel> {
-  _CarOverviewPageState(CarOverviewViewModel viewModel) : super(viewModel);
+class _CarsPageState extends ViewState<CarsPage, CarsViewModel> {
+  _CarsPageState(CarsViewModel viewModel) : super(viewModel);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class _CarOverviewPageState
     return Scaffold(
       appBar: AppBar(title: Text(l10n.carOverViewPageTitle)),
       body: _buildBody(context, l10n),
-      bottomNavigationBar: AppNavigation(CarOverviewPage.routeName),
+      bottomNavigationBar: AppNavigation(CarsPage.routeName),
     );
   }
 
@@ -59,11 +58,10 @@ class _CarOverviewPageState
         });
   }
 
-  Widget buildItemWidget(int index, CarInfo item) => GestureDetector(
+  Widget buildItemWidget(int index, CarInfo item) => InkWell(
+        highlightColor: BaseColors.zergPurple.withOpacity(0.4),
+        splashColor: BaseColors.babyBlue.withOpacity(0.5),
         child: CarInfoListItem(item),
-        onTap: () => Navigate.to(
-          context,
-          DirPage.pushIt(item),
-        ),
+        onTap: () => Navigate.to(context, CategoriesPage.pushIt(item)),
       );
 }

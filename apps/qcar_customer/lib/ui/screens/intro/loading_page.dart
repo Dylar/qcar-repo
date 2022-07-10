@@ -4,26 +4,20 @@ import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/ui/widgets/gradient_text.dart';
 
 class LoadingStartPage extends StatelessWidget {
-  const LoadingStartPage(this.progressValue);
+  const LoadingStartPage({this.progressValue});
 
-  final ValueNotifier<Tuple<double, double>> progressValue;
+  final ValueNotifier<Tuple<double, double>>? progressValue;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox.expand(
       child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: <Color>[
-              BaseColors.primary,
-              BaseColors.accent,
-            ],
-            tileMode: TileMode.clamp,
+        decoration: qcarGradientBox,
+        child: Center(
+          child: AppLoadingIndicator(
+            progressValue ?? ValueNotifier(Tuple(100.0, 1.0)),
           ),
         ),
-        child: Center(child: AppLoadingIndicator(progressValue)),
       ),
     );
   }
@@ -40,23 +34,7 @@ class AppLoadingIndicator extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Spacer(flex: 2),
-        Flexible(
-          flex: 3,
-          child: GradientText(
-            'qCar',
-            style: Theme.of(context)
-                .textTheme
-                .headline1!
-                .copyWith(fontWeight: FontWeight.w400),
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  BaseColors.babyBlue,
-                  BaseColors.zergPurple,
-                ]),
-          ),
-        ),
+        Flexible(flex: 3, child: _qcarGradientText(context)),
         Spacer(flex: 1),
         Flexible(child: CircularProgressIndicator()),
         Spacer(flex: 1),
@@ -91,3 +69,30 @@ class AppLoadingIndicator extends StatelessWidget {
     );
   }
 }
+
+BoxDecoration get qcarGradientBox => BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: <Color>[
+          BaseColors.primary,
+          BaseColors.accent,
+        ],
+        tileMode: TileMode.clamp,
+      ),
+    );
+
+GradientText _qcarGradientText(BuildContext context) => GradientText(
+      'qCar',
+      style: Theme.of(context)
+          .textTheme
+          .headline1!
+          .copyWith(fontWeight: FontWeight.w400),
+      gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            BaseColors.babyBlue,
+            BaseColors.zergPurple,
+          ]),
+    );

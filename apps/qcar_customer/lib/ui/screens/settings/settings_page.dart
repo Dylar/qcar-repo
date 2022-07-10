@@ -47,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
           if (EnvironmentConfig.isDev || showDebug)
             Flexible(child: SettingsButton("Debug", DebugPage.pushIt())),
           Flexible(
-            child: GestureDetector(
+            child: InkWell(
               onLongPress: () => setState(() => showDebug = true),
               child: SettingsButton(
                 "Video Einstellungen",

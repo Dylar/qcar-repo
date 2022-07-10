@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/service/services.dart';
+import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
+import 'package:qcar_customer/ui/screens/categories/categories_page.dart';
 import 'package:qcar_customer/ui/screens/debug_page.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
-import 'package:qcar_customer/ui/screens/overview/car_overview_page.dart';
+import 'package:qcar_customer/ui/screens/intro/landing_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_page.dart';
 import 'package:qcar_customer/ui/screens/settings/video_settings_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_page.dart';
 import 'package:qcar_customer/ui/viewmodels/car_overview_vm.dart';
+import 'package:qcar_customer/ui/viewmodels/categories_vm.dart';
 import 'package:qcar_customer/ui/viewmodels/home_vm.dart';
 import 'package:qcar_customer/ui/viewmodels/intro_vm.dart';
+import 'package:qcar_customer/ui/viewmodels/landing_vm.dart';
 import 'package:qcar_customer/ui/viewmodels/qr_vm.dart';
 import 'package:qcar_customer/ui/viewmodels/video_overview_vm.dart';
 import 'package:qcar_customer/ui/viewmodels/video_vm.dart';
 
-import '../../ui/screens/dir/dir_page.dart';
-import '../../ui/viewmodels/dir_vm.dart';
 import '../tracking.dart';
 
 abstract class AppRoute<T> extends Route<T> {
@@ -53,23 +55,6 @@ class AppRouter {
   static final RouteObserver<ModalRoute> routeObserver =
       RouteObserver<ModalRoute>();
 
-  static List<Route<dynamic>> generateInitRoute(String initialRoute) {
-    late WidgetBuilder builder;
-    switch (initialRoute) {
-      case DebugPage.routeName:
-        builder = _navigateToDebug;
-        break;
-      case IntroPage.routeName:
-        builder = _navigateToIntro;
-        break;
-      case HomePage.routeName:
-        builder = _navigateToHome;
-        break;
-      //TODO download page?
-    }
-    return [_wrapRoute(RouteSettings(name: initialRoute), builder)];
-  }
-
   static AppRoute<dynamic> generateRoute(RouteSettings settings) {
     final arguments = settings.arguments as Map<String, dynamic>? ?? {};
     Logger.logI("Route: ${settings.name}");
@@ -85,6 +70,9 @@ class AppRouter {
       case VideoSettingsPage.routeName:
         builder = _navigateToVideoSettings;
         break;
+      case LandingPage.routeName:
+        builder = _navigateToLanding;
+        break;
       case IntroPage.routeName:
         builder = _navigateToIntro;
         break;
@@ -94,13 +82,13 @@ class AppRouter {
       case QrScanPage.routeName:
         builder = _navigateToQrScan;
         break;
-      case CarOverviewPage.routeName:
-        builder = _navigateToCarOverview;
+      case CarsPage.routeName:
+        builder = _navigateToCars;
         break;
       case VideoOverviewPage.routeName:
         builder = (context) => _navigateToVideoOverview(context, arguments);
         break;
-      case DirPage.routeName:
+      case CategoriesPage.routeName:
         builder = (context) => _navigateToDirs(context, arguments);
         break;
       case VideoPage.routeName:
@@ -134,6 +122,12 @@ Widget _navigateToVideoSettings(BuildContext context) {
   return VideoSettingsPage(Services.of(context)!.settings);
 }
 
+Widget _navigateToLanding(BuildContext context) {
+  final services = Services.of(context)!;
+  return LandingPage.model(
+      LandingVM(services.authService, services.infoService));
+}
+
 Widget _navigateToIntro(BuildContext context) {
   final services = Services.of(context)!;
   return IntroPage.model(IntroVM(services.infoService));
@@ -141,19 +135,19 @@ Widget _navigateToIntro(BuildContext context) {
 
 Widget _navigateToHome(BuildContext context) {
   final services = Services.of(context)!;
-  return HomePage(HomeVM(services.settings, services.infoService));
+  return HomePage(HomeVM(services.infoService));
 }
 
-Widget _navigateToCarOverview(BuildContext context) {
+Widget _navigateToCars(BuildContext context) {
   final services = Services.of(context)!;
-  return CarOverviewPage.model(CarOverVM(services.infoService));
+  return CarsPage.model(CarsVM(services.infoService));
 }
 
 Widget _navigateToVideoOverview(
     BuildContext context, Map<String, dynamic> arguments) {
   final vm = VideoOverVM(
     arguments[VideoOverviewPage.ARG_CAR],
-    arguments[VideoOverviewPage.ARG_DIR],
+    arguments[VideoOverviewPage.ARG_CATEGORY],
   );
   return VideoOverviewPage.model(vm);
 }
@@ -165,14 +159,14 @@ Widget _navigateToQrScan(BuildContext context) {
 
 Widget _navigateToDirs(BuildContext context, Map<String, dynamic> arguments) {
   final services = Services.of(context)!;
-  return DirPage.model(DirVM(services.infoService, arguments[DirPage.ARG_CAR]));
+  return CategoriesPage.model(
+      CategoriesVM(services.infoService, arguments[CategoriesPage.ARG_CAR]));
 }
 
 Widget _navigateToVideo(BuildContext context, Map<String, dynamic> arguments) {
   final width = MediaQuery.of(context).size.width;
   final height = MediaQuery.of(context).size.height;
-  final services = Services.of(context)!;
-  final vm = VideoVM(services.settings, arguments[VideoPage.ARG_VIDEO]);
+  final vm = VideoVM(arguments[VideoPage.ARG_VIDEO]);
   return VideoPage(
     vm,
     aspectRatio: width / height / 3, //16 / 9

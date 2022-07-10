@@ -24,7 +24,7 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
 
   @mustCallSuper
   ViewState(this._viewModel) {
-    Logger.logI('Created $runtimeType.');
+    Logger.logI('Created $_sanitisedRoutePageName');
   }
 
   @mustCallSuper
@@ -101,11 +101,7 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
       routes.listen((spec) => Navigate.to(context, spec));
 }
 
-abstract class ScreenUpdater {
-  late void Function() notifyListeners;
-}
-
-abstract class ViewModel extends ScreenUpdater {
+abstract class ViewModel with ScreenUpdater {
   ViewModel();
 
   late StreamController<AppRouteSpec> _routeController;
@@ -141,5 +137,21 @@ abstract class ViewModel extends ScreenUpdater {
 
   void navigateTo(AppRouteSpec routeSpec) {
     _routeController.sink.add(routeSpec);
+  }
+}
+
+mixin ScreenUpdater {
+  late void Function() notifyListeners;
+}
+
+mixin Initializer {
+  final completer = new Completer();
+
+  Future whenInitialized() async => completer.future;
+
+  void initializeFinished() {
+    if (!completer.isCompleted) {
+      completer.complete();
+    }
   }
 }

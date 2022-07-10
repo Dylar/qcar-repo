@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:qcar_customer/core/app_theme.dart';
 import 'package:qcar_customer/core/navigation/app_bar.dart';
 import 'package:qcar_customer/core/navigation/app_navigation.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
-import 'package:qcar_customer/ui/screens/dir/dir_list_item.dart';
-import 'package:qcar_customer/ui/viewmodels/dir_vm.dart';
+import 'package:qcar_customer/ui/screens/categories/categories_list_item.dart';
+import 'package:qcar_customer/ui/viewmodels/categories_vm.dart';
 import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
 
-class DirPage extends View<DirViewModel> {
-  static const String routeName = "/dirPage";
+class CategoriesPage extends View<CategoriesViewModel> {
+  static const String routeName = "/categoriesPage";
   static const String ARG_CAR = "car";
 
   static AppRouteSpec pushIt(CarInfo carInfo) => AppRouteSpec(
@@ -19,35 +20,38 @@ class DirPage extends View<DirViewModel> {
         arguments: {ARG_CAR: carInfo},
       );
 
-  DirPage.model(DirViewModel viewModel) : super.model(viewModel);
+  CategoriesPage.model(CategoriesViewModel viewModel) : super.model(viewModel);
 
   @override
-  State<DirPage> createState() => _DirPageState(viewModel);
+  State<CategoriesPage> createState() => _CategoriesPageState(viewModel);
 }
 
-class _DirPageState extends ViewState<DirPage, DirViewModel> {
-  _DirPageState(DirViewModel viewModel) : super(viewModel);
+class _CategoriesPageState
+    extends ViewState<CategoriesPage, CategoriesViewModel> {
+  _CategoriesPageState(CategoriesViewModel viewModel) : super(viewModel);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SearchAppBar(viewModel.title, viewModel),
       body: _buildBody(context),
-      bottomNavigationBar: AppNavigation(DirPage.routeName),
+      bottomNavigationBar: AppNavigation(CategoriesPage.routeName),
     );
   }
 
   Widget _buildBody(BuildContext context) {
     return ScrollListView<CategoryInfo>(
-      items: viewModel.getDirs(),
+      items: viewModel.categories,
       buildItemWidget: buildItemWidget,
     );
   }
 
   Widget buildItemWidget(int index, CategoryInfo item) {
-    return GestureDetector(
-      child: DirListItem(item),
-      onTap: () => viewModel.selectDir(item),
+    return InkWell(
+      highlightColor: BaseColors.zergPurple.withOpacity(0.4),
+      splashColor: BaseColors.babyBlue.withOpacity(0.5),
+      child: CategoryListItem(item),
+      onTap: () => viewModel.selectCategory(item),
     );
   }
 }

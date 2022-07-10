@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/navigation/app_navigation.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
-import 'package:qcar_customer/models/settings.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:qcar_customer/ui/viewmodels/video_vm.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
@@ -37,18 +36,7 @@ class _VideoPageState extends ViewState<VideoPage, VideoViewModel> {
       appBar: AppBar(title: Text(viewModel.title)),
       body: Column(
         children: [
-          Flexible(
-              child: StreamBuilder<Settings>(
-                  stream: viewModel.watchSettings(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData || viewModel.videoInfo == null) {
-                      return VideoDownload();
-                    }
-                    return VideoWidget(
-                      url: viewModel.videoInfo!.vidUrl,
-                      settings: snapshot.data!,
-                    );
-                  })),
+          Flexible(child: VideoWidget(viewModel: viewModel)),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -58,7 +46,7 @@ class _VideoPageState extends ViewState<VideoPage, VideoViewModel> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      viewModel.videoInfo!.description,
+                      viewModel.description,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                   ),

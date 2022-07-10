@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:qcar_customer/core/tracking.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
@@ -15,12 +16,13 @@ class AuthenticationService {
     await _firebaseAuth.signOut();
   }
 
-  Future<String> signInAnon() async {
+  Future<bool> signInAnon() async {
     try {
       await _firebaseAuth.signInAnonymously();
-      return "Signed in";
+      return true;
     } on FirebaseAuthException catch (e) {
-      return e.message ?? "Signed in error";
+      Logger.logE(e.toString());
+      return false;
     }
   }
 

@@ -1,29 +1,30 @@
 import 'dart:async';
 
+import 'package:qcar_customer/core/navigation/app_bar.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_page.dart';
 
-abstract class DirViewModel extends ViewModel {
+abstract class CategoriesViewModel extends ViewModel
+    implements AppBarViewModel {
   String get title;
+  List<CategoryInfo> get categories;
 
-  late CarInfo selectedCar;
-
-  List<CategoryInfo> getDirs();
-
-  void selectDir(CategoryInfo dir);
+  void selectCategory(CategoryInfo category);
 }
 
-class DirVM extends DirViewModel {
-  DirVM(this._infoService, CarInfo selectedCar) {
-    this.selectedCar = selectedCar;
-  }
+class CategoriesVM extends CategoriesViewModel {
+  CategoriesVM(this._infoService, this.selectedCar);
 
   final InfoService _infoService;
 
+  CarInfo selectedCar;
+
   String get title => "${selectedCar.brand} ${selectedCar.model}";
+  List<CategoryInfo> get categories =>
+      selectedCar.categories..sort((a, b) => a.order.compareTo(b.order));
 
   late final StreamSubscription<List<CarInfo>> sub;
 
@@ -43,11 +44,7 @@ class DirVM extends DirViewModel {
     sub.cancel();
   }
 
-  List<CategoryInfo> getDirs() {
-    return selectedCar.categories..sort((a, b) => a.order.compareTo(b.order));
-  }
-
-  void selectDir(CategoryInfo dir) {
-    navigateTo(VideoOverviewPage.pushIt(selectedCar, dir));
+  void selectCategory(CategoryInfo category) {
+    navigateTo(VideoOverviewPage.pushIt(selectedCar, category));
   }
 }

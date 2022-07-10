@@ -2,77 +2,87 @@ import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/helper/player_config.dart';
 import 'package:qcar_customer/core/tracking.dart';
-import 'package:qcar_customer/models/settings.dart';
+import 'package:qcar_customer/service/services.dart';
 
 import 'loading_overlay.dart';
 
 const VIDEO_START = Duration(seconds: 0, minutes: 0, hours: 0);
 
+abstract class VideoWidgetViewModel {
+  String get url;
+  Future whenInitialized();
+
+  void onVideoStart();
+  void onVideoEnd();
+}
+
 class VideoWidget extends StatefulWidget {
-  final Function()? onVideoStart;
-  final Function()? onVideoEnd;
+  final VideoWidgetViewModel viewModel;
 
-  final Settings settings;
-  final String url;
-
-  VideoWidget({
-    required this.url,
-    required this.settings,
-    this.onVideoStart,
-    this.onVideoEnd,
-  });
+  VideoWidget({required this.viewModel});
 
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
 }
 
 class _VideoWidgetState extends State<VideoWidget> {
-  late BetterPlayerController controller;
+  BetterPlayerController? controller;
 
   bool onStartTriggered = false;
 
   @override
-  void initState() {
-    Logger.logI("Load video: ${widget.url}");
-    final config = playerConfigFromMap(widget.settings.videos);
-    controller = BetterPlayerController(
-      config,
-      betterPlayerDataSource: BetterPlayerDataSource(
-        BetterPlayerDataSourceType.network,
-        widget.url,
-      ),
-    );
-    controller.videoPlayerController!.addListener(checkVideo);
-    super.initState();
-  }
-
-  @override
   void dispose() {
-    controller.videoPlayerController?.removeListener(checkVideo);
-    controller.videoPlayerController?.dispose();
-    controller.dispose();
+    controller?.videoPlayerController?.removeListener(_checkVideo);
+    controller?.videoPlayerController?.dispose();
+    controller?.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) => Container(
-        margin: const EdgeInsets.all(4.0),
-        padding: const EdgeInsets.all(8.0),
-        child: BetterPlayer(
-          controller: controller,
-        ),
-      );
+  Widget build(BuildContext context) {
+    return FutureBuilder<void>(
+        future: _initVideoWidget(),
+        builder: (context, snapshot) {
+          return snapshot.connectionState != ConnectionState.done
+              ? VideoDownload()
+              : Container(
+                  margin: const EdgeInsets.all(4.0),
+                  padding: const EdgeInsets.all(8.0),
+                  child: BetterPlayer(controller: controller!),
+                );
+        });
+  }
 
-  void checkVideo() {
-    if (!controller.isVideoInitialized()! && !controller.isPlaying()!) {
+  Future _initVideoWidget() async {
+    if (controller != null) {
       return;
     }
-    final playerValue = controller.videoPlayerController!.value;
+
+    final settings = await Services.of(context)!.settings.getSettings();
+    await widget.viewModel.whenInitialized();
+
+    Logger.logI("Load video: ${widget.viewModel.url}");
+    final config = playerConfigFromMap(settings.videos);
+    controller = BetterPlayerController(
+      config,
+      betterPlayerDataSource: BetterPlayerDataSource(
+        BetterPlayerDataSourceType.network,
+        widget.viewModel.url,
+      ),
+    )..videoPlayerController!.addListener(_checkVideo);
+  }
+
+  void _checkVideo() {
+    if (controller == null ||
+        !controller!.isVideoInitialized()! && !controller!.isPlaying()!) {
+      return;
+    }
+    final playerValue = controller!.videoPlayerController!.value;
     final position = playerValue.position.inMicroseconds;
     if (!onStartTriggered && position <= VIDEO_START.inMicroseconds) {
       Logger.logI("onVideoStart");
       onStartTriggered = true;
-      widget.onVideoStart?.call();
+      widget.viewModel.onVideoStart.call();
     }
 
     final endPosition = playerValue.duration?.inMicroseconds ?? 0;
@@ -80,7 +90,7 @@ class _VideoWidgetState extends State<VideoWidget> {
     if (onStartTriggered && position >= endPosition) {
       Logger.logI("onVideoEnd");
       onStartTriggered = false;
-      widget.onVideoEnd?.call();
+      widget.viewModel.onVideoEnd.call();
     }
   }
 }

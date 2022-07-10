@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qcar_customer/core/app_theme.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:qcar_customer/ui/screens/video/video_page.dart';
@@ -13,7 +14,9 @@ class VideoInfoListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      highlightColor: BaseColors.zergPurple.withOpacity(0.4),
+      splashColor: BaseColors.babyBlue.withOpacity(0.5),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(

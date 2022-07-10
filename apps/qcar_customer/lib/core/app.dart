@@ -15,11 +15,8 @@ import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
 import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/service/services.dart';
-import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
 import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
-
-import '../ui/screens/home/home_page.dart';
 
 class AppInfrastructure {
   AppInfrastructure({
@@ -79,52 +76,34 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  late Future<bool> _loadApp;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadApp = _initApp();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
+    return FutureBuilder<void>(
         initialData: false,
-        future: _loadApp,
+        future: _initApp(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return fixView(ErrorInfoWidget(snapshot.error!));
           }
 
           if (snapshot.connectionState != ConnectionState.done) {
-            return fixView(LoadingStartPage(
-              widget.infrastructure.infoService.progressValue,
-            ));
+            return fixView(LoadingStartPage());
           }
 
           final env = EnvironmentConfig.ENV == Env.PROD.name
               ? ""
               : "(${EnvironmentConfig.ENV}) ";
 
-          final bool hasCars = snapshot.data ?? false;
-          String firstRoute = IntroPage.routeName;
-          if (hasCars) {
-            firstRoute = HomePage.routeName;
-          }
-          // firstRoute = DebugPage.routeName;
-
           final infra = widget.infrastructure;
           return Services(
             loadClient: infra.loadClient,
             settings: infra.settings,
+            authService: infra.authService,
             infoService: infra.infoService,
             child: MaterialApp(
               title: env + EnvironmentConfig.APP_NAME,
               theme: appTheme,
               darkTheme: appTheme,
-              initialRoute: firstRoute,
-              onGenerateInitialRoutes: AppRouter.generateInitRoute,
               onGenerateRoute: AppRouter.generateRoute,
               navigatorObservers: [AppRouter.routeObserver],
               supportedLocales: const [Locale('en'), Locale('de')],
@@ -146,7 +125,7 @@ class _AppState extends State<App> {
     );
   }
 
-  Future<bool> _initApp() async {
+  Future _initApp() async {
     final infra = widget.infrastructure;
     await infra.database.init();
 
@@ -158,13 +137,5 @@ class _AppState extends State<App> {
       settings.videos = vidSettings;
       infra.settings.saveSettings(settings);
     }
-
-    await infra.authService.signInAnon();
-
-    final hasCars = await infra.infoService.hasCars();
-    if (hasCars) {
-      await infra.infoService.refreshCarInfos();
-    }
-    return hasCars;
   }
 }

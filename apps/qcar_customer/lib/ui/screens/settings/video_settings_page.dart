@@ -68,7 +68,7 @@ class _VideoSettingsPageState extends State<VideoSettingsPage> {
     );
   }
 
-  Widget wrapWidget(String key, Widget child) => GestureDetector(
+  Widget wrapWidget(String key, Widget child) => InkWell(
         onTap: () =>
             setState(() => settingsMap![key] = !(settingsMap![key] ?? false)),
         child: Container(

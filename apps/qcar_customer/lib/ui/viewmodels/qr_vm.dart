@@ -1,7 +1,7 @@
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/service/info_service.dart';
-import 'package:qcar_customer/ui/screens/overview/car_overview_page.dart';
+import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 abstract class QRViewModel extends ViewModel {
@@ -9,7 +9,7 @@ abstract class QRViewModel extends ViewModel {
   Barcode? barcode;
   SellInfo? sellInfo;
 
-  void onScan(Barcode p1);
+  void onScan(Barcode barcode);
 }
 
 class QrVM extends QRViewModel {
@@ -32,7 +32,7 @@ class QrVM extends QRViewModel {
       sellInfo = state.second;
       switch (qrState) {
         case QrScanState.NEW:
-          navigateTo(CarOverviewPage.popAndPush());
+          navigateTo(CarsPage.popAndPush());
           break;
         case QrScanState.OLD:
         case QrScanState.DAFUQ:

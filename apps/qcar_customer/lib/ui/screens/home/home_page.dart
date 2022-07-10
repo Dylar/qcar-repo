@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:qcar_customer/core/asset_paths.dart';
 import 'package:qcar_customer/core/navigation/app_navigation.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
-import 'package:qcar_customer/models/settings.dart';
+import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
 import 'package:qcar_customer/ui/viewmodels/home_vm.dart';
 import 'package:qcar_customer/ui/widgets/info_widget.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
 class HomePage extends View<HomeViewModel> {
   static const String routeName = "/home";
+
+  static AppRouteSpec popAndPush() => AppRouteSpec(
+        name: routeName,
+        action: AppRouteAction.popAndPushTo,
+      );
 
   static AppRouteSpec poopToRoot() => AppRouteSpec(
         name: routeName,
@@ -37,55 +43,39 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
   Widget build(BuildContext context) {
     final title = AppLocalizations.of(context)!.homoPageTitle;
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: HomeVideoPage.model(viewModel),
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title),
+            SizedBox(
+                height: 48,
+                width: 48,
+                //TODO load from car path
+                child: Image.asset(homePageCarLogoImagePath)),
+          ],
+        ),
+      ),
+      body: homePage(context),
       bottomNavigationBar: AppNavigation(HomePage.routeName),
     );
   }
-}
 
-class HomeVideoPage extends View<HomeViewModel> {
-  HomeVideoPage.model(HomeViewModel viewModel) : super.model(viewModel);
-
-  @override
-  State<HomeVideoPage> createState() => _HomeVideoPageState(viewModel);
-}
-
-class _HomeVideoPageState extends ViewState<HomeVideoPage, HomeViewModel> {
-  _HomeVideoPageState(HomeViewModel viewModel) : super(viewModel);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget homePage(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return SingleChildScrollView(
+    return Container(
+      decoration: qcarGradientBox,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Container(
-          //   decoration: BoxDecoration(
-          //     color: Colors.black,
-          //     image: DecorationImage(
-          //       fit: BoxFit.fitWidth,
-          //       image: AssetImage(homePageCarLogoImagePath),
-          //     ),
-          //   ),
-          // ),
-          StreamBuilder<Settings>(
-            stream: viewModel.watchSettings(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData || viewModel.introUrl == null) {
-                return VideoDownload();
-              }
-              return VideoWidget(
-                url: viewModel.introUrl!,
-                settings: snapshot.data!,
-              );
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InfoWidget(
-                l10n.homoPageSubGreetings + "\n\n" + l10n.homoPageMessage),
+          Flexible(flex: 50, child: VideoWidget(viewModel: viewModel)),
+          Flexible(
+            flex: 50,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InfoWidget(
+                  l10n.homoPageSubGreetings + "\n\n" + l10n.homoPageMessage),
+            ),
           ),
         ],
       ),

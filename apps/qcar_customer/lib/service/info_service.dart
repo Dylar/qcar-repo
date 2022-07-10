@@ -41,7 +41,6 @@ class InfoService {
   }
 
   Future<String> getIntroVideo() async {
-    //TODO get info from seller
     final sells = await _sellInfoDataSource.getAllSellInfos();
     return sells.first.introFilePath;
   }

@@ -1,27 +1,26 @@
-import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
-import 'package:qcar_customer/models/settings.dart';
 import 'package:qcar_customer/models/video_info.dart';
+import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
-abstract class VideoViewModel extends ViewModel {
-  VideoInfo? videoInfo;
-
-  late String title;
-
-  Stream<Settings> watchSettings();
+abstract class VideoViewModel extends ViewModel
+    implements VideoWidgetViewModel {
+  String get title;
+  String get description;
 }
 
-class VideoVM extends VideoViewModel {
-  VideoVM(this.settings, VideoInfo info) {
-    this.videoInfo = info;
-  }
+class VideoVM extends VideoViewModel with Initializer {
+  VideoVM(this.videoInfo);
 
-  SettingsDataSource settings;
+  VideoInfo? videoInfo;
 
   String get title => videoInfo?.name ?? "";
+  String get url => videoInfo?.vidUrl ?? "";
+  String get description => videoInfo?.description ?? "";
 
-  Stream<Settings> watchSettings() {
-    return settings.watchSettings();
+  @override
+  void init() {
+    super.init();
+    initializeFinished();
   }
 
   @override
@@ -39,4 +38,10 @@ class VideoVM extends VideoViewModel {
     // }
     super.routingDidPop();
   }
+
+  @override
+  void onVideoEnd() {}
+
+  @override
+  void onVideoStart() {}
 }

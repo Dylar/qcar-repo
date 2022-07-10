@@ -15,5 +15,4 @@ Widget buildImageError(
     padding: EdgeInsets.all(8),
     child: Icon(Icons.error, color: BaseColors.red),
   );
-  ;
 }

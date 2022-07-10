@@ -15,14 +15,15 @@ import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
 class VideoOverviewPage extends View<VideoOverViewModel> {
   static const String routeName = "/videoOverviewPage";
   static const ARG_CAR = "cardInfo";
-  static const ARG_DIR = "dir";
+  static const ARG_CATEGORY = "category";
 
-  static AppRouteSpec pushIt(CarInfo carInfo, CategoryInfo dir) => AppRouteSpec(
+  static AppRouteSpec pushIt(CarInfo carInfo, CategoryInfo category) =>
+      AppRouteSpec(
         name: routeName,
         action: AppRouteAction.pushTo,
         arguments: {
           ARG_CAR: carInfo,
-          ARG_DIR: dir,
+          ARG_CATEGORY: category,
         },
       );
 
@@ -41,7 +42,7 @@ class _VideoOverviewPageState
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: SearchAppBar(viewModel.selectedDir.name, viewModel),
+      appBar: SearchAppBar(viewModel.selectedCategory.name, viewModel),
       body: _buildBody(context, l10n),
       bottomNavigationBar: AppNavigation(VideoOverviewPage.routeName),
     );
@@ -51,7 +52,6 @@ class _VideoOverviewPageState
     return StreamBuilder<List<VideoInfo>>(
         stream: viewModel.watchVideos(),
         builder: (context, snapshot) {
-          print("BUILD IT video overview");
           if (snapshot.hasError) {
             return ErrorInfoWidget(snapshot.error!);
           }
