@@ -58,10 +58,13 @@ class _CarsPageState extends ViewState<CarsPage, CarsViewModel> {
         });
   }
 
-  Widget buildItemWidget(int index, CarInfo item) => InkWell(
-        highlightColor: BaseColors.zergPurple.withOpacity(0.4),
-        splashColor: BaseColors.babyBlue.withOpacity(0.5),
-        child: CarInfoListItem(item),
-        onTap: () => Navigate.to(context, CategoriesPage.pushIt(item)),
+  Widget buildItemWidget(int index, CarInfo item) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: InkWell(
+          highlightColor: BaseColors.zergPurple.withOpacity(0.4),
+          splashColor: BaseColors.babyBlue.withOpacity(0.5),
+          child: CarInfoListItem(item),
+          onTap: () => Navigate.to(context, CategoriesPage.pushIt(item)),
+        ),
       );
 }

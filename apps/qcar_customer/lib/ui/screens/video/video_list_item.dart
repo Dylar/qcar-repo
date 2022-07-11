@@ -14,11 +14,15 @@ class VideoInfoListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      highlightColor: BaseColors.zergPurple.withOpacity(0.4),
-      splashColor: BaseColors.babyBlue.withOpacity(0.5),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        highlightColor: BaseColors.zergPurple.withOpacity(0.4),
+        splashColor: BaseColors.babyBlue.withOpacity(0.5),
+        onTap: () => Navigate.to(
+          context,
+          VideoPage.pushIt(video: video),
+        ),
         child: Card(
           elevation: 4,
           margin: const EdgeInsets.all(2.0),
@@ -41,10 +45,6 @@ class VideoInfoListItem extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      onTap: () => Navigate.to(
-        context,
-        VideoPage.pushIt(video: video),
       ),
     );
   }

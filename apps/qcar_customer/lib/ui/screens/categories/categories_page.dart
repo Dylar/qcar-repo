@@ -47,11 +47,14 @@ class _CategoriesPageState
   }
 
   Widget buildItemWidget(int index, CategoryInfo item) {
-    return InkWell(
-      highlightColor: BaseColors.zergPurple.withOpacity(0.4),
-      splashColor: BaseColors.babyBlue.withOpacity(0.5),
-      child: CategoryListItem(item),
-      onTap: () => viewModel.selectCategory(item),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        highlightColor: BaseColors.zergPurple.withOpacity(0.4),
+        splashColor: BaseColors.babyBlue.withOpacity(0.5),
+        child: CategoryListItem(item),
+        onTap: () => viewModel.selectCategory(item),
+      ),
     );
   }
 }

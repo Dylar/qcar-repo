@@ -11,43 +11,40 @@ class CategoryListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        elevation: 4,
-        margin: const EdgeInsets.all(2.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-                margin: const EdgeInsets.all(4.0),
-                padding: const EdgeInsets.all(4.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: BaseColors.babyBlue),
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-                child: CarInfoPic(category.picUrl)),
-            Spacer(flex: 5),
-            Expanded(
-              flex: 95,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${category.name}',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  Divider(color: BaseColors.zergPurple),
-                  Text(
-                    '${category.description}',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ],
+    return Card(
+      elevation: 4,
+      margin: const EdgeInsets.all(2.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+              margin: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(4.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: BaseColors.babyBlue),
+                borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
+              child: CarInfoPic(category.picUrl)),
+          Spacer(flex: 5),
+          Expanded(
+            flex: 95,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${category.name}',
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+                Divider(color: BaseColors.zergPurple),
+                Text(
+                  '${category.description}',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
