@@ -44,7 +44,8 @@ class _VideoOverviewPageState
     return Scaffold(
       appBar: SearchAppBar(viewModel.selectedCategory.name, viewModel),
       body: _buildBody(context, l10n),
-      bottomNavigationBar: AppNavigation(VideoOverviewPage.routeName),
+      bottomNavigationBar:
+          AppNavigation(viewModel, VideoOverviewPage.routeName),
     );
   }
 

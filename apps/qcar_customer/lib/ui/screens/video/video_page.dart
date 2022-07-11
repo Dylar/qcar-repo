@@ -56,7 +56,7 @@ class _VideoPageState extends ViewState<VideoPage, VideoViewModel> {
           ),
         ],
       ),
-      bottomNavigationBar: AppNavigation(VideoPage.routeName),
+      bottomNavigationBar: AppNavigation(viewModel, VideoPage.routeName),
     );
   }
 }

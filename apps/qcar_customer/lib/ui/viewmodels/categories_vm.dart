@@ -4,10 +4,13 @@ import 'package:qcar_customer/core/navigation/app_bar.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
+import 'package:qcar_customer/service/feedback_fun.dart';
 import 'package:qcar_customer/service/info_service.dart';
+import 'package:qcar_customer/service/tracking_service.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_page.dart';
 
 abstract class CategoriesViewModel extends ViewModel
+    with FeedbackFun
     implements AppBarViewModel {
   String get title;
   List<CategoryInfo> get categories;
@@ -16,8 +19,10 @@ abstract class CategoriesViewModel extends ViewModel
 }
 
 class CategoriesVM extends CategoriesViewModel {
-  CategoriesVM(this._infoService, this.selectedCar);
+  CategoriesVM(this.trackingService, this._infoService, this.selectedCar);
 
+  @override
+  TrackingService trackingService;
   final InfoService _infoService;
 
   CarInfo selectedCar;

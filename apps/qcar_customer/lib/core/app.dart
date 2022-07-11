@@ -15,6 +15,7 @@ import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
 import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/service/services.dart';
+import 'package:qcar_customer/service/tracking_service.dart';
 import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
 
@@ -27,6 +28,7 @@ class AppInfrastructure {
     required this.carInfoDataSource,
     required this.sellInfoDataSource,
     required this.authService,
+    required this.trackingService,
   });
 
   factory AppInfrastructure.load({
@@ -36,6 +38,7 @@ class AppInfrastructure {
     CarInfoDataSource? carInfoDataSource,
     SellInfoDataSource? sellInfoDataSource,
     AuthenticationService? authenticationService,
+    TrackingService? trackingService,
   }) {
     final db = database ?? AppDatabase();
     final carSource = carInfoDataSource ?? CarInfoDS(db);
@@ -52,16 +55,18 @@ class AppInfrastructure {
       sellInfoDataSource: sellSource,
       infoService: InfoService(loadClient, carSource, sellSource),
       authService: authService,
+      trackingService: trackingService ?? TrackingService(),
     );
   }
 
   final AppDatabase database;
   final LoadClient loadClient;
   final SettingsDataSource settings;
+  final TrackingService trackingService;
+  final AuthenticationService authService;
   final InfoService infoService;
   final CarInfoDataSource carInfoDataSource;
   final SellInfoDataSource sellInfoDataSource;
-  final AuthenticationService authService;
 }
 
 class App extends StatefulWidget {
@@ -98,6 +103,7 @@ class _AppState extends State<App> {
           return Services(
             loadClient: infra.loadClient,
             settings: infra.settings,
+            trackingService: infra.trackingService,
             authService: infra.authService,
             infoService: infra.infoService,
             child: MaterialApp(

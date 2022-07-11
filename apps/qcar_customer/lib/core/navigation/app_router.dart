@@ -135,40 +135,60 @@ Widget _navigateToIntro(BuildContext context) {
 
 Widget _navigateToHome(BuildContext context) {
   final services = Services.of(context)!;
-  return HomePage(HomeVM(services.infoService));
+  return HomePage(HomeVM(
+    services.trackingService,
+    services.infoService,
+  ));
 }
 
 Widget _navigateToCars(BuildContext context) {
   final services = Services.of(context)!;
-  return CarsPage.model(CarsVM(services.infoService));
+  return CarsPage.model(CarsVM(
+    services.trackingService,
+    services.infoService,
+  ));
 }
 
 Widget _navigateToVideoOverview(
     BuildContext context, Map<String, dynamic> arguments) {
-  final vm = VideoOverVM(
-    arguments[VideoOverviewPage.ARG_CAR],
-    arguments[VideoOverviewPage.ARG_CATEGORY],
+  final services = Services.of(context)!;
+  return VideoOverviewPage.model(
+    VideoOverVM(
+      services.trackingService,
+      arguments[VideoOverviewPage.ARG_CAR],
+      arguments[VideoOverviewPage.ARG_CATEGORY],
+    ),
   );
-  return VideoOverviewPage.model(vm);
 }
 
 Widget _navigateToQrScan(BuildContext context) {
   final services = Services.of(context)!;
-  return QrScanPage(QrVM(services.infoService));
+  return QrScanPage(QrVM(
+    services.trackingService,
+    services.infoService,
+  ));
 }
 
 Widget _navigateToDirs(BuildContext context, Map<String, dynamic> arguments) {
   final services = Services.of(context)!;
   return CategoriesPage.model(
-      CategoriesVM(services.infoService, arguments[CategoriesPage.ARG_CAR]));
+    CategoriesVM(
+      services.trackingService,
+      services.infoService,
+      arguments[CategoriesPage.ARG_CAR],
+    ),
+  );
 }
 
 Widget _navigateToVideo(BuildContext context, Map<String, dynamic> arguments) {
   final width = MediaQuery.of(context).size.width;
   final height = MediaQuery.of(context).size.height;
-  final vm = VideoVM(arguments[VideoPage.ARG_VIDEO]);
+  final services = Services.of(context)!;
   return VideoPage(
-    vm,
+    VideoVM(
+      services.trackingService,
+      arguments[VideoPage.ARG_VIDEO],
+    ),
     aspectRatio: width / height / 3, //16 / 9
   );
 }

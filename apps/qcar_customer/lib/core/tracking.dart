@@ -18,7 +18,15 @@ class Logger {
     log("Error", msg, printTrace);
   }
 
-  static void logT(String msg, {bool printTrace = false}) {
+  static void logF(String msg) {
+    log("Feedback", msg, false);
+  }
+
+  static void logTrack(String msg) {
+    log("Tracking", msg, false);
+  }
+
+  static void logTest(String msg, {bool printTrace = false}) {
     log("Test", msg, printTrace);
   }
 

@@ -8,17 +8,20 @@ import 'package:qcar_customer/core/network/firestore_client.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
 import 'package:qcar_customer/service/info_service.dart';
+import 'package:qcar_customer/service/tracking_service.dart';
 
 class Services extends InheritedWidget {
   final LoadClient loadClient;
   final SettingsDataSource settings;
 
+  final TrackingService trackingService;
   final AuthenticationService authService;
   final InfoService infoService;
 
   const Services({
     required this.loadClient,
     required this.settings,
+    required this.trackingService,
     required this.authService,
     required this.infoService,
     required Widget child,
@@ -29,6 +32,7 @@ class Services extends InheritedWidget {
     AppDatabase? db,
     LoadClient? loadClient,
     SettingsDataSource? settings,
+    TrackingService? trackingService,
     AuthenticationService? authService,
     InfoService? infoService,
     Key? key,
@@ -38,6 +42,7 @@ class Services extends InheritedWidget {
     final client = loadClient ?? FirestoreClient();
     return Services(
       loadClient: client,
+      trackingService: trackingService ?? TrackingService(),
       authService: authService ?? AuthenticationService(FirebaseAuth.instance),
       infoService: infoService ??
           InfoService(client, CarInfoDS(database), SellInfoDS(database)),

@@ -43,25 +43,34 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
   Widget build(BuildContext context) {
     final title = AppLocalizations.of(context)!.homoPageTitle;
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(title),
-            SizedBox(
-                height: 48,
-                width: 48,
-                //TODO load from car path
-                child: Image.asset(homePageCarLogoImagePath)),
-          ],
-        ),
-      ),
-      body: homePage(context),
-      bottomNavigationBar: AppNavigation(HomePage.routeName),
+      appBar: _buildAppBar(title),
+      body: buildHomePage(context),
+      bottomNavigationBar: AppNavigation(viewModel, HomePage.routeName),
     );
   }
 
-  Widget homePage(BuildContext context) {
+  AppBar _buildAppBar(String title) {
+    return AppBar(
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title),
+          qcarGradientText(
+            context,
+            'qCar',
+            style: Theme.of(context).textTheme.headline6!,
+          ),
+          SizedBox(
+              height: 48,
+              width: 48,
+              //TODO load from car path
+              child: Image.asset(homePageCarLogoImagePath)),
+        ],
+      ),
+    );
+  }
+
+  Widget buildHomePage(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: qcarGradientBox,

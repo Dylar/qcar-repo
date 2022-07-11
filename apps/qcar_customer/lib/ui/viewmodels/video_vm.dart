@@ -1,15 +1,21 @@
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/models/video_info.dart';
+import 'package:qcar_customer/service/feedback_fun.dart';
+import 'package:qcar_customer/service/tracking_service.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
 abstract class VideoViewModel extends ViewModel
+    with FeedbackFun
     implements VideoWidgetViewModel {
   String get title;
   String get description;
 }
 
 class VideoVM extends VideoViewModel with Initializer {
-  VideoVM(this.videoInfo);
+  VideoVM(this.trackingService, this.videoInfo);
+
+  @override
+  TrackingService trackingService;
 
   VideoInfo? videoInfo;
 

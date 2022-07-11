@@ -39,7 +39,7 @@ class _CarsPageState extends ViewState<CarsPage, CarsViewModel> {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.carOverViewPageTitle)),
       body: _buildBody(context, l10n),
-      bottomNavigationBar: AppNavigation(CarsPage.routeName),
+      bottomNavigationBar: AppNavigation(viewModel, CarsPage.routeName),
     );
   }
 

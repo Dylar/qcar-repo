@@ -1,10 +1,12 @@
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/models/sell_info.dart';
+import 'package:qcar_customer/service/feedback_fun.dart';
 import 'package:qcar_customer/service/info_service.dart';
+import 'package:qcar_customer/service/tracking_service.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-abstract class QRViewModel extends ViewModel {
+abstract class QRViewModel extends ViewModel with FeedbackFun {
   QrScanState qrState = QrScanState.WAITING;
   Barcode? barcode;
   SellInfo? sellInfo;
@@ -13,9 +15,11 @@ abstract class QRViewModel extends ViewModel {
 }
 
 class QrVM extends QRViewModel {
-  InfoService infoService;
+  QrVM(this.trackingService, this.infoService);
 
-  QrVM(this.infoService);
+  @override
+  TrackingService trackingService;
+  InfoService infoService;
 
   QrScanState qrState = QrScanState.WAITING;
   Barcode? barcode;

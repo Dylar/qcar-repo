@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/app_theme.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
+import 'package:qcar_customer/ui/notify/dialog.dart';
+import 'package:qcar_customer/ui/notify/feedback_dialog.dart';
+import 'package:qcar_customer/ui/notify/snackbars.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
 import 'package:qcar_customer/ui/screens/categories/categories_page.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
@@ -9,11 +12,12 @@ import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_page.dart';
-import 'package:qcar_customer/ui/snackbars/snackbars.dart';
 import 'package:qcar_customer/ui/widgets/loading_overlay.dart';
 
 import '../../service/services.dart';
 import '../tracking.dart';
+
+const FEEDBACK_ROUTE = "FEEDBACK";
 
 final naviBarData = <Triple<List<String>, String, IconData>>[
   Triple([HomePage.routeName], "Home", Icons.home_outlined),
@@ -28,12 +32,14 @@ final naviBarData = <Triple<List<String>, String, IconData>>[
     Icons.ondemand_video_sharp,
   ),
   Triple([QrScanPage.routeName], "QR", Icons.qr_code_scanner),
+  Triple([FEEDBACK_ROUTE], "Feedback", Icons.feedback),
   Triple([SettingsPage.routeName], "Settings", Icons.settings),
 ];
 
 class AppNavigation extends StatefulWidget {
-  const AppNavigation(this.routeName);
+  const AppNavigation(this.viewModel, this.routeName);
 
+  final FeedbackViewModel viewModel;
   final String routeName;
 
   @override
@@ -75,47 +81,21 @@ class _AppNavigationState extends State<AppNavigation> {
   List<BottomNavigationBarItem> _buildIcons(
     Color? selectedColor,
     Color? unselectedColor,
-  ) =>
-      naviBarData
-          .asMap()
-          .map<int, BottomNavigationBarItem>(
-            (i, data) => MapEntry(
-              i,
-              BottomNavigationBarItem(
-                icon: _buildIcon(i, unselectedColor, data),
-                label: data.middleOrThrow,
-              ),
+  ) {
+    return naviBarData
+        .asMap()
+        .map<int, BottomNavigationBarItem>(
+          (i, data) => MapEntry(
+            i,
+            BottomNavigationBarItem(
+              icon: _NaviIcon(_pageIndex, i, unselectedColor, data),
+              label: data.middleOrThrow,
             ),
-          )
-          .values
-          .toList();
-
-  Widget _buildIcon(
-    int i,
-    Color? unselectedColor,
-    Triple<List<String>, String, IconData> data,
-  ) =>
-      Container(
-        decoration: BoxDecoration(
-          gradient: _pageIndex == i
-              ? LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                    BaseColors.babyBlue,
-                    BaseColors.zergPurple,
-                  ],
-                  tileMode: TileMode.clamp,
-                )
-              : null,
-          color: _pageIndex == i ? null : unselectedColor,
-          shape: BoxShape.circle,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Icon(data.lastOrThrow),
-        ),
-      );
+          ),
+        )
+        .values
+        .toList();
+  }
 
   Future<void> _onItemTapped(BuildContext context, int index) async {
     final isSame = index == _pageIndex;
@@ -127,6 +107,10 @@ class _AppNavigationState extends State<AppNavigation> {
     final thisIsHome = _pageIndex == 0;
     AppRouteSpec routeSpec;
     switch (routeName.firstOrThrow.first) {
+      case FEEDBACK_ROUTE:
+        Logger.logI("Feedback tapped");
+        await openFeedbackDialog(context, widget.viewModel);
+        return;
       case HomePage.routeName:
         Logger.logI("Home tapped");
         routeSpec = HomePage.poopToRoot();
@@ -158,5 +142,39 @@ class _AppNavigationState extends State<AppNavigation> {
     }
     Logger.logI("Navi to: ${routeSpec.name}");
     Navigate.to(context, routeSpec);
+  }
+}
+
+class _NaviIcon extends StatelessWidget {
+  _NaviIcon(this._pageIndex, this._index, this._unselectedColor, this._data);
+
+  final int _pageIndex;
+  final int _index;
+  final Color? _unselectedColor;
+  final Triple<List<String>, String, IconData> _data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: _pageIndex == _index
+            ? LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[
+                  BaseColors.babyBlue,
+                  BaseColors.zergPurple,
+                ],
+                tileMode: TileMode.clamp,
+              )
+            : null,
+        color: _pageIndex == _index ? null : _unselectedColor,
+        shape: BoxShape.circle,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Icon(_data.lastOrThrow),
+      ),
+    );
   }
 }

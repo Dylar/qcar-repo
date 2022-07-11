@@ -35,7 +35,7 @@ class _CategoriesPageState
     return Scaffold(
       appBar: SearchAppBar(viewModel.title, viewModel),
       body: _buildBody(context),
-      bottomNavigationBar: AppNavigation(CategoriesPage.routeName),
+      bottomNavigationBar: AppNavigation(viewModel, CategoriesPage.routeName),
     );
   }
 

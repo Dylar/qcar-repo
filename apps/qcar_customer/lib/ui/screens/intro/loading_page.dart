@@ -34,7 +34,17 @@ class AppLoadingIndicator extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Spacer(flex: 2),
-        Flexible(flex: 3, child: _qcarGradientText(context)),
+        Flexible(
+          flex: 3,
+          child: qcarGradientText(
+            context,
+            'qCar',
+            style: Theme.of(context)
+                .textTheme
+                .headline1!
+                .copyWith(fontWeight: FontWeight.w400),
+          ),
+        ),
         Spacer(flex: 1),
         Flexible(child: CircularProgressIndicator()),
         Spacer(flex: 1),
@@ -82,17 +92,20 @@ BoxDecoration get qcarGradientBox => BoxDecoration(
       ),
     );
 
-GradientText _qcarGradientText(BuildContext context) => GradientText(
-      'qCar',
-      style: Theme.of(context)
-          .textTheme
-          .headline1!
-          .copyWith(fontWeight: FontWeight.w400),
-      gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            BaseColors.babyBlue,
-            BaseColors.zergPurple,
-          ]),
-    );
+GradientText qcarGradientText(
+  BuildContext context,
+  String text, {
+  TextStyle? style,
+}) {
+  return GradientText(
+    text,
+    style: style,
+    gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          BaseColors.babyBlue,
+          BaseColors.zergPurple,
+        ]),
+  );
+}

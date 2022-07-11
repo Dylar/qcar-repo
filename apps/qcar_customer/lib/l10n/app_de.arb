@@ -1,4 +1,9 @@
 {
+
+  "@_BUTTONS": {},
+  "send": "Senden",
+  "cancel": "Abbrechen",
+
   "@_HOME_PAGE": {},
   "homoPageTitle": "Home",
   "homoPageSubGreetings": "Herzlich Willkommen in der Digitalen Auslieferung (Fahrzeugtutorial) für dein neues Auto!",
@@ -21,6 +26,10 @@
   "searchEmptyText": "Leider wurde kein Ergebnisse gefunden",
 
   "@_SETTINGS_PAGE": {},
-  "settingsPageTitle": "Einstellungen"
+  "settingsPageTitle": "Einstellungen",
+
+  "@_FEEDBACK": {},
+  "feedbackTitle": "Feedback",
+  "feedbackHint": "Bitte geben Sie uns Feedback."
 
 }
