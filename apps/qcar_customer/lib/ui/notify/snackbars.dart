@@ -1,37 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:qcar_customer/core/app_theme.dart';
+import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
 
-void showNothingToSeeSnackBar(BuildContext context) {
+void showSnackBar(BuildContext context, String text, {int duration = 1}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Text('Kommt noch'),
-      duration: Duration(seconds: 1),
+      content: Container(
+        height: 56,
+        width: double.infinity,
+        margin: const EdgeInsets.all(24.0),
+        decoration: BoxDecoration(gradient: qcarGradient),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: Theme.of(context)
+              .textTheme
+              .subtitle1!
+              .copyWith(color: BaseColors.primary),
+        ),
+      ),
+      duration: Duration(seconds: duration),
+      backgroundColor: Colors.transparent,
+      padding: const EdgeInsets.all(0.0),
     ),
   );
+}
+
+void showNothingToSeeSnackBar(BuildContext context) {
+  showSnackBar(context, 'Kommt noch');
 }
 
 void showAlreadyHereSnackBar(BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text('Du bist auf dieser Seite'),
-      duration: Duration(seconds: 1),
-    ),
-  );
+  showSnackBar(context, 'Du bist auf dieser Seite');
 }
 
 void showSettingsSavedSnackBar(BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text('Gespeichert'),
-      duration: Duration(seconds: 1),
-    ),
-  );
+  showSnackBar(context, 'Gespeichert');
 }
 
 void updatedSnackBar(BuildContext context) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text('Aktualisiert'),
-      duration: Duration(seconds: 1),
-    ),
-  );
+  showSnackBar(context, 'Aktualisiert');
+}
+
+void feedbackSendSnackBar(BuildContext context) {
+  showSnackBar(context, 'Danke für das Feedback', duration: 2);
 }

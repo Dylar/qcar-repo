@@ -92,6 +92,14 @@ BoxDecoration get qcarGradientBox => BoxDecoration(
       ),
     );
 
+final qcarGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      BaseColors.babyBlue,
+      BaseColors.zergPurple,
+    ]);
+
 GradientText qcarGradientText(
   BuildContext context,
   String text, {
@@ -100,12 +108,6 @@ GradientText qcarGradientText(
   return GradientText(
     text,
     style: style,
-    gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          BaseColors.babyBlue,
-          BaseColors.zergPurple,
-        ]),
+    gradient: qcarGradient,
   );
 }

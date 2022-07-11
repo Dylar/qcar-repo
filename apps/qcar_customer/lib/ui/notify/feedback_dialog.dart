@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/app_theme.dart';
+import 'package:qcar_customer/ui/notify/snackbars.dart';
 import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
 
 abstract class FeedbackViewModel {
@@ -49,6 +50,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
             child: Text(l10n.send),
             onPressed: () {
               widget._viewModel.sendFeedback(_controller.text);
+              feedbackSendSnackBar(context);
               Navigator.of(context).pop();
             },
           ),
