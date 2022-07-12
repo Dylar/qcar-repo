@@ -31,12 +31,21 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
     final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
         title: qcarGradientText(context, l10n.feedbackTitle),
-        content: TextField(
-          controller: _controller,
-          autofocus: true,
-          decoration: InputDecoration(
-            hintText: l10n.feedbackHint,
-            border: UnderlineInputBorder(),
+        content: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: BaseColors.grey),
+            color: BaseColors.darkGrey,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: TextField(
+            controller: _controller,
+            autofocus: true,
+            maxLines: null,
+            decoration: InputDecoration(
+              hintText: l10n.feedbackHint,
+              // border: UnderlineInputBorder(),
+            ),
           ),
         ),
         actions: <Widget>[

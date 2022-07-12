@@ -6,9 +6,17 @@ import '../../utils/test_checker.dart';
 import '../../utils/test_navigation.dart';
 
 void main() {
-  testWidgets('HomePage - all navigation visible', (WidgetTester tester) async {
+  testWidgets('HomePage - all navigation visible - test feedback dialog',
+      (WidgetTester tester) async {
     prepareTest();
     await initNavigateToHome(tester);
     checkNavigationBar(HomePage.routeName);
+    // await testFeedback(tester);
   });
 }
+
+// Future testFeedback(WidgetTester tester) async {
+//   await tester.tap(find.byIcon(Icons.feedback));
+//   await tester.pumpAndSettle();
+//   expect(find.byType(FeedbackDialog), findsOneWidget);
+// }
