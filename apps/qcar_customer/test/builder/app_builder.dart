@@ -30,6 +30,7 @@ AppInfrastructure defaultTestInfra() {
   final carSource = mockCarSource();
   final sellSource = mockSellSource();
   final authService = mockAuthService();
+  final trackService = mockTrackingService();
   return AppInfrastructure.load(
     client: loadClient,
     database: db,
@@ -37,5 +38,6 @@ AppInfrastructure defaultTestInfra() {
     carInfoDataSource: carSource,
     sellInfoDataSource: sellSource,
     authenticationService: authService,
+    trackingService: trackService,
   );
 }

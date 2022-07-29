@@ -30,6 +30,7 @@
 
   "@_FEEDBACK": {},
   "feedbackTitle": "Feedback",
-  "feedbackHint": "Bitte geben Sie uns Feedback."
+  "feedbackHint": "Bitte geben Sie uns Feedback.",
+  "feedbackThanks": "Danke für das Feedback"
 
 }

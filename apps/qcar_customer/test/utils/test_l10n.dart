@@ -11,6 +11,10 @@ class TestAppLocalization {
 
   final Map<String, dynamic> _values;
 
+  //------BUTTONS
+  String get send => _values["send"];
+  String get cancel => _values["cancel"];
+
   //------INTRO
   String get introPageMessage => _values["introPageMessage"];
   String get introPageMessageError => _values["introPageMessageError"];
@@ -19,4 +23,7 @@ class TestAppLocalization {
   //------SEARCH
   String get searchStartText => _values["searchStartText"];
   String get searchEmptyText => _values["searchEmptyText"];
+
+  //--------FEEDBACK
+  String get feedbackThanks => _values["feedbackThanks"];
 }

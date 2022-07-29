@@ -13,6 +13,7 @@ import 'package:qcar_customer/models/sell_key.dart';
 import 'package:qcar_customer/models/settings.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:qcar_customer/service/auth_service.dart';
+import 'package:qcar_customer/service/tracking_service.dart';
 
 import '../builder/entity_builder.dart';
 import '../ui/screens/intro_test.mocks.dart';
@@ -116,5 +117,11 @@ SellInfoDataSource mockSellSource({List<SellInfo>? initialSellInfo}) {
 AuthenticationService mockAuthService({bool isLoggedIn = true}) {
   final service = MockAuthenticationService();
   when(service.signInAnon()).thenAnswer((inv) async => isLoggedIn);
+  return service;
+}
+
+TrackingService mockTrackingService() {
+  final service = MockTrackingService();
+  // when(service.sendFeedback(any)).thenAnswer((inv) async => isLoggedIn);
   return service;
 }
