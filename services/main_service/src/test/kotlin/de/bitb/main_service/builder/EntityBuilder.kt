@@ -11,13 +11,14 @@ const val BASE_TESTDATA_PATH = "../../testdata"
 const val TEST_SELL_INFO = "sell_info.json"
 const val TEST_SELL_INFO_WITHOUT_KEY = "sell_info_without_key.json"
 const val TEST_SELLER_INFO = "seller_info.json"
+const val TEST_INTRO_INFO = "intro_info.json"
 const val TEST_CAR_FULL = "car_info_full.json"
 
 const val TEST_CAR_INFO = "car_info.json"
 const val TEST_VIDEO_INFO = "video_info.json"
 const val TEST_CATEGORY_INFO = "category_info.json"
 
-const val FEEDBACK_INFO = "feedback.json"
+const val TEST_FEEDBACK = "feedback.json"
 
 val objMapper: ObjectMapper = ObjectMapper().registerKotlinModule()
     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
@@ -86,9 +87,20 @@ fun buildSellerInfo(jsonFile: String = TEST_SELLER_INFO): SellerInfo {
 //    throw JSONValidationException.SellInfoValidationException(jsonFile)
 }
 
+fun buildEmptyIntroInfo(): IntroInfo = IntroInfo()
+
 fun buildEmptyFeedback(): Feedback = Feedback()
 
-fun buildFeedback(jsonFile: String = FEEDBACK_INFO): Feedback {
+fun buildIntroInfo(jsonFile: String = TEST_INTRO_INFO): IntroInfo {
+    val json = loadTestDealerFile(jsonFile)
+//    val isValid = validateFeedbackJson(json)
+//    if (isValid) {
+    return objMapper.readValue(json, IntroInfo::class.java)
+//    }
+//    throw JSONValidationException.FeedbackValidationException(jsonFile)
+}
+
+fun buildFeedback(jsonFile: String = TEST_FEEDBACK): Feedback {
     val json = loadTestTrackingFile(jsonFile)
 //    val isValid = validateFeedbackJson(json)
 //    if (isValid) {
