@@ -2,7 +2,7 @@ package de.bitb.main_service.exceptions
 
 sealed class SellerInfoException(msg: String) : Exception(msg) {
     class UnknownSellerException(dealer: String, name: String) :
-        SellerInfoException("Unknown seller ($name) for dealer ($dealer")
+        SellerInfoException("Unknown seller ($name) for dealer ($dealer)")
 
     class EmptyDealerException : SellerInfoException("Dealer is empty")
     class EmptySellerException : SellerInfoException("Seller is empty")
@@ -14,6 +14,9 @@ sealed class IntroInfoException(msg: String) : Exception(msg) {
 
     class EmptyDealerException : IntroInfoException("Dealer is empty")
     class EmptySellerException : IntroInfoException("Seller is empty")
+    class EmptyBrandException : IntroInfoException("Brand is empty")
+    class EmptyModelException : IntroInfoException("Model is empty")
+    class EmptyFilePathException : IntroInfoException("File path is empty")
 }
 
 sealed class SellInfoException(msg: String) : Exception(msg) {

@@ -17,6 +17,8 @@ const val TEST_CAR_INFO = "car_info.json"
 const val TEST_VIDEO_INFO = "video_info.json"
 const val TEST_CATEGORY_INFO = "category_info.json"
 
+const val FEEDBACK_INFO = "feedback.json"
+
 val objMapper: ObjectMapper = ObjectMapper().registerKotlinModule()
     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
@@ -25,6 +27,9 @@ private fun loadTestCustomerFile(jsonFile: String): String =
 
 private fun loadTestDealerFile(jsonFile: String): String =
     loadJsonFile("$BASE_TESTDATA_PATH/dealer/$jsonFile")
+
+private fun loadTestTrackingFile(jsonFile: String): String =
+    loadJsonFile("$BASE_TESTDATA_PATH/tracking/$jsonFile")
 
 fun buildCarInfo(jsonFile: String = TEST_CAR_INFO): CarInfo {
     val json = loadTestCustomerFile(jsonFile)
@@ -79,4 +84,15 @@ fun buildSellerInfo(jsonFile: String = TEST_SELLER_INFO): SellerInfo {
     return objMapper.readValue(json, SellerInfo::class.java)
 //    }
 //    throw JSONValidationException.SellInfoValidationException(jsonFile)
+}
+
+fun buildEmptyFeedback(): Feedback = Feedback()
+
+fun buildFeedback(jsonFile: String = FEEDBACK_INFO): Feedback {
+    val json = loadTestTrackingFile(jsonFile)
+//    val isValid = validateFeedbackJson(json)
+//    if (isValid) {
+    return objMapper.readValue(json, Feedback::class.java)
+//    }
+//    throw JSONValidationException.FeedbackValidationException(jsonFile)
 }

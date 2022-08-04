@@ -2,6 +2,7 @@ package de.bitb.main_service.models
 
 import de.bitb.main_service.exceptions.*
 
+@Throws(CarInfoException::class)
 fun validateCarInfo(info: CarInfo) {
     if (info.brand.isBlank()) {
         throw CarInfoException.EmptyBrandException()
@@ -14,6 +15,7 @@ fun validateCarInfo(info: CarInfo) {
     }
 }
 
+@Throws(CategoryInfoException::class)
 fun validateCategoryInfo(info: CategoryInfo) {
     if (info.brand.isBlank()) {
         throw CategoryInfoException.EmptyBrandException()
@@ -32,6 +34,7 @@ fun validateCategoryInfo(info: CategoryInfo) {
     }
 }
 
+@Throws(VideoInfoException::class)
 fun validateVideoInfo(info: VideoInfo) {
     if (info.brand.isBlank()) {
         throw VideoInfoException.EmptyBrandException()
@@ -59,6 +62,7 @@ fun validateVideoInfo(info: VideoInfo) {
     }
 }
 
+@Throws(SellInfoException::class)
 fun validateSellInfo(info: SellInfo) {
     if (info.brand.isBlank()) {
         throw SellInfoException.EmptyBrandException()
@@ -85,6 +89,7 @@ fun validateSellInfo(info: SellInfo) {
     }
 }
 
+@Throws(SellerInfoException::class)
 fun validateSellerInfo(info: SellerInfo) {
     if (info.dealer.isBlank()) {
         throw SellerInfoException.EmptyDealerException()
@@ -94,14 +99,36 @@ fun validateSellerInfo(info: SellerInfo) {
     }
 }
 
+@Throws(IntroInfoException::class)
 fun validateIntroInfo(info: IntroInfo) {
+    if (info.dealer.isBlank()) {
+        throw IntroInfoException.EmptyDealerException()
+    }
+    if (info.seller.isBlank()) {
+        throw IntroInfoException.EmptySellerException()
+    }
     if (info.brand.isBlank()) {
-        throw VideoInfoException.EmptyBrandException()
+        throw IntroInfoException.EmptyBrandException()
     }
     if (info.model.isBlank()) {
-        throw VideoInfoException.EmptyModelException()
+        throw IntroInfoException.EmptyModelException()
     }
     if (info.filePath.isBlank()) {
-        throw VideoInfoException.EmptyFilePathException()
+        throw IntroInfoException.EmptyFilePathException()
+    }
+}
+
+@Throws(FeedbackException::class)
+fun validateFeedback(feedback: Feedback) {
+    if (feedback.date.isBlank()) {
+        throw FeedbackException.EmptyDateException()
+    }
+    try{
+        feedback.dateAsDateTime()
+    }catch (e: Exception){
+        throw FeedbackException.WrongDateFormatException(feedback.date)
+    }
+    if (feedback.text.isBlank()) {
+        throw FeedbackException.EmptyTextException()
     }
 }
