@@ -13,7 +13,7 @@ import 'package:qcar_customer/models/sell_key.dart';
 import 'package:qcar_customer/models/settings.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:qcar_customer/service/auth_service.dart';
-import 'package:qcar_customer/service/tracking_service.dart';
+import 'package:qcar_customer/service/upload_service.dart';
 
 import '../builder/entity_builder.dart';
 import '../ui/screens/intro_test.mocks.dart';
@@ -21,8 +21,12 @@ import 'http_client_mock.dart';
 
 HttpOverrides mockHttpOverrides() => MockHttpOverrides();
 
-LoadClient mockLoadClient() {
-  final client = MockLoadClient();
+UploadClient mockUploadClient() {
+  return MockUploadClient();
+}
+
+DownloadClient mockDownloadClient() {
+  final client = MockDownloadClient();
   when(client.loadCarInfo(any)).thenAnswer((inv) async {
     final info = inv.positionalArguments[0] as SellInfo;
     final car = await buildCarInfo();
@@ -120,8 +124,8 @@ AuthenticationService mockAuthService({bool isLoggedIn = true}) {
   return service;
 }
 
-TrackingService mockTrackingService() {
-  final service = MockTrackingService();
+UploadService mockUploadService() {
+  final service = MockUploadService();
   // when(service.sendFeedback(any)).thenAnswer((inv) async => isLoggedIn);
   return service;
 }

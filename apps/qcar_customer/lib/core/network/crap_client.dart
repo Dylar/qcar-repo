@@ -21,7 +21,7 @@ const String CLIENT_DISCONNECTED = "sftp_disconnected";
 
 enum FileType { UNKNOWN, JSON, VIDEO, IMAGE }
 
-class CrapClient implements LoadClient {
+class CrapClient implements DownloadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
       ValueNotifier(Tuple(0, 0));
 

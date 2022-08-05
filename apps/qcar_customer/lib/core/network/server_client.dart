@@ -6,7 +6,7 @@ import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/models/sell_key.dart';
 
 //TODO load through backend
-class ServerClient implements LoadClient {
+class ServerClient implements DownloadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
       ValueNotifier(Tuple(0, 0));
 

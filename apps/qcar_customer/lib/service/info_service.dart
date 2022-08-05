@@ -18,7 +18,7 @@ class InfoService {
     this._sellInfoDataSource,
   );
 
-  final LoadClient _loadClient;
+  final DownloadClient _loadClient;
   final CarInfoDataSource carInfoDataSource; //TODO private
   final SellInfoDataSource _sellInfoDataSource;
 

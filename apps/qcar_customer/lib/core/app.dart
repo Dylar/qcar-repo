@@ -15,7 +15,7 @@ import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
 import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/service/services.dart';
-import 'package:qcar_customer/service/tracking_service.dart';
+import 'package:qcar_customer/service/upload_service.dart';
 import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
 
@@ -28,41 +28,43 @@ class AppInfrastructure {
     required this.carInfoDataSource,
     required this.sellInfoDataSource,
     required this.authService,
-    required this.trackingService,
+    required this.uploadService,
   });
 
   factory AppInfrastructure.load({
-    LoadClient? client,
+    DownloadClient? downloadClient,
+    UploadClient? uploadClient,
     AppDatabase? database,
     SettingsDataSource? settingsDataSource,
     CarInfoDataSource? carInfoDataSource,
     SellInfoDataSource? sellInfoDataSource,
     AuthenticationService? authenticationService,
-    TrackingService? trackingService,
+    UploadService? uploadService,
   }) {
     final db = database ?? AppDatabase();
     final carSource = carInfoDataSource ?? CarInfoDS(db);
     final sellSource = sellInfoDataSource ?? SellInfoDS(db);
     final settingsSource = settingsDataSource ?? SettingsDS(db);
-    final loadClient = client ?? FirestoreClient();
+    final downClient = downloadClient ?? FirestoreClient();
+    final upClient = uploadClient ?? FirestoreClient();
     final authService =
         authenticationService ?? AuthenticationService(FirebaseAuth.instance);
     return AppInfrastructure(
       database: db,
-      loadClient: loadClient,
+      loadClient: downClient,
       settings: settingsSource,
       carInfoDataSource: carSource,
       sellInfoDataSource: sellSource,
-      infoService: InfoService(loadClient, carSource, sellSource),
+      infoService: InfoService(downClient, carSource, sellSource),
       authService: authService,
-      trackingService: trackingService ?? TrackingService(),
+      uploadService: uploadService ?? UploadService(upClient),
     );
   }
 
   final AppDatabase database;
-  final LoadClient loadClient;
+  final DownloadClient loadClient;
   final SettingsDataSource settings;
-  final TrackingService trackingService;
+  final UploadService uploadService;
   final AuthenticationService authService;
   final InfoService infoService;
   final CarInfoDataSource carInfoDataSource;
@@ -103,7 +105,7 @@ class _AppState extends State<App> {
           return Services(
             loadClient: infra.loadClient,
             settings: infra.settings,
-            trackingService: infra.trackingService,
+            uploadService: infra.uploadService,
             authService: infra.authService,
             infoService: infra.infoService,
             child: MaterialApp(

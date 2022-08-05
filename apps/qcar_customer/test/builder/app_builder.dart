@@ -25,19 +25,21 @@ Future<void> prepareTest() async {
 
 AppInfrastructure defaultTestInfra() {
   final db = MockAppDatabase();
-  final loadClient = mockLoadClient();
+  final downloadClient = mockDownloadClient();
+  final uploadClient = mockUploadClient();
   final settingsSource = mockSettings();
   final carSource = mockCarSource();
   final sellSource = mockSellSource();
   final authService = mockAuthService();
-  final trackService = mockTrackingService();
+  final trackService = mockUploadService();
   return AppInfrastructure.load(
-    client: loadClient,
+    downloadClient: downloadClient,
+    uploadClient: uploadClient,
     database: db,
     settingsDataSource: settingsSource,
     carInfoDataSource: carSource,
     sellInfoDataSource: sellSource,
     authenticationService: authService,
-    trackingService: trackService,
+    uploadService: trackService,
   );
 }

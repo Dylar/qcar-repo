@@ -8,7 +8,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('hasCars - no cars in db', () async {
-    final loadClient = mockLoadClient();
+    final loadClient = mockDownloadClient();
     final carDS = mockCarSource();
     final sellDS = mockSellSource();
     final service = InfoService(loadClient, carDS, sellDS);
@@ -18,7 +18,7 @@ void main() {
   });
 
   test('hasCars - cars in db', () async {
-    final loadClient = mockLoadClient();
+    final loadClient = mockDownloadClient();
     final carDS = mockCarSource(initialCars: [await buildCarInfo()]);
     final sellDS = mockSellSource();
     final service = InfoService(loadClient, carDS, sellDS);
@@ -30,7 +30,7 @@ void main() {
   test('getIntroVideo - get path from sell info', () async {
     final sellInfo = await buildSellInfo();
     final car = await buildCarInfo();
-    final loadClient = mockLoadClient();
+    final loadClient = mockDownloadClient();
     final carDS = mockCarSource(initialCars: [car]);
     final sellDS = mockSellSource(initialSellInfo: [sellInfo]);
     final service = InfoService(loadClient, carDS, sellDS);

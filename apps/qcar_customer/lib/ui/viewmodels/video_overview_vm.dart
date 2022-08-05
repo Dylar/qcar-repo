@@ -1,10 +1,10 @@
 import 'package:qcar_customer/core/navigation/app_bar.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
+import 'package:qcar_customer/mixins/feedback_fun.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/models/video_info.dart';
-import 'package:qcar_customer/service/feedback_fun.dart';
-import 'package:qcar_customer/service/tracking_service.dart';
+import 'package:qcar_customer/service/upload_service.dart';
 
 abstract class VideoOverViewModel extends ViewModel
     with FeedbackFun
@@ -16,14 +16,14 @@ abstract class VideoOverViewModel extends ViewModel
 }
 
 class VideoOverVM extends VideoOverViewModel {
-  VideoOverVM(this.trackingService, CarInfo selectedCar,
-      CategoryInfo selectedCategory) {
+  VideoOverVM(
+      this.uploadService, CarInfo selectedCar, CategoryInfo selectedCategory) {
     this.selectedCar = selectedCar;
     this.selectedCategory = selectedCategory;
   }
 
   @override
-  TrackingService trackingService;
+  UploadService uploadService;
 
   Stream<List<VideoInfo>> watchVideos() async* {
     yield selectedCategory.videos;

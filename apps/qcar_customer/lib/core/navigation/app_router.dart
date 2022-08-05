@@ -136,7 +136,7 @@ Widget _navigateToIntro(BuildContext context) {
 Widget _navigateToHome(BuildContext context) {
   final services = Services.of(context)!;
   return HomePage(HomeVM(
-    services.trackingService,
+    services.uploadService,
     services.infoService,
   ));
 }
@@ -144,7 +144,7 @@ Widget _navigateToHome(BuildContext context) {
 Widget _navigateToCars(BuildContext context) {
   final services = Services.of(context)!;
   return CarsPage.model(CarsVM(
-    services.trackingService,
+    services.uploadService,
     services.infoService,
   ));
 }
@@ -154,7 +154,7 @@ Widget _navigateToVideoOverview(
   final services = Services.of(context)!;
   return VideoOverviewPage.model(
     VideoOverVM(
-      services.trackingService,
+      services.uploadService,
       arguments[VideoOverviewPage.ARG_CAR],
       arguments[VideoOverviewPage.ARG_CATEGORY],
     ),
@@ -164,7 +164,7 @@ Widget _navigateToVideoOverview(
 Widget _navigateToQrScan(BuildContext context) {
   final services = Services.of(context)!;
   return QrScanPage(QrVM(
-    services.trackingService,
+    services.uploadService,
     services.infoService,
   ));
 }
@@ -173,7 +173,7 @@ Widget _navigateToDirs(BuildContext context, Map<String, dynamic> arguments) {
   final services = Services.of(context)!;
   return CategoriesPage.model(
     CategoriesVM(
-      services.trackingService,
+      services.uploadService,
       services.infoService,
       arguments[CategoriesPage.ARG_CAR],
     ),
@@ -186,7 +186,7 @@ Widget _navigateToVideo(BuildContext context, Map<String, dynamic> arguments) {
   final services = Services.of(context)!;
   return VideoPage(
     VideoVM(
-      services.trackingService,
+      services.uploadService,
       arguments[VideoPage.ARG_VIDEO],
     ),
     aspectRatio: width / height / 3, //16 / 9

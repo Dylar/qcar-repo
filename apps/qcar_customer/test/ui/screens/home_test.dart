@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:qcar_customer/service/feedback_fun.dart' as fb;
-import 'package:qcar_customer/service/tracking_service.dart';
+import 'package:qcar_customer/models/Feedback.dart' as fb;
+import 'package:qcar_customer/service/upload_service.dart';
 import 'package:qcar_customer/ui/notify/feedback_dialog.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 
@@ -18,13 +18,13 @@ void main() {
     final infra = defaultTestInfra();
     await initNavigateToHome(tester, infra: infra);
     checkNavigationBar(HomePage.routeName);
-    await testFeedback(tester, infra.trackingService);
+    await testFeedback(tester, infra.uploadService);
   });
 }
 
 Future testFeedback(
   WidgetTester tester,
-  TrackingService trackingService,
+  UploadService trackingService,
 ) async {
   final feedbackTextField = find.descendant(
     of: find.byType(FeedbackDialog),

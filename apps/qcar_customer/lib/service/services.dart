@@ -8,20 +8,20 @@ import 'package:qcar_customer/core/network/firestore_client.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
 import 'package:qcar_customer/service/info_service.dart';
-import 'package:qcar_customer/service/tracking_service.dart';
+import 'package:qcar_customer/service/upload_service.dart';
 
 class Services extends InheritedWidget {
-  final LoadClient loadClient;
+  final DownloadClient loadClient;
   final SettingsDataSource settings;
 
-  final TrackingService trackingService;
+  final UploadService uploadService;
   final AuthenticationService authService;
   final InfoService infoService;
 
   const Services({
     required this.loadClient,
     required this.settings,
-    required this.trackingService,
+    required this.uploadService,
     required this.authService,
     required this.infoService,
     required Widget child,
@@ -30,22 +30,24 @@ class Services extends InheritedWidget {
 
   factory Services.init({
     AppDatabase? db,
-    LoadClient? loadClient,
+    DownloadClient? downloadClient,
+    UploadClient? uploadClient,
     SettingsDataSource? settings,
-    TrackingService? trackingService,
+    UploadService? uploadService,
     AuthenticationService? authService,
     InfoService? infoService,
     Key? key,
     required Widget child,
   }) {
     final database = db ?? AppDatabase();
-    final client = loadClient ?? FirestoreClient();
+    final downClient = downloadClient ?? FirestoreClient();
+    final upClient = uploadClient ?? FirestoreClient();
     return Services(
-      loadClient: client,
-      trackingService: trackingService ?? TrackingService(),
+      loadClient: downClient,
+      uploadService: uploadService ?? UploadService(upClient),
       authService: authService ?? AuthenticationService(FirebaseAuth.instance),
       infoService: infoService ??
-          InfoService(client, CarInfoDS(database), SellInfoDS(database)),
+          InfoService(downClient, CarInfoDS(database), SellInfoDS(database)),
       settings: settings ?? SettingsDS(database),
       key: key,
       child: child,

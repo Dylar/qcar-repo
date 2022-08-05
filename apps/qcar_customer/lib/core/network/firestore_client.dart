@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
+import 'package:qcar_customer/models/Feedback.dart';
+import 'package:qcar_customer/models/Tracking.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/models/model_data.dart';
@@ -14,7 +16,7 @@ const String BACKEND_V1 = "v1";
 
 const bool TOGGLE_LOAD_EVERY = false;
 
-class FirestoreClient implements LoadClient {
+class FirestoreClient implements DownloadClient, UploadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
       ValueNotifier(Tuple(0, 0));
 
@@ -216,5 +218,17 @@ class FirestoreClient implements LoadClient {
           ),
         )
         .first;
+  }
+
+  @override
+  Future sendFeedback(Feedback feedback) {
+    // TODO: implement sendFeedback
+    throw UnimplementedError();
+  }
+
+  @override
+  Future sendTracking(Tracking tracking) {
+    // TODO: implement sendTracking
+    throw UnimplementedError();
   }
 }

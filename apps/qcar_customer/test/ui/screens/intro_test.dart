@@ -8,7 +8,7 @@ import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
-import 'package:qcar_customer/service/tracking_service.dart';
+import 'package:qcar_customer/service/upload_service.dart';
 
 import '../../builder/app_builder.dart';
 import '../../builder/entity_builder.dart';
@@ -18,13 +18,14 @@ import '../../utils/test_l10n.dart';
 import '../../utils/test_navigation.dart';
 
 @GenerateMocks([
-  LoadClient,
+  DownloadClient,
+  UploadClient,
   AppDatabase,
   SettingsDataSource,
   CarInfoDataSource,
   SellInfoDataSource,
   AuthenticationService,
-  TrackingService,
+  UploadService,
   HttpClient,
   HttpHeaders,
   HttpClientRequest,

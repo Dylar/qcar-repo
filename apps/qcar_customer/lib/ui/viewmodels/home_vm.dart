@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
-import 'package:qcar_customer/service/feedback_fun.dart';
+import 'package:qcar_customer/mixins/feedback_fun.dart';
 import 'package:qcar_customer/service/info_service.dart';
-import 'package:qcar_customer/service/tracking_service.dart';
+import 'package:qcar_customer/service/upload_service.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
 import '../../core/tracking.dart';
@@ -13,10 +13,10 @@ abstract class HomeViewModel extends ViewModel
     implements VideoWidgetViewModel {}
 
 class HomeVM extends HomeViewModel with Initializer {
-  HomeVM(this.trackingService, this.infoService);
+  HomeVM(this.uploadService, this.infoService);
 
   @override
-  TrackingService trackingService;
+  UploadService uploadService;
   final InfoService infoService;
 
   String url = "";
