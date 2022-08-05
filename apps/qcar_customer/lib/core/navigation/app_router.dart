@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/environment_config.dart';
+import 'package:qcar_customer/core/logger.dart';
 import 'package:qcar_customer/service/services.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
 import 'package:qcar_customer/ui/screens/categories/categories_page.dart';
@@ -20,8 +21,6 @@ import 'package:qcar_customer/ui/viewmodels/landing_vm.dart';
 import 'package:qcar_customer/ui/viewmodels/qr_vm.dart';
 import 'package:qcar_customer/ui/viewmodels/video_overview_vm.dart';
 import 'package:qcar_customer/ui/viewmodels/video_vm.dart';
-
-import '../tracking.dart';
 
 abstract class AppRoute<T> extends Route<T> {
   String get appName;

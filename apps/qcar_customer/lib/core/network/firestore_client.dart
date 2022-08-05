@@ -227,7 +227,7 @@ class FirestoreClient implements DownloadClient, UploadClient {
   }
 
   @override
-  Future sendTracking(Tracking tracking) {
+  Future sendTracking(TrackEvent event) {
     // TODO: implement sendTracking
     throw UnimplementedError();
   }

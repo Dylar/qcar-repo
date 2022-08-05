@@ -12,8 +12,8 @@ class UploadService {
     uploadClient.sendFeedback(feedback!);
   }
 
-  void sendTracking(Tracking? tracking) {
-    assert(tracking != null);
-    uploadClient.sendTracking(tracking!);
+  void sendTracking(TrackEvent? event) {
+    assert(event != null);
+    uploadClient.sendTracking(event!);
   }
 }

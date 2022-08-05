@@ -5,6 +5,6 @@ mixin TrackingFun {
   UploadService get uploadService;
 
   void sendTracking(String text) {
-    uploadService.sendTracking(Tracking(DateTime.now(), text));
+    uploadService.sendTracking(TrackEvent("Navi", text));
   }
 }

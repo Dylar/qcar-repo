@@ -18,5 +18,5 @@ abstract class DownloadClient {
 abstract class UploadClient {
   Future sendFeedback(fb.Feedback feedback);
 
-  Future sendTracking(Tracking tracking);
+  Future sendTracking(TrackEvent event);
 }

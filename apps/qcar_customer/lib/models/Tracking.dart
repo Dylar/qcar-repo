@@ -1,6 +1,6 @@
-class Tracking {
-  Tracking(this.date, this.text);
+class TrackEvent {
+  const TrackEvent(this.type, this.message);
 
-  DateTime date;
-  String text;
+  final String type;
+  final String message;
 }

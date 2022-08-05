@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:qcar_customer/core/tracking.dart';
+import 'package:qcar_customer/core/logger.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;

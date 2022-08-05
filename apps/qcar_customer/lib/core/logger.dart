@@ -1,10 +1,3 @@
-class TrackEvent {
-  const TrackEvent(this.type, this.message);
-
-  final String type;
-  final String message;
-}
-
 class Logger {
   static void logI(String msg) {
     log("Logging", msg, false);
