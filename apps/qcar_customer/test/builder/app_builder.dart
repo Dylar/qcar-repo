@@ -32,7 +32,9 @@ AppInfrastructure defaultTestInfra() {
   final sellSource = mockSellSource();
   final authService = mockAuthService();
   final trackService = mockUploadService();
+  final settingsService = mockSettingsService();
   return AppInfrastructure.load(
+    settingsService,
     downloadClient: downloadClient,
     uploadClient: uploadClient,
     database: db,

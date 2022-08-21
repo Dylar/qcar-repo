@@ -13,6 +13,7 @@ import 'package:qcar_customer/models/sell_key.dart';
 import 'package:qcar_customer/models/settings.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:qcar_customer/service/auth_service.dart';
+import 'package:qcar_customer/service/settings_service.dart';
 import 'package:qcar_customer/service/upload_service.dart';
 
 import '../builder/entity_builder.dart';
@@ -128,4 +129,8 @@ UploadService mockUploadService() {
   final service = MockUploadService();
   // when(service.sendFeedback(any)).thenAnswer((inv) async => isLoggedIn);
   return service;
+}
+
+SettingsService mockSettingsService() {
+  return MockSettingsService();
 }

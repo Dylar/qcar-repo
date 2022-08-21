@@ -15,12 +15,13 @@ import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
 import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/service/services.dart';
+import 'package:qcar_customer/service/settings_service.dart';
 import 'package:qcar_customer/service/upload_service.dart';
 import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
 
 class AppInfrastructure {
-  AppInfrastructure({
+  AppInfrastructure._({
     required this.database,
     required this.loadClient,
     required this.settings,
@@ -29,9 +30,11 @@ class AppInfrastructure {
     required this.sellInfoDataSource,
     required this.authService,
     required this.uploadService,
+    required this.settingsService,
   });
 
-  factory AppInfrastructure.load({
+  factory AppInfrastructure.load(
+    SettingsService settingsService, {
     DownloadClient? downloadClient,
     UploadClient? uploadClient,
     AppDatabase? database,
@@ -49,15 +52,16 @@ class AppInfrastructure {
     final upClient = uploadClient ?? FirestoreClient();
     final authService =
         authenticationService ?? AuthenticationService(FirebaseAuth.instance);
-    return AppInfrastructure(
+    return AppInfrastructure._(
       database: db,
       loadClient: downClient,
       settings: settingsSource,
+      settingsService: settingsService,
       carInfoDataSource: carSource,
       sellInfoDataSource: sellSource,
       infoService: InfoService(downClient, carSource, sellSource),
       authService: authService,
-      uploadService: uploadService ?? UploadService(upClient),
+      uploadService: uploadService ?? UploadService(settingsService, upClient),
     );
   }
 
@@ -69,12 +73,14 @@ class AppInfrastructure {
   final InfoService infoService;
   final CarInfoDataSource carInfoDataSource;
   final SellInfoDataSource sellInfoDataSource;
+  SettingsService? settingsService;
 }
 
 class App extends StatefulWidget {
   const App({required this.infrastructure}) : super();
 
-  factory App.load() => App(infrastructure: AppInfrastructure.load());
+  factory App.load(SettingsService settingsService) =>
+      App(infrastructure: AppInfrastructure.load(settingsService));
 
   final AppInfrastructure infrastructure;
 
@@ -86,7 +92,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
-        initialData: false,
+        initialData: null,
         future: _initApp(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -102,11 +108,12 @@ class _AppState extends State<App> {
               : "(${EnvironmentConfig.ENV}) ";
 
           final infra = widget.infrastructure;
-          return Services(
-            loadClient: infra.loadClient,
+          return Services.init(
+            downloadClient: infra.loadClient,
             settings: infra.settings,
             uploadService: infra.uploadService,
             authService: infra.authService,
+            settingsService: infra.settingsService,
             infoService: infra.infoService,
             child: MaterialApp(
               title: env + EnvironmentConfig.APP_NAME,
@@ -133,7 +140,7 @@ class _AppState extends State<App> {
     );
   }
 
-  Future _initApp() async {
+  Future<void> _initApp() async {
     final infra = widget.infrastructure;
     await infra.database.init();
 

@@ -1,6 +1,6 @@
 class Feedback {
   Feedback(this.date, this.text);
 
-  DateTime date;
-  String text;
+  final DateTime date;
+  final String text;
 }
