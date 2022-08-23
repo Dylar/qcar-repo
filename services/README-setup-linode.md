@@ -3,17 +3,15 @@ export REPO_NAME=qcar-repo
 export GIT_REPO=https://github.com/Dylar/${REPO_NAME}.git
 
 export SERVICE_NAME=main_service
-export SERVICE_VERSION=0.0.12
+export SERVICE_VERSION=$(./gradlew -q getVersion)
 export JAR_PATH=/build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar
-
-export PROJECT_ID=qcar-backend
-export DOCKER_IMAGE=dylar/${PROJECT_ID}:${SERVICE_VERSION}
+export DOCKER_IMAGE=dylar/qcar-${SERVICE_NAME}:${SERVICE_VERSION}
 
 #show all running images
 kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |sort
 
 #on update
-increase version + change deployment.yaml
+increase: deployment.yaml + build.gradle
 gradle build (in service folder)
 docker build --build-arg JAR_FILE=${JAR_PATH} -t ${DOCKER_IMAGE} .
 docker push ${DOCKER_IMAGE}

@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "de.bitb"
-version = "0.0.12"
+version = project.property("serviceVersion") ?: "VERSION-ERROR"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
@@ -61,3 +61,6 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks.register("getVersion") { doLast { logger.quiet("$version") } }
+tasks.register("getName") { doLast { logger.quiet(rootProject.name) } }

@@ -1,6 +1,6 @@
-#run in service folder -> sh scripts/run.sh
+#run in service_name folder -> sh ../scripts/run.sh
 
-SERVICE_VERSION="${1:-0.0.12}"
+SERVICE_VERSION="${1:-0.0.13}"
 SERVICE_NAME="$(basename $(pwd))"
 
 #SERVICE_VERSION must be the same as in build.gradle

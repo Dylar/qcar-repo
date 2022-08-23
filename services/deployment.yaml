@@ -1,7 +1,7 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: qcar-deployment
+  name: main-service
   labels:
     app: qcar
 spec:
@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: main-service
-        image: dylar/qcar-backend:0.0.12 #europe-west1-docker.pkg.dev/qcar-backend/qcar-backend-repo/main_service:0.0.12
+        imagePullPolicy: Always
+        image: dylar/qcar-main-service:0.0.1
         ports:
         - containerPort: 2203
         env:
