@@ -13,12 +13,10 @@ class MockSellInfoDataSource : SellInfoDataSource {
     private val sellInfoDb = mutableMapOf<String, SellInfo>()
 
     override fun getSellInfo(key: String): SellInfo? {
-        log.debug("getSellInfo")
         return sellInfoDb[key]
     }
 
     override fun addSellInfo(info: SellInfo) {
-        log.debug("addSellInfo")
         sellInfoDb[info.key] = info
     }
 

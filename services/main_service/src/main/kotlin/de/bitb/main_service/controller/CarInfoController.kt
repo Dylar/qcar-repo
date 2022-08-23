@@ -32,12 +32,15 @@ class CarInfoController @Autowired constructor(
 
     @GetMapping("/{brand}/{model}")
     fun getCarInfo(@PathVariable brand: String, @PathVariable model: String): CarInfo {
-        log.info("getCarInfo")
+        log.info("getCarInfo: $brand - $model")
         return service.getCarInfo(brand, model)
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addCarInfo(@RequestBody info: CarInfo) = service.addCarInfo(info)
+    fun addCarInfo(@RequestBody info: CarInfo) {
+        log.info("addCarInfo: $info")
+        service.addCarInfo(info)
+    }
 
 }

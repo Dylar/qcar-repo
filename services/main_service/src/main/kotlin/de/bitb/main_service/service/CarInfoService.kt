@@ -26,7 +26,6 @@ class CarInfoService @Autowired constructor(
 
     @Throws(SellInfoException.UnknownKeyException::class, CarInfoException.UnknownCarException::class)
     fun getSoldCarInfo(key: String): CarInfo {
-        log.info("getSoldCarInfo")
         val sellInfo = sellDS.getSellInfo(key) ?: throw SellInfoException.UnknownKeyException(key)
         return carDS.getCarInfo(sellInfo.brand, sellInfo.model)
                 ?: throw CarInfoException.UnknownCarException(sellInfo.brand, sellInfo.model)
@@ -34,14 +33,12 @@ class CarInfoService @Autowired constructor(
 
     @Throws(CarInfoException.UnknownCarException::class)
     fun getCarInfo(brand: String, model: String): CarInfo {
-        log.info("getCarInfo")
         return carDS.getCarInfo(brand, model)
                 ?: throw CarInfoException.UnknownCarException(brand, model)
     }
 
     @Throws(CarInfoException::class)
     fun addCarInfo(info: CarInfo) {
-        log.info("addCarInfo")
         validateCarInfo(info)
         carDS.addCarInfo(info)
     }

@@ -38,6 +38,9 @@ class FeedbackController @Autowired constructor(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addFeedback(@RequestBody feedback: Feedback) = service.addFeedback(feedback)
+    fun addFeedback(@RequestBody feedback: Feedback) {
+        log.info("addFeedback: $feedback")
+        service.addFeedback(feedback)
+    }
 
 }
