@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:qcar_customer/core/logger.dart';
 import 'package:qcar_customer/core/network/network_helper.dart';
 
 enum RequestType { get, put, post }
@@ -39,11 +39,11 @@ class NetworkService {
           headers: _header,
           body: body);
 
-      debugPrint('Response : ${response?.headers}');
+      Logger.logD('Response: ${response?.headers}');
 
       return response;
     } catch (e) {
-      debugPrint('Error - $e');
+      Logger.logE('$e');
       return null;
     }
   }

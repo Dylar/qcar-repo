@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/logger.dart';
 import 'package:qcar_customer/core/navigation/app_router.dart';
+import 'package:qcar_customer/ui/notify/dialog.dart';
 
 import 'navi.dart';
 
@@ -48,6 +49,7 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
     }
 
     viewModel.notifyListeners = () => this.setState(() {});
+    viewModel.openDialog = (event) async => openDialog(context, event);
   }
 
   @mustCallSuper
@@ -142,6 +144,7 @@ abstract class ViewModel with ScreenUpdater {
 
 mixin ScreenUpdater {
   late void Function() notifyListeners;
+  late Future Function(DialogEvent) openDialog;
 }
 
 mixin Initializer {

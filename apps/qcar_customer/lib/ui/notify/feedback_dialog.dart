@@ -58,9 +58,9 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
             style: TextButton.styleFrom(primary: BaseColors.green),
             child: Text(l10n.send),
             onPressed: () {
+              Navigator.of(context).pop();
               widget._viewModel.sendFeedback(_controller.text);
               feedbackSendSnackBar(context);
-              Navigator.of(context).pop();
             },
           ),
         ]);

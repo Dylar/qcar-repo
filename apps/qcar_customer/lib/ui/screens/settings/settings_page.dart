@@ -6,6 +6,7 @@ import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/mixins/feedback_fun.dart';
 import 'package:qcar_customer/service/services.dart';
 import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/ui/notify/dialog.dart';
 import 'package:qcar_customer/ui/notify/snackbars.dart';
 import 'package:qcar_customer/ui/screens/debug_page.dart';
 import 'package:qcar_customer/ui/screens/settings/video_settings_page.dart';
@@ -32,6 +33,10 @@ class _SettingsPageState extends State<SettingsPage> with FeedbackFun {
 
   @override //TODO do this anders ...
   late UploadService uploadService;
+
+  @override //TODO crash
+  Future Function(DialogEvent event) get openDialog =>
+      throw UnimplementedError();
 
   @override
   Widget build(BuildContext context) {

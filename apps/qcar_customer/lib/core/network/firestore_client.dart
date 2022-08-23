@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
+import 'package:qcar_customer/core/network/endpoints.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/models/Feedback.dart';
 import 'package:qcar_customer/models/Tracking.dart';
@@ -11,8 +12,6 @@ import 'package:qcar_customer/models/model_data.dart';
 import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/models/sell_key.dart';
 import 'package:qcar_customer/models/video_info.dart';
-
-const String BACKEND_V1 = "v1";
 
 const bool TOGGLE_LOAD_EVERY = false;
 
