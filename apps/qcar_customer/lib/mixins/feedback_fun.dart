@@ -9,6 +9,6 @@ mixin FeedbackFun implements FeedbackViewModel {
 
   void sendFeedback(String text) {
     uploadService.sendFeedback(text);
-    openDialog(DialogEvent(DialogType.ERROR));
+    // openDialog(DialogEvent(DialogType.ERROR)); //TODO feedback from sending
   }
 }

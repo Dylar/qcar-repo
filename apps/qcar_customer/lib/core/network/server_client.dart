@@ -29,7 +29,7 @@ class ServerClient implements DownloadClient, UploadClient {
     await NetworkService.sendRequest(
         requestType: RequestType.post,
         url: FEEDBACK_URL,
-        body: feedback.toMap());
+        body: feedback.toJson());
   }
 
   @override

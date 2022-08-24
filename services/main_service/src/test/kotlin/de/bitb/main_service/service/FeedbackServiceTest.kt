@@ -56,7 +56,7 @@ internal class FeedbackServiceTest {
         exception = assertThrows { service.addFeedback(emptyFeedback) }
         assertThat(exception is FeedbackException.WrongDateFormatException)
 
-        emptyFeedback = emptyFeedback.copy(date = "2022-08-04T21:55:54.940044+02:00")
+        emptyFeedback = emptyFeedback.copy(date = "2022-08-04T21:55:54.940")
         exception = assertThrows { service.addFeedback(emptyFeedback) }
         assertThat(exception is FeedbackException.EmptyTextException)
 
