@@ -8,25 +8,31 @@ class NetworkService {
   const NetworkService._();
 
   static Map<String, String> _getHeaders() => {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        // 'Content-Type': 'application/json',
       };
 
   static Future<http.Response>? _createRequest({
     required RequestType requestType,
     required Uri uri,
     Map<String, String>? headers,
-    Map<String, dynamic>? body,
+    String? body,
   }) {
-    if (requestType == RequestType.get) {
-      return http.get(uri, headers: headers);
+    switch (requestType) {
+      case RequestType.get:
+        return http.get(uri, headers: headers);
+      case RequestType.post:
+        return http.post(uri, headers: headers, body: body);
+      case RequestType.put:
+        throw UnimplementedError();
     }
-    return null;
   }
 
   static Future<http.Response?>? sendRequest({
     required RequestType requestType,
     required String url,
-    Map<String, dynamic>? body,
+    String? body,
     Map<String, String>? queryParam,
   }) async {
     try {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:qcar_customer/models/Feedback.dart' as fb;
 import 'package:qcar_customer/service/upload_service.dart';
 import 'package:qcar_customer/ui/notify/feedback_dialog.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
@@ -57,6 +56,6 @@ Future testFeedback(
 
   expect(find.text(l10n.feedbackThanks), findsOneWidget);
   expect(find.byType(FeedbackDialog), findsNothing);
-  final result = verify(trackingService.sendFeedback(captureAny));
-  expect((result.captured.single as fb.Feedback).text, feedbackText);
+  var result = verify(trackingService.sendFeedback(captureAny));
+  expect((result.captured.single as String), feedbackText);
 }

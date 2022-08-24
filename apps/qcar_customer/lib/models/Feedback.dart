@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:qcar_customer/models/model_data.dart';
+import 'package:qcar_customer/models/utils.dart';
 
 class Feedback {
   Feedback(this.date, this.text);
@@ -7,7 +10,9 @@ class Feedback {
   final String text;
 
   Map<String, dynamic> toMap() => {
-        FIELD_DATE: date.toString(),
+        FIELD_DATE: formatDate(date),
         FIELD_TEXT: text,
       };
+
+  String toJson() => jsonEncode(toMap());
 }
