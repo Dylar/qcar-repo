@@ -4,6 +4,7 @@ import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/network/endpoints.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
+import 'package:qcar_customer/core/network/network_service.dart';
 import 'package:qcar_customer/models/Feedback.dart';
 import 'package:qcar_customer/models/Tracking.dart';
 import 'package:qcar_customer/models/car_info.dart';
@@ -220,13 +221,13 @@ class FirestoreClient implements DownloadClient, UploadClient {
   }
 
   @override
-  Future sendFeedback(Feedback feedback) {
+  Future<Response> sendFeedback(Feedback feedback) {
     // TODO: implement sendFeedback
     throw UnimplementedError();
   }
 
   @override
-  Future sendTracking(TrackEvent event) {
+  Future<Response> sendTracking(TrackEvent event) {
     // TODO: implement sendTracking
     throw UnimplementedError();
   }

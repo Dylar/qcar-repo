@@ -7,3 +7,6 @@ String urlPrefix(String endpoint) =>
     "${EnvironmentConfig.backendUrl}$API_PREFIX$BACKEND_V1$endpoint";
 
 String get FEEDBACK_URL => urlPrefix("/feedback");
+String get TRACKING_URL => urlPrefix("/tracking");
+
+String get SELL_INFO_URL => urlPrefix("/sellInfo");

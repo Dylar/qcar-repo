@@ -7,6 +7,5 @@ class SettingsService {
 
   SharedPreferences _sharedPref;
 
-  bool isTrackingEnabled() =>
-      _sharedPref.getBool(KEY_TRACKING_ENABLED) ?? false;
+  bool isTrackingEnabled() => _sharedPref.getBool(KEY_TRACKING_ENABLED) ?? true;
 }

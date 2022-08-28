@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
+import 'package:qcar_customer/core/network/network_service.dart';
 import 'package:qcar_customer/models/Feedback.dart' as fb;
 import 'package:qcar_customer/models/Tracking.dart';
 import 'package:qcar_customer/models/car_info.dart';
@@ -16,7 +17,7 @@ abstract class DownloadClient {
 }
 
 abstract class UploadClient {
-  Future sendFeedback(fb.Feedback feedback);
+  Future<Response> sendFeedback(fb.Feedback feedback);
 
-  Future sendTracking(TrackEvent event);
+  Future<Response> sendTracking(TrackEvent event);
 }

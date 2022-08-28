@@ -3,14 +3,23 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/app_theme.dart';
 import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
 
+class SnackBarEvent {
+  SnackBarEvent(this.showIt);
+
+  final Function(BuildContext) showIt;
+}
+
 void showSnackBar(BuildContext context, String text, {int duration = 1}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Container(
-        height: 56,
+        height: 48,
         width: double.infinity,
         margin: const EdgeInsets.all(24.0),
-        decoration: BoxDecoration(gradient: qcarGradient),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.transparent),
+            borderRadius: BorderRadius.circular(20),
+            gradient: qcarGradient),
         alignment: Alignment.center,
         child: Text(
           text,

@@ -8,6 +8,7 @@ const SELL_VIDEO_INFO_TYPE_ID = 7;
 
 const FIELD_DATE = "date";
 const FIELD_TEXT = "text";
+const FIELD_TYPE = "type";
 
 const FIELD_KEY = "key";
 const FIELD_PATH = "path";

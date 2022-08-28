@@ -15,8 +15,13 @@ class ServerClient implements DownloadClient, UploadClient {
       ValueNotifier(Tuple(0, 0));
 
   Future<SellInfo> loadSellInfo(SellKey key) async {
-    // final response = await NetworkService.sendRequest(
-    //     requestType: RequestType.get, url: EnvironmentConfig.backendUrl);
+    // final response=  await NetworkService.sendRequest(
+    //   Request(
+    //     requestType: RequestType.get,
+    //     url: SELL_INFO_URL,
+    //     body: key.toJson(),
+    //   ),
+    // );
     throw UnimplementedError();
   }
 
@@ -25,16 +30,24 @@ class ServerClient implements DownloadClient, UploadClient {
   }
 
   @override
-  Future sendFeedback(Feedback feedback) async {
-    await NetworkService.sendRequest(
+  Future<Response> sendFeedback(Feedback feedback) async {
+    return await NetworkService.sendRequest(
+      Request(
         requestType: RequestType.post,
         url: FEEDBACK_URL,
-        body: feedback.toJson());
+        body: feedback.toJson(),
+      ),
+    );
   }
 
   @override
-  Future sendTracking(TrackEvent event) {
-    // TODO: implement sendTracking
-    throw UnimplementedError();
+  Future<Response> sendTracking(TrackEvent event) async {
+    return await NetworkService.sendRequest(
+      Request(
+        requestType: RequestType.post,
+        url: TRACKING_URL,
+        body: event.toJson(),
+      ),
+    );
   }
 }

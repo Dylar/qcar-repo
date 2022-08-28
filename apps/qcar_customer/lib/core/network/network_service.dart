@@ -1,19 +1,72 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
 import 'package:qcar_customer/core/logger.dart';
-import 'package:qcar_customer/core/network/network_helper.dart';
 
 enum RequestType { get, put, post }
+enum CallBackParameterName { all, articles }
+
+Map<String, String> _defaultHeaders() => {
+      'Content-Type': 'application/json; charset=UTF-8',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+      // 'Content-Type': 'application/json',
+    };
+
+class Request {
+  Request({
+    required this.requestType,
+    required this.url,
+    Map<String, String>? header,
+    this.body,
+    this.queryParam,
+  }) : this.header = header ?? _defaultHeaders();
+
+  final RequestType requestType;
+  final String url;
+  final Map<String, String> header;
+  final String? body;
+  final Map<String, String>? queryParam;
+}
+
+enum ResponseStatus { OK, NOT_FOUND, ERROR, NO_RESPONSE, UNKNOWN }
+
+class Response {
+  Response(this.status, {this.jsonMap});
+
+  Response.error(String error)
+      : status = ResponseStatus.ERROR,
+        jsonMap = {"error": error};
+
+  final ResponseStatus status;
+  final Map<String, dynamic>? jsonMap;
+
+  String? get error => jsonMap?["error"];
+}
 
 class NetworkService {
   const NetworkService._();
 
-  static Map<String, String> _getHeaders() => {
-        'Content-Type': 'application/json; charset=UTF-8',
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-        // 'Content-Type': 'application/json',
-      };
+  static Future<Response> sendRequest(Request request) async {
+    try {
+      final service = NetworkService._();
+      final _header = request.header;
+      final _url = service._concatUrl(request.url, request.queryParam);
 
-  static Future<http.Response>? _createRequest({
+      final response = await service._createRequest(
+          requestType: request.requestType,
+          uri: Uri.parse(_url),
+          headers: _header,
+          body: request.body);
+
+      return service._evaluateResponse(response);
+    } catch (e) {
+      Logger.logE('$e');
+      return Response.error(e.toString());
+    }
+  }
+
+  Future<http.Response>? _createRequest({
     required RequestType requestType,
     required Uri uri,
     Map<String, String>? headers,
@@ -29,28 +82,47 @@ class NetworkService {
     }
   }
 
-  static Future<http.Response?>? sendRequest({
-    required RequestType requestType,
-    required String url,
-    String? body,
-    Map<String, String>? queryParam,
-  }) async {
-    try {
-      final _header = _getHeaders();
-      final _url = NetworkHelper.concatUrlQP(url, queryParam);
+  String _concatUrl(String url, Map<String, String>? queryParameters) {
+    if (url.isEmpty || queryParameters == null || queryParameters.isEmpty) {
+      return url;
+    }
+    final StringBuffer stringBuffer = StringBuffer("$url?");
+    queryParameters.forEach((key, value) {
+      if (value.trim() == '') return;
+      if (value.contains(' ')) throw Exception('Invalid Input Exception');
+      stringBuffer.write('$key=$value&');
+    });
+    final result = stringBuffer.toString();
+    return result.substring(0, result.length - 1);
+  }
 
-      final response = await _createRequest(
-          requestType: requestType,
-          uri: Uri.parse(_url),
-          headers: _header,
-          body: body);
+  Response _evaluateResponse(http.Response? response) {
+    if (response == null) {
+      return Response(ResponseStatus.NO_RESPONSE);
+    }
 
-      Logger.logD('Response: ${response?.headers}');
-
-      return response;
-    } catch (e) {
-      Logger.logE('$e');
-      return null;
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+      case HttpStatus.created:
+        return Response(
+          ResponseStatus.OK,
+          jsonMap: response.body.isEmpty ? null : jsonDecode(response.body),
+        );
+      case HttpStatus.notFound:
+        return Response(
+          ResponseStatus.NOT_FOUND,
+          jsonMap: jsonDecode(response.body),
+        );
+      case HttpStatus.badRequest:
+        return Response(
+          ResponseStatus.ERROR,
+          jsonMap: jsonDecode(response.body),
+        );
+      default:
+        return Response(
+          ResponseStatus.UNKNOWN,
+          jsonMap: jsonDecode(response.body),
+        );
     }
   }
 }
