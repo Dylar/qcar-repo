@@ -9,6 +9,9 @@ Linter:
 Localization:
     if not resolved => Dart Analysis tab -> Restart Dart Analysis Server
 
+Clean:
+    flutter pub cache clean
+
 Build:
     flutter pub run build_runner build --delete-conflicting-outputs
     flutter packages get

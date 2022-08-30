@@ -8,11 +8,16 @@ import 'loading_overlay.dart';
 
 const VIDEO_START = Duration(seconds: 0, minutes: 0, hours: 0);
 
+//TODO make this anders...
+bool isTest = false;
+
 abstract class VideoWidgetViewModel {
   String get url;
+
   Future whenInitialized();
 
   void onVideoStart();
+
   void onVideoEnd();
 }
 
@@ -40,6 +45,10 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isTest) {
+      //TODO make this anders...
+      return Container();
+    }
     return FutureBuilder<void>(
         future: _initVideoWidget(),
         builder: (context, snapshot) {

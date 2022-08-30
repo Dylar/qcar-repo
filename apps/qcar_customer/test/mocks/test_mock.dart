@@ -7,6 +7,7 @@ import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
+import 'package:qcar_customer/core/network/network_service.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/models/sell_key.dart';
@@ -17,7 +18,7 @@ import 'package:qcar_customer/service/settings_service.dart';
 import 'package:qcar_customer/service/upload_service.dart';
 
 import '../builder/entity_builder.dart';
-import '../ui/screens/intro_test.mocks.dart';
+import '../ui/screens/app/app_test.mocks.dart';
 import 'http_client_mock.dart';
 
 HttpOverrides mockHttpOverrides() => MockHttpOverrides();
@@ -125,10 +126,25 @@ AuthenticationService mockAuthService({bool isLoggedIn = true}) {
   return service;
 }
 
-UploadService mockUploadService() {
+UploadService mockUploadService({
+  Response? feedbackResponse,
+  Response? trackingResponse,
+}) {
   final service = MockUploadService();
-  // when(service.sendFeedback(any)).thenAnswer((inv) async => isLoggedIn);
+  if (feedbackResponse != null) {
+    when(service.sendFeedback(any)).thenAnswer((inv) async => feedbackResponse);
+  }
+  if (trackingResponse != null) {
+    when(service.sendTracking(any)).thenAnswer((inv) async => trackingResponse);
+  }
   return service;
+}
+
+void mockFeedbackResponse(
+  UploadService service,
+  Response feedbackResponse,
+) {
+  when(service.sendFeedback(any)).thenAnswer((inv) async => feedbackResponse);
 }
 
 SettingsService mockSettingsService() {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/app_theme.dart';
+import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
 
 abstract class FeedbackViewModel {
@@ -51,13 +52,13 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
           TextButton(
             style: TextButton.styleFrom(primary: BaseColors.red),
             child: Text(l10n.cancel),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigate.pop(context),
           ),
           TextButton(
             style: TextButton.styleFrom(primary: BaseColors.green),
             child: Text(l10n.send),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigate.pop(context);
               widget._viewModel.sendFeedback(_controller.text);
             },
           ),

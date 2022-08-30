@@ -1,51 +1,24 @@
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
-import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
-import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
-import 'package:qcar_customer/core/datasource/database.dart';
-import 'package:qcar_customer/core/network/load_client.dart';
-import 'package:qcar_customer/service/auth_service.dart';
-import 'package:qcar_customer/service/settings_service.dart';
-import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/ui/screens/home/home_page.dart';
+import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
 
-import '../../builder/app_builder.dart';
-import '../../builder/entity_builder.dart';
-import '../../utils/test_checker.dart';
-import '../../utils/test_interactions.dart';
-import '../../utils/test_l10n.dart';
-import '../../utils/test_navigation.dart';
+import '../../../builder/entity_builder.dart';
+import '../../../utils/test_l10n.dart';
+import '../../../utils/test_utils.dart';
+import 'intro_action.dart';
 
-@GenerateMocks([
-  DownloadClient,
-  UploadClient,
-  AppDatabase,
-  SettingsDataSource,
-  SettingsService,
-  CarInfoDataSource,
-  SellInfoDataSource,
-  AuthenticationService,
-  UploadService,
-  HttpClient,
-  HttpHeaders,
-  HttpClientRequest,
-  HttpClientResponse,
-])
 void main() {
   testWidgets('Load app - got no cars - show intro screen',
       (WidgetTester tester) async {
-    prepareTest();
     final l10n = await getTestL10n();
-    await initNavigateToIntro(tester);
+    await loadApp(tester);
     expect(find.text(l10n.introPageMessage), findsOneWidget);
+    expect(find.byType(IntroPage), findsOneWidget);
   });
 
   testWidgets('Load app - scan bullshit - show error',
       (WidgetTester tester) async {
-    prepareTest();
-    await initNavigateToIntro(tester);
+    await loadApp(tester);
 
     final l10n = await getTestL10n();
     expect(find.text(l10n.introPageMessageError), findsNothing);
@@ -55,8 +28,7 @@ void main() {
 
   testWidgets('Load app - scan wrong json - show error',
       (WidgetTester tester) async {
-    prepareTest();
-    await initNavigateToIntro(tester);
+    await loadApp(tester);
 
     final l10n = await getTestL10n();
     expect(find.text(l10n.introPageMessageError), findsNothing);
@@ -66,11 +38,9 @@ void main() {
 
   testWidgets('Load app - show intro page - scan key - show home page',
       (WidgetTester tester) async {
-    prepareTest();
     final l10n = await getTestL10n();
 
-    final infra = defaultTestInfra();
-    await initNavigateToIntro(tester, infra: infra);
+    await loadApp(tester);
 
     final key = await buildSellKey();
     final scan = key.encode();
@@ -81,7 +51,6 @@ void main() {
     expect(find.text(l10n.introPageMessageScanning), findsOneWidget);
     await tester.pump(Duration(milliseconds: 10));
     await tester.pump(Duration(milliseconds: 10));
-    await tester.pump(Duration(milliseconds: 10));
-    checkHomePage();
+    expect(find.byType(HomePage), findsOneWidget);
   });
 }

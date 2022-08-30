@@ -12,6 +12,11 @@ import 'package:qcar_customer/ui/widgets/video_widget.dart';
 class HomePage extends View<HomeViewModel> {
   static const String routeName = "/home";
 
+  static AppRouteSpec pushIt() => AppRouteSpec(
+        name: routeName,
+        action: AppRouteAction.pushTo,
+      );
+
   static AppRouteSpec popAndPush() => AppRouteSpec(
         name: routeName,
         action: AppRouteAction.popAndPushTo,

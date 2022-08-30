@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:mockito/mockito.dart';
 
-import '../ui/screens/intro_test.mocks.dart';
+import '../ui/screens/app/app_test.mocks.dart';
 
 class MockHttpOverrides extends HttpOverrides {
   MockHttpOverrides();

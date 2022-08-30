@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/app_theme.dart';
+import 'package:qcar_customer/core/navigation/navi.dart';
 
 class InfoDialog extends StatelessWidget {
   const InfoDialog({
@@ -21,9 +22,7 @@ class InfoDialog extends StatelessWidget {
           TextButton(
             style: TextButton.styleFrom(primary: BaseColors.primary),
             child: Text(closeButtonText),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () => Navigate.pop(context),
           ),
         ]);
   }

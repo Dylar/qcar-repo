@@ -1,6 +1,10 @@
 {
 
+  "@_DIALOG": {},
+  "errorTitle": "Fehler",
+
   "@_BUTTONS": {},
+  "ok": "Ok",
   "send": "Senden",
   "cancel": "Abbrechen",
 
@@ -31,6 +35,7 @@
   "@_FEEDBACK": {},
   "feedbackTitle": "Feedback",
   "feedbackHint": "Bitte geben Sie uns Feedback.",
-  "feedbackThanks": "Danke für das Feedback"
+  "feedbackThanks": "Danke für das Feedback",
+  "feedbackError": "Beim versenden ist ein Fehler aufgetreten:\n\n"
 
 }

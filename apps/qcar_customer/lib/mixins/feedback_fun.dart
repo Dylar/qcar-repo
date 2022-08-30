@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/network/network_service.dart';
 import 'package:qcar_customer/service/upload_service.dart';
 import 'package:qcar_customer/ui/notify/dialog.dart';
@@ -9,6 +10,7 @@ mixin FeedbackFun implements FeedbackViewModel {
   UploadService get uploadService;
 
   Future Function(Function(BuildContext)) get openDialog;
+
   Future Function(Function(BuildContext)) get showSnackBar;
 
   Future sendFeedback(String text) async {
@@ -18,8 +20,11 @@ mixin FeedbackFun implements FeedbackViewModel {
         showSnackBar(feedbackSendSnackBar);
         break;
       default:
-        openDialog((context) =>
-            openErrorDialog(context, response.error ?? "EMPTY ERROR"));
+        openDialog((context) {
+          final l10n = AppLocalizations.of(context)!;
+          final error = l10n.feedbackError + (response.error ?? "EMPTY ERROR");
+          return openErrorDialog(context, error);
+        });
         break;
     }
   }

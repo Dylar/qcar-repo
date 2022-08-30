@@ -11,6 +11,9 @@ class TestAppLocalization {
 
   final Map<String, dynamic> _values;
 
+  //------DIALOG
+  String get errorTitle => _values["errorTitle"];
+
   //------BUTTONS
   String get send => _values["send"];
   String get cancel => _values["cancel"];
@@ -26,4 +29,5 @@ class TestAppLocalization {
 
   //--------FEEDBACK
   String get feedbackThanks => _values["feedbackThanks"];
+  String get feedbackError => _values["feedbackError"];
 }
