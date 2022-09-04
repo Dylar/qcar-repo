@@ -10,7 +10,6 @@ import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/player_config.dart';
 import 'package:qcar_customer/core/navigation/app_router.dart';
-import 'package:qcar_customer/core/network/firestore_client.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/network/server_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
@@ -49,7 +48,8 @@ class AppInfrastructure {
     final carSource = carInfoDataSource ?? CarInfoDS(db);
     final sellSource = sellInfoDataSource ?? SellInfoDS(db);
     final settingsSource = settingsDataSource ?? SettingsDS(db);
-    final downClient = downloadClient ?? FirestoreClient();
+    final downClient = downloadClient ?? ServerClient();
+    //TODO make this not doppelt
     final upClient = uploadClient ?? ServerClient();
     final authService =
         authenticationService ?? AuthenticationService(FirebaseAuth.instance);

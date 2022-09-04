@@ -20,6 +20,7 @@ class Request {
     Map<String, String>? header,
     this.body,
     this.queryParam,
+    this.urlPath,
   }) : this.header = header ?? _defaultHeaders();
 
   final RequestType requestType;
@@ -27,6 +28,7 @@ class Request {
   final Map<String, String> header;
   final String? body;
   final Map<String, String>? queryParam;
+  final List<String>? urlPath;
 }
 
 enum ResponseStatus { OK, NOT_FOUND, ERROR, NO_RESPONSE, UNKNOWN }
@@ -34,9 +36,11 @@ enum ResponseStatus { OK, NOT_FOUND, ERROR, NO_RESPONSE, UNKNOWN }
 class Response {
   Response(this.status, {this.jsonMap});
 
+  Response.ok({Map<String, dynamic>? jsonMap})
+      : this(ResponseStatus.OK, jsonMap: jsonMap);
+
   Response.error(String error)
-      : status = ResponseStatus.ERROR,
-        jsonMap = {"error": error};
+      : this(ResponseStatus.ERROR, jsonMap: {"error": error});
 
   final ResponseStatus status;
   final Map<String, dynamic>? jsonMap;
@@ -51,7 +55,8 @@ class NetworkService {
     try {
       final service = NetworkService._();
       final _header = request.header;
-      final _url = service._concatUrl(request.url, request.queryParam);
+      String _url = service._concatUrlParams(request.url, request.queryParam);
+      _url = service._concatUrl(_url, request.urlPath);
 
       final response = await service._createRequest(
           requestType: request.requestType,
@@ -82,7 +87,15 @@ class NetworkService {
     }
   }
 
-  String _concatUrl(String url, Map<String, String>? queryParameters) {
+  String _concatUrl(String url, List<String>? urlPath) {
+    if (url.isEmpty || urlPath == null || urlPath.isEmpty) {
+      return url;
+    }
+    urlPath.forEach((path) => url += "/$path");
+    return url;
+  }
+
+  String _concatUrlParams(String url, Map<String, String>? queryParameters) {
     if (url.isEmpty || queryParameters == null || queryParameters.isEmpty) {
       return url;
     }

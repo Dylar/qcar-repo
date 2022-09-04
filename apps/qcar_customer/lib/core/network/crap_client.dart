@@ -7,6 +7,7 @@ import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/logger.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
+import 'package:qcar_customer/core/network/network_service.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/models/schema_validator.dart';
@@ -124,7 +125,7 @@ class CrapClient implements DownloadClient {
     return dirs;
   }
 
-  Future<CarInfo> loadCarInfo(SellInfo info) async {
+  Future<Response> loadCarInfo(SellInfo info) async {
     final brand = info.brand;
     final model = info.model;
     Logger.logI("Load car: $brand, $model");
@@ -141,7 +142,7 @@ class CrapClient implements DownloadClient {
     final car = CarInfo.fromMap(json);
     car.categories.addAll(await _loadCategories(rootDir));
     _addDataPath(car.brand, car.model, "", car.categories);
-    return car;
+    return Response.ok(jsonMap: car.toMap());
   }
 
   Future<List<CategoryInfo>> _loadCategories(DirData data) async {
@@ -240,7 +241,7 @@ class CrapClient implements DownloadClient {
   }
 
   @override
-  Future<SellInfo> loadSellInfo(SellKey key) {
+  Future<Response> loadSellInfo(SellKey key) {
     throw UnimplementedError();
   }
 }

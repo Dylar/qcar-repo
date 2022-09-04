@@ -4,6 +4,7 @@ import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/logger.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
+import 'package:qcar_customer/core/network/network_service.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/models/sell_key.dart';
@@ -66,12 +67,18 @@ class InfoService {
 
   Future<SellInfo> _loadSellInfo(String scan) async {
     final key = SellKey.fromScan(scan);
-    return await _loadClient.loadSellInfo(key);
+    final response = await _loadClient.loadSellInfo(key);
+    if (response.status == ResponseStatus.OK) {
+      return SellInfo.fromMap(response.jsonMap!);
+    } //TODO on error
+    throw Exception("ERROR ON SELL INFO LOAD");
   }
 
   Future _loadCarInfo(SellInfo info) async {
     final car = await _loadClient.loadCarInfo(info);
-    await carInfoDataSource.addCarInfo(car);
+    if (car.status == ResponseStatus.OK) {
+      await carInfoDataSource.addCarInfo(CarInfo.fromMap(car.jsonMap!));
+    } //TODO on error
   }
 
   Future refreshCarInfos() async {

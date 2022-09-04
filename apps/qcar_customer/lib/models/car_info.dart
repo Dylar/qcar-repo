@@ -28,7 +28,7 @@ class CarInfo extends HiveObject {
         FIELD_BRAND: brand,
         FIELD_MODEL: model,
         FIELD_IMAGE_PATH: imagePath,
-        FIELD_CATEGORIES: categories,
+        FIELD_CATEGORIES: categories.map((e) => e.toMap()).toList(),
       };
 
   String toJson() => jsonEncode(toMap());

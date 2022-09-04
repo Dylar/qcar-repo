@@ -42,14 +42,14 @@ DownloadClient mockDownloadClient() {
         vid.model = car.model;
       });
     });
-    return car;
+    return Response.ok(jsonMap: car.toMap());
   });
 
   when(client.loadSellInfo(any)).thenAnswer((inv) async {
     final key = inv.positionalArguments[0] as SellKey;
     final sellInfo = await buildSellInfo();
     if (sellInfo.key == key.key) {
-      return sellInfo;
+      return Response.ok(jsonMap: sellInfo.toMap());
     }
     throw Exception("WRONG KEY");
   });

@@ -4,8 +4,8 @@ import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
-import 'package:qcar_customer/core/network/firestore_client.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
+import 'package:qcar_customer/core/network/server_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
 import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/service/settings_service.dart';
@@ -47,8 +47,9 @@ class Services extends InheritedWidget {
     assert(settingsService != null);
 
     final database = db ?? AppDatabase();
-    final downClient = downloadClient ?? FirestoreClient();
-    final upClient = uploadClient ?? FirestoreClient();
+    final downClient = downloadClient ?? ServerClient();
+    //TODO make this not doppelt
+    final upClient = uploadClient ?? ServerClient();
     return Services(
       loadClient: downClient,
       uploadService: uploadService ?? UploadService(settingsService!, upClient),

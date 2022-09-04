@@ -44,7 +44,7 @@ class CategoryInfo extends HiveObject {
         FIELD_ORDER: order,
         FIELD_DESC: description,
         FIELD_IMAGE_PATH: imagePath,
-        FIELD_VIDEOS: videos,
+        FIELD_VIDEOS: videos.map((e) => e.toMap()).toList(),
       };
 
   String toJson() => jsonEncode(toMap());

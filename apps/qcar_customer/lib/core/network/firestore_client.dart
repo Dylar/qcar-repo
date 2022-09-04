@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/core/network/endpoints.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
@@ -14,7 +13,7 @@ import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/models/sell_key.dart';
 import 'package:qcar_customer/models/video_info.dart';
 
-const bool TOGGLE_LOAD_EVERY = false;
+const bool LOAD_EVERYTHING = false;
 
 class FirestoreClient implements DownloadClient, UploadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
@@ -50,7 +49,7 @@ class FirestoreClient implements DownloadClient, UploadClient {
   ) =>
       "$BACKEND_V1/dealer/$dealer/$seller/intros/${brand}_${model}";
 
-  Future<SellInfo> loadSellInfo(SellKey key) async {
+  Future<Response> loadSellInfo(SellKey key) async {
     // final response = await NetworkService.sendRequest(
     //     requestType: RequestType.get, url: EnvironmentConfig.backendUrl);
 
@@ -69,20 +68,21 @@ class FirestoreClient implements DownloadClient, UploadClient {
         .asyncMap<Map<String, dynamic>>((event) async => await event.data()!)
         .asyncMap<String>((map) async => map[FIELD_FILE_PATH])
         .first;
-    return sellInfo
-      ..introFilePath =
-          "https://${EnvironmentConfig.domain}/videos/${sellInfo.brand}/${sellInfo.model}/${intro}";
+    sellInfo.introFilePath = intro;
+    fixSell(sellInfo);
+
+    return Response.ok(jsonMap: sellInfo.toMap());
   }
 
-  Future<CarInfo> loadCarInfo(SellInfo info) async {
+  Future<Response> loadCarInfo(SellInfo info) async {
     try {
-      if (TOGGLE_LOAD_EVERY) {
-        return await _getCarDELETEME(info.brand, info.model);
-      }
-      return await _getCar(info);
+      CarInfo car = LOAD_EVERYTHING
+          ? await _getCarDELETEME(info.brand, info.model)
+          : await _getCar(info);
+      return Response.ok(jsonMap: car.toMap());
     } catch (e) {
       print("error: ${e}");
-      throw e;
+      return Response.error(e.toString());
     }
   }
 
@@ -95,8 +95,7 @@ class FirestoreClient implements DownloadClient, UploadClient {
         .asyncMap<CarInfo>((map) async => CarInfo.fromMap(map))
         .asyncMap<CarInfo>(
       (car) async {
-        //TODO fix me in DB
-        car.imagePath = "${car.brand}/${car.model}/${car.imagePath}";
+        fixCar(car);
         for (final catName in info.videos.keys) {
           final category = await _getCategory(info, catName);
           car.categories.add(category);
@@ -121,9 +120,7 @@ class FirestoreClient implements DownloadClient, UploadClient {
         .asyncMap<CategoryInfo>((map) async => CategoryInfo.fromMap(map))
         .asyncMap<CategoryInfo>(
       (category) async {
-        //TODO fix me in DB
-        category.imagePath =
-            "${category.brand}/${category.model}/${category.name}/${category.imagePath}";
+        fixCategory(category);
 
         return category;
       },
@@ -139,11 +136,7 @@ class FirestoreClient implements DownloadClient, UploadClient {
         .asyncMap<VideoInfo>((map) async => VideoInfo.fromMap(map))
         .asyncMap<VideoInfo>(
       (video) async {
-        //TODO fix me in DB
-        video.filePath =
-            "${video.brand}/${video.model}/${video.category}/${video.name}/${video.filePath}";
-        video.imagePath =
-            "${video.brand}/${video.model}/${video.category}/${video.name}/${video.imagePath}";
+        fixVideo(video);
         return video;
       },
     ).first;
@@ -156,7 +149,7 @@ class FirestoreClient implements DownloadClient, UploadClient {
         .asyncMap<CarInfo>(
       (event) async {
         final car = CarInfo.fromMap(await event.data()!);
-        car.imagePath = "${car.brand}/${car.model}/${car.imagePath}";
+        fixCar(car);
         car.categories.addAll(await _getCategoriesDELETEME(car));
         return car;
       },
@@ -179,10 +172,7 @@ class FirestoreClient implements DownloadClient, UploadClient {
                 final data = await event.data()!;
                 final category = CategoryInfo.fromMap(data);
                 category.videos.addAll(await _getVideosDELETEME(category));
-                //TODO fix path
-                category.imagePath =
-                    "${category.brand}/${category.model}/${category.name}/${category.imagePath}";
-
+                fixCategory(category);
                 progressValue.value =
                     Tuple(maxProgress, progressValue.value.secondOrThrow + 1);
                 return category;
@@ -206,11 +196,7 @@ class FirestoreClient implements DownloadClient, UploadClient {
                 (event) async {
                   final data = await event.data()!;
                   final video = VideoInfo.fromMap(data);
-                  //TODO fix path
-                  video.filePath =
-                      "${video.brand}/${video.model}/${video.category}/${video.name}/${video.filePath}";
-                  video.imagePath =
-                      "${video.brand}/${video.model}/${video.category}/${video.name}/${video.imagePath}";
+                  fixVideo(video);
                   return video;
                 },
               ).first;
