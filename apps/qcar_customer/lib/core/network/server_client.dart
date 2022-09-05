@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
-import 'package:qcar_customer/core/network/endpoints.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/network/network_service.dart';
+import 'package:qcar_customer/core/network/urls.dart';
 import 'package:qcar_customer/models/Feedback.dart' as fb;
 import 'package:qcar_customer/models/Tracking.dart';
 import 'package:qcar_customer/models/car_info.dart';

@@ -1,5 +1,6 @@
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/mixins/feedback_fun.dart';
+import 'package:qcar_customer/mixins/scan_fun.dart';
 import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/service/upload_service.dart';

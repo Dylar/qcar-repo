@@ -6,8 +6,8 @@ import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
-import 'package:qcar_customer/ui/screens/categories/categories_list_item.dart';
-import 'package:qcar_customer/ui/viewmodels/categories_vm.dart';
+import 'package:qcar_customer/ui/screens/cars/categories_list_item.dart';
+import 'package:qcar_customer/ui/screens/cars/categories_vm.dart';
 import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
 
 class CategoriesPage extends View<CategoriesViewModel> {

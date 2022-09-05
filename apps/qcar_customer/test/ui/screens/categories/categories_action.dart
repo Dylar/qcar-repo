@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qcar_customer/core/app.dart';
 import 'package:qcar_customer/models/car_info.dart';
-import 'package:qcar_customer/ui/screens/categories/categories_page.dart';
+import 'package:qcar_customer/ui/screens/cars/categories_page.dart';
 
 import '../../../builder/app_builder.dart';
 import '../../../builder/entity_builder.dart';

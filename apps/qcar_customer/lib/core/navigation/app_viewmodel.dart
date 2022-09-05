@@ -103,10 +103,14 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
       routes.listen((spec) => Navigate.to(context, spec));
 }
 
-abstract class ViewModel with ScreenUpdater {
+abstract class ViewModel {
   ViewModel();
 
   late StreamController<AppRouteSpec> _routeController;
+
+  late void Function() notifyListeners;
+  late Future Function(Function(BuildContext)) openDialog;
+  late Future Function(Function(BuildContext)) showSnackBar;
 
   /// This method is executed exactly once for each State object Flutter's
   /// framework creates.
@@ -140,12 +144,6 @@ abstract class ViewModel with ScreenUpdater {
   void navigateTo(AppRouteSpec routeSpec) {
     _routeController.sink.add(routeSpec);
   }
-}
-
-mixin ScreenUpdater {
-  late void Function() notifyListeners;
-  late Future Function(Function(BuildContext)) openDialog;
-  late Future Function(Function(BuildContext)) showSnackBar;
 }
 
 mixin Initializer {

@@ -5,9 +5,9 @@ import 'package:qcar_customer/core/navigation/app_navigation.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/models/car_info.dart';
-import 'package:qcar_customer/ui/screens/cars/car_info_list_item.dart';
-import 'package:qcar_customer/ui/screens/categories/categories_page.dart';
-import 'package:qcar_customer/ui/viewmodels/car_overview_vm.dart';
+import 'package:qcar_customer/ui/screens/cars/cars_list_item.dart';
+import 'package:qcar_customer/ui/screens/cars/cars_vm.dart';
+import 'package:qcar_customer/ui/screens/cars/categories_page.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
 import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
 

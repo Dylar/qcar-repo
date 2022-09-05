@@ -4,8 +4,8 @@ import 'package:qcar_customer/core/asset_paths.dart';
 import 'package:qcar_customer/core/navigation/app_navigation.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
-import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
-import 'package:qcar_customer/ui/viewmodels/home_vm.dart';
+import 'package:qcar_customer/ui/screens/home/home_vm.dart';
+import 'package:qcar_customer/ui/widgets/deco.dart';
 import 'package:qcar_customer/ui/widgets/info_widget.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
 

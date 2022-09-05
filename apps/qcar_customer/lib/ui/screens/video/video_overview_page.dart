@@ -8,7 +8,7 @@ import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:qcar_customer/ui/screens/video/video_list_item.dart';
-import 'package:qcar_customer/ui/viewmodels/video_overview_vm.dart';
+import 'package:qcar_customer/ui/screens/video/video_overview_vm.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
 import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
 

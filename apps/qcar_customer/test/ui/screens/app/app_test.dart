@@ -10,7 +10,7 @@ import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
 import 'package:qcar_customer/service/settings_service.dart';
 import 'package:qcar_customer/service/upload_service.dart';
-import 'package:qcar_customer/ui/screens/categories/categories_page.dart';
+import 'package:qcar_customer/ui/screens/cars/categories_page.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';

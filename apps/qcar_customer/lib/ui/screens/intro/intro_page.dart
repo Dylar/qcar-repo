@@ -3,9 +3,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
-import 'package:qcar_customer/service/info_service.dart';
+import 'package:qcar_customer/mixins/scan_fun.dart';
+import 'package:qcar_customer/ui/screens/intro/intro_vm.dart';
 import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
-import 'package:qcar_customer/ui/viewmodels/intro_vm.dart';
 import 'package:qcar_customer/ui/widgets/debug/debug_skip_button.dart';
 import 'package:qcar_customer/ui/widgets/qr_camera_view.dart';
 
@@ -36,26 +36,11 @@ class _IntroScanPageState extends ViewState<IntroPage, IntroViewModel> {
   }
 
   Widget _buildBody(BuildContext context, AppLocalizations l10n) {
-    String status = "";
-    switch (viewModel.qrState) {
-      case QrScanState.NEW:
-      case QrScanState.OLD:
-        break;
-      case QrScanState.DAFUQ:
-        status = l10n.introPageMessageError;
-        break;
-      case QrScanState.WAITING:
-        status = l10n.introPageMessage;
-        break;
-      case QrScanState.SCANNING:
-        status = l10n.introPageMessageScanning;
-        break;
-    }
     return Column(
       children: <Widget>[
         Expanded(
           flex: 1,
-          child: Center(child: Text(status)),
+          child: Center(child: Text(_statusText(l10n))),
         ),
         Expanded(
           flex: 7,
@@ -72,5 +57,24 @@ class _IntroScanPageState extends ViewState<IntroPage, IntroViewModel> {
         if (EnvironmentConfig.isDev) SkipDebugButton(viewModel.onScan),
       ],
     );
+  }
+
+  String _statusText(AppLocalizations l10n) {
+    String status = "";
+    switch (viewModel.qrState) {
+      case QrScanState.NEW:
+      case QrScanState.OLD:
+        break;
+      case QrScanState.DAFUQ:
+        status = l10n.introPageMessageError;
+        break;
+      case QrScanState.WAITING:
+        status = l10n.introPageMessage;
+        break;
+      case QrScanState.SCANNING:
+        status = l10n.introPageMessageScanning;
+        break;
+    }
+    return status;
   }
 }

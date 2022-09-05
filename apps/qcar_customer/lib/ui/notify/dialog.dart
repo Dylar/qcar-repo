@@ -8,7 +8,7 @@ Future openErrorDialog(BuildContext context, String error) {
     context: context,
     builder: (context) {
       final l10n = AppLocalizations.of(context)!;
-      return InfoDialog(
+      return InfoDialog.asError(
         title: l10n.errorTitle,
         message: error,
         closeButtonText: l10n.ok,

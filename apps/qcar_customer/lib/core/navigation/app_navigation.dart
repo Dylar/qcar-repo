@@ -8,7 +8,7 @@ import 'package:qcar_customer/ui/notify/dialog.dart';
 import 'package:qcar_customer/ui/notify/feedback_dialog.dart';
 import 'package:qcar_customer/ui/notify/snackbars.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
-import 'package:qcar_customer/ui/screens/categories/categories_page.dart';
+import 'package:qcar_customer/ui/screens/cars/categories_page.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_page.dart';

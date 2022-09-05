@@ -3,7 +3,7 @@ import 'package:qcar_customer/core/navigation/app_navigation.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/models/video_info.dart';
-import 'package:qcar_customer/ui/viewmodels/video_vm.dart';
+import 'package:qcar_customer/ui/screens/video/video_vm.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
 class VideoPage extends View<VideoViewModel> {

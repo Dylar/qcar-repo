@@ -68,6 +68,13 @@ final ThemeData appTheme = ThemeData(
       borderSide: BorderSide(color: BaseColors.lightGrey, width: 2.0),
     ),
   ),
+  dialogTheme: DialogTheme(
+    backgroundColor: BaseColors.primary,
+    titleTextStyle: TextStyle(
+        fontWeight: FontWeight.w500, //TODO make this anders
+        fontSize: 16,
+        color: BaseColors.veryLightGrey),
+  ),
   bottomAppBarTheme: BottomAppBarTheme(color: BaseColors.primary),
   unselectedWidgetColor: BaseColors.grey,
   cardTheme: CardTheme(color: BaseColors.accent),

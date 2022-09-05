@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
+import 'package:qcar_customer/ui/screens/intro/landing_vm.dart';
 import 'package:qcar_customer/ui/screens/intro/loading_page.dart';
-import 'package:qcar_customer/ui/viewmodels/landing_vm.dart';
 
 class LandingPage extends View<LandingViewModel> {
   static const String routeName = "/";

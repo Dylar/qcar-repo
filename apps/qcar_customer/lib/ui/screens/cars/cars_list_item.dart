@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/models/car_info.dart';
-import 'package:qcar_customer/ui/widgets/error_builder.dart';
+import 'package:qcar_customer/ui/widgets/pic_widget.dart';
 
 import '../../../core/constants/debug.dart';
 
@@ -19,7 +19,7 @@ class CarInfoListItem extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(4.0),
-            child: CarInfoPic(DEBUG_PIC_URL),
+            child: PicWidget(DEBUG_PIC_URL),
           ),
           Spacer(flex: 5),
           Expanded(
@@ -36,41 +36,6 @@ class CarInfoListItem extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class CarInfoPic extends StatelessWidget {
-  const CarInfoPic(this.url);
-
-  final String url;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 60,
-      height: 80,
-      child: Image.network(
-        url,
-        loadingBuilder: loadingWidget,
-        errorBuilder: buildImageError,
-      ),
-    );
-  }
-
-  Widget loadingWidget(
-    BuildContext context,
-    Widget child,
-    ImageChunkEvent? loadingProgress,
-  ) {
-    if (loadingProgress == null) return child;
-    return Center(
-      child: CircularProgressIndicator(
-        value: loadingProgress.expectedTotalBytes != null
-            ? loadingProgress.cumulativeBytesLoaded /
-                loadingProgress.expectedTotalBytes!
-            : null,
       ),
     );
   }
