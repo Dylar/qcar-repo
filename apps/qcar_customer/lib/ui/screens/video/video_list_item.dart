@@ -3,8 +3,8 @@ import 'package:qcar_customer/core/app_theme.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:qcar_customer/ui/screens/video/video_page.dart';
-import 'package:qcar_customer/ui/widgets/error_builder.dart';
 import 'package:qcar_customer/ui/widgets/highlight_text.dart';
+import 'package:qcar_customer/ui/widgets/pic_widget.dart';
 
 class VideoInfoListItem extends StatelessWidget {
   const VideoInfoListItem(this.video, {this.highlight = ""});
@@ -31,7 +31,7 @@ class VideoInfoListItem extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: CarInfoPic(video.picUrl),
+                child: PicWidget(video.picUrl),
               ),
               Spacer(flex: 5),
               Expanded(
@@ -45,41 +45,6 @@ class VideoInfoListItem extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class CarInfoPic extends StatelessWidget {
-  const CarInfoPic(this.url);
-
-  final String url;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 60,
-      height: 80,
-      child: Image.network(
-        url,
-        loadingBuilder: loadingWidget,
-        errorBuilder: buildImageError,
-      ),
-    );
-  }
-
-  Widget loadingWidget(
-    BuildContext context,
-    Widget child,
-    ImageChunkEvent? loadingProgress,
-  ) {
-    if (loadingProgress == null) return child;
-    return Center(
-      child: CircularProgressIndicator(
-        value: loadingProgress.expectedTotalBytes != null
-            ? loadingProgress.cumulativeBytesLoaded /
-                loadingProgress.expectedTotalBytes!
-            : null,
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
-import 'package:qcar_customer/mixins/feedback_fun.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
 abstract class VideoViewModel extends ViewModel

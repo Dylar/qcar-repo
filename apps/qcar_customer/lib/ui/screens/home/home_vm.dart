@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:qcar_customer/core/logger.dart';
 import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
-import 'package:qcar_customer/mixins/feedback_fun.dart';
 import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
 abstract class HomeViewModel extends ViewModel
