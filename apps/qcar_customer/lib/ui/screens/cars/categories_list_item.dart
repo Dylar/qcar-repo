@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/app_theme.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/ui/widgets/pic_widget.dart';
+import 'package:qcar_customer/ui/widgets/rounded_widget.dart';
 
 class CategoryListItem extends StatelessWidget {
   const CategoryListItem(this.category);
@@ -16,14 +17,7 @@ class CategoryListItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Container(
-              margin: const EdgeInsets.all(4.0),
-              padding: const EdgeInsets.all(4.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: BaseColors.babyBlue),
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-              ),
-              child: PicWidget(category.picUrl)),
+          RoundedWidget(child: PicWidget(category.picUrl)),
           Spacer(flex: 5),
           Expanded(
             flex: 95,

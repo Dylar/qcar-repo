@@ -9,62 +9,36 @@ import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/models/sell_key.dart';
 import 'package:qcar_customer/models/video_info.dart';
-import 'package:qcar_customer/ui/mixins/scan_fun.dart';
 
 class InfoService {
   InfoService(
     this._loadClient,
-    this.carInfoDataSource,
+    this._carInfoDataSource,
     this._sellInfoDataSource,
   );
 
   final DownloadClient _loadClient;
-  final CarInfoDataSource carInfoDataSource; //TODO private
+  final CarInfoDataSource _carInfoDataSource;
   final SellInfoDataSource _sellInfoDataSource;
 
   ValueNotifier<Tuple<double, double>> get progressValue =>
       _loadClient.progressValue;
 
-  Stream<List<CarInfo>> watchCarInfo() => carInfoDataSource.watchCarInfo();
-
-  Future<bool> _isOldCar(String brand, String model) async {
-    final allCars = await carInfoDataSource.getAllCars();
-    return allCars.any((car) => car.brand == brand && car.model == model);
-  }
+  Future<List<CarInfo>> getAllCars() => _carInfoDataSource.getAllCars();
+  Stream<List<CarInfo>> watchCarInfo() => _carInfoDataSource.watchCarInfo();
 
   Future<bool> hasCars() async {
-    final List<CarInfo> cars = await carInfoDataSource.getAllCars();
-    if (cars.isEmpty) {
-      return false;
-    }
-    return true;
+    final List<CarInfo> cars = await _carInfoDataSource.getAllCars();
+    return cars.isNotEmpty;
   }
 
   Future<String> getIntroVideo() async {
+    //TODO put into sellInfo
     final sells = await _sellInfoDataSource.getAllSellInfos();
     return sells.first.introFilePath;
   }
 
-  Future<Tuple<QrScanState, SellInfo>> onNewScan(String scan) async {
-    Logger.logI("scan: $scan");
-    try {
-      final sellInfo = await _loadSellInfo(scan);
-
-      final isOldCar = await _isOldCar(sellInfo.brand, sellInfo.model);
-      if (isOldCar) {
-        return Tuple(QrScanState.OLD, sellInfo);
-      } else {
-        await _loadCarInfo(sellInfo);
-        await _sellInfoDataSource.addSellInfo(sellInfo);
-        return Tuple(QrScanState.NEW, sellInfo);
-      }
-    } on Exception catch (e) {
-      Logger.logE("scan error: ${e.toString()}");
-    }
-    return Tuple(QrScanState.DAFUQ, null);
-  }
-
-  Future<SellInfo> _loadSellInfo(String scan) async {
+  Future<SellInfo> loadSellInfo(String scan) async {
     final key = SellKey.fromScan(scan);
     final response = await _loadClient.loadSellInfo(key);
     if (response.status == ResponseStatus.OK) {
@@ -73,22 +47,31 @@ class InfoService {
     throw Exception("ERROR ON SELL INFO LOAD");
   }
 
-  Future _loadCarInfo(SellInfo info) async {
+  Future loadCarInfo(SellInfo info) async {
     final car = await _loadClient.loadCarInfo(info);
     if (car.status == ResponseStatus.OK) {
-      await carInfoDataSource.addCarInfo(CarInfo.fromMap(car.jsonMap!));
+      await _carInfoDataSource.addCarInfo(CarInfo.fromMap(car.jsonMap!));
     } //TODO on error
+  }
+
+  Future<bool> isOldCar(String brand, String model) async {
+    final allCars = await _carInfoDataSource.getAllCars();
+    return allCars.any((car) => car.brand == brand && car.model == model);
   }
 
   Future refreshCarInfos() async {
     final infos = await _sellInfoDataSource.getAllSellInfos();
     for (final info in infos) {
       Logger.logI("Refresh Car: ${info.brand} ${info.model}");
-      return await _loadCarInfo(info);
+      return await loadCarInfo(info);
     }
   }
 
   Future<List<VideoInfo>> searchVideo(String query) async {
-    return await carInfoDataSource.findVideos(query);
+    return await _carInfoDataSource.findVideos(query);
+  }
+
+  Future upsertSellInfo(SellInfo sellInfo) async {
+    _sellInfoDataSource.addSellInfo(sellInfo);
   }
 }

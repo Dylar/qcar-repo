@@ -56,3 +56,8 @@ void feedbackSendSnackBar(BuildContext context) {
   final l10n = AppLocalizations.of(context)!;
   showSnackBar(context, l10n.feedbackThanks, duration: 2);
 }
+
+void oldCarScannedSnackBar(BuildContext context) {
+  final l10n = AppLocalizations.of(context)!;
+  showSnackBar(context, l10n.oldCarScanned, duration: 2);
+}

@@ -4,6 +4,7 @@ import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/models/video_info.dart';
 import 'package:qcar_customer/ui/screens/video/video_vm.dart';
+import 'package:qcar_customer/ui/widgets/rounded_widget.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
 class VideoPage extends View<VideoViewModel> {
@@ -36,24 +37,29 @@ class _VideoPageState extends ViewState<VideoPage, VideoViewModel> {
       appBar: AppBar(title: Text(viewModel.title)),
       body: Column(
         children: [
-          Flexible(child: VideoWidget(viewModel: viewModel)),
           Expanded(
+            flex: 40,
+            child: RoundedWidget(child: VideoWidget(viewModel: viewModel)),
+          ),
+          Spacer(flex: 10),
+          Flexible(
+            flex: 40,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
                 elevation: 4,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      viewModel.description,
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    viewModel.description,
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),
               ),
             ),
           ),
+          Spacer(flex: 10),
         ],
       ),
       bottomNavigationBar: AppNavigation(viewModel, VideoPage.routeName),

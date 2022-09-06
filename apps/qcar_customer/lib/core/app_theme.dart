@@ -25,7 +25,9 @@ const TextTheme textSizes = TextTheme(
     subtitle2: TextStyle(fontSize: 16.0, letterSpacing: 0.25),
     caption: TextStyle(fontSize: 12.0),
     button: TextStyle(fontSize: 14, letterSpacing: 1.25),
-    headline6: TextStyle(letterSpacing: 0.25, fontSize: 20.0));
+    headline6: TextStyle(letterSpacing: 0.25, fontSize: 20.0),
+    headline5: TextStyle(letterSpacing: 0.25, fontSize: 18.0),
+    headline4: TextStyle(letterSpacing: 0.25, fontSize: 16.0));
 
 const TextTheme textColors = TextTheme(
     bodyText1: TextStyle(color: BaseColors.veryLightGrey),
@@ -70,10 +72,7 @@ final ThemeData appTheme = ThemeData(
   ),
   dialogTheme: DialogTheme(
     backgroundColor: BaseColors.primary,
-    titleTextStyle: TextStyle(
-        fontWeight: FontWeight.w500, //TODO make this anders
-        fontSize: 16,
-        color: BaseColors.veryLightGrey),
+    titleTextStyle: textSizes.merge(primaryTextColors).headline6,
   ),
   bottomAppBarTheme: BottomAppBarTheme(color: BaseColors.primary),
   unselectedWidgetColor: BaseColors.grey,

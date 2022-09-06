@@ -116,10 +116,7 @@ class _AppNavigationState extends State<AppNavigation> {
         break;
       case CarsPage.routeName:
         Logger.logI("Videos tapped");
-        final cars = await Services.of(context)!
-            .infoService
-            .carInfoDataSource
-            .getAllCars();
+        final cars = await Services.of(context)!.infoService.getAllCars();
         if (cars.length == 1) {
           routeSpec = CategoriesPage.pushIt(cars.first);
         } else {

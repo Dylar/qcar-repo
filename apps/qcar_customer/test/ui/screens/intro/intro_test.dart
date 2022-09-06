@@ -21,9 +21,9 @@ void main() {
     await loadApp(tester);
 
     final l10n = await getTestL10n();
-    expect(find.text(l10n.introPageMessageError), findsNothing);
+    expect(find.text(l10n.scanError), findsNothing);
     await scanOnIntroPage(tester, "Bullshit");
-    expect(find.text(l10n.introPageMessageError), findsOneWidget);
+    expect(find.text(l10n.scanError), findsOneWidget);
   });
 
   testWidgets('Load app - scan wrong json - show error',
@@ -31,9 +31,9 @@ void main() {
     await loadApp(tester);
 
     final l10n = await getTestL10n();
-    expect(find.text(l10n.introPageMessageError), findsNothing);
+    expect(find.text(l10n.scanError), findsNothing);
     await scanOnIntroPage(tester, "{}");
-    expect(find.text(l10n.introPageMessageError), findsOneWidget);
+    expect(find.text(l10n.scanError), findsOneWidget);
   });
 
   testWidgets('Load app - show intro page - scan key - show home page',

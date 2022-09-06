@@ -33,7 +33,6 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
     Logger.logI('initState $_sanitisedRoutePageName');
     super.initState();
     viewModel.init();
-    listenToRoutesSpecs(viewModel._routeController.stream);
   }
 
   @mustCallSuper
@@ -50,6 +49,7 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
     viewModel.notifyListeners = () => this.setState(() {});
     viewModel.openDialog = (fun) async => fun(context);
     viewModel.showSnackBar = (fun) async => fun(context);
+    viewModel.navigateTo = (spec) => Navigate.to(context, spec);
   }
 
   @mustCallSuper
@@ -94,38 +94,26 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
     Logger.logI('🚚 $_sanitisedRoutePageName didPushNext');
     viewModel.routingDidPushNext();
   }
-
-  /// Listens to the stream and automatically routes users according to the
-  /// route spec.
-  StreamSubscription<AppRouteSpec> listenToRoutesSpecs(
-    Stream<AppRouteSpec> routes,
-  ) =>
-      routes.listen((spec) => Navigate.to(context, spec));
 }
 
 abstract class ViewModel {
   ViewModel();
 
-  late StreamController<AppRouteSpec> _routeController;
-
   late void Function() notifyListeners;
+  late void Function(AppRouteSpec) navigateTo;
   late Future Function(Function(BuildContext)) openDialog;
   late Future Function(Function(BuildContext)) showSnackBar;
 
   /// This method is executed exactly once for each State object Flutter's
   /// framework creates.
   @mustCallSuper
-  void init() {
-    _routeController = StreamController();
-  }
+  void init() {}
 
   ///  This method is executed whenever the Widget's Stateful State gets
   /// disposed. It might happen a few times, always matching the amount of times
   /// `init` is called.
   @mustCallSuper
-  void dispose() {
-    _routeController.close();
-  }
+  void dispose() {}
 
   /// Called when the top route has been popped off, and the current route
   /// shows up.
@@ -140,10 +128,6 @@ abstract class ViewModel {
   /// Called when a new route has been pushed, and the current route is no
   /// longer visible.
   void routingDidPushNext() {}
-
-  void navigateTo(AppRouteSpec routeSpec) {
-    _routeController.sink.add(routeSpec);
-  }
 }
 
 mixin Initializer {

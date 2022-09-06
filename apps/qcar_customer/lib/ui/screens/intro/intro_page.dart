@@ -38,21 +38,12 @@ class _IntroScanPageState extends ViewState<IntroPage, IntroViewModel> {
   Widget _buildBody(BuildContext context, AppLocalizations l10n) {
     return Column(
       children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Center(child: Text(_statusText(l10n))),
-        ),
+        Expanded(child: Center(child: Text(_statusText(l10n)))),
         Expanded(
           flex: 7,
           child: viewModel.qrState == QrScanState.SCANNING
               ? AppLoadingIndicator(viewModel.progressValue)
-              : QRCameraView(
-                  (barcode) {
-                    setState(() {
-                      viewModel.onScan(barcode.code ?? "");
-                    });
-                  },
-                ),
+              : QRCameraView(viewModel.onScan),
         ),
         if (EnvironmentConfig.isDev) SkipDebugButton(viewModel.onScan),
       ],
@@ -65,10 +56,8 @@ class _IntroScanPageState extends ViewState<IntroPage, IntroViewModel> {
       case QrScanState.NEW:
       case QrScanState.OLD:
         break;
-      case QrScanState.DAFUQ:
-        status = l10n.introPageMessageError;
-        break;
       case QrScanState.WAITING:
+      case QrScanState.DAFUQ:
         status = l10n.introPageMessage;
         break;
       case QrScanState.SCANNING:

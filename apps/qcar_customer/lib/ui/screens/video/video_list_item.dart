@@ -5,6 +5,7 @@ import 'package:qcar_customer/models/video_info.dart';
 import 'package:qcar_customer/ui/screens/video/video_page.dart';
 import 'package:qcar_customer/ui/widgets/highlight_text.dart';
 import 'package:qcar_customer/ui/widgets/pic_widget.dart';
+import 'package:qcar_customer/ui/widgets/rounded_widget.dart';
 
 class VideoInfoListItem extends StatelessWidget {
   const VideoInfoListItem(this.video, {this.highlight = ""});
@@ -29,10 +30,7 @@ class VideoInfoListItem extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: PicWidget(video.picUrl),
-              ),
+              RoundedWidget(child: PicWidget(video.picUrl)),
               Spacer(flex: 5),
               Expanded(
                 flex: 95,

@@ -3,6 +3,10 @@
   "@_DIALOG": {},
   "errorTitle": "Fehler",
 
+  "@_SCAN": {},
+  "scanError": "Beim scannen ist ein Fehler aufgetreten.\nBitten scannen Sie erneut.",
+  "oldCarScanned": "Dieses Auto hast du schon registriert.",
+
   "@_BUTTONS": {},
   "ok": "Ok",
   "send": "Senden",

@@ -31,7 +31,7 @@ class InfoDialog extends StatelessWidget {
         content: Text(message),
         actions: <Widget>[
           TextButton(
-            style: TextButton.styleFrom(primary: BaseColors.primary),
+            style: TextButton.styleFrom(primary: BaseColors.veryLightGrey),
             child: Text(closeButtonText),
             onPressed: () => Navigate.pop(context),
           ),

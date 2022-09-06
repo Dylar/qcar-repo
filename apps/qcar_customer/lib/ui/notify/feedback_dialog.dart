@@ -50,7 +50,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
         ),
         actions: <Widget>[
           TextButton(
-            style: TextButton.styleFrom(primary: BaseColors.red),
+            style: TextButton.styleFrom(primary: BaseColors.lightGrey),
             child: Text(l10n.cancel),
             onPressed: () => Navigate.pop(context),
           ),

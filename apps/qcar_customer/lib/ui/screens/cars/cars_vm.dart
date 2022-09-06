@@ -16,6 +16,6 @@ class CarsVM extends CarsViewModel {
   InfoService infoService;
 
   Stream<List<CarInfo>> watchCars() {
-    return infoService.carInfoDataSource.watchCarInfo();
+    return infoService.watchCarInfo();
   }
 }

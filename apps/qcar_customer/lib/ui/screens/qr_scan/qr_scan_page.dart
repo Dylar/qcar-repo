@@ -37,49 +37,18 @@ class _QrScanPageState extends ViewState<QrScanPage, QRViewModel> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.qrScanPageTitle),
       ),
-      body: _buildBody(context),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: viewModel.qrState == QrScanState.SCANNING
+                ? VideoDownload()
+                : QRCameraView(viewModel.onScan),
+          ),
+          Expanded(child: Center(child: Text("Bitte einen QR Code scannen")))
+        ],
+      ),
       bottomNavigationBar: AppNavigation(viewModel, QrScanPage.routeName),
     );
-  }
-
-  Widget _buildBody(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          flex: 5,
-          child: viewModel.qrState == QrScanState.SCANNING
-              ? VideoDownload()
-              : QRCameraView(viewModel.onScan),
-        ),
-        Expanded(flex: 1, child: buildScanInfo())
-      ],
-    );
-  }
-
-  Widget buildScanInfo() {
-    final state = viewModel.qrState;
-    final carInfo = viewModel.sellInfo;
-    final barcode = viewModel.barcode;
-    String text;
-    switch (state) {
-      case QrScanState.NEW:
-        text = "Yeah neues Auto";
-        break;
-      case QrScanState.OLD:
-        text = 'Das Auto ${carInfo!.model} hast du schon';
-        break;
-      case QrScanState.DAFUQ:
-        text = barcode == null
-            ? "Unbekannter Fehler"
-            : 'Barcode Type: ${describeEnum(barcode.format)}\nData: ${barcode.code}';
-        break;
-      case QrScanState.WAITING:
-        text = 'Bitte einen QR Code scannen';
-        break;
-      case QrScanState.SCANNING:
-        text = 'Scanning...';
-        break;
-    }
-    return Center(child: Text(text));
   }
 }

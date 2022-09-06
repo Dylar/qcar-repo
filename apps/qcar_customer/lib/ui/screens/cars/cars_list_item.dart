@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/ui/widgets/pic_widget.dart';
+import 'package:qcar_customer/ui/widgets/rounded_widget.dart';
 
 import '../../../core/constants/debug.dart';
 
@@ -17,10 +18,7 @@ class CarInfoListItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: PicWidget(DEBUG_PIC_URL),
-          ),
+          RoundedWidget(child: PicWidget(DEBUG_PIC_URL)),
           Spacer(flex: 5),
           Expanded(
             flex: 95,

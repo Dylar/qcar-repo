@@ -18,6 +18,11 @@ Future openErrorDialog(BuildContext context, String error) {
   );
 }
 
+Future scanErrorDialog(BuildContext context) {
+  final l10n = AppLocalizations.of(context)!;
+  return openErrorDialog(context, l10n.scanError);
+}
+
 Future openFeedbackDialog(BuildContext context, FeedbackViewModel viewModel) {
   return showDialog(
     context: context,

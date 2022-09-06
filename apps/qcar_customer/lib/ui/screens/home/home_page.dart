@@ -7,6 +7,7 @@ import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/home/home_vm.dart';
 import 'package:qcar_customer/ui/widgets/deco.dart';
 import 'package:qcar_customer/ui/widgets/info_widget.dart';
+import 'package:qcar_customer/ui/widgets/rounded_widget.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
 class HomePage extends View<HomeViewModel> {
@@ -82,15 +83,19 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Flexible(flex: 50, child: VideoWidget(viewModel: viewModel)),
           Flexible(
-            flex: 50,
+              flex: 40,
+              child: RoundedWidget(child: VideoWidget(viewModel: viewModel))),
+          Spacer(flex: 10),
+          Flexible(
+            flex: 40,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: InfoWidget(
                   l10n.homoPageSubGreetings + "\n\n" + l10n.homoPageMessage),
             ),
           ),
+          Spacer(flex: 10),
         ],
       ),
     );

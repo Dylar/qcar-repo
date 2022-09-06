@@ -18,9 +18,12 @@ class TestAppLocalization {
   String get send => _values["send"];
   String get cancel => _values["cancel"];
 
+  //------SCAN
+  String get oldCarScanned => _values["oldCarScanned"];
+
   //------INTRO
   String get introPageMessage => _values["introPageMessage"];
-  String get introPageMessageError => _values["introPageMessageError"];
+  String get scanError => _values["scanError"];
   String get introPageMessageScanning => _values["introPageMessageScanning"];
 
   //------SEARCH

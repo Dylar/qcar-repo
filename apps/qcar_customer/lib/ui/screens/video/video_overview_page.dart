@@ -56,13 +56,11 @@ class _VideoOverviewPageState
           if (snapshot.hasError) {
             return ErrorInfoWidget(snapshot.error!);
           }
-
           return ScrollListView<VideoInfo>(
             items: snapshot.data?..sort((a, b) => a.name.compareTo(b.name)),
-            buildItemWidget: buildItemWidget,
+            buildItemWidget: (int index, VideoInfo item) =>
+                VideoInfoListItem(item),
           );
         });
   }
-
-  Widget buildItemWidget(int index, VideoInfo item) => VideoInfoListItem(item);
 }
