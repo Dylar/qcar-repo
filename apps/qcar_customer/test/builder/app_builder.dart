@@ -7,6 +7,7 @@ import 'package:path_provider_platform_interface/path_provider_platform_interfac
 import 'package:qcar_customer/core/app.dart';
 import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
+import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/upload_service.dart';
 
 import '../mocks/path_provider_mock.dart';
@@ -25,9 +26,10 @@ AppInfrastructure createTestInfra({
   UploadService? uploadService,
   CarInfoDataSource? carDataSource,
   SellInfoDataSource? sellDataSource,
+  DownloadClient? downloadClient,
 }) {
   final db = MockAppDatabase();
-  final downloadClient = mockDownloadClient();
+  final dlClient = downloadClient ?? mockDownloadClient();
   final uploadClient = mockUploadClient();
   final settingsSource = mockSettings();
   final carSource = carDataSource ?? mockCarSource();
@@ -37,7 +39,7 @@ AppInfrastructure createTestInfra({
   final settingsService = mockSettingsService();
   return AppInfrastructure.load(
     settingsService,
-    downloadClient: downloadClient,
+    downloadClient: dlClient,
     uploadClient: uploadClient,
     database: db,
     settingsDataSource: settingsSource,

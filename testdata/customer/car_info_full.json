@@ -1,6 +1,6 @@
 {
   "brand": "Toyota",
-  "model": "Corolla",
+  "model": "CorollaTSGR",
   "imagePath": "Path/to/image.jpg",
   "categories": [
     {
@@ -11,7 +11,7 @@
       "videos": [
         {
           "brand": "Toyota",
-          "model": "Corolla",
+          "model": "CorollaTSGR",
           "filePath": "2-Zonen Klimaautomatik.mp4",
           "imagePath": "2-Zonen Klimaautomatik.jpg",
           "name": "2-Zonen Klimaautomatik",
@@ -27,7 +27,7 @@
         },
         {
           "brand": "Toyota",
-          "model": "Corolla",
+          "model": "CorollaTSGR",
           "filePath": "3-Zonen Klimaautomatik.mp4",
           "imagePath": "3-Zonen Klimaautomatik.jpg",
           "name": "3-Zonen Klimaautomatik",
@@ -51,7 +51,7 @@
       "videos": [
         {
           "brand": "Toyota",
-          "model": "Corolla",
+          "model": "CorollaTSGR",
           "filePath": "4-Zonen Klimaautomatik.mp4",
           "imagePath": "4-Zonen Klimaautomatik.jpg",
           "name": "4-Zonen Klimaautomatik",

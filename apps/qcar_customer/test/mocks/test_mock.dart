@@ -27,13 +27,11 @@ UploadClient mockUploadClient() {
   return MockUploadClient();
 }
 
-DownloadClient mockDownloadClient() {
+DownloadClient mockDownloadClient({List<SellKey> acceptedKeys = const []}) {
   final client = MockDownloadClient();
   when(client.loadCarInfo(any)).thenAnswer((inv) async {
     final info = inv.positionalArguments[0] as SellInfo;
-    final car = await buildCarInfo();
-    car.brand = info.brand;
-    car.model = info.model;
+    final car = await buildCarWith(brand: info.brand, model: info.model);
 
     //TODO maybe delete me if we got the urls right
     car.categories.forEach((category) {
@@ -46,9 +44,16 @@ DownloadClient mockDownloadClient() {
   });
 
   when(client.loadSellInfo(any)).thenAnswer((inv) async {
-    final key = inv.positionalArguments[0] as SellKey;
+    final sellKey = inv.positionalArguments[0] as SellKey;
+    final key = sellKey.key;
     final sellInfo = await buildSellInfo();
-    if (sellInfo.key == key.key) {
+    if (sellInfo.key == key) {
+      return Response.ok(jsonMap: sellInfo.toMap());
+    }
+    if (acceptedKeys.any((k) => k.key == key)) {
+      sellInfo
+        ..brand = key
+        ..model = key;
       return Response.ok(jsonMap: sellInfo.toMap());
     }
     throw Exception("WRONG KEY");

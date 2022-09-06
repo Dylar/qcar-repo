@@ -1,10 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:qcar_customer/models/sell_key.dart';
+import 'package:qcar_customer/ui/screens/cars/cars_list_item.dart';
+import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
+import '../../../builder/entity_builder.dart';
 import '../../../builder/network_builder.dart';
 import '../../../mocks/test_mock.dart';
 import '../../../utils/test_l10n.dart';
+import '../app/app_action.dart';
 import '../app/app_checker.dart';
 import '../app/feedback_action.dart';
 import 'qr_scan_action.dart';
@@ -57,13 +62,37 @@ void main() {
     expect(find.text(l10n.scanError), findsOneWidget);
   });
 
-  testWidgets('QRScanPage - scan old json - show error',
+  testWidgets('QRScanPage - scan old key - show error',
       (WidgetTester tester) async {
+    final key = await buildSellKey();
     await pushToQrScan(tester);
 
     final l10n = await getTestL10n();
     expect(find.text(l10n.oldCarScanned), findsNothing);
-    await scanOnQRPage(tester, "{}");
+    await scanOnQRPage(tester, key.encode());
     expect(find.text(l10n.oldCarScanned), findsOneWidget);
+  });
+
+  testWidgets('QRScanPage - scan new key - navi to carsPage',
+      (WidgetTester tester) async {
+    final key = SellKey(key: "newKey");
+    final car = await buildCarWith(brand: "hoho", model: "super");
+    final infra = await createQRInfra(initialCar: [car], acceptedKeys: [key]);
+    await pushToQrScan(tester, infra: infra);
+
+    //navi to cars - show 2 cars
+    await tapNaviIcon(tester, CarsPage.routeName);
+    expect(find.byType(QrScanPage), findsNothing);
+    expect(find.byType(CarsPage), findsOneWidget);
+    expect(find.byType(CarInfoListItem), findsNWidgets(2));
+
+    //navi back
+    await tapNaviIcon(tester, QrScanPage.routeName);
+    await scanOnQRPage(tester, key.encode());
+
+    //navi automatically to cars page - show 3 cars
+    expect(find.byType(QrScanPage), findsNothing);
+    expect(find.byType(CarsPage), findsOneWidget);
+    expect(find.byType(CarInfoListItem), findsNWidgets(3));
   });
 }

@@ -16,6 +16,24 @@ const String TEST_SELL_INFO = "sell_info.json";
 const String TEST_SELL_KEY = "sell_key.json";
 const String TEST_CATEGORY_INFO = "category_info.json";
 
+Future<CarInfo> buildCarWith({
+  String brand = "new",
+  String model = "newer",
+}) async {
+  final car = await buildCarInfo();
+  car.categories.forEach((cat) {
+    cat.brand = brand;
+    cat.model = model;
+    cat.videos.forEach((vid) {
+      vid.brand = brand;
+      vid.model = model;
+    });
+  });
+  return car
+    ..brand = brand
+    ..model = model;
+}
+
 Future<CarInfo> buildCarInfo({String name = TEST_CAR_FULL}) async {
   final json = await loadJsonFile('$CUSTOMER_TESTDATA_PATH$name');
   final valid = await validateCarInfo(json);
@@ -42,6 +60,16 @@ Future<CategoryInfo> buildCategoryInfo(
     throw Exception("Category(${name}) json invalid: $json");
   }
   return CategoryInfo.fromMap(json);
+}
+
+Future<SellInfo> buildSellWith({
+  String brand = "new",
+  String model = "newer",
+}) async {
+  final sell = await buildSellInfo();
+  return sell
+    ..brand = brand
+    ..model = model;
 }
 
 Future<SellInfo> buildSellInfo({String name = TEST_SELL_INFO}) async {
