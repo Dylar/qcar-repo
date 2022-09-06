@@ -8,6 +8,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import '../../../builder/app_builder.dart';
 import '../../../builder/entity_builder.dart';
 import '../../../mocks/test_mock.dart';
+import '../../../utils/test_getter.dart';
 import '../../../utils/test_utils.dart';
 
 Future<AppInfrastructure> createQRInfra({
@@ -47,8 +48,7 @@ Future<AppInfrastructure> pushToQrScan(
 
 Future<void> scanOnQRPage(WidgetTester tester, String scan,
     {bool settle = true}) async {
-  final page = find.byType(QrScanPage).evaluate().first.widget as QrScanPage;
-  page.viewModel.onScan(Barcode(scan, BarcodeFormat.aztec, []));
+  getQRViewModel().onScan(Barcode(scan, BarcodeFormat.aztec, []));
   if (settle) {
     await tester.pumpAndSettle(Duration(milliseconds: 10));
   } else {
