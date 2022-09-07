@@ -43,7 +43,8 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
             autofocus: true,
             maxLines: null,
             decoration: InputDecoration(
-              hintText: l10n.feedbackHint, //TODO oder email
+              hintText:
+                  l10n.feedbackHint, //TODO oder email + 3 Smilies zum sortieren
               // border: UnderlineInputBorder(),
             ),
           ),

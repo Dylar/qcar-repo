@@ -19,6 +19,8 @@ const val TEST_VIDEO_INFO = "video_info.json"
 const val TEST_CATEGORY_INFO = "category_info.json"
 
 const val TEST_FEEDBACK = "feedback.json"
+//TODO until now feedback and tracking json is the same
+const val TEST_TRACKING = "feedback.json"
 
 val objMapper: ObjectMapper = ObjectMapper().registerKotlinModule()
     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
@@ -89,8 +91,6 @@ fun buildSellerInfo(jsonFile: String = TEST_SELLER_INFO): SellerInfo {
 
 fun buildEmptyIntroInfo(): IntroInfo = IntroInfo()
 
-fun buildEmptyFeedback(): Feedback = Feedback()
-
 fun buildIntroInfo(jsonFile: String = TEST_INTRO_INFO): IntroInfo {
     val json = loadTestDealerFile(jsonFile)
 //    val isValid = validateFeedbackJson(json)
@@ -100,11 +100,24 @@ fun buildIntroInfo(jsonFile: String = TEST_INTRO_INFO): IntroInfo {
 //    throw JSONValidationException.FeedbackValidationException(jsonFile)
 }
 
+fun buildEmptyFeedback(): Feedback = Feedback()
+
 fun buildFeedback(jsonFile: String = TEST_FEEDBACK): Feedback {
     val json = loadTestTrackingFile(jsonFile)
 //    val isValid = validateFeedbackJson(json)
 //    if (isValid) {
     return objMapper.readValue(json, Feedback::class.java)
+//    }
+//    throw JSONValidationException.FeedbackValidationException(jsonFile)
+}
+
+fun buildEmptyTracking(): Tracking = Tracking()
+
+fun buildTracking(jsonFile: String = TEST_TRACKING): Tracking {
+    val json = loadTestTrackingFile(jsonFile)
+//    val isValid = validateFeedbackJson(json)
+//    if (isValid) {
+    return objMapper.readValue(json, Tracking::class.java)
 //    }
 //    throw JSONValidationException.FeedbackValidationException(jsonFile)
 }

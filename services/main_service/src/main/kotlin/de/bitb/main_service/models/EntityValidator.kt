@@ -132,3 +132,18 @@ fun validateFeedback(feedback: Feedback) {
         throw FeedbackException.EmptyTextException()
     }
 }
+
+@Throws(TrackingException::class)
+fun validateTracking(feedback: Tracking) {
+    if (feedback.date.isBlank()) {
+        throw TrackingException.EmptyDateException()
+    }
+    try{
+        feedback.dateAsDateTime()
+    }catch (e: Exception){
+        throw TrackingException.WrongDateFormatException(feedback.date)
+    }
+    if (feedback.text.isBlank()) {
+        throw TrackingException.EmptyTextException()
+    }
+}
