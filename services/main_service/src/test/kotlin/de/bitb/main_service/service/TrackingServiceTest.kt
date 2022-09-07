@@ -32,14 +32,14 @@ internal class TrackingServiceTest {
         val testTracking = buildTracking()
         every { dataSource.getTracking() }.returns(listOf(testTracking))
         //when
-        val Tracking = service.getTracking()
+        val tracking = service.getTracking()
         //then
         verify(exactly = 1) { dataSource.getTracking() }
-        assertThat(Tracking.first() == testTracking)
+        assertThat(tracking.first() == testTracking)
     }
 
     @Test
-    fun `get no tracking from datasource - throw UnknownSellerException`() {
+    fun `get no tracking from datasource - throw NoTrackingException`() {
         //when
         val exceptionNoTracking: Exception = assertThrows { service.getTracking() }
         //then

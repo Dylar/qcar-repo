@@ -36,8 +36,7 @@ internal class SellServiceTest {
         every { dataSource.getSellInfo(testInfo.key) }
             .returns(testInfo)
         //when
-        val info =
-            service.getSellInfo(testInfo.key)
+        val info = service.getSellInfo(testInfo.key)
         //then
         verify(exactly = 1) { dataSource.getSellInfo(testInfo.key) }
         assertThat(info == testInfo)
@@ -48,8 +47,7 @@ internal class SellServiceTest {
         //given
         val testInfo = buildSellInfo()
         //when
-        val exceptionNoInfo: Exception =
-            assertThrows { service.getSellInfo(testInfo.key) }
+        val exceptionNoInfo: Exception = assertThrows { service.getSellInfo(testInfo.key) }
         //then
         AssertionsForInterfaceTypes.assertThat(exceptionNoInfo is SellInfoException.UnknownKeyException)
     }

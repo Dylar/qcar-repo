@@ -32,14 +32,14 @@ internal class FeedbackServiceTest {
         val testFeedback = buildFeedback()
         every { dataSource.getFeedback() }.returns(listOf(testFeedback))
         //when
-        val Feedback = service.getFeedback()
+        val feedback = service.getFeedback()
         //then
         verify(exactly = 1) { dataSource.getFeedback() }
-        assertThat(Feedback.first() == testFeedback)
+        assertThat(feedback.first() == testFeedback)
     }
 
     @Test
-    fun `get no feedback from datasource - throw UnknownSellerException`() {
+    fun `get no feedback from datasource - throw NoFeedbackException`() {
         //when
         val exceptionNoFeedback: Exception = assertThrows { service.getFeedback() }
         //then

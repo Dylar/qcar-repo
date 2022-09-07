@@ -30,11 +30,9 @@ internal class SellerServiceTest {
     fun `get seller from service`() {
         //given
         val testInfo = buildSellerInfo()
-        every { dataSource.getSellerInfo(testInfo.dealer, testInfo.name) }
-            .returns(testInfo)
+        every { dataSource.getSellerInfo(testInfo.dealer, testInfo.name) }.returns(testInfo)
         //when
-        val info =
-            service.getSellerInfo(testInfo.dealer, testInfo.name)
+        val info = service.getSellerInfo(testInfo.dealer, testInfo.name)
         //then
         verify(exactly = 1) { dataSource.getSellerInfo(testInfo.dealer, testInfo.name) }
         assertThat(info == testInfo)

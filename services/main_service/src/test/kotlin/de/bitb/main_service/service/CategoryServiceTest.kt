@@ -30,9 +30,8 @@ internal class CategoryServiceTest {
     fun `get category from service`() {
         //given
         val testInfo = buildCategoryInfo()
-        every { dataSource.getCategoryInfo(testInfo.brand, testInfo.model, testInfo.name) }.returns(
-            testInfo
-        )
+        every { dataSource.getCategoryInfo(testInfo.brand, testInfo.model, testInfo.name) }
+            .returns(testInfo)
         //when
         val info = service.getCategoryInfo(testInfo.brand, testInfo.model, testInfo.name)
         //then

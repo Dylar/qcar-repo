@@ -37,9 +37,7 @@ internal class VideoServiceTest {
                 testInfo.category,
                 testInfo.name
             )
-        }.returns(
-            testInfo
-        )
+        }.returns(testInfo)
         //when
         val info =
             service.getVideoInfo(testInfo.brand, testInfo.model, testInfo.category, testInfo.name)
