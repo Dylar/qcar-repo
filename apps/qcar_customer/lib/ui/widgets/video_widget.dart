@@ -1,7 +1,7 @@
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
+import 'package:qcar_customer/core/helper/logger.dart';
 import 'package:qcar_customer/core/helper/player_config.dart';
-import 'package:qcar_customer/core/logger.dart';
 import 'package:qcar_customer/service/services.dart';
 
 import 'loading_overlay.dart';

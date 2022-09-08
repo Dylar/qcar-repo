@@ -1,8 +1,8 @@
 import 'package:flutter/src/foundation/change_notifier.dart';
 import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
+import 'package:qcar_customer/core/helper/logger.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
-import 'package:qcar_customer/core/logger.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/network/network_service.dart';
 import 'package:qcar_customer/models/car_info.dart';

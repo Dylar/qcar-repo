@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcar_customer/core/navigation/app_navigation.dart';
+import 'package:qcar_customer/ui/navigation/app_navigation.dart';
 
 void checkNavigationBar(String thisPage) {
   final naviFinder = find.byType(AppNavigation);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/app_theme.dart';
+import 'package:qcar_customer/ui/app_theme.dart';
 
 class RoundedWidget extends StatelessWidget {
   const RoundedWidget({required this.child});

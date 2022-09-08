@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:qcar_customer/core/navigation/app_bar.dart';
-import 'package:qcar_customer/core/navigation/app_navigation.dart';
-import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
-import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/models/video_info.dart';
+import 'package:qcar_customer/ui/navigation/app_bar.dart';
+import 'package:qcar_customer/ui/navigation/app_navigation.dart';
+import 'package:qcar_customer/ui/navigation/app_viewmodel.dart';
+import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/video/video_list_item.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_vm.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';

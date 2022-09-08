@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qcar_customer/core/datasource/CarInfoDatabase.dart';
 import 'package:qcar_customer/core/datasource/SellInfoDatabase.dart';
 import 'package:qcar_customer/core/datasource/SettingsDatabase.dart';
-import 'package:qcar_customer/core/logger.dart';
+import 'package:qcar_customer/core/helper/logger.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
 import 'package:qcar_customer/models/sell_info.dart';

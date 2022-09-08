@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
-import 'package:qcar_customer/core/app.dart';
 import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/ui/screens/app/app.dart';
 
 import '../mocks/path_provider_mock.dart';
 import '../mocks/test_mock.dart';

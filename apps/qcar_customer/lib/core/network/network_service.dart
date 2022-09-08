@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:qcar_customer/core/logger.dart';
+import 'package:qcar_customer/core/helper/logger.dart';
 
 enum RequestType { get, put, post }
 enum CallBackParameterName { all, articles }

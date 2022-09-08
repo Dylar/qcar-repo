@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:qcar_customer/core/app_theme.dart';
-import 'package:qcar_customer/core/navigation/navi.dart';
+import 'package:qcar_customer/ui/app_theme.dart';
+import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/widgets/deco.dart';
 
 abstract class FeedbackViewModel {

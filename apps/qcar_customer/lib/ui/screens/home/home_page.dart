@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/asset_paths.dart';
-import 'package:qcar_customer/core/navigation/app_navigation.dart';
-import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
-import 'package:qcar_customer/core/navigation/navi.dart';
+import 'package:qcar_customer/core/environment_config.dart';
+import 'package:qcar_customer/ui/navigation/app_navigation.dart';
+import 'package:qcar_customer/ui/navigation/app_viewmodel.dart';
+import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/home/home_vm.dart';
 import 'package:qcar_customer/ui/widgets/deco.dart';
 import 'package:qcar_customer/ui/widgets/info_widget.dart';
@@ -63,7 +64,7 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
           Text(title),
           qcarGradientText(
             context,
-            'qCar',
+            EnvironmentConfig.APP_NAME,
             style: Theme.of(context).textTheme.headline6!,
           ),
           SizedBox(

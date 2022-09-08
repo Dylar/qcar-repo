@@ -1,8 +1,8 @@
-import 'package:qcar_customer/core/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/service/upload_service.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
+import 'package:qcar_customer/ui/navigation/app_viewmodel.dart';
 
 abstract class CarsViewModel extends ViewModel with FeedbackFun {
   Stream<List<CarInfo>> watchCars();

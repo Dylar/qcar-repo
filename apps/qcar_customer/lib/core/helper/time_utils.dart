@@ -6,3 +6,11 @@ const DAY_PER_WEEK = HOUR_PER_DAY * 7;
 const DAY_PER_MONTH_30 = HOUR_PER_DAY * 30;
 const DAY_PER_MONTH_31 = HOUR_PER_DAY * 31;
 const DAY_PER_YEAR = HOUR_PER_DAY * 365;
+
+Future waitDiff(DateTime start) async {
+  final diff = DateTime.now().difference(start).inMilliseconds;
+  final rest = MILLI_PER_SEC * 2 - diff;
+  if ((rest > 0)) {
+    await Future.delayed(Duration(milliseconds: rest));
+  }
+}

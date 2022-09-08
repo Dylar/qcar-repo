@@ -5,6 +5,7 @@ import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
 import '../../../builder/entity_builder.dart';
 import '../../../utils/test_l10n.dart';
 import '../../../utils/test_utils.dart';
+import '../app/app_checker.dart';
 import 'intro_action.dart';
 
 void main() {
@@ -14,6 +15,8 @@ void main() {
     await loadApp(tester);
     expect(find.text(l10n.introPageMessage), findsOneWidget);
     expect(find.byType(IntroPage), findsOneWidget);
+    checkSearchIcon(isVisible: false);
+    checkReloadIcon(isVisible: false);
   });
 
   testWidgets('Load app - scan bullshit - show error',

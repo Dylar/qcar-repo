@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/logger.dart';
-import 'package:qcar_customer/core/navigation/app_router.dart';
+import 'package:qcar_customer/core/helper/logger.dart';
+import 'package:qcar_customer/ui/navigation/app_router.dart';
 
 import 'navi.dart';
 

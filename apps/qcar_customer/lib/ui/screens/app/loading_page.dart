@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/app_theme.dart';
+import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
+import 'package:qcar_customer/ui/app_theme.dart';
 import 'package:qcar_customer/ui/widgets/deco.dart';
 
 class LoadingStartPage extends StatelessWidget {
@@ -36,7 +37,7 @@ class AppLoadingIndicator extends StatelessWidget {
           flex: 3,
           child: qcarGradientText(
             context,
-            'qCar',
+            EnvironmentConfig.APP_NAME,
             style: Theme.of(context)
                 .textTheme
                 .headline1!

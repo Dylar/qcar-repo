@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcar_customer/core/app.dart';
-import 'package:qcar_customer/core/app_theme.dart';
 import 'package:qcar_customer/core/environment_config.dart';
-import 'package:qcar_customer/core/navigation/app_router.dart';
-import 'package:qcar_customer/core/navigation/navi.dart';
 import 'package:qcar_customer/service/services.dart';
+import 'package:qcar_customer/ui/app_theme.dart';
+import 'package:qcar_customer/ui/navigation/app_router.dart';
+import 'package:qcar_customer/ui/navigation/navi.dart';
+import 'package:qcar_customer/ui/screens/app/app.dart';
 
 import '../builder/app_builder.dart';
 
@@ -16,10 +16,7 @@ Future loadApp(WidgetTester tester, {AppInfrastructure? infra}) async {
   // Build our app and trigger some frames.
   final appWidget = await App(infrastructure: infra ?? createTestInfra());
   await tester.pumpWidget(appWidget);
-  for (int i = 0; i < 10; i++) {
-    //TODO we need that?
-    await tester.pump(Duration(seconds: 1));
-  }
+  await tester.pump(Duration(seconds: 3));
 }
 
 Future pushPage(

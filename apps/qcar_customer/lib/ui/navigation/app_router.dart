@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/environment_config.dart';
-import 'package:qcar_customer/core/logger.dart';
+import 'package:qcar_customer/core/helper/logger.dart';
 import 'package:qcar_customer/service/services.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_vm.dart';
@@ -11,8 +11,6 @@ import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qcar_customer/ui/screens/home/home_vm.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_vm.dart';
-import 'package:qcar_customer/ui/screens/intro/landing_page.dart';
-import 'package:qcar_customer/ui/screens/intro/landing_vm.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_vm.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_page.dart';
@@ -54,6 +52,22 @@ class AppRouter {
   static final RouteObserver<ModalRoute> routeObserver =
       RouteObserver<ModalRoute>();
 
+  static List<Route<dynamic>> generateInitRoute(String initialRoute) {
+    late WidgetBuilder builder;
+    switch (initialRoute) {
+      case DebugPage.routeName:
+        builder = _navigateToDebug;
+        break;
+      case IntroPage.routeName:
+        builder = _navigateToIntro;
+        break;
+      case HomePage.routeName:
+        builder = _navigateToHome;
+        break;
+    }
+    return [_wrapRoute(RouteSettings(name: initialRoute), builder)];
+  }
+
   static AppRoute<dynamic> generateRoute(RouteSettings settings) {
     final arguments = settings.arguments as Map<String, dynamic>? ?? {};
     Logger.logI("Route: ${settings.name}");
@@ -68,9 +82,6 @@ class AppRouter {
         break;
       case VideoSettingsPage.routeName:
         builder = _navigateToVideoSettings;
-        break;
-      case LandingPage.routeName:
-        builder = _navigateToLanding;
         break;
       case IntroPage.routeName:
         builder = _navigateToIntro;
@@ -119,12 +130,6 @@ Widget _navigateToSettings(BuildContext context) {
 
 Widget _navigateToVideoSettings(BuildContext context) {
   return VideoSettingsPage(Services.of(context)!.settings);
-}
-
-Widget _navigateToLanding(BuildContext context) {
-  final services = Services.of(context)!;
-  return LandingPage.model(
-      LandingVM(services.authService, services.infoService));
 }
 
 Widget _navigateToIntro(BuildContext context) {

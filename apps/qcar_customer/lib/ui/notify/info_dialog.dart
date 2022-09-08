@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/app_theme.dart';
-import 'package:qcar_customer/core/navigation/navi.dart';
+import 'package:qcar_customer/ui/app_theme.dart';
+import 'package:qcar_customer/ui/navigation/navi.dart';
 
 class InfoDialog extends StatelessWidget {
   InfoDialog({
