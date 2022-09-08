@@ -25,17 +25,18 @@ class InfoService {
       _loadClient.progressValue;
 
   Future<List<CarInfo>> getAllCars() => _carInfoDataSource.getAllCars();
+
   Stream<List<CarInfo>> watchCarInfo() => _carInfoDataSource.watchCarInfo();
 
   Future<bool> hasCars() async {
     final List<CarInfo> cars = await _carInfoDataSource.getAllCars();
-    return cars.isNotEmpty;
+    final List<SellInfo> sells = await _sellInfoDataSource.getAllSellInfos();
+    return cars.isNotEmpty && sells.isNotEmpty; //TODO test both empty
   }
 
   Future<String> getIntroVideo() async {
-    //TODO put into sellInfo
     final sells = await _sellInfoDataSource.getAllSellInfos();
-    return sells.first.introFilePath;
+    return fixIntroPath(sells.first); //TODO remember last selected
   }
 
   Future<SellInfo> loadSellInfo(String scan) async {
@@ -50,13 +51,16 @@ class InfoService {
   Future loadCarInfo(SellInfo info) async {
     final car = await _loadClient.loadCarInfo(info);
     if (car.status == ResponseStatus.OK) {
-      await _carInfoDataSource.addCarInfo(CarInfo.fromMap(car.jsonMap!));
+      return await _carInfoDataSource.addCarInfo(CarInfo.fromMap(car.jsonMap!));
     } //TODO on error
+    throw Exception("ERROR ON CAR INFO LOAD");
   }
 
   Future<bool> isOldCar(String brand, String model) async {
-    final allCars = await _carInfoDataSource.getAllCars();
-    return allCars.any((car) => car.brand == brand && car.model == model);
+    final cars = await _carInfoDataSource.getAllCars();
+    final List<SellInfo> sells = await _sellInfoDataSource.getAllSellInfos();
+    return cars.any((car) => car.brand == brand && car.model == model) &&
+        sells.any((sell) => sell.brand == brand && sell.model == model);
   }
 
   Future refreshCarInfos() async {

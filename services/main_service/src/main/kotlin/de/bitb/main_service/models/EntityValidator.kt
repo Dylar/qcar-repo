@@ -79,6 +79,9 @@ fun validateSellInfo(info: SellInfo) {
     if (info.key.isNotBlank()) {
         throw SellInfoException.NotEmptyKeyException()
     }
+    if (info.intro.isBlank()) {
+        throw SellInfoException.EmptyIntroException()
+    }
     if (info.videos.isEmpty()) {
         throw SellInfoException.NoVideosException()
     }
@@ -96,25 +99,6 @@ fun validateSellerInfo(info: SellerInfo) {
     }
     if (info.name.isBlank()) {
         throw SellerInfoException.EmptySellerException()
-    }
-}
-
-@Throws(IntroInfoException::class)
-fun validateIntroInfo(info: IntroInfo) {
-    if (info.dealer.isBlank()) {
-        throw IntroInfoException.EmptyDealerException()
-    }
-    if (info.seller.isBlank()) {
-        throw IntroInfoException.EmptySellerException()
-    }
-    if (info.brand.isBlank()) {
-        throw IntroInfoException.EmptyBrandException()
-    }
-    if (info.model.isBlank()) {
-        throw IntroInfoException.EmptyModelException()
-    }
-    if (info.filePath.isBlank()) {
-        throw IntroInfoException.EmptyFilePathException()
     }
 }
 

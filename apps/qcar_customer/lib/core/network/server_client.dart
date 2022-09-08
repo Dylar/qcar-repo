@@ -16,16 +16,13 @@ class ServerClient implements DownloadClient, UploadClient {
       ValueNotifier(Tuple(0, 0));
 
   Future<Response> loadSellInfo(SellKey key) async {
-    final sellRsp = await NetworkService.sendRequest(
+    return await NetworkService.sendRequest(
       Request(
         requestType: RequestType.get,
         url: SELL_INFO_URL,
         urlPath: [key.key], //TODO make with params?
       ),
     );
-    final sell = SellInfo.fromMap(sellRsp.jsonMap!);
-    fixSell(sell);
-    return Response.ok(jsonMap: sell.toMap());
   }
 
   Future<Response> loadCarInfo(SellInfo info) async {

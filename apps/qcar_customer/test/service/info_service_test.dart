@@ -1,10 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qcar_customer/service/info_service.dart';
 
+import '../builder/app_builder.dart';
 import '../builder/entity_builder.dart';
 import '../mocks/test_mock.dart';
 
-void main() {
+void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('hasCars - no cars in db', () async {
@@ -17,10 +18,10 @@ void main() {
     expect(hasCars, isFalse);
   });
 
-  test('hasCars - cars in db', () async {
+  test('hasCars - cars + sell info in db', () async {
     final loadClient = mockDownloadClient();
     final carDS = mockCarSource(initialCars: [await buildCarInfo()]);
-    final sellDS = mockSellSource();
+    final sellDS = mockSellSource(initialSellInfo: [await buildSellInfo()]);
     final service = InfoService(loadClient, carDS, sellDS);
 
     final hasCars = await service.hasCars();
@@ -28,6 +29,7 @@ void main() {
   });
 
   test('getIntroVideo - get path from sell info', () async {
+    await prepareTest(); //because we need domain initialized
     final sellInfo = await buildSellInfo();
     final car = await buildCarInfo();
     final loadClient = mockDownloadClient();
@@ -37,6 +39,6 @@ void main() {
 
     final introPath = await service.getIntroVideo();
     expect(introPath != "", isTrue);
-    expect(introPath == sellInfo.introFilePath, isTrue);
+    expect(introPath.endsWith(sellInfo.introFilePath), isTrue);
   });
 }

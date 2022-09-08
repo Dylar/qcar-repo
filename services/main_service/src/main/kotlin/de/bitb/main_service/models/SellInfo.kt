@@ -6,5 +6,6 @@ data class SellInfo(
     val seller: String = "",
     val dealer: String = "",
     val key: String = "",
+    val intro: String = "",
     val videos: Map<String, List<String>> = mapOf(),
 )

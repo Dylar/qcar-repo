@@ -28,10 +28,8 @@ abstract class UploadClient {
 //TODO DELETE THE FIX METHODS
 
 //TODO fix me in DB
-void fixSell(SellInfo info) {
-  info
-    ..introFilePath =
-        "https://${EnvironmentConfig.domain}/videos/${info.brand}/${info.model}/qCar Intro.mp4";
+String fixIntroPath(SellInfo info) {
+  return "https://${EnvironmentConfig.domain}/videos/${info.brand}/${info.model}/${info.introFilePath}";
 }
 
 //TODO fix me in DB

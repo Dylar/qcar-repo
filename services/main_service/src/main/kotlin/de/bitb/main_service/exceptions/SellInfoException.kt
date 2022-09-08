@@ -8,17 +8,6 @@ sealed class SellerInfoException(msg: String) : Exception(msg) {
     class EmptySellerException : SellerInfoException("Seller is empty")
 }
 
-sealed class IntroInfoException(msg: String) : Exception(msg) {
-    class UnknownIntroException(dealer: String,seller: String, brand: String, model: String) :
-        IntroInfoException("Unknown intro from $dealer $seller for $brand $model")
-
-    class EmptyDealerException : IntroInfoException("Dealer is empty")
-    class EmptySellerException : IntroInfoException("Seller is empty")
-    class EmptyBrandException : IntroInfoException("Brand is empty")
-    class EmptyModelException : IntroInfoException("Model is empty")
-    class EmptyFilePathException : IntroInfoException("File path is empty")
-}
-
 sealed class SellInfoException(msg: String) : Exception(msg) {
     class UnknownKeyException(msg: String) : SellInfoException(msg)
     class InvalidKeyException(msg: String) : SellInfoException(msg)
@@ -27,6 +16,7 @@ sealed class SellInfoException(msg: String) : Exception(msg) {
     class EmptySellerException : SellInfoException("Seller is empty")
     class EmptyDealerException : SellInfoException("Dealer is empty")
     class NotEmptyKeyException : SellInfoException("Key is NOT empty")
+    class EmptyIntroException : SellInfoException("Intro path empty")
     class NoVideosException : SellInfoException("No videos")
     class NoVideosForCategoryException(category: String) : SellInfoException("No videos for category $category")
 }

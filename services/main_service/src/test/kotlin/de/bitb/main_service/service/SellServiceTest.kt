@@ -98,6 +98,10 @@ internal class SellServiceTest {
 
         emptyInfo = emptyInfo.copy(key = "")
         exception = assertThrows { service.addSellInfo(emptyInfo) }
+        assertThat(exception is SellInfoException.EmptyIntroException)
+
+        emptyInfo = emptyInfo.copy(intro = "path/to/file.mp3")
+        exception = assertThrows { service.addSellInfo(emptyInfo) }
         assertThat(exception is SellInfoException.NoVideosException)
 
         emptyInfo = emptyInfo.copy(videos = mapOf("Sicherheit" to listOf()))

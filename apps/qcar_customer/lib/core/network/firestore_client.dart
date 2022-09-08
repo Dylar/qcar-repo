@@ -8,7 +8,6 @@ import 'package:qcar_customer/models/Feedback.dart';
 import 'package:qcar_customer/models/Tracking.dart';
 import 'package:qcar_customer/models/car_info.dart';
 import 'package:qcar_customer/models/category_info.dart';
-import 'package:qcar_customer/models/model_data.dart';
 import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/models/sell_key.dart';
 import 'package:qcar_customer/models/video_info.dart';
@@ -50,9 +49,6 @@ class FirestoreClient implements DownloadClient, UploadClient {
       "$BACKEND_V1/dealer/$dealer/$seller/intros/${brand}_${model}";
 
   Future<Response> loadSellInfo(SellKey key) async {
-    // final response = await NetworkService.sendRequest(
-    //     requestType: RequestType.get, url: EnvironmentConfig.backendUrl);
-
     final sellInfo = await FirebaseFirestore.instance
         .collectionGroup("sales")
         .where("key", isEqualTo: key.key)
@@ -61,16 +57,6 @@ class FirestoreClient implements DownloadClient, UploadClient {
         .asyncMap((doc) => doc.data())
         .asyncMap((map) => SellInfo.fromMap(map))
         .first;
-    final introPath = _introDocPath(
-        sellInfo.dealer, sellInfo.seller, sellInfo.brand, sellInfo.model);
-    final intro = await _getDocument(introPath)
-        .snapshots()
-        .asyncMap<Map<String, dynamic>>((event) async => await event.data()!)
-        .asyncMap<String>((map) async => map[FIELD_FILE_PATH])
-        .first;
-    sellInfo.introFilePath = intro;
-    fixSell(sellInfo);
-
     return Response.ok(jsonMap: sellInfo.toMap());
   }
 
