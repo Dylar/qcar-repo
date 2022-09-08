@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
-import 'package:qcar_customer/models/settings.dart';
 import 'package:qcar_customer/ui/app_theme.dart';
+import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
+import 'package:qcar_customer/ui/screens/settings/settings_vm.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
 import 'package:qcar_customer/ui/widgets/loading_overlay.dart';
 import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
 
-class VideoSettingsPage extends StatefulWidget {
+class VideoSettingsPage extends View<SettingsViewModel> {
   static const String routeName = "/videoSettingsPage";
 
-  VideoSettingsPage(this.settings);
+  VideoSettingsPage.model(SettingsViewModel viewModel) : super.model(viewModel);
 
   static AppRouteSpec pushIt() => AppRouteSpec(
         name: routeName,
         action: AppRouteAction.pushTo,
       );
 
-  final SettingsDataSource settings;
-
   @override
-  State<VideoSettingsPage> createState() => _VideoSettingsPageState();
+  State<VideoSettingsPage> createState() => _VideoSettingsPageState(viewModel);
 }
 
-class _VideoSettingsPageState extends State<VideoSettingsPage> {
-  Settings? _settings;
+class _VideoSettingsPageState
+    extends ViewState<VideoSettingsPage, SettingsViewModel> {
+  _VideoSettingsPageState(SettingsViewModel viewModel) : super(viewModel);
+
   Map<String, bool>? settingsMap;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("VideoSettings")),
-      body: FutureBuilder<Settings>(
-          future: widget.settings.getSettings(),
+      body: FutureBuilder<void>(
+          future: viewModel.isInitialized,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return ErrorInfoWidget(snapshot.error!);
@@ -41,8 +41,7 @@ class _VideoSettingsPageState extends State<VideoSettingsPage> {
             if (snapshot.connectionState != ConnectionState.done) {
               return LoadingOverlay();
             }
-            _settings = snapshot.data;
-            settingsMap ??= _settings?.videos;
+            settingsMap ??= viewModel.settings.videos;
             return ScrollListView<MapEntry<String, bool>>(
               items: settingsMap?.entries.toList(),
               buildItemWidget: (_, item) => wrapWidget(
@@ -57,9 +56,10 @@ class _VideoSettingsPageState extends State<VideoSettingsPage> {
           padding: const EdgeInsets.all(4.0),
           child: ElevatedButton(
             onPressed: () async {
-              _settings!.videos = settingsMap!;
-              await widget.settings.saveSettings(_settings!);
-              Navigate.pop(context, true);
+              if (settingsMap != null) {
+                await viewModel.saveVideoSettings(settingsMap!);
+              }
+              Navigate.pop(context, settingsMap != null);
             },
             child: Text("Speichern"),
           ),

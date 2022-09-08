@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/helper/logger.dart';
 import 'package:qcar_customer/ui/navigation/app_router.dart';
 
-import 'navi.dart';
+import 'navigation/navi.dart';
 
 abstract class View<VM extends ViewModel> extends StatefulWidget {
   final VM viewModel;
@@ -32,7 +32,7 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
   void initState() {
     Logger.logI('initState $_sanitisedRoutePageName');
     super.initState();
-    viewModel.init();
+    viewModel.startInit();
   }
 
   @mustCallSuper
@@ -104,16 +104,29 @@ abstract class ViewModel {
   late Future Function(Function(BuildContext)) openDialog;
   late Future Function(Function(BuildContext)) showSnackBar;
 
-  /// This method is executed exactly once for each State object Flutter's
-  /// framework creates.
-  @mustCallSuper
-  void init() {}
+  final _initializer = new Completer();
+  Future get isInitialized => _initializer.future;
 
-  ///  This method is executed whenever the Widget's Stateful State gets
+  /// This method is executed whenever the Widget's Stateful State gets
   /// disposed. It might happen a few times, always matching the amount of times
   /// `init` is called.
   @mustCallSuper
   void dispose() {}
+
+  /// This method is executed exactly once for each State object Flutter's
+  /// framework creates.
+  @mustCallSuper
+  void startInit() {
+    init().then((value) => finishInit());
+  }
+
+  Future init() async {}
+
+  void finishInit() {
+    if (!_initializer.isCompleted) {
+      _initializer.complete();
+    }
+  }
 
   /// Called when the top route has been popped off, and the current route
   /// shows up.
@@ -128,16 +141,4 @@ abstract class ViewModel {
   /// Called when a new route has been pushed, and the current route is no
   /// longer visible.
   void routingDidPushNext() {}
-}
-
-mixin Initializer {
-  final completer = new Completer();
-
-  Future whenInitialized() async => completer.future;
-
-  void initializeFinished() {
-    if (!completer.isCompleted) {
-      completer.complete();
-    }
-  }
 }

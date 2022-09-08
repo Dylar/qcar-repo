@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/ui/app_theme.dart';
+import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/widgets/deco.dart';
-
-abstract class FeedbackViewModel {
-  void sendFeedback(String text);
-}
 
 class FeedbackDialog extends StatefulWidget {
   const FeedbackDialog(this._viewModel);

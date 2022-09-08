@@ -14,7 +14,7 @@ bool isTest = false;
 abstract class VideoWidgetViewModel {
   String get url;
 
-  Future whenInitialized();
+  Future get isInitialized;
 
   void onVideoStart();
 
@@ -67,8 +67,8 @@ class _VideoWidgetState extends State<VideoWidget> {
       return;
     }
 
-    final settings = await Services.of(context)!.settings.getSettings();
-    await widget.viewModel.whenInitialized();
+    final settings = await Services.of(context)!.settingsSource.getSettings();
+    await widget.viewModel.isInitialized;
 
     Logger.logI("Load video: ${widget.viewModel.url}");
     final config = playerConfigFromMap(settings.videos);

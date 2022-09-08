@@ -1,19 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
-import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
-import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
-import 'package:qcar_customer/core/network/server_client.dart';
 import 'package:qcar_customer/service/auth_service.dart';
 import 'package:qcar_customer/service/info_service.dart';
 import 'package:qcar_customer/service/settings_service.dart';
 import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/ui/screens/app/app.dart';
 
 class Services extends InheritedWidget {
   final DownloadClient loadClient;
-  final SettingsDataSource settings;
+  final SettingsDataSource settingsSource;
   final SettingsService settingsService;
 
   final AuthenticationService authService;
@@ -21,9 +17,9 @@ class Services extends InheritedWidget {
   final UploadService uploadService;
   final InfoService infoService;
 
-  const Services({
+  const Services._({
     required this.loadClient,
-    required this.settings,
+    required this.settingsSource,
     required this.settingsService,
     required this.uploadService,
     required this.authService,
@@ -33,31 +29,17 @@ class Services extends InheritedWidget {
   }) : super(child: child);
 
   factory Services.init({
-    AppDatabase? db,
-    DownloadClient? downloadClient,
-    UploadClient? uploadClient,
-    SettingsDataSource? settings,
-    UploadService? uploadService,
-    AuthenticationService? authService,
-    InfoService? infoService,
-    SettingsService? settingsService,
+    required AppInfrastructure infra,
     Key? key,
     required Widget child,
   }) {
-    assert(settingsService != null);
-
-    final database = db ?? AppDatabase();
-    final downClient = downloadClient ?? ServerClient();
-    //TODO make this not doppelt
-    final upClient = uploadClient ?? ServerClient();
-    return Services(
-      loadClient: downClient,
-      uploadService: uploadService ?? UploadService(settingsService!, upClient),
-      authService: authService ?? AuthenticationService(FirebaseAuth.instance),
-      infoService: infoService ??
-          InfoService(downClient, CarInfoDS(database), SellInfoDS(database)),
-      settings: settings ?? SettingsDS(database),
-      settingsService: settingsService!,
+    return Services._(
+      loadClient: infra.loadClient, //TODO services only
+      uploadService: infra.uploadService,
+      authService: infra.authService,
+      infoService: infra.infoService,
+      settingsSource: infra.settingsSource, //TODO services only
+      settingsService: infra.settingsService,
       key: key,
       child: child,
     );

@@ -8,7 +8,14 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 enum QrScanState { NEW, OLD, DAFUQ, WAITING, SCANNING }
 
-mixin ScanFun {
+abstract class ScanViewModel {
+  QrScanState get qrState;
+
+  Future onScan(Barcode scan);
+  void doOnScanState(QrScanState qrState);
+}
+
+mixin ScanFun implements ScanViewModel {
   InfoService get infoService;
 
   QrScanState qrState = QrScanState.WAITING;

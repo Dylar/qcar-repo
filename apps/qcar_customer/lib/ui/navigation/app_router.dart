@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/helper/logger.dart';
+import 'package:qcar_customer/models/model_data.dart';
 import 'package:qcar_customer/service/services.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_vm.dart';
@@ -14,6 +15,7 @@ import 'package:qcar_customer/ui/screens/intro/intro_vm.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_vm.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_page.dart';
+import 'package:qcar_customer/ui/screens/settings/settings_vm.dart';
 import 'package:qcar_customer/ui/screens/settings/video_settings_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_vm.dart';
@@ -81,7 +83,7 @@ class AppRouter {
         builder = _navigateToSettings;
         break;
       case VideoSettingsPage.routeName:
-        builder = _navigateToVideoSettings;
+        builder = (context) => _navigateToVideoSettings(context, arguments);
         break;
       case IntroPage.routeName:
         builder = _navigateToIntro;
@@ -125,11 +127,19 @@ Widget _navigateToDebug(BuildContext context) {
 }
 
 Widget _navigateToSettings(BuildContext context) {
-  return SettingsPage();
+  final services = Services.of(context)!;
+  return SettingsPage.model(SettingsVM(
+    services.settingsService,
+    services.uploadService,
+    services.settingsSource,
+  ));
 }
 
-Widget _navigateToVideoSettings(BuildContext context) {
-  return VideoSettingsPage(Services.of(context)!.settings);
+Widget _navigateToVideoSettings(
+  BuildContext context,
+  Map<String, dynamic> arguments,
+) {
+  return VideoSettingsPage.model(arguments[ARGS_VIEW_MODEL]);
 }
 
 Widget _navigateToIntro(BuildContext context) {

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/models/sell_info.dart';
 import 'package:qcar_customer/service/info_service.dart';
+import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/mixins/scan_fun.dart';
-import 'package:qcar_customer/ui/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 

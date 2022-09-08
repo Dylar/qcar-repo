@@ -8,7 +8,7 @@ import 'package:qcar_customer/core/helper/player_config.dart';
 import 'package:qcar_customer/core/helper/time_utils.dart';
 import 'package:qcar_customer/core/helper/tuple.dart';
 import 'package:qcar_customer/service/settings_service.dart';
-import 'package:qcar_customer/ui/navigation/app_viewmodel.dart';
+import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/screens/app/app.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
@@ -19,22 +19,27 @@ enum AppState { STARTING, SIGN_IN, SCAN_QR, GO_HOME }
 abstract class AppViewModel extends ViewModel {
   ValueNotifier<Tuple<double, double>>? get progressValue;
 
-  AppInfrastructure? get infrastructure;
+  AppInfrastructure get infra;
 
-  Future<String> initApp();
+  String get firstRoute;
 }
 
 class AppVM extends AppViewModel {
   AppVM({this.infrastructure});
 
-  AppInfrastructure? infrastructure;
-
   ValueNotifier<Tuple<double, double>>? progressValue;
 
-  Future<String> initApp() async {
+  AppInfrastructure? infrastructure;
+  AppInfrastructure get infra => infrastructure!;
+
+  late String firstRoute;
+
+  @override
+  Future init() async {
     final start = DateTime.now();
     final infra = await _initInfrastructure();
 
+    progressValue = infrastructure!.infoService.progressValue;
     final AppState state;
     final signedIn = await infra.authService.signInAnon();
     if (!signedIn) {
@@ -49,7 +54,8 @@ class AppVM extends AppViewModel {
       }
     }
     await waitDiff(start);
-    return state == AppState.GO_HOME ? HomePage.routeName : IntroPage.routeName;
+    firstRoute =
+        state == AppState.GO_HOME ? HomePage.routeName : IntroPage.routeName;
   }
 
   Future<AppInfrastructure> _initInfrastructure() async {
@@ -64,16 +70,14 @@ class AppVM extends AppViewModel {
 
     await infrastructure!.database.init();
 
-    final settings = await infrastructure!.settings.getSettings();
+    final settings = await infrastructure!.settingsSource.getSettings();
     final vidSettings = initPlayerSettings();
 
     if (settings.videos.isEmpty || //TODO make anders -> ab in settings service
         settings.videos.length != vidSettings.length) {
       settings.videos = vidSettings;
-      infrastructure!.settings.saveSettings(settings);
+      infrastructure!.settingsSource.saveSettings(settings);
     }
-
-    progressValue = infrastructure!.infoService.progressValue;
 
     return infrastructure!;
   }

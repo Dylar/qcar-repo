@@ -3,8 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/network/network_service.dart';
 import 'package:qcar_customer/service/upload_service.dart';
 import 'package:qcar_customer/ui/notify/dialog.dart';
-import 'package:qcar_customer/ui/notify/feedback_dialog.dart';
 import 'package:qcar_customer/ui/notify/snackbars.dart';
+
+abstract class FeedbackViewModel {
+  void sendFeedback(String text);
+}
 
 mixin FeedbackFun implements FeedbackViewModel {
   UploadService get uploadService;

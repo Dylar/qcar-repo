@@ -41,18 +41,12 @@ Future pushPage(
 }
 
 Widget wrapWidget(Widget widget, {AppInfrastructure? testInfra}) {
-  final infra = testInfra ?? createTestInfra();
   return Services.init(
-    downloadClient: infra.loadClient,
-    settings: infra.settings,
-    uploadService: infra.uploadService,
-    authService: infra.authService,
-    settingsService: infra.settingsService,
-    infoService: infra.infoService,
+    infra: testInfra ?? createTestInfra(),
     child: MaterialApp(
         title: EnvironmentConfig.APP_NAME,
-        theme: appTheme,
-        darkTheme: appTheme,
+        theme: appTheme, //TODO make real light theme
+        darkTheme: appTheme, //TODO make real dark theme
         onGenerateRoute: AppRouter.generateRoute,
         navigatorObservers: [AppRouter.routeObserver],
         supportedLocales: const [Locale('en'), Locale('de')],

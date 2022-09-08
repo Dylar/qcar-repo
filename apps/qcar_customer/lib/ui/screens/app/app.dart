@@ -15,8 +15,8 @@ import 'package:qcar_customer/service/services.dart';
 import 'package:qcar_customer/service/settings_service.dart';
 import 'package:qcar_customer/service/upload_service.dart';
 import 'package:qcar_customer/ui/app_theme.dart';
+import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/app_router.dart';
-import 'package:qcar_customer/ui/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/ui/screens/app/app_vm.dart';
 import 'package:qcar_customer/ui/screens/app/loading_page.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
@@ -25,7 +25,7 @@ class AppInfrastructure {
   AppInfrastructure._({
     required this.database,
     required this.loadClient,
-    required this.settings,
+    required this.settingsSource,
     required this.infoService,
     required this.carInfoDataSource,
     required this.sellInfoDataSource,
@@ -57,7 +57,7 @@ class AppInfrastructure {
     return AppInfrastructure._(
       database: db,
       loadClient: downClient,
-      settings: settingsSource,
+      settingsSource: settingsSource,
       settingsService: settingsService,
       carInfoDataSource: carSource,
       sellInfoDataSource: sellSource,
@@ -69,13 +69,13 @@ class AppInfrastructure {
 
   final AppDatabase database;
   final DownloadClient loadClient;
-  final SettingsDataSource settings;
+  final SettingsDataSource settingsSource;
   final UploadService uploadService;
   final AuthenticationService authService;
   final InfoService infoService;
   final CarInfoDataSource carInfoDataSource;
   final SellInfoDataSource sellInfoDataSource;
-  SettingsService? settingsService;
+  final SettingsService settingsService;
 }
 
 class App extends View<AppViewModel> {
@@ -91,8 +91,8 @@ class _AppState extends ViewState<App, AppViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String>(
-        future: widget.viewModel.initApp(),
+    return FutureBuilder<void>(
+        future: widget.viewModel.isInitialized,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return fixView(ErrorInfoWidget(snapshot.error!));
@@ -102,23 +102,16 @@ class _AppState extends ViewState<App, AppViewModel> {
             return fixView(LoadingStartPage());
           }
 
-          final firstRoute = snapshot.data!;
           final env = EnvironmentConfig.ENV == Env.PROD.name
               ? ""
               : "(${EnvironmentConfig.ENV}) ";
-          final infra = widget.viewModel.infrastructure!;
           return Services.init(
-            downloadClient: infra.loadClient,
-            settings: infra.settings,
-            uploadService: infra.uploadService,
-            authService: infra.authService,
-            settingsService: infra.settingsService,
-            infoService: infra.infoService,
+            infra: widget.viewModel.infra,
             child: MaterialApp(
               title: env + EnvironmentConfig.APP_NAME,
               theme: appTheme,
               darkTheme: appTheme,
-              initialRoute: firstRoute,
+              initialRoute: viewModel.firstRoute,
               onGenerateInitialRoutes: AppRouter.generateInitRoute,
               onGenerateRoute: AppRouter.generateRoute,
               navigatorObservers: [AppRouter.routeObserver],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/environment_config.dart';
+import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/mixins/scan_fun.dart';
-import 'package:qcar_customer/ui/navigation/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/app/loading_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_vm.dart';
