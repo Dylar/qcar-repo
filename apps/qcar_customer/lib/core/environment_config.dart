@@ -13,6 +13,10 @@ class EnvironmentConfig {
     'ENV',
     defaultValue: "DEV",
   );
+  static const VERSION = String.fromEnvironment(
+    'build-name',
+    defaultValue: "0.0.7",
+  );
 
   static String get domain => dotenv.env['Domain'] ?? "";
   static String get host => dotenv.env['Host'] ?? "";

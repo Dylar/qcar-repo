@@ -60,6 +60,7 @@ class AppVM extends AppViewModel {
       infrastructure = AppInfrastructure.load();
     }
 
-    return infrastructure!..database.init();
+    await infrastructure!.database.init();
+    return infrastructure!;
   }
 }

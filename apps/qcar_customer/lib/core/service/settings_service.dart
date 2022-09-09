@@ -10,4 +10,7 @@ class SettingsService {
       (await _settingsSource.getSettings()).isTrackingEnabled;
 
   Future<Settings> getSettings() async => _settingsSource.getSettings();
+
+  Future<bool> saveSettings(Settings settings) =>
+      _settingsSource.saveSettings(settings);
 }

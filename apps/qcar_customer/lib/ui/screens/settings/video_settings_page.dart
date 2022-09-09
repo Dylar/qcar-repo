@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/ui/app_theme.dart';
+import 'package:qcar_customer/core/models/model_data.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_vm.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
 import 'package:qcar_customer/ui/widgets/loading_overlay.dart';
-import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
+import 'package:settings_ui/settings_ui.dart';
 
 class VideoSettingsPage extends View<SettingsViewModel> {
   static const String routeName = "/videoSettingsPage";
 
   VideoSettingsPage.model(SettingsViewModel viewModel) : super.model(viewModel);
 
-  static AppRouteSpec pushIt() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.pushTo,
-      );
+  static AppRouteSpec pushIt(SettingsViewModel model) => AppRouteSpec(
+      name: routeName,
+      action: AppRouteAction.pushTo,
+      arguments: {ARGS_VIEW_MODEL: model});
 
   @override
   State<VideoSettingsPage> createState() => _VideoSettingsPageState(viewModel);
@@ -42,13 +42,7 @@ class _VideoSettingsPageState
               return LoadingOverlay();
             }
             settingsMap ??= viewModel.settings.videos;
-            return ScrollListView<MapEntry<String, bool>>(
-              items: settingsMap?.entries.toList(),
-              buildItemWidget: (_, item) => wrapWidget(
-                item.key,
-                _VideoSettingsInfoText("${item.key}", item.value),
-              ),
-            );
+            return _buildPage();
           }),
       persistentFooterButtons: [
         Container(
@@ -68,39 +62,30 @@ class _VideoSettingsPageState
     );
   }
 
-  Widget wrapWidget(String key, Widget child) => InkWell(
-        onTap: () =>
-            setState(() => settingsMap![key] = !(settingsMap![key] ?? false)),
-        child: Container(
-          height: 48,
-          padding: const EdgeInsets.all(4.0),
-          child: child,
-        ),
+  SettingsTile _buildSwitch(String title, String key, IconData icon) =>
+      SettingsTile.switchTile(
+        onToggle: (value) async => setState(() => settingsMap![key] = value),
+        initialValue: settingsMap![key],
+        leading: Icon(icon),
+        title: Text(title),
       );
-}
 
-class _VideoSettingsInfoText extends StatelessWidget {
-  _VideoSettingsInfoText(this.title, this.enabled);
-
-  final String title;
-  final bool enabled;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: enabled ? BaseColors.green : BaseColors.red,
-          border: Border.all(color: BaseColors.accent)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Align(alignment: Alignment.centerLeft, child: Text(title)),
-          Flexible(
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(enabled ? "True" : "False"))),
+  Widget _buildPage() => SettingsList(
+        sections: [
+          SettingsSection(
+            title: Text('Wiedergabe'),
+            tiles: <SettingsTile>[
+              _buildSwitch("Automatisch", "autoPlay", Icons.play_arrow),
+              _buildSwitch("Wiederholen", "looping", Icons.repeat),
+            ],
+          ),
+          SettingsSection(
+            title: Text('Steuerung'),
+            tiles: <SettingsTile>[
+              _buildSwitch("Sofort zeigen", "showControlsOnInitialize",
+                  Icons.call_to_action_outlined),
+            ],
+          ),
         ],
-      ),
-    );
-  }
+      );
 }

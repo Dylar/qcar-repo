@@ -8,7 +8,7 @@ abstract class SettingsViewModel extends ViewModel
     implements FeedbackViewModel {
   Settings get settings;
 
-  saveVideoSettings(Map<String, bool> settingsMap);
+  Future saveVideoSettings(Map<String, bool> settingsMap);
 }
 
 class SettingsVM extends SettingsViewModel with FeedbackFun {
@@ -26,7 +26,8 @@ class SettingsVM extends SettingsViewModel with FeedbackFun {
   }
 
   @override
-  saveVideoSettings(Map<String, bool> settingsMap) {
-    throw UnimplementedError();
+  Future saveVideoSettings(Map<String, bool> settingsMap) async {
+    settings.videos = settingsMap;
+    await settingsService.saveSettings(settings);
   }
 }

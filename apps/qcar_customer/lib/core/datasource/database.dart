@@ -24,7 +24,6 @@ class AppDatabase with SettingsDB, SellInfoDB, CarInfoDB {
   }
 
   Future<void> init() async {
-    await initSettings();
     await Hive.initFlutter();
     try {
       Hive.registerAdapter(CarInfoAdapter());
@@ -38,6 +37,8 @@ class AppDatabase with SettingsDB, SellInfoDB, CarInfoDB {
     await Hive.openBox<Settings>(BOX_SETTINGS);
     await Hive.openBox<CarInfo>(BOX_CAR_INFO);
     await Hive.openBox<SellInfo>(BOX_SELL_INFO);
+
+    await initSettings();
   }
 
   Future initSettings() async {

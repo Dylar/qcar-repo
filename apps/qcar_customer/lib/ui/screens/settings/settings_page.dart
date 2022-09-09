@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/environment_config.dart';
+import 'package:qcar_customer/core/misc/constants/asset_paths.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/app_navigation.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
-import 'package:qcar_customer/ui/notify/snackbars.dart';
 import 'package:qcar_customer/ui/screens/debug_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_vm.dart';
 import 'package:qcar_customer/ui/screens/settings/video_settings_page.dart';
+import 'package:qcar_customer/ui/widgets/error_widget.dart';
+import 'package:qcar_customer/ui/widgets/loading_overlay.dart';
+import 'package:settings_ui/settings_ui.dart';
 
 class SettingsPage extends View<SettingsViewModel> {
   static const String routeName = "/settingsPage";
@@ -44,48 +47,60 @@ class _SettingsPageState extends ViewState<SettingsPage, SettingsViewModel> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        verticalDirection: VerticalDirection.up,
-        children: [
-          if (EnvironmentConfig.isDev || showDebug)
-            Flexible(child: SettingsButton("Debug", DebugPage.pushIt())),
-          Flexible(
-            child: InkWell(
-              onLongPress: () => setState(() => showDebug = true),
-              child: SettingsButton(
-                "Video Einstellungen",
-                VideoSettingsPage.pushIt(),
+    return FutureBuilder<void>(
+        future: viewModel.isInitialized,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return ErrorInfoWidget(snapshot.error!);
+          }
+
+          if (snapshot.connectionState != ConnectionState.done) {
+            return LoadingOverlay();
+          }
+          return _buildPage();
+        });
+  }
+
+  SettingsTile _buildButton(
+          String title, IconData icon, Function(BuildContext) onTap) =>
+      SettingsTile.navigation(
+        leading: Icon(icon),
+        title: Text(title),
+        onPressed: onTap,
+      );
+
+  Widget _buildPage() => SettingsList(
+        sections: [
+          SettingsSection(
+            title: Text('Menu'),
+            tiles: <SettingsTile>[
+              if (EnvironmentConfig.isDev || showDebug)
+                _buildButton(
+                  "DEBUG",
+                  Icons.settings_cell_rounded,
+                  (context) => Navigate.to(context, DebugPage.pushIt()),
+                ),
+              _buildButton(
+                "Video",
+                Icons.call_to_action_outlined,
+                (context) =>
+                    Navigate.to(context, VideoSettingsPage.pushIt(viewModel)),
               ),
-            ),
+              _buildButton(
+                "Informationen",
+                Icons.info,
+                (context) => showAboutDialog(
+                  context: context,
+                  applicationIcon: SizedBox.square(
+                    child: Image.asset(launcherIcon),
+                    dimension: 48,
+                  ),
+                  applicationName: EnvironmentConfig.APP_NAME,
+                  applicationVersion: EnvironmentConfig.VERSION,
+                ),
+              ),
+            ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class SettingsButton extends StatelessWidget {
-  SettingsButton(this.name, this.route);
-
-  final AppRouteSpec route;
-  final String name;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 48,
-      padding: const EdgeInsets.all(4.0),
-      child: ElevatedButton(
-        onPressed: () async {
-          final result = await Navigate.to(context, route);
-          if (result == true) {
-            showSettingsSavedSnackBar(context);
-          }
-        },
-        child: Text(name),
-      ),
-    );
-  }
+      );
 }
