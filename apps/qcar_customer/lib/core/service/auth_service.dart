@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:qcar_customer/core/helper/logger.dart';
+import 'package:qcar_customer/core/misc/helper/logger.dart';
 
 class AuthenticationService {
   //TODO maybe we dont need firestore

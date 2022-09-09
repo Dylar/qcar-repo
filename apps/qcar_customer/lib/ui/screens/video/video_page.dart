@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/models/video_info.dart';
+import 'package:qcar_customer/core/models/video_info.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/app_navigation.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';

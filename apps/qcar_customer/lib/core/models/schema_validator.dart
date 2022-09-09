@@ -1,5 +1,5 @@
 import 'package:json_schema2/json_schema2.dart';
-import 'package:qcar_customer/core/helper/json_loader.dart';
+import 'package:qcar_customer/core/misc/helper/json_loader.dart';
 
 const BASE_SCHEMA_PATH = "assets/schema/";
 final SELL_INFO_SCHEMA = "sell_info_schema.json";

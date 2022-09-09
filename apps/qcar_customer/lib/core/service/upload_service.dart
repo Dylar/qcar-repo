@@ -1,8 +1,8 @@
+import 'package:qcar_customer/core/models/Feedback.dart';
+import 'package:qcar_customer/core/models/Tracking.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/network/network_service.dart';
-import 'package:qcar_customer/models/Feedback.dart';
-import 'package:qcar_customer/models/Tracking.dart';
-import 'package:qcar_customer/service/settings_service.dart';
+import 'package:qcar_customer/core/service/settings_service.dart';
 
 class UploadService {
   UploadService(this.settingsService, this.uploadClient);
@@ -17,8 +17,10 @@ class UploadService {
 
   void sendTracking(TrackEvent? event) {
     assert(event != null);
-    if (settingsService.isTrackingEnabled()) {
-      uploadClient.sendTracking(event!);
-    }
+    settingsService.isTrackingEnabled().then((enabled) {
+      if (enabled) {
+        uploadClient.sendTracking(event!);
+      }
+    });
   }
 }

@@ -1,8 +1,8 @@
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/helper/logger.dart';
-import 'package:qcar_customer/core/helper/player_config.dart';
-import 'package:qcar_customer/service/services.dart';
+import 'package:qcar_customer/core/misc/helper/logger.dart';
+import 'package:qcar_customer/core/misc/helper/player_config.dart';
+import 'package:qcar_customer/core/service/services.dart';
 
 import 'loading_overlay.dart';
 
@@ -67,9 +67,9 @@ class _VideoWidgetState extends State<VideoWidget> {
       return;
     }
 
-    final settings = await Services.of(context)!.settingsSource.getSettings();
     await widget.viewModel.isInitialized;
 
+    final settings = await Services.of(context)!.settingsService.getSettings();
     Logger.logI("Load video: ${widget.viewModel.url}");
     final config = playerConfigFromMap(settings.videos);
     controller = BetterPlayerController(

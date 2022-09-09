@@ -1,10 +1,10 @@
-import 'package:qcar_customer/core/helper/json_loader.dart';
-import 'package:qcar_customer/models/car_info.dart';
-import 'package:qcar_customer/models/category_info.dart';
-import 'package:qcar_customer/models/schema_validator.dart';
-import 'package:qcar_customer/models/sell_info.dart';
-import 'package:qcar_customer/models/sell_key.dart';
-import 'package:qcar_customer/models/video_info.dart';
+import 'package:qcar_customer/core/misc/helper/json_loader.dart';
+import 'package:qcar_customer/core/models/car_info.dart';
+import 'package:qcar_customer/core/models/category_info.dart';
+import 'package:qcar_customer/core/models/schema_validator.dart';
+import 'package:qcar_customer/core/models/sell_info.dart';
+import 'package:qcar_customer/core/models/sell_key.dart';
+import 'package:qcar_customer/core/models/video_info.dart';
 
 const String BASE_TESTDATA_PATH = "../../testdata";
 const String DEALER_TESTDATA_PATH = "$BASE_TESTDATA_PATH/dealer/";

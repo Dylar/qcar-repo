@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/models/category_info.dart';
+import 'package:qcar_customer/core/models/category_info.dart';
 import 'package:qcar_customer/ui/app_theme.dart';
 import 'package:qcar_customer/ui/widgets/pic_widget.dart';
 import 'package:qcar_customer/ui/widgets/rounded_widget.dart';

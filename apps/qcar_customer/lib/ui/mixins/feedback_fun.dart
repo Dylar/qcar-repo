@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/network/network_service.dart';
-import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/core/service/upload_service.dart';
 import 'package:qcar_customer/ui/notify/dialog.dart';
 import 'package:qcar_customer/ui/notify/snackbars.dart';
 

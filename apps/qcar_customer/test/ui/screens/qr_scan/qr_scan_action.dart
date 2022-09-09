@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcar_customer/models/car_info.dart';
-import 'package:qcar_customer/models/sell_key.dart';
+import 'package:qcar_customer/core/models/car_info.dart';
+import 'package:qcar_customer/core/models/sell_key.dart';
 import 'package:qcar_customer/ui/screens/app/app.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:hive/hive.dart';
 import 'package:qcar_customer/core/environment_config.dart';
-import 'package:qcar_customer/core/helper/etag.dart';
+import 'package:qcar_customer/core/misc/helper/etag.dart';
 
 import 'model_data.dart';
 

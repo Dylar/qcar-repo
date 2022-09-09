@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/helper/logger.dart';
+import 'package:qcar_customer/core/misc/helper/logger.dart';
 import 'package:qcar_customer/ui/navigation/app_router.dart';
 
 import 'navigation/navi.dart';

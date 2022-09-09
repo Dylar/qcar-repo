@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/helper/logger.dart';
+import 'package:qcar_customer/core/misc/helper/logger.dart';
 import 'package:qcar_customer/ui/app_theme.dart';
 
 class ErrorInfoWidget extends StatelessWidget {

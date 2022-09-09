@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:qcar_customer/models/video_info.dart';
-import 'package:qcar_customer/service/info_service.dart';
-import 'package:qcar_customer/service/services.dart';
+import 'package:qcar_customer/core/models/video_info.dart';
+import 'package:qcar_customer/core/service/info_service.dart';
+import 'package:qcar_customer/core/service/services.dart';
 import 'package:qcar_customer/ui/notify/snackbars.dart';
 import 'package:qcar_customer/ui/screens/video/video_list_item.dart';
 import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';

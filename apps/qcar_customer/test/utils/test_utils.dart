@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qcar_customer/core/environment_config.dart';
-import 'package:qcar_customer/service/services.dart';
+import 'package:qcar_customer/core/service/services.dart';
 import 'package:qcar_customer/ui/app_theme.dart';
 import 'package:qcar_customer/ui/navigation/app_router.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
@@ -41,7 +41,7 @@ Future pushPage(
 }
 
 Widget wrapWidget(Widget widget, {AppInfrastructure? testInfra}) {
-  return Services.init(
+  return Services(
     infra: testInfra ?? createTestInfra(),
     child: MaterialApp(
         title: EnvironmentConfig.APP_NAME,

@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
-import 'package:qcar_customer/models/sell_info.dart';
+import 'package:qcar_customer/core/models/sell_info.dart';
 
 abstract class SellInfoDatabase {
   Future<void> upsertSellInfo(SellInfo sellInfo);

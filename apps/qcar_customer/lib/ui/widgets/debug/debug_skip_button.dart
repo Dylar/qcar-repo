@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/constants/debug.dart';
+import 'package:qcar_customer/core/misc/constants/debug.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class SkipDebugButton extends StatelessWidget {

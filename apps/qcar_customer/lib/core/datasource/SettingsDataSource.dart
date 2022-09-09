@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:qcar_customer/core/datasource/database.dart';
-import 'package:qcar_customer/models/settings.dart';
+import 'package:qcar_customer/core/models/settings.dart';
 
 abstract class SettingsDataSource {
   Future<bool> saveSettings(Settings settings);

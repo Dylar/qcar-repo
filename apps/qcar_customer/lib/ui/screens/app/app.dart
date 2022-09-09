@@ -9,11 +9,11 @@ import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/network/server_client.dart';
-import 'package:qcar_customer/service/auth_service.dart';
-import 'package:qcar_customer/service/info_service.dart';
-import 'package:qcar_customer/service/services.dart';
-import 'package:qcar_customer/service/settings_service.dart';
-import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/core/service/auth_service.dart';
+import 'package:qcar_customer/core/service/info_service.dart';
+import 'package:qcar_customer/core/service/services.dart';
+import 'package:qcar_customer/core/service/settings_service.dart';
+import 'package:qcar_customer/core/service/upload_service.dart';
 import 'package:qcar_customer/ui/app_theme.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/app_router.dart';
@@ -34,11 +34,10 @@ class AppInfrastructure {
     required this.settingsService,
   });
 
-  factory AppInfrastructure.load(
-    SettingsService settingsService, {
+  factory AppInfrastructure.load({
+    AppDatabase? database,
     DownloadClient? downloadClient,
     UploadClient? uploadClient,
-    AppDatabase? database,
     SettingsDataSource? settingsDataSource,
     CarInfoDataSource? carInfoDataSource,
     SellInfoDataSource? sellInfoDataSource,
@@ -54,6 +53,8 @@ class AppInfrastructure {
     final upClient = uploadClient ?? ServerClient();
     final authService =
         authenticationService ?? AuthenticationService(FirebaseAuth.instance);
+    final settingsService = SettingsService(settingsSource);
+    final upService = uploadService ?? UploadService(settingsService, upClient);
     return AppInfrastructure._(
       database: db,
       loadClient: downClient,
@@ -63,7 +64,7 @@ class AppInfrastructure {
       sellInfoDataSource: sellSource,
       infoService: InfoService(downClient, carSource, sellSource),
       authService: authService,
-      uploadService: uploadService ?? UploadService(settingsService, upClient),
+      uploadService: upService,
     );
   }
 
@@ -105,7 +106,7 @@ class _AppState extends ViewState<App, AppViewModel> {
           final env = EnvironmentConfig.ENV == Env.PROD.name
               ? ""
               : "(${EnvironmentConfig.ENV}) ";
-          return Services.init(
+          return Services(
             infra: widget.viewModel.infra,
             child: MaterialApp(
               title: env + EnvironmentConfig.APP_NAME,

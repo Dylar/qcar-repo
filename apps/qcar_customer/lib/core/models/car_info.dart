@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
-import 'package:qcar_customer/models/category_info.dart';
+import 'package:qcar_customer/core/models/category_info.dart';
 
 import 'model_data.dart';
 

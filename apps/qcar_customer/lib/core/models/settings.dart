@@ -10,4 +10,6 @@ class Settings extends HiveObject {
   Map<String, String> values = {};
   @HiveField(1)
   Map<String, bool> videos = {};
+  @HiveField(2)
+  bool isTrackingEnabled = true;
 }

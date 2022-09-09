@@ -7,7 +7,7 @@ import 'package:path_provider_platform_interface/path_provider_platform_interfac
 import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
-import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/core/service/upload_service.dart';
 import 'package:qcar_customer/ui/screens/app/app.dart';
 
 import '../mocks/path_provider_mock.dart';
@@ -36,9 +36,7 @@ AppInfrastructure createTestInfra({
   final sellSource = sellDataSource ?? mockSellSource();
   final authService = mockAuthService();
   final trackService = uploadService ?? mockUploadService();
-  final settingsService = mockSettingsService();
   return AppInfrastructure.load(
-    settingsService,
     downloadClient: dlClient,
     uploadClient: uploadClient,
     database: db,

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcar_customer/models/car_info.dart';
+import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/ui/screens/app/app.dart';
 import 'package:qcar_customer/ui/screens/cars/categories_page.dart';
 

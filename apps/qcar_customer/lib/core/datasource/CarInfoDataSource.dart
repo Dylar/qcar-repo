@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:qcar_customer/core/datasource/database.dart';
-import 'package:qcar_customer/models/car_info.dart';
-import 'package:qcar_customer/models/video_info.dart';
+import 'package:qcar_customer/core/models/car_info.dart';
+import 'package:qcar_customer/core/models/video_info.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class CarInfoDataSource {

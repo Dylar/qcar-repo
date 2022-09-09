@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcar_customer/service/info_service.dart';
+import 'package:qcar_customer/core/service/info_service.dart';
 
 import '../builder/app_builder.dart';
 import '../builder/entity_builder.dart';

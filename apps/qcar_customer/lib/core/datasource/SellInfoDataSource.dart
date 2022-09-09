@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:qcar_customer/core/datasource/database.dart';
-import 'package:qcar_customer/models/sell_info.dart';
+import 'package:qcar_customer/core/models/sell_info.dart';
 
 abstract class SellInfoDataSource {
   Future<List<SellInfo>> getAllSellInfos();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/core/service/upload_service.dart';
 import 'package:qcar_customer/ui/notify/feedback_dialog.dart';
 
 import '../../../builder/network_builder.dart';

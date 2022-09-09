@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:qcar_customer/models/video_info.dart';
+import 'package:qcar_customer/core/environment_config.dart';
+import 'package:qcar_customer/core/models/video_info.dart';
 
-import '../core/environment_config.dart';
 import 'model_data.dart';
 
 part 'category_info.g.dart';

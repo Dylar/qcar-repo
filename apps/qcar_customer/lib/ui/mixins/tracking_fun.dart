@@ -1,5 +1,5 @@
-import 'package:qcar_customer/models/Tracking.dart';
-import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/core/models/Tracking.dart';
+import 'package:qcar_customer/core/service/upload_service.dart';
 
 mixin TrackingFun {
   UploadService get uploadService;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/helper/logger.dart';
-import 'package:qcar_customer/models/sell_info.dart';
-import 'package:qcar_customer/service/info_service.dart';
+import 'package:qcar_customer/core/misc/helper/logger.dart';
+import 'package:qcar_customer/core/models/sell_info.dart';
+import 'package:qcar_customer/core/service/info_service.dart';
 import 'package:qcar_customer/ui/notify/dialog.dart';
 import 'package:qcar_customer/ui/notify/snackbars.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';

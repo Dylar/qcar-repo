@@ -1,7 +1,6 @@
-import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
-import 'package:qcar_customer/models/settings.dart';
-import 'package:qcar_customer/service/settings_service.dart';
-import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/core/models/settings.dart';
+import 'package:qcar_customer/core/service/settings_service.dart';
+import 'package:qcar_customer/core/service/upload_service.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
 
@@ -13,18 +12,17 @@ abstract class SettingsViewModel extends ViewModel
 }
 
 class SettingsVM extends SettingsViewModel with FeedbackFun {
-  SettingsVM(this.settingsService, this.uploadService, this.settingsSource);
+  SettingsVM(this.settingsService, this.uploadService);
 
   @override
   final UploadService uploadService;
   final SettingsService settingsService;
-  final SettingsDataSource settingsSource;
 
   late Settings settings;
 
   @override
   Future init() async {
-    settings = await settingsSource.getSettings();
+    settings = await settingsService.getSettings();
   }
 
   @override

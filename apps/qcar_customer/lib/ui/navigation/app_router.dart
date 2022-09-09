@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/environment_config.dart';
-import 'package:qcar_customer/core/helper/logger.dart';
-import 'package:qcar_customer/models/model_data.dart';
-import 'package:qcar_customer/service/services.dart';
+import 'package:qcar_customer/core/misc/helper/logger.dart';
+import 'package:qcar_customer/core/models/model_data.dart';
+import 'package:qcar_customer/core/service/services.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_vm.dart';
 import 'package:qcar_customer/ui/screens/cars/categories_page.dart';
@@ -131,7 +131,6 @@ Widget _navigateToSettings(BuildContext context) {
   return SettingsPage.model(SettingsVM(
     services.settingsService,
     services.uploadService,
-    services.settingsSource,
   ));
 }
 

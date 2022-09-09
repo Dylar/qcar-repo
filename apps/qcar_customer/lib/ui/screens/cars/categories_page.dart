@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/models/car_info.dart';
-import 'package:qcar_customer/models/category_info.dart';
+import 'package:qcar_customer/core/models/car_info.dart';
+import 'package:qcar_customer/core/models/category_info.dart';
 import 'package:qcar_customer/ui/app_theme.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/app_bar.dart';

@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
-import 'package:qcar_customer/models/settings.dart';
+import 'package:qcar_customer/core/models/settings.dart';
 
 abstract class SettingsDatabase {
   Future<void> upsertSettings(Settings settings);

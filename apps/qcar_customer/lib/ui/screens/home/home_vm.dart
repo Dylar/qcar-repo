@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:qcar_customer/core/helper/logger.dart';
-import 'package:qcar_customer/service/info_service.dart';
-import 'package:qcar_customer/service/upload_service.dart';
+import 'package:qcar_customer/core/misc/helper/logger.dart';
+import 'package:qcar_customer/core/service/info_service.dart';
+import 'package:qcar_customer/core/service/upload_service.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';

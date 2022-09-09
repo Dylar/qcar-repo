@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/helper/logger.dart';
-import 'package:qcar_customer/core/helper/tuple.dart';
-import 'package:qcar_customer/service/services.dart';
+import 'package:qcar_customer/core/misc/helper/logger.dart';
+import 'package:qcar_customer/core/misc/helper/tuple.dart';
+import 'package:qcar_customer/core/service/services.dart';
 import 'package:qcar_customer/ui/app_theme.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
