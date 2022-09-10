@@ -13,16 +13,13 @@ class EnvironmentConfig {
     'ENV',
     defaultValue: "DEV",
   );
-  static const VERSION = String.fromEnvironment(
-    'build-name',
-    defaultValue: "0.0.7",
-  );
 
   static String get domain => dotenv.env['Domain'] ?? "";
   static String get host => dotenv.env['Host'] ?? "";
   static int get port => int.parse((dotenv.env['Port'] ?? "88"));
   static String get user => dotenv.env['User'] ?? "";
   static String get pewe => dotenv.env['PeWe'] ?? "";
+  static String get version => dotenv.env['Version'] ?? "0.0.7";
 
   // static String get backendUrl => "http://34.77.80.106:1110";//dotenv.env['backend'] ?? "";
   static String get backendUrl =>

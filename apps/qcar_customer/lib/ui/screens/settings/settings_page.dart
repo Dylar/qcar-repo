@@ -96,7 +96,7 @@ class _SettingsPageState extends ViewState<SettingsPage, SettingsViewModel> {
                     dimension: 60,
                   ),
                   applicationName: EnvironmentConfig.APP_NAME,
-                  applicationVersion: EnvironmentConfig.VERSION,
+                  applicationVersion: EnvironmentConfig.version,
                   applicationLegalese: "©2022 QCar",
                   children: <Widget>[
                     Container(
