@@ -27,7 +27,6 @@ dependencies:
   # infrastructure
   ssh2: ^2.2.3
   flutter_dotenv: ^5.0.2
-  path_provider: ^2.0.8 # check me 2.0.11 (do we need?)
 
   # Localization
   flutter_localizations:
@@ -38,20 +37,20 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.4
-  flutter_launcher_icons: ^0.9.2 # check me 0.10.0
+  flutter_launcher_icons: ^0.10.0
 
   # clean code
-  linter: ^1.18.0 # check me 1.27.0
-  json_schema2: ^2.0.1+2 # check me ^2.0.2+9
+  linter: ^1.27.0
+  json_schema2: ^2.0.2+9
 
   # database
-  hive: ^2.0.5 # check me 2.2.3
+  hive: ^2.2.3
   hive_flutter: ^1.1.0
 
   # firebase
   firebase_core: ^1.6.0
   firebase_auth: ^3.3.20
-  cloud_firestore: ^2.5.1
+  cloud_firestore: ^3.4.7
 
   # network
   http: ^0.13.5
