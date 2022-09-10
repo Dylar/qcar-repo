@@ -35,6 +35,9 @@
 
   "@_SETTINGS_PAGE": {},
   "settingsPageTitle": "Einstellungen",
+  "debugMenu": "Debug Menu",
+  "videoMenu": "Video Menu",
+  "aboutDialog": "Informationen",
 
   "@_FEEDBACK": {},
   "feedbackTitle": "Feedback",

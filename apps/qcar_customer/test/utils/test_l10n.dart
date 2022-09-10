@@ -30,7 +30,13 @@ class TestAppLocalization {
   String get searchStartText => _values["searchStartText"];
   String get searchEmptyText => _values["searchEmptyText"];
 
-  //--------FEEDBACK
+  //------FEEDBACK
   String get feedbackThanks => _values["feedbackThanks"];
   String get feedbackError => _values["feedbackError"];
+
+  //------SETTINGS
+  String get settingsPageTitle => _values["settingsPageTitle"];
+  String get debugMenu => _values["debugMenu"];
+  String get videoMenu => _values["videoMenu"];
+  String get aboutDialog => _values["aboutDialog"];
 }

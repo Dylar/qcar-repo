@@ -5,6 +5,7 @@ import 'package:qcar_customer/core/misc/constants/asset_paths.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/app_navigation.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
+import 'package:qcar_customer/ui/notify/snackbars.dart';
 import 'package:qcar_customer/ui/screens/settings/debug_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_vm.dart';
 import 'package:qcar_customer/ui/screens/settings/video_settings_page.dart';
@@ -62,41 +63,51 @@ class _SettingsPageState extends ViewState<SettingsPage, SettingsViewModel> {
             if (snapshot.connectionState != ConnectionState.done) {
               return LoadingOverlay();
             }
-            return _buildPage();
+            return _buildPage(l10n);
           }),
       bottomNavigationBar: AppNavigation(viewModel, SettingsPage.routeName),
     );
   }
 
-  Widget _buildPage() {
+  Widget _buildPage(AppLocalizations l10n) {
     return SettingsList(
       sections: [
         SettingsSection(
           tiles: <SettingsTile>[
             if (showDebug)
               _buildButton(
-                "Debug Menu",
+                l10n.debugMenu,
                 Icons.developer_mode_rounded,
                 (context) => Navigate.to(context, DebugPage.pushIt()),
               ),
             _buildButton(
-              "Video Menu",
+              l10n.videoMenu,
               Icons.call_to_action_outlined,
               (context) =>
                   Navigate.to(context, VideoSettingsPage.pushIt(viewModel)),
             ),
             _buildButton(
-              "Informationen",
+              l10n.aboutDialog,
               Icons.info,
               (context) => showAboutDialog(
-                context: context,
-                applicationIcon: SizedBox.square(
-                  child: Image.asset(launcherIcon),
-                  dimension: 48,
-                ),
-                applicationName: EnvironmentConfig.APP_NAME,
-                applicationVersion: EnvironmentConfig.VERSION,
-              ),
+                  context: context,
+                  applicationIcon: SizedBox.square(
+                    child: Image.asset(launcherIcon),
+                    dimension: 60,
+                  ),
+                  applicationName: EnvironmentConfig.APP_NAME,
+                  applicationVersion: EnvironmentConfig.VERSION,
+                  applicationLegalese: "©2022 QCar",
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.only(top: 15),
+                      child: InkWell(
+                          onTap: () => showSnackBar(context, "Öffne Email App"),
+                          //TODO make real app open
+                          child: Text('info@qcar.com')),
+                    )
+                  ]),
             ),
           ],
         ),

@@ -14,6 +14,7 @@ import 'package:qcar_customer/ui/screens/cars/categories_page.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
+import 'package:qcar_customer/ui/screens/settings/settings_page.dart';
 
 import '../../../builder/entity_builder.dart';
 import '../../../utils/test_utils.dart';
@@ -59,5 +60,10 @@ void main() {
     await tapNaviIcon(tester, CategoriesPage.routeName);
     expect(find.byType(CategoriesPage), findsOneWidget);
     checkNavigationBar(CategoriesPage.routeName);
+
+    //settings page - aaahh die settings
+    await tapNaviIcon(tester, SettingsPage.routeName);
+    expect(find.byType(SettingsPage), findsOneWidget);
+    checkNavigationBar(SettingsPage.routeName);
   });
 }
