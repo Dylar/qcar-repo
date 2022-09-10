@@ -7,13 +7,13 @@ import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_vm.dart';
 import 'package:qcar_customer/ui/screens/cars/categories_page.dart';
 import 'package:qcar_customer/ui/screens/cars/categories_vm.dart';
-import 'package:qcar_customer/ui/screens/debug_page.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qcar_customer/ui/screens/home/home_vm.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_vm.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_vm.dart';
+import 'package:qcar_customer/ui/screens/settings/debug_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_vm.dart';
 import 'package:qcar_customer/ui/screens/settings/video_settings_page.dart';
@@ -149,6 +149,7 @@ Widget _navigateToIntro(BuildContext context) {
 Widget _navigateToHome(BuildContext context) {
   final services = Services.of(context)!;
   return HomePage(HomeVM(
+    services.settingsService,
     services.uploadService,
     services.infoService,
   ));
@@ -199,6 +200,7 @@ Widget _navigateToVideo(BuildContext context, Map<String, dynamic> arguments) {
   final services = Services.of(context)!;
   return VideoPage(
     VideoVM(
+      services.settingsService,
       services.uploadService,
       arguments[VideoPage.ARG_VIDEO],
     ),

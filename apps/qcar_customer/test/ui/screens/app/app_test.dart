@@ -14,7 +14,6 @@ import 'package:qcar_customer/ui/screens/cars/categories_page.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
-import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
 import '../../../builder/entity_builder.dart';
 import '../../../utils/test_utils.dart';
@@ -39,8 +38,6 @@ import 'app_checker.dart';
 ])
 void main() {
   testWidgets('test navigation', (WidgetTester tester) async {
-    isTest = true;
-
     //Intro page - scan key
     await loadApp(tester);
     expect(find.byType(IntroPage), findsOneWidget);

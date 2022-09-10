@@ -1,13 +1,13 @@
 {
   "brand": "Toyota",
   "model": "CorollaTSGR",
-  "imagePath": "Path/to/image.jpg",
+  "imagePath": "Path/to/carImage.jpg",
   "categories": [
     {
       "name": "Sicherheit",
       "order": 1,
       "description": "Hier geht alles um Sicherheit",
-      "imagePath": "Path/to/image.jpg",
+      "imagePath": "Path/to/catImage.jpg",
       "videos": [
         {
           "brand": "Toyota",
@@ -47,7 +47,7 @@
       "name": "Komfort",
       "order": 1,
       "description": "Hier geht alles um Sicherheit",
-      "imagePath": "Path/to/image.jpg",
+      "imagePath": "Path/to/catImage.jpg",
       "videos": [
         {
           "brand": "Toyota",

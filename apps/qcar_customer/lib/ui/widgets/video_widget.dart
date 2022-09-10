@@ -2,16 +2,14 @@ import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/misc/helper/logger.dart';
 import 'package:qcar_customer/core/misc/helper/player_config.dart';
-import 'package:qcar_customer/core/service/services.dart';
-
-import 'loading_overlay.dart';
+import 'package:qcar_customer/core/service/settings_service.dart';
+import 'package:qcar_customer/ui/widgets/loading_overlay.dart';
 
 const VIDEO_START = Duration(seconds: 0, minutes: 0, hours: 0);
 
-//TODO make this anders...
-bool isTest = false;
-
 abstract class VideoWidgetViewModel {
+  SettingsService get settingsService;
+
   String get url;
 
   Future get isInitialized;
@@ -45,14 +43,11 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isTest) {
-      //TODO make this anders...
-      return Container();
-    }
     return FutureBuilder<void>(
         future: _initVideoWidget(),
         builder: (context, snapshot) {
-          return snapshot.connectionState != ConnectionState.done
+          return controller == null ||
+                  snapshot.connectionState != ConnectionState.done
               ? VideoDownload()
               : Container(
                   margin: const EdgeInsets.all(4.0),
@@ -67,11 +62,14 @@ class _VideoWidgetState extends State<VideoWidget> {
       return;
     }
 
+    Logger.logD("init?");
     await widget.viewModel.isInitialized;
+    Logger.logD("Init!");
 
-    final settings = await Services.of(context)!.settingsService.getSettings();
-    Logger.logI("Load video: ${widget.viewModel.url}");
+    final settings = await widget.viewModel.settingsService.getSettings();
+    Logger.logD("Load video: ${widget.viewModel.url}");
     final config = playerConfigFromMap(settings.videos);
+    Logger.logD("set controller");
     controller = BetterPlayerController(
       config,
       betterPlayerDataSource: BetterPlayerDataSource(
@@ -79,6 +77,7 @@ class _VideoWidgetState extends State<VideoWidget> {
         widget.viewModel.url,
       ),
     )..videoPlayerController!.addListener(_checkVideo);
+    Logger.logD("controller done");
   }
 
   void _checkVideo() {

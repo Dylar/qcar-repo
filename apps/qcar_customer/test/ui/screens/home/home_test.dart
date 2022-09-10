@@ -20,8 +20,6 @@ void main() {
   });
 
   group('HomePage - feedback test', () {
-    isTest = true;
-
     testWidgets('HomePage - cancel feedback', (WidgetTester tester) async {
       final infra = await pushToHome(tester);
       await doCancelFeedback(tester, infra.uploadService);

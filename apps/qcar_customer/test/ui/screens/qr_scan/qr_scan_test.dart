@@ -3,7 +3,6 @@ import 'package:qcar_customer/core/models/sell_key.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_list_item.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
-import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
 import '../../../builder/entity_builder.dart';
 import '../../../builder/network_builder.dart';
@@ -23,8 +22,6 @@ void main() {
   });
 
   group('QRScanPage - feedback test', () {
-    isTest = true;
-
     testWidgets('QRScanPage - cancel feedback', (WidgetTester tester) async {
       final infra = await pushToQrScan(tester);
       await doCancelFeedback(tester, infra.uploadService);

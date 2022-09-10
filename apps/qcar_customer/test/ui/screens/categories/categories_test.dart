@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qcar_customer/ui/screens/cars/categories_page.dart';
-import 'package:qcar_customer/ui/widgets/video_widget.dart';
 
 import '../../../builder/network_builder.dart';
 import '../../../mocks/test_mock.dart';
@@ -18,8 +17,6 @@ void main() {
   });
 
   group('CategoriesPage - feedback test', () {
-    isTest = true;
-
     testWidgets('CategoriesPage - cancel feedback',
         (WidgetTester tester) async {
       final infra = await pushToCategories(tester);

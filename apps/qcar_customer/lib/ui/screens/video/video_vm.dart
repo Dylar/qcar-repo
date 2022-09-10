@@ -1,4 +1,5 @@
 import 'package:qcar_customer/core/models/video_info.dart';
+import 'package:qcar_customer/core/service/settings_service.dart';
 import 'package:qcar_customer/core/service/upload_service.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
@@ -12,10 +13,13 @@ abstract class VideoViewModel extends ViewModel
 }
 
 class VideoVM extends VideoViewModel with FeedbackFun {
-  VideoVM(this.uploadService, this.videoInfo);
+  VideoVM(this.settingsService, this.uploadService, this.videoInfo);
 
   @override
   UploadService uploadService;
+
+  @override
+  SettingsService settingsService;
 
   VideoInfo? videoInfo;
 

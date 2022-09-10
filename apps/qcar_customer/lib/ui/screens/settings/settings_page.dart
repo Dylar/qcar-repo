@@ -5,7 +5,7 @@ import 'package:qcar_customer/core/misc/constants/asset_paths.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/app_navigation.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
-import 'package:qcar_customer/ui/screens/debug_page.dart';
+import 'package:qcar_customer/ui/screens/settings/debug_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_vm.dart';
 import 'package:qcar_customer/ui/screens/settings/video_settings_page.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
@@ -34,31 +34,74 @@ class SettingsPage extends View<SettingsViewModel> {
 class _SettingsPageState extends ViewState<SettingsPage, SettingsViewModel> {
   _SettingsPageState(SettingsViewModel viewModel) : super(viewModel);
   bool showDebug = false;
+  int debugCount = 0;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.settingsPageTitle),
+        title: GestureDetector(
+          onTap: () => debugCount++,
+          onLongPress: () {
+            if (debugCount == 3) {
+              setState(() => showDebug = !showDebug);
+            }
+            debugCount = 0;
+          },
+          child: Text(l10n.settingsPageTitle),
+        ),
       ),
-      body: _buildBody(context),
+      body: FutureBuilder<void>(
+          future: viewModel.isInitialized,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return ErrorInfoWidget(snapshot.error!);
+            }
+
+            if (snapshot.connectionState != ConnectionState.done) {
+              return LoadingOverlay();
+            }
+            return _buildPage();
+          }),
       bottomNavigationBar: AppNavigation(viewModel, SettingsPage.routeName),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
-    return FutureBuilder<void>(
-        future: viewModel.isInitialized,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return ErrorInfoWidget(snapshot.error!);
-          }
-
-          if (snapshot.connectionState != ConnectionState.done) {
-            return LoadingOverlay();
-          }
-          return _buildPage();
-        });
+  Widget _buildPage() {
+    return SettingsList(
+      sections: [
+        SettingsSection(
+          tiles: <SettingsTile>[
+            if (showDebug)
+              _buildButton(
+                "Debug Menu",
+                Icons.developer_mode_rounded,
+                (context) => Navigate.to(context, DebugPage.pushIt()),
+              ),
+            _buildButton(
+              "Video Menu",
+              Icons.call_to_action_outlined,
+              (context) =>
+                  Navigate.to(context, VideoSettingsPage.pushIt(viewModel)),
+            ),
+            _buildButton(
+              "Informationen",
+              Icons.info,
+              (context) => showAboutDialog(
+                context: context,
+                applicationIcon: SizedBox.square(
+                  child: Image.asset(launcherIcon),
+                  dimension: 48,
+                ),
+                applicationName: EnvironmentConfig.APP_NAME,
+                applicationVersion: EnvironmentConfig.VERSION,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   SettingsTile _buildButton(
@@ -67,40 +110,5 @@ class _SettingsPageState extends ViewState<SettingsPage, SettingsViewModel> {
         leading: Icon(icon),
         title: Text(title),
         onPressed: onTap,
-      );
-
-  Widget _buildPage() => SettingsList(
-        sections: [
-          SettingsSection(
-            title: Text('Menu'),
-            tiles: <SettingsTile>[
-              if (EnvironmentConfig.isDev || showDebug)
-                _buildButton(
-                  "DEBUG",
-                  Icons.settings_cell_rounded,
-                  (context) => Navigate.to(context, DebugPage.pushIt()),
-                ),
-              _buildButton(
-                "Video",
-                Icons.call_to_action_outlined,
-                (context) =>
-                    Navigate.to(context, VideoSettingsPage.pushIt(viewModel)),
-              ),
-              _buildButton(
-                "Informationen",
-                Icons.info,
-                (context) => showAboutDialog(
-                  context: context,
-                  applicationIcon: SizedBox.square(
-                    child: Image.asset(launcherIcon),
-                    dimension: 48,
-                  ),
-                  applicationName: EnvironmentConfig.APP_NAME,
-                  applicationVersion: EnvironmentConfig.VERSION,
-                ),
-              ),
-            ],
-          ),
-        ],
       );
 }
