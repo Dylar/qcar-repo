@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/models/model_data.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
+import 'package:qcar_customer/ui/notify/dialog.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_vm.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
 import 'package:qcar_customer/ui/widgets/loading_overlay.dart';
@@ -29,36 +32,42 @@ class _VideoSettingsPageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("VideoSettings")),
-      body: FutureBuilder<void>(
-          future: viewModel.isInitialized,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return ErrorInfoWidget(snapshot.error!);
-            }
-
-            if (snapshot.connectionState != ConnectionState.done) {
-              return LoadingOverlay();
-            }
-            settingsMap ??= viewModel.settings.videos;
-            return _buildPage();
-          }),
-      persistentFooterButtons: [
-        Container(
-          height: 48,
-          padding: const EdgeInsets.all(4.0),
-          child: ElevatedButton(
-            onPressed: () async {
-              if (settingsMap != null) {
-                await viewModel.saveVideoSettings(settingsMap!);
+    final l10n = AppLocalizations.of(context)!;
+    return WillPopScope(
+      onWillPop: () => _openConfirmDialog(context, l10n),
+      child: Scaffold(
+        appBar: AppBar(title: Text("Video Einstellungen")),
+        body: FutureBuilder<void>(
+            future: viewModel.isInitialized,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return ErrorInfoWidget(snapshot.error!);
               }
-              Navigate.pop(context, settingsMap != null);
-            },
-            child: Text("Speichern"),
-          ),
-        )
-      ],
+
+              if (snapshot.connectionState != ConnectionState.done) {
+                return LoadingOverlay();
+              }
+              if (settingsMap == null) {
+                settingsMap = Map.from(viewModel.settings.videos);
+              }
+              return _buildPage(l10n);
+            }),
+        persistentFooterButtons: [
+          Container(
+            height: 48,
+            padding: const EdgeInsets.all(4.0),
+            child: ElevatedButton(
+              onPressed: () async {
+                if (settingsMap != null) {
+                  await viewModel.saveVideoSettings(settingsMap!);
+                }
+                Navigate.pop(context);
+              },
+              child: Text(l10n.save),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -70,22 +79,40 @@ class _VideoSettingsPageState
         title: Text(title),
       );
 
-  Widget _buildPage() => SettingsList(
+  Widget _buildPage(AppLocalizations l10n) => SettingsList(
         sections: [
           SettingsSection(
             title: Text('Wiedergabe'),
             tiles: <SettingsTile>[
-              _buildSwitch("Automatisch", "autoPlay", Icons.play_arrow),
+              _buildSwitch(l10n.autoPlay, "autoPlay", Icons.play_arrow),
               _buildSwitch("Wiederholen", "looping", Icons.repeat),
             ],
           ),
           SettingsSection(
             title: Text('Steuerung'),
             tiles: <SettingsTile>[
-              _buildSwitch("Sofort zeigen", "showControlsOnInitialize",
+              _buildSwitch("Immer zeigen", "showControlsOnInitialize",
                   Icons.call_to_action_outlined),
             ],
           ),
         ],
       );
+
+  Future<bool> _openConfirmDialog(
+      BuildContext context, AppLocalizations l10n) async {
+    print("_openConfirmDialog");
+    if (mapEquals(settingsMap, viewModel.settings.videos)) {
+      print("nothign changed");
+      return true;
+    }
+    print("save it?");
+    final save = await openConfirmDialog(
+        context, l10n.notSavedTitle, l10n.notSavedMessage);
+    if (save) {
+      print("save it!");
+      await viewModel.saveVideoSettings(settingsMap!);
+    }
+    print("_openConfirmDialog done");
+    return true;
+  }
 }

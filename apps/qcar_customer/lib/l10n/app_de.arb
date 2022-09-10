@@ -1,16 +1,23 @@
 {
 
+  "@_GENERIC": {},
+  "yes": "Ja",
+  "no": "Nein",
+  "ok": "Ok",
+  "cancel": "Abbrechen",
+
   "@_DIALOG": {},
   "errorTitle": "Fehler",
+  "notSavedTitle": "Änderung speichern?",
+  "notSavedMessage": "Änderungen wurden noch nicht gespeichert. Wollen Sie speichern?",
 
   "@_SCAN": {},
   "scanError": "Beim scannen ist ein Fehler aufgetreten.\nBitten scannen Sie erneut.",
   "oldCarScanned": "Dieses Auto hast du schon registriert.",
 
   "@_BUTTONS": {},
-  "ok": "Ok",
   "send": "Senden",
-  "cancel": "Abbrechen",
+  "save": "Speichern",
 
   "@_HOME_PAGE": {},
   "homoPageTitle": "Home",
@@ -38,6 +45,7 @@
   "debugMenu": "Debug Menu",
   "videoMenu": "Video Menu",
   "aboutDialog": "Informationen",
+  "autoPlay": "Automatisch",
 
   "@_FEEDBACK": {},
   "feedbackTitle": "Feedback",

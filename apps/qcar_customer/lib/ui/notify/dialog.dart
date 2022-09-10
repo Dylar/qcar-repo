@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
+import 'package:qcar_customer/ui/notify/confirm_dialog.dart';
 import 'package:qcar_customer/ui/notify/feedback_dialog.dart';
 import 'package:qcar_customer/ui/notify/info_dialog.dart';
 
@@ -30,4 +31,14 @@ Future openFeedbackDialog(BuildContext context, FeedbackViewModel viewModel) {
     builder: (context) => FeedbackDialog(viewModel),
     barrierDismissible: false,
   );
+}
+
+Future<bool> openConfirmDialog(
+    BuildContext context, String title, String message) async {
+  return (await showDialog<bool>(
+        context: context,
+        builder: (context) => ConfirmDialog(title, message),
+        barrierDismissible: false,
+      )) ??
+      false;
 }
