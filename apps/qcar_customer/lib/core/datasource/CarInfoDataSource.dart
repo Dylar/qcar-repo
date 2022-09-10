@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/core/models/video_info.dart';
-import 'package:rxdart/rxdart.dart';
 
 abstract class CarInfoDataSource {
   Stream<List<CarInfo>> watchCarInfo();
@@ -20,7 +19,7 @@ class CarInfoDS implements CarInfoDataSource {
 
   final AppDatabase _database;
 
-  final streamController = BehaviorSubject<List<CarInfo>>();
+  final streamController = StreamController<List<CarInfo>>();
 
   void dispose() {
     streamController.close();
@@ -41,7 +40,7 @@ class CarInfoDS implements CarInfoDataSource {
   @override
   Stream<List<CarInfo>> watchCarInfo() {
     _database.getCarInfos().then((data) => streamController.add(data));
-    return streamController;
+    return streamController.stream;
   }
 
   @override

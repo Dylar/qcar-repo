@@ -62,14 +62,10 @@ class _VideoWidgetState extends State<VideoWidget> {
       return;
     }
 
-    Logger.logD("init?");
     await widget.viewModel.isInitialized;
-    Logger.logD("Init!");
 
     final settings = await widget.viewModel.settingsService.getSettings();
-    Logger.logD("Load video: ${widget.viewModel.url}");
     final config = playerConfigFromMap(settings.videos);
-    Logger.logD("set controller");
     controller = BetterPlayerController(
       config,
       betterPlayerDataSource: BetterPlayerDataSource(
@@ -77,7 +73,6 @@ class _VideoWidgetState extends State<VideoWidget> {
         widget.viewModel.url,
       ),
     )..videoPlayerController!.addListener(_checkVideo);
-    Logger.logD("controller done");
   }
 
   void _checkVideo() {
