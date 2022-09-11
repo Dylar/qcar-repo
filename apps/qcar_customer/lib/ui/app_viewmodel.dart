@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/misc/helper/logger.dart';
+import 'package:qcar_customer/core/models/Tracking.dart';
+import 'package:qcar_customer/core/service/services.dart';
+import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/navigation/app_router.dart';
 
 import 'navigation/navi.dart';
@@ -50,6 +53,10 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
     viewModel.openDialog = (fun) async => fun(context);
     viewModel.showSnackBar = (fun) async => fun(context);
     viewModel.navigateTo = (spec) => Navigate.to(context, spec);
+    if (Services.of(context) != null) {
+      //TODO make this anders (in appVM also)
+      viewModel.trackingService = Services.of(context)!.trackingService;
+    }
   }
 
   @mustCallSuper
@@ -99,12 +106,15 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
 abstract class ViewModel {
   ViewModel();
 
+  late TrackingService trackingService;
+
   late void Function() notifyListeners;
   late void Function(AppRouteSpec) navigateTo;
   late Future Function(Function(BuildContext)) openDialog;
   late Future Function(Function(BuildContext)) showSnackBar;
 
   final _initializer = new Completer();
+
   Future get isInitialized => _initializer.future;
 
   /// This method is executed whenever the Widget's Stateful State gets
@@ -126,6 +136,10 @@ abstract class ViewModel {
     if (!_initializer.isCompleted) {
       _initializer.complete();
     }
+  }
+
+  void sendTracking(TrackType type, String text) {
+    trackingService.sendTracking(TrackEvent(DateTime.now(), type, text));
   }
 
   /// Called when the top route has been popped off, and the current route

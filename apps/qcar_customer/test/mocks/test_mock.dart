@@ -15,7 +15,7 @@ import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/network/network_service.dart';
 import 'package:qcar_customer/core/service/auth_service.dart';
 import 'package:qcar_customer/core/service/settings_service.dart';
-import 'package:qcar_customer/core/service/upload_service.dart';
+import 'package:qcar_customer/core/service/tracking_service.dart';
 
 import '../builder/entity_builder.dart';
 import '../ui/screens/app/app_test.mocks.dart';
@@ -131,13 +131,14 @@ AuthenticationService mockAuthService({bool isLoggedIn = true}) {
   return service;
 }
 
-UploadService mockUploadService({
+TrackingService mockTrackingService({
   Response? feedbackResponse,
   Response? trackingResponse,
 }) {
-  final service = MockUploadService();
+  final service = MockTrackingService();
   if (feedbackResponse != null) {
-    when(service.sendFeedback(any)).thenAnswer((inv) async => feedbackResponse);
+    when(service.sendFeedback(any, any))
+        .thenAnswer((inv) async => feedbackResponse);
   }
   if (trackingResponse != null) {
     when(service.sendTracking(any)).thenAnswer((inv) async => trackingResponse);
@@ -146,10 +147,11 @@ UploadService mockUploadService({
 }
 
 void mockFeedbackResponse(
-  UploadService service,
+  TrackingService service,
   Response feedbackResponse,
 ) {
-  when(service.sendFeedback(any)).thenAnswer((inv) async => feedbackResponse);
+  when(service.sendFeedback(any, any))
+      .thenAnswer((inv) async => feedbackResponse);
 }
 
 SettingsService mockSettingsService() {

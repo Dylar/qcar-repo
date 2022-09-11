@@ -35,6 +35,7 @@ class AppVM extends AppViewModel {
     final start = DateTime.now();
     final infra = await _initInfrastructure();
 
+    trackingService = infra.trackingService; //TODO make this anders
     progressValue = infrastructure!.infoService.progressValue;
     final signedIn = await infra.authService.signInAnon();
     if (!signedIn) {

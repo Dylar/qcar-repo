@@ -9,7 +9,7 @@ import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/service/auth_service.dart';
 import 'package:qcar_customer/core/service/settings_service.dart';
-import 'package:qcar_customer/core/service/upload_service.dart';
+import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/screens/cars/categories_page.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
@@ -31,7 +31,7 @@ import 'app_checker.dart';
   CarInfoDataSource,
   SellInfoDataSource,
   AuthenticationService,
-  UploadService,
+  TrackingService,
   HttpClient,
   HttpHeaders,
   HttpClientRequest,

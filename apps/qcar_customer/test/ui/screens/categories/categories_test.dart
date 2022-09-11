@@ -20,20 +20,22 @@ void main() {
     testWidgets('CategoriesPage - cancel feedback',
         (WidgetTester tester) async {
       final infra = await pushToCategories(tester);
-      await doCancelFeedback(tester, infra.uploadService);
+      await doCancelFeedback(tester, infra.trackingService);
     });
 
     testWidgets('CategoriesPage - success feedback',
         (WidgetTester tester) async {
       final infra = await pushToCategories(tester);
-      mockFeedbackResponse(infra.uploadService, okResponse());
-      await doSuccessFeedback(tester, infra.uploadService);
+      mockFeedbackResponse(infra.trackingService, okResponse());
+      await doSuccessFeedback(tester, infra.trackingService, -1);
+      await doSuccessFeedback(tester, infra.trackingService, 0);
+      await doSuccessFeedback(tester, infra.trackingService, 1);
     });
 
     testWidgets('CategoriesPage - failed feedback',
         (WidgetTester tester) async {
       final infra = await pushToCategories(tester);
-      await doFailedFeedback(tester, infra.uploadService);
+      await doFailedFeedback(tester, infra.trackingService);
     });
   });
 }

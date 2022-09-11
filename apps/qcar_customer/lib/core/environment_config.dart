@@ -1,6 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 enum Env { FEATURE, DEV, STAGE, PROD }
+
 enum FLAVOR { TEST }
 
 class EnvironmentConfig {
@@ -20,10 +21,7 @@ class EnvironmentConfig {
   static String get user => dotenv.env['User'] ?? "";
   static String get pewe => dotenv.env['PeWe'] ?? "";
   static String get version => dotenv.env['Version'] ?? "0.0.7";
-
-  // static String get backendUrl => "http://34.77.80.106:1110";//dotenv.env['backend'] ?? "";
-  static String get backendUrl =>
-      "http://139.162.140.93:1110"; //dotenv.env['backend'] ?? "";
+  static String get backendUrl => dotenv.env['BackendUrl'] ?? "";
 
   static bool get isDev => ENV == Env.DEV.name;
 }

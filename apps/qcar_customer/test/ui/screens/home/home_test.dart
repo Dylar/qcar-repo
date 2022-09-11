@@ -22,18 +22,20 @@ void main() {
   group('HomePage - feedback test', () {
     testWidgets('HomePage - cancel feedback', (WidgetTester tester) async {
       final infra = await pushToHome(tester);
-      await doCancelFeedback(tester, infra.uploadService);
+      await doCancelFeedback(tester, infra.trackingService);
     });
 
     testWidgets('HomePage - success feedback', (WidgetTester tester) async {
       final infra = await pushToHome(tester);
-      mockFeedbackResponse(infra.uploadService, okResponse());
-      await doSuccessFeedback(tester, infra.uploadService);
+      mockFeedbackResponse(infra.trackingService, okResponse());
+      await doSuccessFeedback(tester, infra.trackingService, -1);
+      await doSuccessFeedback(tester, infra.trackingService, 0);
+      await doSuccessFeedback(tester, infra.trackingService, 1);
     });
 
     testWidgets('HomePage - failed feedback', (WidgetTester tester) async {
       final infra = await pushToHome(tester);
-      await doFailedFeedback(tester, infra.uploadService);
+      await doFailedFeedback(tester, infra.trackingService);
     });
   });
 }

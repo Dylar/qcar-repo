@@ -10,6 +10,7 @@ const ARGS_VIEW_MODEL = "ARGS_VIEW_MODEL";
 
 const FIELD_DATE = "date";
 const FIELD_TEXT = "text";
+const FIELD_RATING = "rating";
 const FIELD_TYPE = "type";
 
 const FIELD_KEY = "key";

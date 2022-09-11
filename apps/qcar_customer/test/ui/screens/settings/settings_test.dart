@@ -23,18 +23,20 @@ void main() {
   group('SettingsPage - feedback test', () {
     testWidgets('SettingsPage - cancel feedback', (WidgetTester tester) async {
       final infra = await pushToSettings(tester);
-      await doCancelFeedback(tester, infra.uploadService);
+      await doCancelFeedback(tester, infra.trackingService);
     });
 
     testWidgets('SettingsPage - success feedback', (WidgetTester tester) async {
       final infra = await pushToSettings(tester);
-      mockFeedbackResponse(infra.uploadService, okResponse());
-      await doSuccessFeedback(tester, infra.uploadService);
+      mockFeedbackResponse(infra.trackingService, okResponse());
+      await doSuccessFeedback(tester, infra.trackingService, -1);
+      await doSuccessFeedback(tester, infra.trackingService, 0);
+      await doSuccessFeedback(tester, infra.trackingService, 1);
     });
 
     testWidgets('SettingsPage - failed feedback', (WidgetTester tester) async {
       final infra = await pushToSettings(tester);
-      await doFailedFeedback(tester, infra.uploadService);
+      await doFailedFeedback(tester, infra.trackingService);
     });
   });
 

@@ -13,7 +13,7 @@ import 'package:qcar_customer/core/service/auth_service.dart';
 import 'package:qcar_customer/core/service/info_service.dart';
 import 'package:qcar_customer/core/service/services.dart';
 import 'package:qcar_customer/core/service/settings_service.dart';
-import 'package:qcar_customer/core/service/upload_service.dart';
+import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/app_theme.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/app_router.dart';
@@ -30,7 +30,7 @@ class AppInfrastructure {
     required this.carInfoDataSource,
     required this.sellInfoDataSource,
     required this.authService,
-    required this.uploadService,
+    required this.trackingService,
     required this.settingsService,
   });
 
@@ -42,7 +42,7 @@ class AppInfrastructure {
     CarInfoDataSource? carInfoDataSource,
     SellInfoDataSource? sellInfoDataSource,
     AuthenticationService? authenticationService,
-    UploadService? uploadService,
+    TrackingService? trackingService,
   }) {
     final db = database ?? AppDatabase();
     final carSource = carInfoDataSource ?? CarInfoDS(db);
@@ -54,7 +54,8 @@ class AppInfrastructure {
     final authService =
         authenticationService ?? AuthenticationService(FirebaseAuth.instance);
     final settingsService = SettingsService(settingsSource);
-    final upService = uploadService ?? UploadService(settingsService, upClient);
+    final trackService =
+        trackingService ?? TrackingService(settingsService, upClient);
     return AppInfrastructure._(
       database: db,
       loadClient: downClient,
@@ -64,14 +65,14 @@ class AppInfrastructure {
       sellInfoDataSource: sellSource,
       infoService: InfoService(downClient, carSource, sellSource),
       authService: authService,
-      uploadService: upService,
+      trackingService: trackService,
     );
   }
 
   final AppDatabase database;
   final DownloadClient loadClient;
   final SettingsDataSource settingsSource;
-  final UploadService uploadService;
+  final TrackingService trackingService;
   final AuthenticationService authService;
   final InfoService infoService;
   final CarInfoDataSource carInfoDataSource;

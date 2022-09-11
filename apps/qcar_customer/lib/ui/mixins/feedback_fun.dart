@@ -1,23 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/network/network_service.dart';
-import 'package:qcar_customer/core/service/upload_service.dart';
+import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/notify/dialog.dart';
 import 'package:qcar_customer/ui/notify/snackbars.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 abstract class FeedbackViewModel {
-  void sendFeedback(String text);
+  void sendFeedback(String text, int rating);
+
+  void sendEmail();
 }
 
 mixin FeedbackFun implements FeedbackViewModel {
-  UploadService get uploadService;
+  TrackingService get trackingService;
 
   Future Function(Function(BuildContext)) get openDialog;
 
   Future Function(Function(BuildContext)) get showSnackBar;
 
-  Future sendFeedback(String text) async {
-    final response = await uploadService.sendFeedback(text);
+  @override
+  Future sendFeedback(String text, int rating) async {
+    final response = await trackingService.sendFeedback(text, rating);
     switch (response.status) {
       case ResponseStatus.OK:
         showSnackBar(feedbackSendSnackBar);
@@ -29,6 +33,14 @@ mixin FeedbackFun implements FeedbackViewModel {
           return openErrorDialog(context, error);
         });
         break;
+    }
+  }
+
+  @override
+  Future sendEmail() async {
+    final uri = Uri.parse("mailto:feedback@qcar.de");
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     }
   }
 }

@@ -7,7 +7,7 @@ import 'package:path_provider_platform_interface/path_provider_platform_interfac
 import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
 import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
-import 'package:qcar_customer/core/service/upload_service.dart';
+import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/screens/app/app.dart';
 
 import '../mocks/path_provider_mock.dart';
@@ -23,7 +23,7 @@ Future<void> prepareTest() async {
 }
 
 AppInfrastructure createTestInfra({
-  UploadService? uploadService,
+  TrackingService? trackingService,
   CarInfoDataSource? carDataSource,
   SellInfoDataSource? sellDataSource,
   DownloadClient? downloadClient,
@@ -35,7 +35,7 @@ AppInfrastructure createTestInfra({
   final carSource = carDataSource ?? mockCarSource();
   final sellSource = sellDataSource ?? mockSellSource();
   final authService = mockAuthService();
-  final trackService = uploadService ?? mockUploadService();
+  final trackService = trackingService ?? mockTrackingService();
   return AppInfrastructure.load(
     downloadClient: dlClient,
     uploadClient: uploadClient,
@@ -44,6 +44,6 @@ AppInfrastructure createTestInfra({
     carInfoDataSource: carSource,
     sellInfoDataSource: sellSource,
     authenticationService: authService,
-    uploadService: trackService,
+    trackingService: trackService,
   );
 }

@@ -1,5 +1,5 @@
 import 'package:qcar_customer/core/service/info_service.dart';
-import 'package:qcar_customer/core/service/upload_service.dart';
+import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
 import 'package:qcar_customer/ui/mixins/scan_fun.dart';
@@ -9,10 +9,10 @@ abstract class QRViewModel extends ViewModel
     implements FeedbackViewModel, ScanViewModel {}
 
 class QrVM extends QRViewModel with FeedbackFun, ScanFun {
-  QrVM(this.uploadService, this.infoService);
+  QrVM(this.trackingService, this.infoService);
 
   @override
-  UploadService uploadService;
+  TrackingService trackingService;
   InfoService infoService;
 
   @override

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/core/models/category_info.dart';
 import 'package:qcar_customer/core/service/info_service.dart';
-import 'package:qcar_customer/core/service/upload_service.dart';
+import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
 import 'package:qcar_customer/ui/navigation/app_bar.dart';
@@ -19,10 +19,10 @@ abstract class CategoriesViewModel extends ViewModel
 }
 
 class CategoriesVM extends CategoriesViewModel with FeedbackFun {
-  CategoriesVM(this.uploadService, this._infoService, this.selectedCar);
+  CategoriesVM(this.trackingService, this._infoService, this.selectedCar);
 
   @override
-  UploadService uploadService;
+  TrackingService trackingService;
   final InfoService _infoService;
 
   CarInfo selectedCar;
