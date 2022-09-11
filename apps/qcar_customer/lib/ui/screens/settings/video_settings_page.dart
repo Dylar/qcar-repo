@@ -13,7 +13,7 @@ import 'package:settings_ui/settings_ui.dart';
 class VideoSettingsPage extends View<SettingsViewModel> {
   static const String routeName = "/videoSettingsPage";
 
-  VideoSettingsPage.model(SettingsViewModel viewModel) : super.model(viewModel);
+  VideoSettingsPage(SettingsViewModel viewModel) : super.model(viewModel);
 
   static AppRouteSpec pushIt(SettingsViewModel model) => AppRouteSpec(
       name: routeName,

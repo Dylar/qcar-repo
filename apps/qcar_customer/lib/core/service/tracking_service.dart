@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:qcar_customer/core/environment_config.dart';
+import 'package:qcar_customer/core/misc/helper/logger.dart';
 import 'package:qcar_customer/core/models/Feedback.dart';
 import 'package:qcar_customer/core/models/Tracking.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
@@ -22,10 +24,15 @@ class TrackingService {
   }
 
   void sendTracking(TrackType? type, String? text) {
+    if (EnvironmentConfig.isDev) {
+      return;
+    }
+
     _settingsService.isTrackingEnabled().then((enabled) {
       final tracking =
           TrackEvent(DateTime.now(), type ?? TrackType.ERROR, text ?? "");
       if (enabled) {
+        Logger.logTrack(tracking.text);
         _uploadClient.sendTracking(tracking);
       }
     });

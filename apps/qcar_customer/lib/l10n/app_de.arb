@@ -5,11 +5,14 @@
   "no": "Nein",
   "ok": "Ok",
   "cancel": "Abbrechen",
+  "refuse": "Ablehnen",
 
   "@_DIALOG": {},
   "errorTitle": "Fehler",
   "notSavedTitle": "Änderung speichern?",
   "notSavedMessage": "Änderungen wurden noch nicht gespeichert. Wollen Sie speichern?",
+  "decideTrackingTitle": "Tracking aktivieren?",
+  "decideTrackingMessage": "Wir würden gerne wissen, wie die App verwendet wird.\nHierzu möchten wir einige Daten sammeln um Probleme schneller lösen zu können.\nWenn Sie das nicht wollen drücken sie bitte auf Ablehnen.\nDie Entscheidung kann jederzeit in den Einstellungen geändert werden.",
 
   "@_SCAN": {},
   "scanError": "Beim scannen ist ein Fehler aufgetreten.\nBitten scannen Sie erneut.",

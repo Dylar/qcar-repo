@@ -28,6 +28,17 @@ Future scanErrorDialog(BuildContext context) {
   return openErrorDialog(context, l10n.scanError);
 }
 
+Future<bool> openConfirmDialog(
+    BuildContext context, String title, String message) async {
+  sendTracking(context, TrackType.INFO, "openConfirmDialog: title - message");
+  return (await showDialog<bool>(
+        context: context,
+        builder: (context) => ConfirmDialog(title, message),
+        barrierDismissible: false,
+      )) ??
+      false;
+}
+
 Future openFeedbackDialog(BuildContext context, FeedbackViewModel viewModel) {
   sendTracking(context, TrackType.INFO, "openFeedbackDialog");
   return showDialog(
@@ -37,12 +48,18 @@ Future openFeedbackDialog(BuildContext context, FeedbackViewModel viewModel) {
   );
 }
 
-Future<bool> openConfirmDialog(
-    BuildContext context, String title, String message) async {
-  sendTracking(context, TrackType.INFO, "openConfirmDialog: title - message");
+Future<bool> openDecideTrackingDialog(
+  BuildContext context,
+) async {
+  final AppLocalizations l10n = AppLocalizations.of(context)!;
   return (await showDialog<bool>(
         context: context,
-        builder: (context) => ConfirmDialog(title, message),
+        builder: (context) => ConfirmDialog(
+          l10n.decideTrackingTitle,
+          l10n.decideTrackingMessage,
+          refuseText: l10n.refuse,
+          confirmText: l10n.ok,
+        ),
         barrierDismissible: false,
       )) ??
       false;

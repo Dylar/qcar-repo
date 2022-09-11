@@ -13,10 +13,10 @@ import '../builder/app_builder.dart';
 
 Future loadApp(WidgetTester tester, {AppInfrastructure? infra}) async {
   await prepareTest();
-  // Build our app and trigger some frames.
-  final appWidget = await App(infrastructure: infra ?? createTestInfra());
+  final appWidget = App(infrastructure: infra ?? createTestInfra());
   await tester.pumpWidget(appWidget);
   await tester.pump(Duration(seconds: 3));
+  await tester.pump();
 }
 
 Future pushPage(
@@ -45,8 +45,10 @@ Widget wrapWidget(Widget widget, {AppInfrastructure? testInfra}) {
     infra: testInfra ?? createTestInfra(),
     child: MaterialApp(
         title: EnvironmentConfig.APP_NAME,
-        theme: appTheme, //TODO make real light theme
-        darkTheme: appTheme, //TODO make real dark theme
+        theme: appTheme,
+        //TODO make real light theme
+        darkTheme: appTheme,
+        //TODO make real dark theme
         onGenerateRoute: AppRouter.generateRoute,
         navigatorObservers: [AppRouter.routeObserver],
         supportedLocales: const [Locale('en'), Locale('de')],

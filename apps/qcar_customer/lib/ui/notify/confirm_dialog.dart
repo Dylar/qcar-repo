@@ -4,10 +4,17 @@ import 'package:qcar_customer/ui/app_theme.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
 
 class ConfirmDialog extends StatelessWidget {
-  const ConfirmDialog(this.title, this.message);
+  const ConfirmDialog(
+    this.title,
+    this.message, {
+    this.confirmText,
+    this.refuseText,
+  });
 
   final String title;
   final String message;
+  final String? confirmText;
+  final String? refuseText;
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +25,12 @@ class ConfirmDialog extends StatelessWidget {
         actions: <Widget>[
           TextButton(
             style: TextButton.styleFrom(primary: BaseColors.lightGrey),
-            child: Text(l10n.no),
+            child: Text(refuseText ?? l10n.no),
             onPressed: () => Navigate.pop(context, true),
           ),
           TextButton(
             style: TextButton.styleFrom(primary: BaseColors.green),
-            child: Text(l10n.yes),
+            child: Text(confirmText ?? l10n.yes),
             onPressed: () => Navigate.pop(context, false),
           ),
         ]);

@@ -6,11 +6,20 @@ class SettingsService {
 
   SettingsDataSource _settingsSource;
 
-  Future<bool> isTrackingEnabled() async =>
-      (await _settingsSource.getSettings()).isTrackingEnabled;
-
   Future<Settings> getSettings() async => _settingsSource.getSettings();
 
   Future<bool> saveSettings(Settings settings) =>
       _settingsSource.saveSettings(settings);
+
+  Future<bool> isTrackingEnabled() async =>
+      (await getSettings()).isTrackingEnabled ?? false;
+
+  Future<bool> isTrackingDecided() async =>
+      (await getSettings()).isTrackingEnabled != null;
+
+  Future setTrackingEnabled(trackingEnabled) async {
+    final settings = await getSettings();
+    settings.isTrackingEnabled = trackingEnabled;
+    await _settingsSource.saveSettings(settings);
+  }
 }

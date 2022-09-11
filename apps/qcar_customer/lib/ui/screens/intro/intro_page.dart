@@ -7,6 +7,7 @@ import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/app/loading_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_vm.dart';
 import 'package:qcar_customer/ui/widgets/debug/debug_skip_button.dart';
+import 'package:qcar_customer/ui/widgets/error_widget.dart';
 import 'package:qcar_customer/ui/widgets/qr_camera_view.dart';
 
 class IntroPage extends View<IntroViewModel> {
@@ -17,7 +18,7 @@ class IntroPage extends View<IntroViewModel> {
         action: AppRouteAction.popAndPushTo,
       );
 
-  IntroPage.model(IntroViewModel viewModel) : super.model(viewModel);
+  IntroPage(IntroViewModel viewModel) : super.model(viewModel);
 
   @override
   State<IntroPage> createState() => _IntroScanPageState(viewModel);
@@ -36,18 +37,30 @@ class _IntroScanPageState extends ViewState<IntroPage, IntroViewModel> {
   }
 
   Widget _buildBody(BuildContext context, AppLocalizations l10n) {
-    return Column(
-      children: <Widget>[
-        Expanded(child: Center(child: Text(_statusText(l10n)))),
-        Expanded(
-          flex: 7,
-          child: viewModel.qrState == QrScanState.SCANNING
-              ? AppLoadingIndicator(viewModel.progressValue)
-              : QRCameraView(viewModel.onScan),
-        ),
-        if (EnvironmentConfig.isDev) SkipDebugButton(viewModel.onScan),
-      ],
-    );
+    return FutureBuilder(
+        future: viewModel.isInitialized,
+        builder: (context, snap) {
+          if (snap.hasError) {
+            return ErrorInfoWidget(snap.error!);
+          }
+
+          if (snap.connectionState != ConnectionState.done) {
+            return AppLoadingIndicator(viewModel.progressValue);
+          }
+
+          return Column(
+            children: <Widget>[
+              Expanded(child: Center(child: Text(_statusText(l10n)))),
+              Expanded(
+                flex: 7,
+                child: viewModel.qrState == QrScanState.SCANNING
+                    ? AppLoadingIndicator(viewModel.progressValue)
+                    : QRCameraView(viewModel.onScan),
+              ),
+              if (EnvironmentConfig.isDev) SkipDebugButton(viewModel.onScan),
+            ],
+          );
+        });
   }
 
   String _statusText(AppLocalizations l10n) {

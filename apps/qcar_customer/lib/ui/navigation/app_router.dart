@@ -128,7 +128,7 @@ Widget _navigateToDebug(BuildContext context) {
 
 Widget _navigateToSettings(BuildContext context) {
   final services = Services.of(context)!;
-  return SettingsPage.model(SettingsVM(
+  return SettingsPage(SettingsVM(
     services.settingsService,
     services.trackingService,
   ));
@@ -138,12 +138,12 @@ Widget _navigateToVideoSettings(
   BuildContext context,
   Map<String, dynamic> arguments,
 ) {
-  return VideoSettingsPage.model(arguments[ARGS_VIEW_MODEL]);
+  return VideoSettingsPage(arguments[ARGS_VIEW_MODEL]);
 }
 
 Widget _navigateToIntro(BuildContext context) {
   final services = Services.of(context)!;
-  return IntroPage.model(IntroVM(services.infoService));
+  return IntroPage(IntroVM(services.settingsService, services.infoService));
 }
 
 Widget _navigateToHome(BuildContext context) {
@@ -157,7 +157,7 @@ Widget _navigateToHome(BuildContext context) {
 
 Widget _navigateToCars(BuildContext context) {
   final services = Services.of(context)!;
-  return CarsPage.model(CarsVM(
+  return CarsPage(CarsVM(
     services.trackingService,
     services.infoService,
   ));
@@ -166,7 +166,7 @@ Widget _navigateToCars(BuildContext context) {
 Widget _navigateToVideoOverview(
     BuildContext context, Map<String, dynamic> arguments) {
   final services = Services.of(context)!;
-  return VideoOverviewPage.model(
+  return VideoOverviewPage(
     VideoOverVM(
       services.trackingService,
       arguments[VideoOverviewPage.ARG_CAR],
@@ -185,7 +185,7 @@ Widget _navigateToQrScan(BuildContext context) {
 
 Widget _navigateToDirs(BuildContext context, Map<String, dynamic> arguments) {
   final services = Services.of(context)!;
-  return CategoriesPage.model(
+  return CategoriesPage(
     CategoriesVM(
       services.trackingService,
       services.infoService,

@@ -9,6 +9,8 @@ abstract class SettingsViewModel extends ViewModel
   Settings get settings;
 
   Future saveVideoSettings(Map<String, bool> settingsMap);
+
+  Future toggleTracking();
 }
 
 class SettingsVM extends SettingsViewModel with FeedbackFun {
@@ -29,5 +31,12 @@ class SettingsVM extends SettingsViewModel with FeedbackFun {
   Future saveVideoSettings(Map<String, bool> settingsMap) async {
     settings.videos = settingsMap;
     await settingsService.saveSettings(settings);
+  }
+
+  @override
+  Future toggleTracking() async {
+    settings.isTrackingEnabled = !settings.isTrackingEnabled!;
+    await settingsService.saveSettings(settings);
+    notifyListeners();
   }
 }
