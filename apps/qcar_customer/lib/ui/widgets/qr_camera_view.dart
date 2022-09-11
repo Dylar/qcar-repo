@@ -48,7 +48,8 @@ class _QRCameraViewState extends State<QRCameraView> {
   }
 
   void _onQRViewCreated(QRViewController controller) {
-    controller = controller;
+    controller.resumeCamera();
+    setState(() => this.controller = controller);
     controller.scannedDataStream.listen((scanData) {
       if (mounted) {
         setState(() => widget.onScan(scanData));

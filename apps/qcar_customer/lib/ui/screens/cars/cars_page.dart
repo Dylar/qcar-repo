@@ -24,7 +24,7 @@ class CarsPage extends View<CarsViewModel> {
         action: AppRouteAction.pushTo,
       );
 
-  CarsPage.model(CarsViewModel viewModel) : super.model(viewModel);
+  CarsPage(CarsViewModel viewModel) : super.model(viewModel);
 
   @override
   State<CarsPage> createState() => _CarsPageState(viewModel);

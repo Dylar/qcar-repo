@@ -35,6 +35,7 @@ void checkReloadIcon({bool isVisible = true}) {
       isVisible ? findsOneWidget : findsNothing);
 }
 
+//TODO make this into checkAppBarIcons
 void checkSearchIcon({bool isVisible = true}) {
   expect(
       find.descendant(

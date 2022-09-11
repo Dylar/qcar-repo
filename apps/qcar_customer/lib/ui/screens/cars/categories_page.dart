@@ -20,7 +20,7 @@ class CategoriesPage extends View<CategoriesViewModel> {
         arguments: {ARG_CAR: carInfo},
       );
 
-  CategoriesPage.model(CategoriesViewModel viewModel) : super.model(viewModel);
+  CategoriesPage(CategoriesViewModel viewModel) : super.model(viewModel);
 
   @override
   State<CategoriesPage> createState() => _CategoriesPageState(viewModel);

@@ -6,6 +6,7 @@ import '../../../builder/entity_builder.dart';
 import '../../../utils/test_l10n.dart';
 import '../../../utils/test_utils.dart';
 import '../app/app_checker.dart';
+import '../app/dialog_checker.dart';
 import 'intro_action.dart';
 
 void main() {
@@ -13,6 +14,11 @@ void main() {
       (WidgetTester tester) async {
     final l10n = await getTestL10n();
     await loadApp(tester);
+
+    checkTrackingDialog(l10n);
+    await tester.tap(find.text(l10n.ok));
+    await tester.pumpAndSettle();
+
     expect(find.text(l10n.introPageMessage), findsOneWidget);
     expect(find.byType(IntroPage), findsOneWidget);
     checkSearchIcon(isVisible: false);
@@ -24,6 +30,9 @@ void main() {
     await loadApp(tester);
 
     final l10n = await getTestL10n();
+    await tester.tap(find.text(l10n.ok));
+    await tester.pumpAndSettle();
+
     expect(find.text(l10n.scanError), findsNothing);
     await scanOnIntroPage(tester, "Bullshit");
     expect(find.text(l10n.scanError), findsOneWidget);
@@ -34,6 +43,9 @@ void main() {
     await loadApp(tester);
 
     final l10n = await getTestL10n();
+    await tester.tap(find.text(l10n.ok));
+    await tester.pumpAndSettle();
+
     expect(find.text(l10n.scanError), findsNothing);
     await scanOnIntroPage(tester, "{}");
     expect(find.text(l10n.scanError), findsOneWidget);
@@ -41,9 +53,11 @@ void main() {
 
   testWidgets('Load app - show intro page - scan key - show home page',
       (WidgetTester tester) async {
-    final l10n = await getTestL10n();
-
     await loadApp(tester);
+
+    final l10n = await getTestL10n();
+    await tester.tap(find.text(l10n.ok));
+    await tester.pumpAndSettle();
 
     final key = await buildSellKey();
     final scan = key.encode();

@@ -27,8 +27,7 @@ class VideoOverviewPage extends View<VideoOverViewModel> {
         },
       );
 
-  VideoOverviewPage.model(VideoOverViewModel viewModel)
-      : super.model(viewModel);
+  VideoOverviewPage(VideoOverViewModel viewModel) : super.model(viewModel);
 
   @override
   State<VideoOverviewPage> createState() => _VideoOverviewPageState(viewModel);

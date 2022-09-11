@@ -11,6 +11,7 @@ Localization:
 
 Clean:
     flutter pub cache clean
+    pub global deactivate protoc_plugin ; pub global activate protoc_plugin
 
 Build:
     flutter pub run build_runner build --delete-conflicting-outputs

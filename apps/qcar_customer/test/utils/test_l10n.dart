@@ -21,6 +21,8 @@ class TestAppLocalization {
   String get errorTitle => _values["errorTitle"];
   String get notSavedTitle => _values["notSavedTitle"];
   String get notSavedMessage => _values["notSavedMessage"];
+  String get decideTrackingTitle => _values["decideTrackingTitle"];
+  String get decideTrackingMessage => _values["decideTrackingMessage"];
 
   //------BUTTONS
   String get send => _values["send"];

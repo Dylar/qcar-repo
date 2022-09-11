@@ -25,7 +25,7 @@ class SettingsPage extends View<SettingsViewModel> {
         action: AppRouteAction.popAndPushTo,
       );
 
-  SettingsPage.model(SettingsViewModel viewModel) : super.model(viewModel);
+  SettingsPage(SettingsViewModel viewModel) : super.model(viewModel);
 
   @override
   State<SettingsPage> createState() => _SettingsPageState(viewModel);
@@ -73,18 +73,29 @@ class _SettingsPageState extends ViewState<SettingsPage, SettingsViewModel> {
       sections: [
         SettingsSection(
           tiles: <SettingsTile>[
-            if (showDebug)
-              _buildButton(
-                l10n.debugMenu,
-                Icons.developer_mode_rounded,
-                (context) => Navigate.to(context, DebugPage.pushIt()),
-              ),
+            SettingsTile.switchTile(
+              onToggle: (value) => viewModel.toggleTracking(),
+              initialValue: viewModel.settings.isTrackingEnabled,
+              leading: Icon(Icons.analytics_outlined),
+              title: Text("Tracking aktiv"),
+            )
+          ],
+        ),
+        SettingsSection(
+          title: Text("Menu"),
+          tiles: <SettingsTile>[
             _buildButton(
               l10n.videoMenu,
               Icons.call_to_action_outlined,
               (context) =>
                   Navigate.to(context, VideoSettingsPage.pushIt(viewModel)),
             ),
+            if (showDebug)
+              _buildButton(
+                l10n.debugMenu,
+                Icons.developer_mode_rounded,
+                (context) => Navigate.to(context, DebugPage.pushIt()),
+              ),
             _buildButton(
               l10n.aboutDialog,
               Icons.info,

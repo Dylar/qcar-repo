@@ -24,13 +24,13 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
 
   @mustCallSuper
   ViewState(this._viewModel) {
-    Logger.logI('Created $_sanitisedRoutePageName');
+    Logger.logI('🏠 Created $_sanitisedRoutePageName');
   }
 
   @mustCallSuper
   @override
   void initState() {
-    Logger.logI('initState $_sanitisedRoutePageName');
+    Logger.logI('🏠 initState $_sanitisedRoutePageName');
     super.initState();
     viewModel.startInit();
   }
@@ -38,6 +38,7 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
   @mustCallSuper
   @override
   void didChangeDependencies() {
+    Logger.logI('🏠 didChangeDependencies $_sanitisedRoutePageName');
     super.didChangeDependencies();
 
     // subscribe for the change of route
@@ -55,8 +56,8 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
   @mustCallSuper
   @override
   void dispose() {
+    Logger.logI('🏠 dispose $_sanitisedRoutePageName');
     AppRouter.routeObserver.unsubscribe(this);
-    Logger.logI('dispose $_sanitisedRoutePageName');
     viewModel.dispose();
     super.dispose();
   }

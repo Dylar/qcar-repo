@@ -11,10 +11,6 @@ class Logger {
     log("Error", msg, printTrace);
   }
 
-  static void logF(String msg) {
-    log("Feedback", msg, false);
-  }
-
   static void logTrack(String msg) {
     log("Tracking", msg, false);
   }

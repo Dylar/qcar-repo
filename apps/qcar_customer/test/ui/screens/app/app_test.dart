@@ -17,6 +17,7 @@ import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_page.dart';
 
 import '../../../builder/entity_builder.dart';
+import '../../../utils/test_l10n.dart';
 import '../../../utils/test_utils.dart';
 import '../intro/intro_action.dart';
 import 'app_action.dart';
@@ -39,15 +40,23 @@ import 'app_checker.dart';
 ])
 void main() {
   testWidgets('test navigation', (WidgetTester tester) async {
-    //Intro page - scan key
     await loadApp(tester);
+    final l10n = await getTestL10n();
+
+    //Intro page
     expect(find.byType(IntroPage), findsOneWidget);
 
-    //Home page - looks nice
+    //accept tracking dialog
+    await tester.tap(find.text(l10n.ok));
+    await tester.pumpAndSettle();
+
+    //scan key
     final key = await buildSellKey();
     await scanOnIntroPage(tester, key.encode(), settle: false);
     await tester.pump(Duration(milliseconds: 10));
     await tester.pump(Duration(milliseconds: 10));
+
+    //Home page - looks nice
     expect(find.byType(HomePage), findsOneWidget);
     checkNavigationBar(HomePage.routeName);
 
