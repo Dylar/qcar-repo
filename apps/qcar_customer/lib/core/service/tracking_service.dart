@@ -1,8 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:qcar_customer/core/models/Feedback.dart';
 import 'package:qcar_customer/core/models/Tracking.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/network/network_service.dart';
+import 'package:qcar_customer/core/service/services.dart';
 import 'package:qcar_customer/core/service/settings_service.dart';
+
+void sendTracking(BuildContext context, TrackType? type, String? text) {
+  Services.of(context)!.trackingService.sendTracking(type, text);
+}
 
 class TrackingService {
   TrackingService(this._settingsService, this._uploadClient);
@@ -15,11 +21,12 @@ class TrackingService {
     return _uploadClient.sendFeedback(feedback);
   }
 
-  void sendTracking(TrackEvent? event) {
-    assert(event != null);
+  void sendTracking(TrackType? type, String? text) {
     _settingsService.isTrackingEnabled().then((enabled) {
+      final tracking =
+          TrackEvent(DateTime.now(), type ?? TrackType.ERROR, text ?? "");
       if (enabled) {
-        _uploadClient.sendTracking(event!);
+        _uploadClient.sendTracking(tracking);
       }
     });
   }

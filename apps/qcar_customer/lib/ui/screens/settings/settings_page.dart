@@ -5,7 +5,6 @@ import 'package:qcar_customer/core/misc/constants/asset_paths.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/app_navigation.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
-import 'package:qcar_customer/ui/notify/snackbars.dart';
 import 'package:qcar_customer/ui/screens/settings/debug_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_vm.dart';
 import 'package:qcar_customer/ui/screens/settings/video_settings_page.dart';
@@ -103,8 +102,8 @@ class _SettingsPageState extends ViewState<SettingsPage, SettingsViewModel> {
                       alignment: Alignment.centerRight,
                       padding: EdgeInsets.only(top: 15),
                       child: InkWell(
-                          onTap: () => showSnackBar(context, "Öffne Email App"),
-                          //TODO make real app open
+                          onTap: () =>
+                              viewModel.sendEmail(email: 'info@qcar.com'),
                           child: Text('info@qcar.com')),
                     )
                   ]),

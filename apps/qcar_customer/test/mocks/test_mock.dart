@@ -141,7 +141,8 @@ TrackingService mockTrackingService({
         .thenAnswer((inv) async => feedbackResponse);
   }
   if (trackingResponse != null) {
-    when(service.sendTracking(any)).thenAnswer((inv) async => trackingResponse);
+    when(service.sendTracking(any, any))
+        .thenAnswer((inv) async => trackingResponse);
   }
   return service;
 }

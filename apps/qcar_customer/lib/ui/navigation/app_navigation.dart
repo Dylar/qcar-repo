@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/misc/helper/logger.dart';
 import 'package:qcar_customer/core/misc/helper/tuple.dart';
 import 'package:qcar_customer/core/service/services.dart';
 import 'package:qcar_customer/ui/app_theme.dart';
@@ -107,15 +106,12 @@ class _AppNavigationState extends State<AppNavigation> {
     AppRouteSpec routeSpec;
     switch (routeName.firstOrThrow.first) {
       case FEEDBACK_ROUTE:
-        Logger.logI("Feedback tapped");
         await openFeedbackDialog(context, widget.viewModel);
         return;
       case HomePage.routeName:
-        Logger.logI("Home tapped");
         routeSpec = HomePage.poopToRoot();
         break;
       case CarsPage.routeName:
-        Logger.logI("Videos tapped");
         final cars = await Services.of(context)!.infoService.getAllCars();
         if (cars.length == 1) {
           routeSpec = CategoriesPage.pushIt(cars.first);
@@ -124,19 +120,16 @@ class _AppNavigationState extends State<AppNavigation> {
         }
         break;
       case QrScanPage.routeName:
-        Logger.logI("QR tapped");
         routeSpec = routeSpec =
             thisIsHome ? QrScanPage.pushIt() : QrScanPage.popAndPush();
         break;
       case SettingsPage.routeName:
-        Logger.logI("Settings tapped");
         routeSpec = routeSpec =
             thisIsHome ? SettingsPage.pushIt() : SettingsPage.popAndPush();
         break;
       default:
         throw Exception("No route found");
     }
-    Logger.logI("Navi to: ${routeSpec.name}");
     Navigate.to(context, routeSpec);
   }
 }

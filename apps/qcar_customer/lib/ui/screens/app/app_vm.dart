@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:qcar_customer/core/misc/helper/time_utils.dart';
 import 'package:qcar_customer/core/misc/helper/tuple.dart';
+import 'package:qcar_customer/core/models/Tracking.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/screens/app/app.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
@@ -35,7 +36,6 @@ class AppVM extends AppViewModel {
     final start = DateTime.now();
     final infra = await _initInfrastructure();
 
-    trackingService = infra.trackingService; //TODO make this anders
     progressValue = infrastructure!.infoService.progressValue;
     final signedIn = await infra.authService.signInAnon();
     if (!signedIn) {
@@ -49,6 +49,8 @@ class AppVM extends AppViewModel {
         firstRoute = IntroPage.routeName;
       }
     }
+    infra.trackingService
+        .sendTracking(TrackType.INFO, "App started: $firstRoute");
     await waitDiff(start);
   }
 

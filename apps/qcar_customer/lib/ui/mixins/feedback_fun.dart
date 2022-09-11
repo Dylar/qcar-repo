@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 abstract class FeedbackViewModel {
   void sendFeedback(String text, int rating);
 
-  void sendEmail();
+  void sendEmail({String? email});
 }
 
 mixin FeedbackFun implements FeedbackViewModel {
@@ -37,8 +37,8 @@ mixin FeedbackFun implements FeedbackViewModel {
   }
 
   @override
-  Future sendEmail() async {
-    final uri = Uri.parse("mailto:feedback@qcar.de");
+  Future sendEmail({String? email}) async {
+    final uri = Uri.parse("mailto:${email ?? "feedback@qcar.de"}");
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qcar_customer/core/models/Tracking.dart';
+import 'package:qcar_customer/core/service/services.dart';
 
 const String POP_RESULT = "result";
 
@@ -47,6 +49,9 @@ class Navigate {
   }
 
   static Future<T> to<T>(BuildContext context, AppRouteSpec spec) async {
+    Services.of(context)!
+        .trackingService
+        .sendTracking(TrackType.NAVIGATION, "Navi to: ${spec.name}");
     switch (spec.action) {
       //TODO complete list
       case AppRouteAction.pushTo:

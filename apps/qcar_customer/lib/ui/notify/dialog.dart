@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:qcar_customer/core/models/Tracking.dart';
+import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
 import 'package:qcar_customer/ui/notify/confirm_dialog.dart';
 import 'package:qcar_customer/ui/notify/feedback_dialog.dart';
 import 'package:qcar_customer/ui/notify/info_dialog.dart';
 
 Future openErrorDialog(BuildContext context, String error) {
+  sendTracking(context, TrackType.ERROR, "openErrorDialog: $error");
   return showDialog(
     context: context,
     builder: (context) {
@@ -26,6 +29,7 @@ Future scanErrorDialog(BuildContext context) {
 }
 
 Future openFeedbackDialog(BuildContext context, FeedbackViewModel viewModel) {
+  sendTracking(context, TrackType.INFO, "openFeedbackDialog");
   return showDialog(
     context: context,
     builder: (context) => FeedbackDialog(viewModel),
@@ -35,6 +39,7 @@ Future openFeedbackDialog(BuildContext context, FeedbackViewModel viewModel) {
 
 Future<bool> openConfirmDialog(
     BuildContext context, String title, String message) async {
+  sendTracking(context, TrackType.INFO, "openConfirmDialog: title - message");
   return (await showDialog<bool>(
         context: context,
         builder: (context) => ConfirmDialog(title, message),
