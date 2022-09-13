@@ -10,6 +10,7 @@ import '../../../mocks/test_mock.dart';
 import '../../../utils/test_l10n.dart';
 import '../app/app_action.dart';
 import '../app/app_checker.dart';
+import '../app/dialog_checker.dart';
 import '../app/feedback_action.dart';
 import 'qr_scan_action.dart';
 
@@ -46,9 +47,9 @@ void main() {
     await pushToQrScan(tester);
 
     final l10n = await getTestL10n();
-    expect(find.text(l10n.scanError), findsNothing);
+    checkErrorDialog(l10n, l10n.scanError, isVisible: false);
     await scanOnQRPage(tester, "Bullshit");
-    expect(find.text(l10n.scanError), findsOneWidget);
+    checkErrorDialog(l10n, l10n.scanError);
   });
 
   testWidgets('QRScanPage - scan wrong json - show error',
@@ -56,9 +57,9 @@ void main() {
     await pushToQrScan(tester);
 
     final l10n = await getTestL10n();
-    expect(find.text(l10n.scanError), findsNothing);
+    checkErrorDialog(l10n, l10n.scanError, isVisible: false);
     await scanOnQRPage(tester, "{}");
-    expect(find.text(l10n.scanError), findsOneWidget);
+    checkErrorDialog(l10n, l10n.scanError);
   });
 
   testWidgets('QRScanPage - scan old key - show error',

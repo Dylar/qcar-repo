@@ -16,7 +16,7 @@
 
   "@_SCAN": {},
   "scanError": "Beim scannen ist ein Fehler aufgetreten.\nBitten scannen Sie erneut.",
-  "oldCarScanned": "Dieses Auto hast du schon registriert.",
+  "oldCarScanned": "Dieses Auto hast du schon registriert",
 
   "@_BUTTONS": {},
   "send": "Senden",
@@ -30,11 +30,11 @@
   "@_INTRO_PAGE": {},
   "introPageTitle": "Willkommen",
   "introPageMessage": "Bitte scannen Sie einen gültigen QR-Code um fortzufahren.",
-  "introPageMessageError": "Ungültiger QR-Code, bitte neu scannen.",
   "introPageMessageScanning": "Daten werden geladen...",
 
   "@_QR_SCAN_PAGE": {},
   "qrScanPageTitle": "Bitte scannen",
+  "qrScanPageMessage": "Bitte scannen Sie einen gültigen QR-Code.",
 
   "@_CAR_OVERVIEW_PAGE": {},
   "carOverViewPageTitle": "Übersicht",

@@ -8,6 +8,7 @@ import 'package:qcar_customer/ui/screens/app/loading_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_vm.dart';
 import 'package:qcar_customer/ui/widgets/debug/debug_skip_button.dart';
 import 'package:qcar_customer/ui/widgets/error_widget.dart';
+import 'package:qcar_customer/ui/widgets/info_widget.dart';
 import 'package:qcar_customer/ui/widgets/qr_camera_view.dart';
 
 class IntroPage extends View<IntroViewModel> {
@@ -50,13 +51,21 @@ class _IntroScanPageState extends ViewState<IntroPage, IntroViewModel> {
 
           return Column(
             children: <Widget>[
-              Expanded(child: Center(child: Text(_statusText(l10n)))),
               Expanded(
-                flex: 7,
+                flex: 70,
                 child: viewModel.qrState == QrScanState.SCANNING
                     ? AppLoadingIndicator(viewModel.progressValue)
                     : QRCameraView(viewModel.onScan),
               ),
+              Spacer(flex: 5),
+              Flexible(
+                flex: 20,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: InfoWidget(_statusText(l10n)),
+                ),
+              ),
+              Spacer(flex: 5),
               if (EnvironmentConfig.isDev) SkipDebugButton(viewModel.onScan),
             ],
           );
@@ -66,15 +75,15 @@ class _IntroScanPageState extends ViewState<IntroPage, IntroViewModel> {
   String _statusText(AppLocalizations l10n) {
     String status = "";
     switch (viewModel.qrState) {
-      case QrScanState.NEW:
-      case QrScanState.OLD:
-        break;
       case QrScanState.WAITING:
       case QrScanState.DAFUQ:
         status = l10n.introPageMessage;
         break;
       case QrScanState.SCANNING:
         status = l10n.introPageMessageScanning;
+        break;
+      case QrScanState.NEW:
+      case QrScanState.OLD:
         break;
     }
     return status;
