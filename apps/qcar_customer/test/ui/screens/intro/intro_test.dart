@@ -15,7 +15,7 @@ void main() {
     final l10n = await getTestL10n();
     await loadApp(tester);
 
-    checkTrackingDialog(l10n);
+    checkConfirmDialog(l10n.decideTrackingTitle, l10n.decideTrackingMessage);
     await tester.tap(find.text(l10n.ok));
     await tester.pumpAndSettle();
 

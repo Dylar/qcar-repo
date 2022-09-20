@@ -34,10 +34,6 @@ void checkConfirmDialog(String title, String message) {
   checkSimpleDialog(ConfirmDialog, title, message);
 }
 
-void checkTrackingDialog(TestAppLocalization l10n) async {
-  checkConfirmDialog(l10n.decideTrackingTitle, l10n.decideTrackingMessage);
-}
-
 void checkErrorDialog(
   TestAppLocalization l10n,
   String error, {

@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
-import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
-import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
+import 'package:qcar_customer/core/datasource/car_data_source.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
+import 'package:qcar_customer/core/datasource/favorite_data_source.dart';
+import 'package:qcar_customer/core/datasource/sell_data_source.dart';
+import 'package:qcar_customer/core/datasource/settings_data_source.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/service/auth_service.dart';
 import 'package:qcar_customer/core/service/settings_service.dart';
@@ -31,6 +32,7 @@ import 'app_checker.dart';
   SettingsService,
   CarInfoDataSource,
   SellInfoDataSource,
+  FavoriteDataSource,
   AuthenticationService,
   TrackingService,
   HttpClient,

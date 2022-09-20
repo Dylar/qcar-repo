@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
-import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
-import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
+import 'package:qcar_customer/core/datasource/car_data_source.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
+import 'package:qcar_customer/core/datasource/favorite_data_source.dart';
+import 'package:qcar_customer/core/datasource/sell_data_source.dart';
+import 'package:qcar_customer/core/datasource/settings_data_source.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/network/server_client.dart';
@@ -41,12 +42,14 @@ class AppInfrastructure {
     SettingsDataSource? settingsDataSource,
     CarInfoDataSource? carInfoDataSource,
     SellInfoDataSource? sellInfoDataSource,
+    FavoriteDataSource? favoriteDataSource,
     AuthenticationService? authenticationService,
     TrackingService? trackingService,
   }) {
     final db = database ?? AppDatabase();
     final carSource = carInfoDataSource ?? CarInfoDS(db);
     final sellSource = sellInfoDataSource ?? SellInfoDS(db);
+    final favSource = favoriteDataSource ?? FavoriteDS(db);
     final settingsSource = settingsDataSource ?? SettingsDS(db);
     final downClient = downloadClient ?? ServerClient();
     //TODO make this not doppelt
@@ -63,7 +66,7 @@ class AppInfrastructure {
       settingsService: settingsService,
       carInfoDataSource: carSource,
       sellInfoDataSource: sellSource,
-      infoService: InfoService(downClient, carSource, sellSource),
+      infoService: InfoService(downClient, carSource, sellSource, favSource),
       authService: authService,
       trackingService: trackService,
     );

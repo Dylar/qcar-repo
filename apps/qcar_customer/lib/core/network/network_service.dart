@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:qcar_customer/core/misc/helper/logger.dart';
 
 enum RequestType { get, put, post }
+
 enum CallBackParameterName { all, articles }
 
 Map<String, String> _defaultHeaders() => {
@@ -114,28 +115,28 @@ class NetworkService {
       return Response(ResponseStatus.NO_RESPONSE);
     }
 
+    final ResponseStatus code;
     switch (response.statusCode) {
       case HttpStatus.ok:
       case HttpStatus.created:
-        return Response(
-          ResponseStatus.OK,
-          jsonMap: response.body.isEmpty ? null : jsonDecode(response.body),
-        );
+        code = ResponseStatus.OK;
+        break;
       case HttpStatus.notFound:
-        return Response(
-          ResponseStatus.NOT_FOUND,
-          jsonMap: jsonDecode(response.body),
-        );
+        code = ResponseStatus.NOT_FOUND;
+        break;
       case HttpStatus.badRequest:
-        return Response(
-          ResponseStatus.ERROR,
-          jsonMap: jsonDecode(response.body),
-        );
+        code = ResponseStatus.ERROR;
+        break;
       default:
-        return Response(
-          ResponseStatus.UNKNOWN,
-          jsonMap: jsonDecode(response.body),
-        );
+        code = ResponseStatus.UNKNOWN;
+        break;
     }
+
+    return Response(
+      code,
+      jsonMap: response.body.isEmpty
+          ? null
+          : jsonDecode(utf8.decode(response.bodyBytes)),
+    );
   }
 }

@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:mockito/mockito.dart';
-import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
-import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
-import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
+import 'package:qcar_customer/core/datasource/car_data_source.dart';
+import 'package:qcar_customer/core/datasource/favorite_data_source.dart';
+import 'package:qcar_customer/core/datasource/sell_data_source.dart';
+import 'package:qcar_customer/core/datasource/settings_data_source.dart';
 import 'package:qcar_customer/core/misc/helper/tuple.dart';
 import 'package:qcar_customer/core/models/car_info.dart';
+import 'package:qcar_customer/core/models/favorite.dart';
 import 'package:qcar_customer/core/models/sell_info.dart';
 import 'package:qcar_customer/core/models/sell_key.dart';
 import 'package:qcar_customer/core/models/settings.dart';
@@ -65,7 +67,7 @@ DownloadClient mockDownloadClient({List<SellKey> acceptedKeys = const []}) {
 
 SettingsDataSource mockSettings() {
   final source = MockSettingsDataSource();
-  var settings = Settings();
+  Settings settings = Settings();
   when(source.getSettings()).thenAnswer((_) async => settings);
   when(source.watchSettings()).thenAnswer((_) async* {
     yield settings;
@@ -122,6 +124,34 @@ SellInfoDataSource mockSellSource({List<SellInfo>? initialSellInfo}) {
       sells.add(info);
     }
   });
+  return source;
+}
+
+FavoriteDataSource mockFavoriteSource({List<Favorite>? initialFavorites}) {
+  final favs = initialFavorites ?? [];
+  final source = MockFavoriteDataSource();
+  when(source.watchFavorites()).thenAnswer((_) async* {
+    yield favs;
+  });
+  when(source.getFavorites(any, any)).thenAnswer((inv) async {
+    final brand = inv.positionalArguments[0];
+    final model = inv.positionalArguments[1];
+    return favs
+        .where((fav) => fav.brand == brand && fav.model == model)
+        .toList();
+  });
+  when(source.getFavorite(any, any, any, any)).thenAnswer((inv) async {
+    final brand = inv.positionalArguments[0];
+    final model = inv.positionalArguments[1];
+    final cat = inv.positionalArguments[2];
+    final vid = inv.positionalArguments[3];
+    return favs.firstWhere((fav) =>
+        fav.brand == brand &&
+        fav.model == model &&
+        fav.category == cat &&
+        fav.video == vid);
+  });
+
   return source;
 }
 

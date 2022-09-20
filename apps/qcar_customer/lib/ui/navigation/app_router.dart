@@ -17,6 +17,8 @@ import 'package:qcar_customer/ui/screens/settings/debug_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_vm.dart';
 import 'package:qcar_customer/ui/screens/settings/video_settings_page.dart';
+import 'package:qcar_customer/ui/screens/video/favorites_page.dart';
+import 'package:qcar_customer/ui/screens/video/favorites_vm.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_vm.dart';
 import 'package:qcar_customer/ui/screens/video/video_page.dart';
@@ -106,6 +108,9 @@ class AppRouter {
       case VideoPage.routeName:
         builder = (context) => _navigateToVideo(context, arguments);
         break;
+      case FavoritesPage.routeName:
+        builder = (context) => _navigateToFavorites(context, arguments);
+        break;
       default:
         throw Exception('Route ${settings.name} not implemented');
     }
@@ -175,6 +180,18 @@ Widget _navigateToVideoOverview(
   );
 }
 
+Widget _navigateToFavorites(
+    BuildContext context, Map<String, dynamic> arguments) {
+  final services = Services.of(context)!;
+  return FavoritesPage(
+    FavoritesVM(
+      services.trackingService,
+      services.infoService,
+      arguments[VideoOverviewPage.ARG_CAR],
+    ),
+  );
+}
+
 Widget _navigateToQrScan(BuildContext context) {
   final services = Services.of(context)!;
   return QrScanPage(QrVM(
@@ -202,7 +219,8 @@ Widget _navigateToVideo(BuildContext context, Map<String, dynamic> arguments) {
     VideoVM(
       services.settingsService,
       services.trackingService,
-      arguments[VideoPage.ARG_VIDEO],
+      services.infoService,
+      arguments[VideoPage.ARG_VIDEO]!,
     ),
     aspectRatio: width / height / 3, //16 / 9
   );

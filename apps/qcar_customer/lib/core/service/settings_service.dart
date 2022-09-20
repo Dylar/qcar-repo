@@ -1,4 +1,4 @@
-import 'package:qcar_customer/core/datasource/SettingsDataSource.dart';
+import 'package:qcar_customer/core/datasource/settings_data_source.dart';
 import 'package:qcar_customer/core/models/settings.dart';
 
 class SettingsService {

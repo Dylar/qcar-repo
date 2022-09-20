@@ -12,7 +12,8 @@ void main() async {
     final loadClient = mockDownloadClient();
     final carDS = mockCarSource();
     final sellDS = mockSellSource();
-    final service = InfoService(loadClient, carDS, sellDS);
+    final favDS = mockFavoriteSource();
+    final service = InfoService(loadClient, carDS, sellDS, favDS);
 
     final hasCars = await service.hasCars();
     expect(hasCars, isFalse);
@@ -22,7 +23,8 @@ void main() async {
     final loadClient = mockDownloadClient();
     final carDS = mockCarSource(initialCars: [await buildCarInfo()]);
     final sellDS = mockSellSource(initialSellInfo: [await buildSellInfo()]);
-    final service = InfoService(loadClient, carDS, sellDS);
+    final favDS = mockFavoriteSource();
+    final service = InfoService(loadClient, carDS, sellDS, favDS);
 
     final hasCars = await service.hasCars();
     expect(hasCars, isTrue);
@@ -35,7 +37,8 @@ void main() async {
     final loadClient = mockDownloadClient();
     final carDS = mockCarSource(initialCars: [car]);
     final sellDS = mockSellSource(initialSellInfo: [sellInfo]);
-    final service = InfoService(loadClient, carDS, sellDS);
+    final favDS = mockFavoriteSource();
+    final service = InfoService(loadClient, carDS, sellDS, favDS);
 
     final introPath = await service.getIntroVideo();
     expect(introPath != "", isTrue);

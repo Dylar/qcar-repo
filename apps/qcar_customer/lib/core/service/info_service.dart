@@ -1,9 +1,11 @@
 import 'package:flutter/src/foundation/change_notifier.dart';
-import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
-import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
+import 'package:qcar_customer/core/datasource/car_data_source.dart';
+import 'package:qcar_customer/core/datasource/favorite_data_source.dart';
+import 'package:qcar_customer/core/datasource/sell_data_source.dart';
 import 'package:qcar_customer/core/misc/helper/logger.dart';
 import 'package:qcar_customer/core/misc/helper/tuple.dart';
 import 'package:qcar_customer/core/models/car_info.dart';
+import 'package:qcar_customer/core/models/favorite.dart';
 import 'package:qcar_customer/core/models/sell_info.dart';
 import 'package:qcar_customer/core/models/sell_key.dart';
 import 'package:qcar_customer/core/models/video_info.dart';
@@ -15,18 +17,27 @@ class InfoService {
     this._loadClient,
     this._carInfoDataSource,
     this._sellInfoDataSource,
+    this._favoriteDataSource,
   );
 
   final DownloadClient _loadClient;
   final CarInfoDataSource _carInfoDataSource;
   final SellInfoDataSource _sellInfoDataSource;
+  final FavoriteDataSource _favoriteDataSource;
 
   ValueNotifier<Tuple<double, double>> get progressValue =>
       _loadClient.progressValue;
 
   Future<List<CarInfo>> getAllCars() => _carInfoDataSource.getAllCars();
 
-  Stream<List<CarInfo>> watchCarInfo() => _carInfoDataSource.watchCarInfo();
+  Stream<List<CarInfo>> watchCarsInfo() => _carInfoDataSource.watchCarInfo();
+
+  Stream<CarInfo> watchCarInfo(CarInfo selectedCar) {
+    return _carInfoDataSource.watchCarInfo().map((event) {
+      return event.firstWhere((car) =>
+          car.model == selectedCar.model && car.brand == selectedCar.brand);
+    });
+  }
 
   Future<bool> hasCars() async {
     final List<CarInfo> cars = await _carInfoDataSource.getAllCars();
@@ -77,5 +88,29 @@ class InfoService {
 
   Future upsertSellInfo(SellInfo sellInfo) async {
     _sellInfoDataSource.addSellInfo(sellInfo);
+  }
+
+  Future<bool> isFavorite(VideoInfo video) async =>
+      (await _favoriteDataSource.getFavorite(
+          video.brand, video.model, video.category, video.name)) !=
+      null;
+
+  Future<List<Favorite>> getFavorites(CarInfo car) async =>
+      (await _favoriteDataSource.getFavorites(car.brand, car.model));
+
+  Stream<Iterable<Favorite>> watchFavorites(CarInfo selectedCar) async* {
+    yield* _favoriteDataSource.watchFavorites().map((event) {
+      return event.where((fav) =>
+          fav.brand == selectedCar.brand && fav.model == selectedCar.model);
+    });
+  }
+
+  void toggleFavorite(VideoInfo video, bool isFavorite) {
+    final favorite = video.toFavorite;
+    if (isFavorite) {
+      _favoriteDataSource.upsertFavorite(favorite);
+    } else {
+      _favoriteDataSource.deleteFavorite(favorite);
+    }
   }
 }

@@ -34,7 +34,15 @@ class _VideoPageState extends ViewState<VideoPage, VideoViewModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(viewModel.title)),
+      appBar: AppBar(
+        title: Text(viewModel.title),
+        actions: [
+          IconButton(
+            onPressed: viewModel.toggleFavorite,
+            icon: Icon(viewModel.isFavorite ? Icons.star : Icons.star_outline),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
