@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:hive/hive.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/misc/helper/etag.dart';
+import 'package:qcar_customer/core/models/favorite.dart';
 
 import 'model_data.dart';
 
@@ -20,6 +21,9 @@ class VideoInfo extends HiveObject {
     required this.description,
     required this.tags,
   });
+
+  Favorite get toFavorite =>
+      Favorite(brand: brand, model: model, category: category, video: name);
 
   static List<VideoInfo> fromList(List<dynamic> list) =>
       List<Map<String, dynamic>>.from(list)
@@ -51,6 +55,7 @@ class VideoInfo extends HiveObject {
   String toJson() => jsonEncode(toMap());
 
   String get vidUrl => "https://${EnvironmentConfig.domain}/videos/$filePath";
+
   String get picUrl => "https://${EnvironmentConfig.domain}/videos/$imagePath";
 
   String get asEtag => etag(vidUrl);

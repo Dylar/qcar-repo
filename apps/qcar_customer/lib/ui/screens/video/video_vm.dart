@@ -1,4 +1,5 @@
 import 'package:qcar_customer/core/models/video_info.dart';
+import 'package:qcar_customer/core/service/info_service.dart';
 import 'package:qcar_customer/core/service/settings_service.dart';
 import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/app_viewmodel.dart';
@@ -10,10 +11,19 @@ abstract class VideoViewModel extends ViewModel
   String get title;
 
   String get description;
+
+  bool get isFavorite;
+
+  void toggleFavorite();
 }
 
 class VideoVM extends VideoViewModel with FeedbackFun {
-  VideoVM(this.settingsService, this.trackingService, this.videoInfo);
+  VideoVM(
+    this.settingsService,
+    this.trackingService,
+    this.infoService,
+    this.videoInfo,
+  );
 
   @override
   TrackingService trackingService;
@@ -21,28 +31,31 @@ class VideoVM extends VideoViewModel with FeedbackFun {
   @override
   SettingsService settingsService;
 
-  VideoInfo? videoInfo;
+  InfoService infoService;
 
-  String get title => videoInfo?.name ?? "";
+  VideoInfo videoInfo;
 
-  String get url => videoInfo?.vidUrl ?? "";
+  String get title => videoInfo.name;
 
-  String get description => videoInfo?.description ?? "";
+  String get url => videoInfo.vidUrl;
+
+  String get description => videoInfo.description;
 
   @override
-  void routingDidPushNext() {
-    // _controller.videoPlayerController.pause();
-    // _controller.pause();
-    super.routingDidPopNext();
+  bool isFavorite = false;
+
+  @override
+  Future init() async {
+    super.init();
+    isFavorite = await infoService.isFavorite(videoInfo);
+    notifyListeners();
   }
 
   @override
-  void routingDidPopNext() {
-    // if (VIDEO_SETTINGS["autoPlay"] ?? true) {
-    // _controller.videoPlayerController.play();
-    // _controller.play();
-    // }
-    super.routingDidPop();
+  void toggleFavorite() {
+    isFavorite = !isFavorite;
+    infoService.toggleFavorite(videoInfo, isFavorite);
+    notifyListeners();
   }
 
   @override

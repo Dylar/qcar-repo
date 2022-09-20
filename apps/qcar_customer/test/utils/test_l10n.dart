@@ -50,4 +50,8 @@ class TestAppLocalization {
   String get videoMenu => _values["videoMenu"];
   String get aboutDialog => _values["aboutDialog"];
   String get autoPlay => _values["autoPlay"];
+
+  //------FAVORITES
+  String get noFavoritesTitle => _values["noFavoritesTitle"];
+  String get noFavoritesMessage => _values["noFavoritesMessage"];
 }

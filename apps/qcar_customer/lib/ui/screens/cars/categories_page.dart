@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/core/models/category_info.dart';
 import 'package:qcar_customer/ui/app_theme.dart';
@@ -8,6 +9,7 @@ import 'package:qcar_customer/ui/navigation/app_navigation.dart';
 import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/cars/categories_list_item.dart';
 import 'package:qcar_customer/ui/screens/cars/categories_vm.dart';
+import 'package:qcar_customer/ui/screens/cars/favorites_button.dart';
 import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
 
 class CategoriesPage extends View<CategoriesViewModel> {
@@ -32,15 +34,17 @@ class _CategoriesPageState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: SearchAppBar(viewModel.title, viewModel),
-      body: _buildBody(context),
+      body: _buildBody(l10n),
       bottomNavigationBar: AppNavigation(viewModel, CategoriesPage.routeName),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody(AppLocalizations l10n) {
     return ScrollListView<CategoryInfo>(
+      headerWidget: buildFavoritesButton(l10n),
       items: viewModel.categories,
       buildItemWidget: buildItemWidget,
     );
@@ -55,6 +59,13 @@ class _CategoriesPageState
         child: CategoryListItem(item),
         onTap: () => viewModel.selectCategory(item),
       ),
+    );
+  }
+
+  Widget? buildFavoritesButton(AppLocalizations l10n) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: FavoritesButton(viewModel),
     );
   }
 }

@@ -36,8 +36,16 @@
   "qrScanPageTitle": "Bitte scannen",
   "qrScanPageMessage": "Bitte scannen Sie einen gültigen QR-Code.",
 
-  "@_CAR_OVERVIEW_PAGE": {},
+  "@_CARS_PAGE": {},
   "carOverViewPageTitle": "Übersicht",
+
+  "@_CATEGORIES_PAGE": {},
+  "favoritesButton": "Favoriten",
+
+  "@_FAVORITES_PAGE": {},
+  "favoritesPageTitle": "Favoriten",
+  "noFavoritesTitle": "Keine Favoriten",
+  "noFavoritesMessage": "Es sind noch keine Videos favorisiert.\nUm Videos zu den Favoriten hinzuzufügen einfach den Stern beim entsprechenden Video aktivieren.",
 
   "@_SEARCH": {},
   "searchStartText": "Sie können hier nach Videos suchen",

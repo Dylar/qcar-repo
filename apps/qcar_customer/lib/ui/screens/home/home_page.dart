@@ -81,23 +81,24 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
     final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: qcarGradientBox,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Flexible(
-              flex: 40,
-              child: RoundedWidget(child: VideoWidget(viewModel: viewModel))),
-          Spacer(flex: 10),
-          Flexible(
-            flex: 40,
-            child: Padding(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+              child: RoundedWidget(child: VideoWidget(viewModel: viewModel)),
+            ),
+            // Spacer(flex: 10),
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: InfoWidget(
                   l10n.homoPageSubGreetings + "\n\n" + l10n.homoPageMessage),
             ),
-          ),
-          Spacer(flex: 10),
-        ],
+            // Spacer(flex: 10),
+          ],
+        ),
       ),
     );
   }

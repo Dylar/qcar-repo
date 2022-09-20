@@ -18,16 +18,15 @@ class HomeVM extends HomeViewModel with FeedbackFun {
   TrackingService trackingService;
   final InfoService infoService;
 
-  String url = "";
-
   @override
   SettingsService settingsService;
+
+  String url = "";
 
   @override
   Future init() async {
     url = await infoService.getIntroVideo();
     Logger.logI("Intro: ${url}");
-    finishInit();
     notifyListeners();
   }
 

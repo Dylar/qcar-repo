@@ -15,7 +15,5 @@ class CarsVM extends CarsViewModel with FeedbackFun {
   TrackingService trackingService;
   InfoService infoService;
 
-  Stream<List<CarInfo>> watchCars() {
-    return infoService.watchCarInfo();
-  }
+  Stream<List<CarInfo>> watchCars() => infoService.watchCarsInfo();
 }

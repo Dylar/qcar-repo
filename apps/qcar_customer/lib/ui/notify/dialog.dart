@@ -64,3 +64,17 @@ Future<bool> openDecideTrackingDialog(
       )) ??
       false;
 }
+
+Future openNoFavoritesDialog(BuildContext context) {
+  sendTracking(context, TrackType.INFO, "openFavoritesInfoDialog");
+  final AppLocalizations l10n = AppLocalizations.of(context)!;
+  return showDialog(
+    context: context,
+    builder: (context) => InfoDialog(
+      title: l10n.noFavoritesTitle,
+      message: l10n.noFavoritesMessage,
+      closeButtonText: l10n.ok,
+    ),
+    barrierDismissible: false,
+  );
+}

@@ -11,6 +11,7 @@ import 'package:qcar_customer/ui/screens/cars/categories_page.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_page.dart';
+import 'package:qcar_customer/ui/screens/video/favorites_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_page.dart';
 import 'package:qcar_customer/ui/widgets/loading_overlay.dart';
@@ -25,6 +26,7 @@ final naviBarData = <Triple<List<String>, String, IconData>>[
       CategoriesPage.routeName,
       VideoOverviewPage.routeName,
       VideoPage.routeName,
+      FavoritesPage.routeName,
     ],
     "Videos",
     Icons.ondemand_video_sharp,

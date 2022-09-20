@@ -5,6 +5,7 @@ const SELL_INFO_TYPE_ID = 4;
 const CATEGORY_INFO_TYPE_ID = 5;
 const SELL_KEY_TYPE_ID = 6;
 const SELL_VIDEO_INFO_TYPE_ID = 7;
+const FAVORITE_TYPE_ID = 8;
 
 const ARGS_VIEW_MODEL = "ARGS_VIEW_MODEL";
 
@@ -32,5 +33,6 @@ const FIELD_ORDER = "order";
 const FIELD_IMAGE_PATH = "imagePath";
 const FIELD_FILE_PATH = "filePath";
 
+const FIELD_VIDEO = "video";
 const FIELD_VIDEOS = "videos";
 const FIELD_TAGS = "tags";

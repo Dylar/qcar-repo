@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
-import 'package:qcar_customer/core/datasource/CarInfoDataSource.dart';
-import 'package:qcar_customer/core/datasource/SellInfoDataSource.dart';
+import 'package:qcar_customer/core/datasource/car_data_source.dart';
+import 'package:qcar_customer/core/datasource/favorite_data_source.dart';
+import 'package:qcar_customer/core/datasource/sell_data_source.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/screens/app/app.dart';
@@ -23,10 +24,11 @@ Future<void> prepareTest() async {
 }
 
 AppInfrastructure createTestInfra({
-  TrackingService? trackingService,
-  CarInfoDataSource? carDataSource,
-  SellInfoDataSource? sellDataSource,
   DownloadClient? downloadClient,
+  TrackingService? trackingService,
+  SellInfoDataSource? sellDataSource,
+  CarInfoDataSource? carDataSource,
+  FavoriteDataSource? favoriteDataSource,
 }) {
   final db = MockAppDatabase();
   final dlClient = downloadClient ?? mockDownloadClient();
@@ -36,12 +38,14 @@ AppInfrastructure createTestInfra({
   final sellSource = sellDataSource ?? mockSellSource();
   final authService = mockAuthService();
   final trackService = trackingService ?? mockTrackingService();
+  final favDataSource = favoriteDataSource ?? mockFavoriteSource();
   return AppInfrastructure.load(
     downloadClient: dlClient,
     uploadClient: uploadClient,
     database: db,
     settingsDataSource: settingsSource,
     carInfoDataSource: carSource,
+    favoriteDataSource: favDataSource,
     sellInfoDataSource: sellSource,
     authenticationService: authService,
     trackingService: trackService,
