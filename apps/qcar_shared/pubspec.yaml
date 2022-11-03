@@ -1,9 +1,5 @@
-name: qcar_customer
-description: Qcar app for customer
-
-# The following line prevents the package from being accidentally published to
-# pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+name: qcar_shared
+description: Qcar shared code
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -15,95 +11,52 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+#
+# This version is used _only_ for the Runner app, which is used if you just do
+# a `flutter run` or a `flutter make-host-app-editable`. It has no impact
+# on any other native host app that you embed your Flutter project into.
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.18.4 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  # infrastructure
-  ssh2: ^2.2.3
-  flutter_dotenv: ^5.0.2
-  url_launcher: ^6.1.5
-
-  # Localization
-  flutter_localizations:
-    sdk: flutter
-  flutter_localized_locales: ^2.0.3
-  intl: ^0.17.0
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.4
-  flutter_launcher_icons: ^0.10.0
-
-  # clean code
-  linter: ^1.27.0
-  json_schema2: ^2.0.2+9
-
-  qcar_shared:
-    path: ../qcar_shared
-
-  # database
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
-
-  # network
-  http: ^0.13.5
-
-  # app dependency
-  better_player: ^0.0.83
-  qr_code_scanner: ^1.0.1
-
-  settings_ui: ^2.0.2
+  cupertino_icons: ^1.0.2
 
 dev_dependencies:
-  hive_generator: ^1.1.2
-  build_runner: ^2.1.7
-
-  # test dependency
-  mockito: ^5.0.17
-  hive_test: ^1.0.1
-
   flutter_test:
     sdk: flutter
+  flutter_lints: ^2.0.0
 
-flutter_icons:
-  android: "ic_launcher"
-  ios: true
-  image_path: "assets/images/ic_launcher.jpeg"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
-# The following section is specific to Flutter.
 flutter:
-  generate: true
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  assets:
-   - assets/
-   - assets/schema/
-   - assets/images/
-   - .env
+  # To add Flutter specific assets to your application, add an assets section,
+  # like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
+  # https://flutter.dev/assets-and-images/#resolution-aware
 
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
 
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
+  # To add Flutter specific custom fonts to your application, add a fonts
+  # section here, in this "flutter" section. Each entry in this list should
+  # have a "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
@@ -120,3 +73,15 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+  # This section identifies your Flutter project as a module meant for
+  # embedding in a native host app.  These identifiers should _not_ ordinarily
+  # be changed after generation - they are used to ensure that the tooling can
+  # maintain consistency when adding or modifying assets and plugins.
+  # They also do not have any bearing on your native host application's
+  # identifiers, which may be completely independent or the same as these.
+  module:
+    androidX: true
+    androidPackage: de.bitb.qcar_shared
+    iosBundleIdentifier: de.bitb.qcarShared

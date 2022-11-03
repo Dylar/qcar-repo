@@ -52,6 +52,9 @@ dependencies:
   linter: ^1.27.0
   json_schema2: ^2.0.2+9
 
+  qcar_shared:
+    path: ../qcar_shared
+
   # database
   hive: ^2.2.3
   hive_flutter: ^1.1.0
