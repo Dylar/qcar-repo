@@ -21,6 +21,19 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def dartEnvironmentVariables = [
+        APP_NAME: "QCar-Business",
+        ENV     : "DEV",
+        FLAVOR  : "",
+];
+if (project.hasProperty('dart-defines')) {
+    dartEnvironmentVariables = dartEnvironmentVariables + project.property('dart-defines')
+            .split(',')
+            .collectEntries { entry ->
+                def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
+                [(pair.first()): pair.last()]
+            }
+}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -33,6 +46,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion '33.0.0'
 
     kotlinOptions {
         jvmTarget = '1.8'
@@ -42,15 +56,40 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    flavorDimensions "app"
+    productFlavors {
+
+        DEV {
+            dimension "app"
+        }
+
+        STAGE {
+            dimension "app"
+        }
+
+        PROD {
+            dimension "app"
+        }
+    }
+
     defaultConfig {
+        multiDexEnabled true
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "de.bitb.qcar_business"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        applicationIdSuffix(dartEnvironmentVariables.ENV == "PROD" ? "" : "." + dartEnvironmentVariables.ENV)
+        minSdkVersion 20
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        resValue "string", "app_name", (dartEnvironmentVariables.ENV == "PROD" ? "" : "(" + dartEnvironmentVariables.ENV + ") ") + dartEnvironmentVariables.APP_NAME
     }
 
     buildTypes {
@@ -58,6 +97,10 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+
+            minifyEnabled true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -67,5 +110,6 @@ flutter {
 }
 
 dependencies {
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:qcar_business/core/misc/helper/time_utils.dart';
@@ -56,9 +54,6 @@ class AppVM extends AppViewModel {
 
   Future<AppInfrastructure> _initInfrastructure() async {
     if (infrastructure == null) {
-      await Firebase.initializeApp();
-      //TODO enable persistence?
-      FirebaseFirestore.instance.settings = Settings(persistenceEnabled: false);
       await dotenv.load(fileName: ".env");
       infrastructure = AppInfrastructure.load();
     }
