@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -54,8 +53,7 @@ class AppInfrastructure {
     final downClient = downloadClient ?? ServerClient();
     //TODO make this not doppelt
     final upClient = uploadClient ?? ServerClient();
-    final authService =
-        authenticationService ?? AuthenticationService(FirebaseAuth.instance);
+    final authService = authenticationService ?? AuthenticationService();
     final settingsService = SettingsService(settingsSource);
     final trackService =
         trackingService ?? TrackingService(settingsService, upClient);
