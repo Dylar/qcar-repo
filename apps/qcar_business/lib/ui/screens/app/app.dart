@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:qcar_business/core/datasource/car_data_source.dart';
 import 'package:qcar_business/core/datasource/database.dart';
 import 'package:qcar_business/core/datasource/favorite_data_source.dart';
 import 'package:qcar_business/core/datasource/sell_data_source.dart';
 import 'package:qcar_business/core/datasource/settings_data_source.dart';
+import 'package:qcar_business/core/environment_config.dart';
 import 'package:qcar_business/core/network/load_client.dart';
 import 'package:qcar_business/core/network/server_client.dart';
 import 'package:qcar_business/core/service/auth_service.dart';
 import 'package:qcar_business/core/service/info_service.dart';
+import 'package:qcar_business/core/service/services.dart';
 import 'package:qcar_business/core/service/settings_service.dart';
 import 'package:qcar_business/core/service/tracking_service.dart';
+import 'package:qcar_business/ui/app_theme.dart';
 import 'package:qcar_business/ui/app_viewmodel.dart';
+import 'package:qcar_business/ui/navigation/app_router.dart';
 import 'package:qcar_business/ui/screens/app/app_vm.dart';
 import 'package:qcar_business/ui/screens/app/loading_page.dart';
 import 'package:qcar_business/ui/widgets/error_widget.dart';
@@ -99,34 +105,33 @@ class _AppState extends ViewState<App, AppViewModel> {
             return fixView(LoadingStartPage());
           }
 
-          return fixView(
-            Container(
-              alignment: Alignment.center,
-              child: Text("Dies wird die Business App"),
-            ),
-          );
-          // final env = EnvironmentConfig.ENV == Env.PROD.name
-          //     ? ""
-          //     : "(${EnvironmentConfig.ENV}) ";
-          // return Services(
-          //   infra: widget.viewModel.infra,
-          //   child: MaterialApp(
-          //     title: env + EnvironmentConfig.APP_NAME,
-          //     theme: appTheme,
-          //     darkTheme: appTheme,
-          //     initialRoute: viewModel.firstRoute,
-          //     onGenerateInitialRoutes: AppRouter.generateInitRoute,
-          //     onGenerateRoute: AppRouter.generateRoute,
-          //     navigatorObservers: [AppRouter.routeObserver],
-          //     supportedLocales: const [Locale('en'), Locale('de')],
-          //     localizationsDelegates: const [
-          //       AppLocalizations.delegate,
-          //       GlobalMaterialLocalizations.delegate,
-          //       GlobalWidgetsLocalizations.delegate,
-          //       GlobalCupertinoLocalizations.delegate,
-          //     ],
-          //   ),
-          // );
+          final env = EnvironmentConfig.ENV == Env.PROD.name
+              ? ""
+              : "(${EnvironmentConfig.ENV}) ";
+          return EnvironmentConfig.ENV != Env.PROD.name
+              ? fixView(Container(
+                  alignment: Alignment.center,
+                  child: Text("${env}Dies wird die Business App"),
+                ))
+              : Services(
+                  infra: widget.viewModel.infra,
+                  child: MaterialApp(
+                    title: env + EnvironmentConfig.APP_NAME,
+                    theme: appTheme,
+                    darkTheme: appTheme,
+                    initialRoute: viewModel.firstRoute,
+                    onGenerateInitialRoutes: AppRouter.generateInitRoute,
+                    onGenerateRoute: AppRouter.generateRoute,
+                    navigatorObservers: [AppRouter.routeObserver],
+                    supportedLocales: const [Locale('en'), Locale('de')],
+                    localizationsDelegates: const [
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                  ),
+                );
         });
   }
 
