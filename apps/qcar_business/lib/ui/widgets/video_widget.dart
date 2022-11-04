@@ -1,9 +1,9 @@
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
-import 'package:qcar_business/core/misc/helper/logger.dart';
 import 'package:qcar_business/core/misc/helper/player_config.dart';
 import 'package:qcar_business/core/service/settings_service.dart';
-import 'package:qcar_business/ui/widgets/loading_overlay.dart';
+import 'package:qcar_shared/utils/logger.dart';
+import 'package:qcar_shared/widgets/loading_overlay.dart';
 
 const VIDEO_START = Duration(seconds: 0, minutes: 0, hours: 0);
 

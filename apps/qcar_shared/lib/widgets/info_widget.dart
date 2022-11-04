@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class InfoWidget extends StatelessWidget {
-  const InfoWidget(this.text);
+  const InfoWidget(this.text, {super.key});
 
   final String text;
 
@@ -9,7 +9,7 @@ class InfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: Colors.white70, width: 1),
+        side: const BorderSide(color: Colors.white70, width: 1),
         borderRadius: BorderRadius.circular(20),
       ),
       elevation: 4,

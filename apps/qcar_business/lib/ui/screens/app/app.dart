@@ -14,12 +14,13 @@ import 'package:qcar_business/core/service/info_service.dart';
 import 'package:qcar_business/core/service/services.dart';
 import 'package:qcar_business/core/service/settings_service.dart';
 import 'package:qcar_business/core/service/tracking_service.dart';
-import 'package:qcar_business/ui/app_theme.dart';
-import 'package:qcar_business/ui/app_viewmodel.dart';
 import 'package:qcar_business/ui/navigation/app_router.dart';
 import 'package:qcar_business/ui/screens/app/app_vm.dart';
 import 'package:qcar_business/ui/screens/app/loading_page.dart';
-import 'package:qcar_business/ui/widgets/error_widget.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_theme.dart';
+import 'package:qcar_shared/core/app_view.dart';
+import 'package:qcar_shared/widgets/error_widget.dart';
 
 class AppInfrastructure {
   AppInfrastructure._({
@@ -122,7 +123,7 @@ class _AppState extends ViewState<App, AppViewModel> {
                     initialRoute: viewModel.firstRoute,
                     onGenerateInitialRoutes: AppRouter.generateInitRoute,
                     onGenerateRoute: AppRouter.generateRoute,
-                    navigatorObservers: [AppRouter.routeObserver],
+                    navigatorObservers: [Navigate.routeObserver],
                     supportedLocales: const [Locale('en'), Locale('de')],
                     localizationsDelegates: const [
                       AppLocalizations.delegate,

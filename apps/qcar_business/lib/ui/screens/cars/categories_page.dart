@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_business/core/models/car_info.dart';
 import 'package:qcar_business/core/models/category_info.dart';
-import 'package:qcar_business/ui/app_theme.dart';
-import 'package:qcar_business/ui/app_viewmodel.dart';
 import 'package:qcar_business/ui/navigation/app_bar.dart';
 import 'package:qcar_business/ui/navigation/app_navigation.dart';
-import 'package:qcar_business/ui/navigation/navi.dart';
 import 'package:qcar_business/ui/screens/cars/categories_list_item.dart';
 import 'package:qcar_business/ui/screens/cars/categories_vm.dart';
 import 'package:qcar_business/ui/screens/cars/favorites_button.dart';
-import 'package:qcar_business/ui/widgets/scroll_list_view.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_theme.dart';
+import 'package:qcar_shared/core/app_view.dart';
+import 'package:qcar_shared/widgets/scroll_list_view.dart';
 
 class CategoriesPage extends View<CategoriesViewModel> {
   static const String routeName = "/categoriesPage";

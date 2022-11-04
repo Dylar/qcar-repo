@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_business/ui/app_theme.dart';
-import 'package:qcar_business/ui/navigation/navi.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_theme.dart';
 
 class InfoDialog extends StatelessWidget {
-  InfoDialog({
+  const InfoDialog({
+    super.key,
     required this.title,
     required this.message,
     required this.closeButtonText,
   }) : titleColor = BaseColors.veryLightGrey;
 
-  InfoDialog.asError({
+  const InfoDialog.asError({
+    super.key,
     required this.title,
     required this.message,
     required this.closeButtonText,

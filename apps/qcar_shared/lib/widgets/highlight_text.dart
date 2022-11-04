@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_business/ui/app_theme.dart';
+import 'package:qcar_shared/core/app_theme.dart';
 
 final int __int64MaxValue = double.maxFinite.toInt();
 
 /// Widget that renders a string with sub-string highlighting.
 class HighlightText extends StatelessWidget {
-  HighlightText(
-      {this.caseSensitive = false,
+  const HighlightText(
+      {super.key,
+      this.caseSensitive = false,
       this.maxLines,
       this.term,
       this.terms,
@@ -62,9 +63,7 @@ class HighlightText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textStyleHighlight = this.textStyleHighlight;
-    if (textStyleHighlight == null) {
-      textStyleHighlight = textStyle!.copyWith(color: BaseColors.zergPurple);
-    }
+    textStyleHighlight ??= textStyle!.copyWith(color: BaseColors.zergPurple);
 
     final String textLC = caseSensitive ? text : text.toLowerCase();
 

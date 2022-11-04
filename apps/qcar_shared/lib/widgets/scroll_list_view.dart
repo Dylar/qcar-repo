@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ScrollListView<T> extends StatelessWidget {
   ScrollListView({
+    super.key,
     required this.items,
     required this.buildItemWidget,
     this.headerWidget,

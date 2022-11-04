@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_business/core/environment_config.dart';
-import 'package:qcar_business/core/misc/helper/tuple.dart';
-import 'package:qcar_business/ui/app_theme.dart';
-import 'package:qcar_business/ui/widgets/deco.dart';
+import 'package:qcar_shared/core/app_theme.dart';
+import 'package:qcar_shared/tuple.dart';
+import 'package:qcar_shared/widgets/deco.dart';
 
 class LoadingStartPage extends StatelessWidget {
   const LoadingStartPage({this.progressValue});

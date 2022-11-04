@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:qcar_business/core/misc/helper/logger.dart';
 import 'package:qcar_business/core/service/info_service.dart';
 import 'package:qcar_business/core/service/settings_service.dart';
 import 'package:qcar_business/core/service/tracking_service.dart';
-import 'package:qcar_business/ui/app_viewmodel.dart';
 import 'package:qcar_business/ui/mixins/feedback_fun.dart';
 import 'package:qcar_business/ui/widgets/video_widget.dart';
+import 'package:qcar_shared/core/app_viewmodel.dart';
+import 'package:qcar_shared/utils/logger.dart';
 
 abstract class HomeViewModel extends ViewModel
     implements VideoWidgetViewModel, FeedbackViewModel {}

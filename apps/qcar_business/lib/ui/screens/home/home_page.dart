@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_business/core/environment_config.dart';
 import 'package:qcar_business/core/misc/constants/asset_paths.dart';
-import 'package:qcar_business/ui/app_viewmodel.dart';
 import 'package:qcar_business/ui/navigation/app_navigation.dart';
-import 'package:qcar_business/ui/navigation/navi.dart';
 import 'package:qcar_business/ui/screens/home/home_vm.dart';
-import 'package:qcar_business/ui/widgets/deco.dart';
-import 'package:qcar_business/ui/widgets/info_widget.dart';
-import 'package:qcar_business/ui/widgets/rounded_widget.dart';
 import 'package:qcar_business/ui/widgets/video_widget.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_view.dart';
+import 'package:qcar_shared/widgets/deco.dart';
+import 'package:qcar_shared/widgets/info_widget.dart';
+import 'package:qcar_shared/widgets/rounded_widget.dart';
 
 class HomePage extends View<HomeViewModel> {
   static const String routeName = "/home";

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qcar_business/core/misc/constants/debug.dart';
 import 'package:qcar_business/core/models/car_info.dart';
 import 'package:qcar_business/ui/widgets/pic_widget.dart';
-import 'package:qcar_business/ui/widgets/rounded_widget.dart';
+import 'package:qcar_shared/widgets/rounded_widget.dart';
 
 class CarInfoListItem extends StatelessWidget {
   const CarInfoListItem(this.carInfo);

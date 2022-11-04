@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:qcar_business/ui/app_theme.dart';
-import 'package:qcar_business/ui/navigation/navi.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_theme.dart';
 
 class ConfirmDialog extends StatelessWidget {
   const ConfirmDialog(
@@ -9,6 +9,7 @@ class ConfirmDialog extends StatelessWidget {
     this.message, {
     this.confirmText,
     this.refuseText,
+    super.key,
   });
 
   final String title;
@@ -24,12 +25,12 @@ class ConfirmDialog extends StatelessWidget {
         content: Text(message),
         actions: <Widget>[
           TextButton(
-            style: TextButton.styleFrom(primary: BaseColors.lightGrey),
+            style: TextButton.styleFrom(foregroundColor: BaseColors.lightGrey),
             child: Text(refuseText ?? l10n.no),
             onPressed: () => Navigate.pop(context, true),
           ),
           TextButton(
-            style: TextButton.styleFrom(primary: BaseColors.green),
+            style: TextButton.styleFrom(foregroundColor: BaseColors.green),
             child: Text(confirmText ?? l10n.yes),
             onPressed: () => Navigate.pop(context, false),
           ),

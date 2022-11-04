@@ -5,7 +5,7 @@ import 'package:qcar_business/core/service/info_service.dart';
 import 'package:qcar_business/core/service/services.dart';
 import 'package:qcar_business/ui/notify/snackbars.dart';
 import 'package:qcar_business/ui/screens/video/video_list_item.dart';
-import 'package:qcar_business/ui/widgets/scroll_list_view.dart';
+import 'package:qcar_shared/widgets/scroll_list_view.dart';
 
 abstract class AppBarViewModel {
   late void Function() notifyListeners;

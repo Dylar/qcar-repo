@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_business/core/environment_config.dart';
-import 'package:qcar_business/core/misc/helper/tuple.dart';
 import 'package:qcar_business/core/models/Feedback.dart' as fb;
 import 'package:qcar_business/core/models/Tracking.dart';
 import 'package:qcar_business/core/models/car_info.dart';
@@ -8,7 +7,8 @@ import 'package:qcar_business/core/models/category_info.dart';
 import 'package:qcar_business/core/models/sell_info.dart';
 import 'package:qcar_business/core/models/sell_key.dart';
 import 'package:qcar_business/core/models/video_info.dart';
-import 'package:qcar_business/core/network/network_service.dart';
+import 'package:qcar_shared/network_service.dart';
+import 'package:qcar_shared/tuple.dart';
 
 abstract class DownloadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =

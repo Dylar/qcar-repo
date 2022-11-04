@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:qcar_business/core/misc/helper/logger.dart';
+import 'package:qcar_shared/utils/logger.dart';
 
 enum RequestType { get, put, post }
 
@@ -22,7 +22,7 @@ class Request {
     this.body,
     this.queryParam,
     this.urlPath,
-  }) : this.header = header ?? _defaultHeaders();
+  }) : header = header ?? _defaultHeaders();
 
   final RequestType requestType;
   final String url;
@@ -92,7 +92,9 @@ class NetworkService {
     if (url.isEmpty || urlPath == null || urlPath.isEmpty) {
       return url;
     }
-    urlPath.forEach((path) => url += "/$path");
+    for (var path in urlPath) {
+      url += "/$path";
+    }
     return url;
   }
 

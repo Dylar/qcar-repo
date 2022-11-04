@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:qcar_business/core/misc/helper/tuple.dart';
 import 'package:qcar_business/core/models/Tracking.dart';
-import 'package:qcar_business/ui/app_viewmodel.dart';
 import 'package:qcar_business/ui/screens/app/app.dart';
 import 'package:qcar_business/ui/screens/home/home_page.dart';
 import 'package:qcar_business/ui/screens/intro/intro_page.dart';
+import 'package:qcar_shared/core/app_viewmodel.dart';
+import 'package:qcar_shared/tuple.dart';
 import 'package:qcar_shared/utils/time_utils.dart';
 
 abstract class AppViewModel extends ViewModel {

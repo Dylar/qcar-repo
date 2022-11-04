@@ -60,7 +60,7 @@ final ThemeData appTheme = ThemeData(
   textTheme: textSizes.merge(textColors),
   appBarTheme: AppBarTheme(
     color: BaseColors.primary,
-    iconTheme: IconThemeData(color: BaseColors.lightGrey),
+    iconTheme: const IconThemeData(color: BaseColors.lightGrey),
     titleTextStyle: textSizes.merge(primaryTextColors).headline6,
   ),
   tabBarTheme: const TabBarTheme(
@@ -74,9 +74,9 @@ final ThemeData appTheme = ThemeData(
     backgroundColor: BaseColors.primary,
     titleTextStyle: textSizes.merge(primaryTextColors).headline6,
   ),
-  bottomAppBarTheme: BottomAppBarTheme(color: BaseColors.primary),
+  bottomAppBarTheme: const BottomAppBarTheme(color: BaseColors.primary),
   unselectedWidgetColor: BaseColors.grey,
-  cardTheme: CardTheme(color: BaseColors.accent),
+  cardTheme: const CardTheme(color: BaseColors.accent),
   inputDecorationTheme: const InputDecorationTheme(
     labelStyle: TextStyle(color: BaseColors.primary),
     floatingLabelBehavior: FloatingLabelBehavior.always,

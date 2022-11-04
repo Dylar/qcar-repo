@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_business/core/misc/helper/logger.dart';
 import 'package:qcar_business/core/models/sell_info.dart';
 import 'package:qcar_business/core/service/info_service.dart';
 import 'package:qcar_business/ui/notify/dialog.dart';
 import 'package:qcar_business/ui/notify/snackbars.dart';
+import 'package:qcar_shared/utils/logger.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 enum QrScanState { NEW, OLD, DAFUQ, WAITING, SCANNING }

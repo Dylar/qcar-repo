@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_business/ui/app_theme.dart';
-import 'package:qcar_business/ui/widgets/gradient_text.dart';
+import 'package:qcar_shared/core/app_theme.dart';
+import 'package:qcar_shared/widgets/gradient_text.dart';
 
-BoxDecoration get qcarGradientBox => BoxDecoration(
+BoxDecoration get qcarGradientBox => const BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -14,7 +14,7 @@ BoxDecoration get qcarGradientBox => BoxDecoration(
       ),
     );
 
-final qcarGradient = LinearGradient(
+const qcarGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [

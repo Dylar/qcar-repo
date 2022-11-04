@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_business/core/misc/helper/tuple.dart';
 import 'package:qcar_business/core/models/sell_info.dart';
 import 'package:qcar_business/core/service/info_service.dart';
 import 'package:qcar_business/core/service/settings_service.dart';
-import 'package:qcar_business/ui/app_viewmodel.dart';
 import 'package:qcar_business/ui/mixins/scan_fun.dart';
 import 'package:qcar_business/ui/notify/dialog.dart';
 import 'package:qcar_business/ui/screens/home/home_page.dart';
+import 'package:qcar_shared/core/app_viewmodel.dart';
+import 'package:qcar_shared/tuple.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 abstract class IntroViewModel extends ViewModel {

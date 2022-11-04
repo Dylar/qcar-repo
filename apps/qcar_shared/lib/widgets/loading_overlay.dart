@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_business/ui/app_theme.dart';
+import 'package:qcar_shared/core/app_theme.dart';
 
 const OPACITY_2 = .02;
 const OPACITY_20 = .2;
@@ -7,6 +7,7 @@ const OPACITY_100 = 1.0;
 
 class LoadingOverlay extends StatelessWidget {
   const LoadingOverlay({
+    super.key,
     this.backgroundColor = BaseColors.primary,
     this.opacity = OPACITY_100,
     this.child,
@@ -46,7 +47,7 @@ class LoadingOverlay extends StatelessWidget {
           child: Container(
             alignment: Alignment.topCenter,
             color: backgroundColor.withOpacity(opacity),
-            child: Center(child: CircularProgressIndicator()),
+            child: const Center(child: CircularProgressIndicator()),
           ),
         ),
         // if (child != null) Container(child: child!),

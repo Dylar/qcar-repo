@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:qcar_business/core/environment_config.dart';
-import 'package:qcar_business/core/misc/helper/logger.dart';
 import 'package:qcar_business/core/models/Feedback.dart';
 import 'package:qcar_business/core/models/Tracking.dart';
 import 'package:qcar_business/core/network/load_client.dart';
-import 'package:qcar_business/core/network/network_service.dart';
 import 'package:qcar_business/core/service/services.dart';
 import 'package:qcar_business/core/service/settings_service.dart';
+import 'package:qcar_shared/network_service.dart';
+import 'package:qcar_shared/utils/logger.dart';
 
 void sendTracking(BuildContext context, TrackType? type, String? text) {
   Services.of(context)!.trackingService.sendTracking(type, text);

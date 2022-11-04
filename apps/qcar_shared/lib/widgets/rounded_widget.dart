@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_business/ui/app_theme.dart';
+import 'package:qcar_shared/core/app_theme.dart';
 
 class RoundedWidget extends StatelessWidget {
-  const RoundedWidget({required this.child});
+  const RoundedWidget({super.key, required this.child});
 
   final Widget child;
 
@@ -13,7 +13,7 @@ class RoundedWidget extends StatelessWidget {
       padding: const EdgeInsets.all(4.0),
       decoration: BoxDecoration(
         border: Border.all(color: BaseColors.babyBlue),
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       child: child,
     );

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_business/core/models/Tracking.dart';
-import 'package:qcar_business/core/service/services.dart';
 
 const String POP_RESULT = "result";
 
@@ -39,6 +37,9 @@ class AppRouteSpec {
 }
 
 class Navigate {
+  static final RouteObserver<ModalRoute> routeObserver =
+      RouteObserver<ModalRoute>();
+
   static void pop<T>(BuildContext context, [T? result]) {
     final popSpec = AppRouteSpec(
       name: '',
@@ -49,9 +50,9 @@ class Navigate {
   }
 
   static Future<T> to<T>(BuildContext context, AppRouteSpec spec) async {
-    Services.of(context)!
-        .trackingService
-        .sendTracking(TrackType.NAVIGATION, "Navi to: ${spec.name}");
+    // Services.of(context)!
+    //     .trackingService
+    //     .sendTracking(TrackType.NAVIGATION, "Navi to: ${spec.name}");
     switch (spec.action) {
       //TODO complete list
       case AppRouteAction.pushTo:

@@ -59,9 +59,6 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
-  # network
-  http: ^0.13.5
-
   # app dependency
   better_player: ^0.0.83
   qr_code_scanner: ^1.0.1

@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:qcar_business/core/misc/helper/logger.dart';
-import 'package:qcar_business/ui/navigation/app_router.dart';
-
-import 'navigation/navi.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_viewmodel.dart';
+import 'package:qcar_shared/utils/logger.dart';
 
 abstract class View<VM extends ViewModel> extends StatefulWidget {
   final VM viewModel;
@@ -43,11 +40,11 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
 
     // subscribe for the change of route
     if (ModalRoute.of(context) != null) {
-      AppRouter.routeObserver
+      Navigate.routeObserver
           .subscribe(this, ModalRoute.of(context)! as PageRoute);
     }
 
-    viewModel.notifyListeners = () => this.setState(() {});
+    viewModel.notifyListeners = () => setState(() {});
     viewModel.openDialog = (fun) async => fun(context);
     viewModel.showSnackBar = (fun) async => fun(context);
     viewModel.navigateTo = (spec) => Navigate.to(context, spec);
@@ -57,7 +54,7 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
   @override
   void dispose() {
     Logger.logI('🏠 dispose $_sanitisedRoutePageName');
-    AppRouter.routeObserver.unsubscribe(this);
+    Navigate.routeObserver.unsubscribe(this);
     viewModel.dispose();
     super.dispose();
   }
@@ -95,52 +92,4 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
     Logger.logI('🚚 $_sanitisedRoutePageName didPushNext');
     viewModel.routingDidPushNext();
   }
-}
-
-abstract class ViewModel {
-  ViewModel();
-
-  late void Function() notifyListeners;
-  late void Function(AppRouteSpec) navigateTo;
-  late Future Function(Function(BuildContext)) openDialog;
-  late Future Function(Function(BuildContext)) showSnackBar;
-
-  final _initializer = new Completer();
-
-  Future get isInitialized => _initializer.future;
-
-  /// This method is executed whenever the Widget's Stateful State gets
-  /// disposed. It might happen a few times, always matching the amount of times
-  /// `init` is called.
-  @mustCallSuper
-  void dispose() {}
-
-  /// This method is executed exactly once for each State object Flutter's
-  /// framework creates.
-  @mustCallSuper
-  void startInit() {
-    init().then((value) => finishInit());
-  }
-
-  Future init() async {}
-
-  void finishInit() {
-    if (!_initializer.isCompleted) {
-      _initializer.complete();
-    }
-  }
-
-  /// Called when the top route has been popped off, and the current route
-  /// shows up.
-  void routingDidPopNext() {}
-
-  /// Called when the current route has been pushed.
-  void routingDidPush() {}
-
-  /// Called when the current route has been popped off.
-  void routingDidPop() {}
-
-  /// Called when a new route has been pushed, and the current route is no
-  /// longer visible.
-  void routingDidPushNext() {}
 }

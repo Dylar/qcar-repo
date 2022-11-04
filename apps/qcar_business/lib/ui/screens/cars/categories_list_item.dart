@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_business/core/models/category_info.dart';
-import 'package:qcar_business/ui/app_theme.dart';
 import 'package:qcar_business/ui/widgets/pic_widget.dart';
-import 'package:qcar_business/ui/widgets/rounded_widget.dart';
+import 'package:qcar_shared/core/app_theme.dart';
+import 'package:qcar_shared/widgets/rounded_widget.dart';
 
 class CategoryListItem extends StatelessWidget {
   const CategoryListItem(this.category);

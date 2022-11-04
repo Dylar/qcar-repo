@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_business/ui/notify/dialog.dart';
-import 'package:qcar_business/ui/widgets/rounded_widget.dart';
+import 'package:qcar_shared/widgets/rounded_widget.dart';
 
 abstract class FavoritesButtonViewModel {
   bool get hasFavorites;
