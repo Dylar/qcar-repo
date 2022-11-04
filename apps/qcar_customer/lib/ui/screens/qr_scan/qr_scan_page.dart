@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/mixins/scan_fun.dart';
 import 'package:qcar_customer/ui/navigation/app_navigation.dart';
-import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_vm.dart';
-import 'package:qcar_customer/ui/widgets/info_widget.dart';
 import 'package:qcar_customer/ui/widgets/qr_camera_view.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_view.dart';
+import 'package:qcar_shared/widgets/info_widget.dart';
 
 class QrScanPage extends View<QRViewModel> {
   QrScanPage(QRViewModel viewModel, {Key? key}) : super.model(viewModel);

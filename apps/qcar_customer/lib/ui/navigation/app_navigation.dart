@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/misc/helper/tuple.dart';
 import 'package:qcar_customer/core/service/services.dart';
-import 'package:qcar_customer/ui/app_theme.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
-import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/notify/dialog.dart';
 import 'package:qcar_customer/ui/notify/snackbars.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
@@ -14,7 +11,10 @@ import 'package:qcar_customer/ui/screens/settings/settings_page.dart';
 import 'package:qcar_customer/ui/screens/video/favorites_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_page.dart';
-import 'package:qcar_customer/ui/widgets/loading_overlay.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_theme.dart';
+import 'package:qcar_shared/tuple.dart';
+import 'package:qcar_shared/widgets/loading_overlay.dart';
 
 const FEEDBACK_ROUTE = "FEEDBACK";
 

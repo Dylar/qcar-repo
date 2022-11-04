@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:qcar_customer/core/network/network_service.dart';
 import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/notify/dialog.dart';
 import 'package:qcar_customer/ui/notify/snackbars.dart';
+import 'package:qcar_shared/network_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 abstract class FeedbackViewModel {

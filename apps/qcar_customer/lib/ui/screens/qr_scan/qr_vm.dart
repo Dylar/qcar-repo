@@ -1,9 +1,9 @@
 import 'package:qcar_customer/core/service/info_service.dart';
 import 'package:qcar_customer/core/service/tracking_service.dart';
-import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
 import 'package:qcar_customer/ui/mixins/scan_fun.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
+import 'package:qcar_shared/core/app_viewmodel.dart';
 
 abstract class QRViewModel extends ViewModel
     implements FeedbackViewModel, ScanViewModel {}

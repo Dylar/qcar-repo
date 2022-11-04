@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/environment_config.dart';
-import 'package:qcar_customer/core/misc/helper/logger.dart';
 import 'package:qcar_customer/core/models/model_data.dart';
 import 'package:qcar_customer/core/service/services.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
@@ -23,6 +22,7 @@ import 'package:qcar_customer/ui/screens/video/video_overview_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_vm.dart';
 import 'package:qcar_customer/ui/screens/video/video_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_vm.dart';
+import 'package:qcar_shared/utils/logger.dart';
 
 abstract class AppRoute<T> extends Route<T> {
   String get appName;
@@ -53,9 +53,6 @@ class RouteWrapper<T> extends MaterialPageRoute<T> implements AppRoute<T> {
 }
 
 class AppRouter {
-  static final RouteObserver<ModalRoute> routeObserver =
-      RouteObserver<ModalRoute>();
-
   static List<Route<dynamic>> generateInitRoute(String initialRoute) {
     late WidgetBuilder builder;
     switch (initialRoute) {

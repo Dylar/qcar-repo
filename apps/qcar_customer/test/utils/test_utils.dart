@@ -4,10 +4,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/service/services.dart';
-import 'package:qcar_customer/ui/app_theme.dart';
 import 'package:qcar_customer/ui/navigation/app_router.dart';
-import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/app/app.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_theme.dart';
 
 import '../builder/app_builder.dart';
 
@@ -50,7 +50,7 @@ Widget wrapWidget(Widget widget, {AppInfrastructure? testInfra}) {
         darkTheme: appTheme,
         //TODO make real dark theme
         onGenerateRoute: AppRouter.generateRoute,
-        navigatorObservers: [AppRouter.routeObserver],
+        navigatorObservers: [Navigate.routeObserver],
         supportedLocales: const [Locale('en'), Locale('de')],
         localizationsDelegates: const [
           AppLocalizations.delegate,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/environment_config.dart';
-import 'package:qcar_customer/ui/navigation/navi.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class DebugPage extends StatefulWidget {

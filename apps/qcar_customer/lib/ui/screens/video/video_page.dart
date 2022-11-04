@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/models/video_info.dart';
-import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/app_navigation.dart';
-import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/video/video_vm.dart';
-import 'package:qcar_customer/ui/widgets/rounded_widget.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_view.dart';
+import 'package:qcar_shared/widgets/rounded_widget.dart';
 
 class VideoPage extends View<VideoViewModel> {
   static const String routeName = "/VideoPage";

@@ -2,12 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/models/model_data.dart';
-import 'package:qcar_customer/ui/app_viewmodel.dart';
-import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/notify/dialog.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_vm.dart';
-import 'package:qcar_customer/ui/widgets/error_widget.dart';
-import 'package:qcar_customer/ui/widgets/loading_overlay.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_view.dart';
+import 'package:qcar_shared/widgets/error_widget.dart';
+import 'package:qcar_shared/widgets/loading_overlay.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class VideoSettingsPage extends View<SettingsViewModel> {

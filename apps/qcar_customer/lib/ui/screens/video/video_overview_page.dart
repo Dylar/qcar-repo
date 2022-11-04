@@ -3,14 +3,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/core/models/category_info.dart';
 import 'package:qcar_customer/core/models/video_info.dart';
-import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/app_bar.dart';
 import 'package:qcar_customer/ui/navigation/app_navigation.dart';
-import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/video/video_list_item.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_vm.dart';
-import 'package:qcar_customer/ui/widgets/error_widget.dart';
-import 'package:qcar_customer/ui/widgets/scroll_list_view.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_view.dart';
+import 'package:qcar_shared/widgets/error_widget.dart';
+import 'package:qcar_shared/widgets/scroll_list_view.dart';
 
 class VideoOverviewPage extends View<VideoOverViewModel> {
   static const String routeName = "/videoOverviewPage";

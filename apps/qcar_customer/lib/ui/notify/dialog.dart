@@ -3,9 +3,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/models/Tracking.dart';
 import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
-import 'package:qcar_customer/ui/notify/confirm_dialog.dart';
 import 'package:qcar_customer/ui/notify/feedback_dialog.dart';
-import 'package:qcar_customer/ui/notify/info_dialog.dart';
+import 'package:qcar_shared/widgets/confirm_dialog.dart';
+import 'package:qcar_shared/widgets/info_dialog.dart';
 
 Future openErrorDialog(BuildContext context, String error) {
   sendTracking(context, TrackType.ERROR, "openErrorDialog: $error");
