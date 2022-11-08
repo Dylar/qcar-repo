@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_business/core/environment_config.dart';
+import 'package:qcar_business/core/models/model_data.dart';
 import 'package:qcar_business/core/service/services.dart';
+import 'package:qcar_business/ui/screens/form/form_cars_page.dart';
+import 'package:qcar_business/ui/screens/form/form_customer_page.dart';
+import 'package:qcar_business/ui/screens/form/form_videos_page.dart';
+import 'package:qcar_business/ui/screens/form/form_vm.dart';
 import 'package:qcar_business/ui/screens/home/home_page.dart';
 import 'package:qcar_business/ui/screens/home/home_vm.dart';
 import 'package:qcar_business/ui/screens/login/login_page.dart';
@@ -8,35 +12,8 @@ import 'package:qcar_business/ui/screens/login/login_vm.dart';
 import 'package:qcar_business/ui/screens/settings/debug_page.dart';
 import 'package:qcar_business/ui/screens/settings/settings_page.dart';
 import 'package:qcar_business/ui/screens/settings/settings_vm.dart';
+import 'package:qcar_shared/core/app_routing.dart';
 import 'package:qcar_shared/utils/logger.dart';
-
-abstract class AppRoute<T> extends Route<T> {
-  String get appName;
-
-  String? get viewName;
-}
-
-class RouteWrapper<T> extends MaterialPageRoute<T> implements AppRoute<T> {
-  RouteWrapper({
-    required WidgetBuilder builder,
-    required RouteSettings settings,
-  }) : super(builder: builder, settings: settings);
-
-  @override
-  String get appName => EnvironmentConfig.APP_NAME;
-
-  @override
-  String? get viewName => settings.name;
-
-  @override //TODO do into args/settings
-  Duration get transitionDuration => Duration.zero;
-
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    return child;
-  }
-}
 
 class AppRouter {
   static List<Route<dynamic>> generateInitRoute(String initialRoute) {
@@ -55,7 +32,7 @@ class AppRouter {
     return [_wrapRoute(RouteSettings(name: initialRoute), builder)];
   }
 
-  static AppRoute<dynamic> generateRoute(RouteSettings settings) {
+  static RouteWrapper generateRoute(RouteSettings settings) {
     final arguments = settings.arguments as Map<String, dynamic>? ?? {};
     Logger.logI("Route: ${settings.name}");
 
@@ -72,6 +49,15 @@ class AppRouter {
         break;
       case HomePage.routeName:
         builder = _navigateToHome;
+        break;
+      case FormCarsPage.routeName:
+        builder = _navigateToFormCars;
+        break;
+      case FormVideosPage.routeName:
+        builder = (context) => _navigateToFormVideos(context, arguments);
+        break;
+      case FormCustomerPage.routeName:
+        builder = (context) => _navigateToFormCustomer(context, arguments);
         break;
       default:
         throw Exception('Route ${settings.name} not implemented');
@@ -107,5 +93,22 @@ Widget _navigateToLogin(BuildContext context) {
 
 Widget _navigateToHome(BuildContext context) {
   final services = Services.of(context)!;
-  return HomePage(HomeVM(services.settingsService));
+  return HomePage(HomeVM(services.authService, services.infoService));
 }
+
+Widget _navigateToFormCars(BuildContext context) {
+  final services = Services.of(context)!;
+  return FormCarsPage(FormVM(services.authService, services.infoService));
+}
+
+Widget _navigateToFormVideos(
+  BuildContext context,
+  Map<String, dynamic> arguments,
+) =>
+    FormVideosPage(arguments[ARGS_VIEW_MODEL]!);
+
+Widget _navigateToFormCustomer(
+  BuildContext context,
+  Map<String, dynamic> arguments,
+) =>
+    FormCustomerPage(arguments[ARGS_VIEW_MODEL]!);

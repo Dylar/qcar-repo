@@ -6,6 +6,16 @@ class Tuple<E1, E2> {
 
   E1 get firstOrThrow => first!;
   E2 get secondOrThrow => second!;
+
+  @override
+  int get hashCode => first.hashCode ^ second.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Tuple &&
+              first == other.first &&
+              second == other.second;
 }
 
 class Triple<E1, E2, E3> {
@@ -18,4 +28,15 @@ class Triple<E1, E2, E3> {
   E1 get firstOrThrow => first!;
   E2 get middleOrThrow => middle!;
   E3 get lastOrThrow => last!;
+
+  @override
+  int get hashCode => first.hashCode ^ middle.hashCode ^ last.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Triple &&
+              first == other.first &&
+              middle == other.middle &&
+              last == other.last;
 }

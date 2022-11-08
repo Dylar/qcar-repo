@@ -3,7 +3,6 @@ import 'package:qcar_business/core/datasource/car_database.dart';
 import 'package:qcar_business/core/datasource/sell_database.dart';
 import 'package:qcar_business/core/datasource/settings_database.dart';
 import 'package:qcar_business/core/models/car_info.dart';
-import 'package:qcar_business/core/models/category_info.dart';
 import 'package:qcar_business/core/models/sell_info.dart';
 import 'package:qcar_business/core/models/settings.dart';
 import 'package:qcar_business/core/models/video_info.dart';
@@ -23,7 +22,6 @@ class AppDatabase with SettingsDB, SellInfoDB, CarInfoDB {
     try {
       Hive.registerAdapter(CarInfoAdapter());
       Hive.registerAdapter(VideoInfoAdapter());
-      Hive.registerAdapter(CategoryInfoAdapter());
       Hive.registerAdapter(SellInfoAdapter());
       Hive.registerAdapter(SettingsAdapter());
     } catch (e) {

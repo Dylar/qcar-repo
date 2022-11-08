@@ -12,7 +12,8 @@ class BaseColors {
   static const Color zergPurple = Color.fromRGBO(254, 46, 247, 1);
 
   static const Color black = Color.fromRGBO(0, 0, 0, 1);
-  static const Color darkGrey = Color.fromRGBO(0, 0, 0, 0.4);
+  static const Color veryDarkGrey = Color.fromRGBO(0, 0, 0, 0.4);
+  static const Color darkGrey = Color.fromRGBO(50, 50, 50, 1);
   static const Color grey = Color.fromRGBO(196, 196, 196, 0.4);
   static const Color lightGrey = Color.fromRGBO(196, 196, 196, 1);
   static const Color veryLightGrey = Color.fromRGBO(245, 245, 245, 1);
@@ -77,9 +78,28 @@ final ThemeData appTheme = ThemeData(
   bottomAppBarTheme: const BottomAppBarTheme(color: BaseColors.primary),
   unselectedWidgetColor: BaseColors.grey,
   cardTheme: const CardTheme(color: BaseColors.accent),
-  inputDecorationTheme: const InputDecorationTheme(
-    labelStyle: TextStyle(color: BaseColors.primary),
-    floatingLabelBehavior: FloatingLabelBehavior.always,
-    border: InputBorder.none,
+  inputDecorationTheme: InputDecorationTheme(
+    labelStyle: const TextStyle(color: Colors.white),
+    floatingLabelBehavior: FloatingLabelBehavior.auto,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(100)
+          .copyWith(bottomRight: const Radius.circular(0)),
+      borderSide: const BorderSide(color: BaseColors.zergPurple),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(100)
+          .copyWith(bottomRight: const Radius.circular(0)),
+      borderSide: const BorderSide(color: BaseColors.zergPurple),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(100)
+          .copyWith(bottomRight: const Radius.circular(0)),
+      borderSide: const BorderSide(color: BaseColors.babyBlue),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(100)
+          .copyWith(bottomRight: const Radius.circular(0)),
+      borderSide: const BorderSide(color: BaseColors.red),
+    ),
   ),
 );

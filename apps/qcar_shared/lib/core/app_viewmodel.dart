@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_routing.dart';
 
 abstract class ViewModel {
   ViewModel();
 
-  late void Function() notifyListeners;
-  late void Function(AppRouteSpec) navigateTo;
-  late Future Function(Function(BuildContext)) openDialog;
-  late Future Function(Function(BuildContext)) showSnackBar;
+  void Function() notifyListeners = () {};
+  void Function(RoutingSpec) navigateTo = (_) {};
+  Future Function(Function(BuildContext)) openDialog = (_) async {};
+  Future Function(Function(BuildContext)) showSnackBar = (_) async {};
 
   final _initializer = Completer();
 

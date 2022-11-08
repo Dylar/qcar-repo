@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Logger {
   static void logI(String msg) {
     log("Logging", msg, false);
@@ -8,7 +10,10 @@ class Logger {
   }
 
   static void logE(String msg, {bool printTrace = false}) {
-    log("Error", msg, printTrace);
+    // log("Error", msg, printTrace);
+    FlutterError.reportError(
+      FlutterErrorDetails(exception: Exception(msg)),
+    );
   }
 
   static void logTrack(String msg) {

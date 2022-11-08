@@ -1,87 +1,54 @@
 import 'package:flutter/material.dart';
-
-const String POP_RESULT = "result";
-
-enum AppRouteAction {
-  pushTo,
-  popAndPushTo,
-  pop,
-  popUntil,
-  popUntilRoot,
-  replaceWith,
-  replaceAllWith,
-}
-
-class AppRouteSpec {
-  /// The route that the `action` will use to perform the action (push,
-  /// replace, pop, etc).
-  final String name;
-
-  /// Arguments for the route. Arguments for Pop actions are ignored.
-  /// Default empty.
-  final Map<String, dynamic> arguments;
-
-  /// Defaults to `AppRouteAction.pushTo`
-  final AppRouteAction action;
-
-  const AppRouteSpec({
-    required this.name,
-    this.arguments = const {},
-    this.action = AppRouteAction.pushTo,
-  });
-
-  const AppRouteSpec.popUntilRoot()
-      : name = '',
-        action = AppRouteAction.popUntilRoot,
-        arguments = const {};
-}
+import 'package:qcar_shared/core/app_routing.dart';
 
 class Navigate {
   static final RouteObserver<ModalRoute> routeObserver =
       RouteObserver<ModalRoute>();
 
   static void pop<T>(BuildContext context, [T? result]) {
-    final popSpec = AppRouteSpec(
-      name: '',
-      action: AppRouteAction.pop,
-      arguments: {POP_RESULT: result},
+    final popSpec = RoutingSpec(
+      routeName: '',
+      action: RouteAction.pop,
+      args: {POP_RESULT: result},
     );
     to(context, popSpec);
   }
 
-  static Future<T> to<T>(BuildContext context, AppRouteSpec spec) async {
+  static Future<T> to<T>(BuildContext context, RoutingSpec spec) async {
     // Services.of(context)!
     //     .trackingService
     //     .sendTracking(TrackType.NAVIGATION, "Navi to: ${spec.name}");
+
+    final arguments = spec.routingArguments;
     switch (spec.action) {
       //TODO complete list
-      case AppRouteAction.pushTo:
+      case RouteAction.pushTo:
         return (await Navigator.of(context).pushNamed(
-          spec.name,
-          arguments: spec.arguments,
+          spec.routeName,
+          arguments: arguments,
         )) as T;
-      case AppRouteAction.popAndPushTo:
+      case RouteAction.popAndPushTo:
         return await Navigator.of(context).popAndPushNamed(
-          spec.name,
-          arguments: spec.arguments,
+          spec.routeName,
+          arguments: arguments,
         ) as T;
-      case AppRouteAction.replaceWith:
+      case RouteAction.replaceWith:
         return await Navigator.of(context).pushReplacementNamed(
-          spec.name,
-          arguments: spec.arguments,
+          spec.routeName,
+          arguments: arguments,
         ) as T;
-      case AppRouteAction.replaceAllWith:
+      case RouteAction.replaceAllWith:
         return await Navigator.of(context).pushNamedAndRemoveUntil(
-          spec.name,
+          spec.routeName,
           (route) => false,
-          arguments: spec.arguments,
+          arguments: arguments,
         ) as T;
-      case AppRouteAction.pop:
-        return Navigator.of(context).pop(spec.arguments[POP_RESULT]) as T;
-      case AppRouteAction.popUntil:
+      case RouteAction.pop:
+        return Navigator.of(context).pop(arguments[POP_RESULT]) as T;
+      case RouteAction.popUntil:
         return Navigator.of(context)
-            .popUntil((route) => route.settings.name == spec.name) as T;
-      case AppRouteAction.popUntilRoot:
+            .popUntil((route) => route.settings.name == spec.routeName) as T;
+      case RouteAction.popUntilRoot:
         return Navigator.of(context).popUntil((route) => route.isFirst) as T;
       default:
         throw UnsupportedError("Unknown app route action");

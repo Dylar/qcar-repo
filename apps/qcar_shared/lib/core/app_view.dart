@@ -44,6 +44,10 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
           .subscribe(this, ModalRoute.of(context)! as PageRoute);
     }
 
+    _setViewModelMethods();
+  }
+
+  void _setViewModelMethods() {
     viewModel.notifyListeners = () => setState(() {});
     viewModel.openDialog = (fun) async => fun(context);
     viewModel.showSnackBar = (fun) async => fun(context);
@@ -65,6 +69,7 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
   @override
   void didPopNext() {
     Logger.logI('🚚 $_sanitisedRoutePageName didPopNext');
+    _setViewModelMethods();
     viewModel.routingDidPopNext();
   }
 

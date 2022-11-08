@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:qcar_business/core/models/model_data.dart';
-import 'package:qcar_business/core/models/utils.dart';
+import 'package:qcar_shared/utils/time_utils.dart';
 
 enum TrackType { NAVIGATION, INFO, ERROR }
 

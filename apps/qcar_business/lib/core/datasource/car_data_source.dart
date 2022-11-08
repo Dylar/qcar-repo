@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:qcar_business/core/datasource/database.dart';
 import 'package:qcar_business/core/models/car_info.dart';
-import 'package:qcar_business/core/models/video_info.dart';
 
 abstract class CarInfoDataSource {
   Stream<List<CarInfo>> watchCarInfo();
@@ -10,8 +9,6 @@ abstract class CarInfoDataSource {
   Future<void> addCarInfo(CarInfo info);
 
   Future<List<CarInfo>> getAllCars();
-
-  Future<List<VideoInfo>> findVideos(String query);
 }
 
 class CarInfoDS implements CarInfoDataSource {
@@ -41,26 +38,5 @@ class CarInfoDS implements CarInfoDataSource {
   Stream<List<CarInfo>> watchCarInfo() {
     _database.getCarInfos().then((data) => streamController.add(data));
     return streamController.stream;
-  }
-
-  @override
-  Future<List<VideoInfo>> findVideos(String query) async {
-    final cars = await getAllCars();
-    final lowerQuery = query.toLowerCase();
-    final vids = <VideoInfo>[];
-    cars.first.categories.forEach((cat) {
-      if (cat.name.toLowerCase().contains(lowerQuery)) {
-        vids.addAll(cat.videos);
-      } else {
-        cat.videos.forEach((vid) {
-          final found = vid.name.toLowerCase().contains(lowerQuery) ||
-              vid.tags.any((tag) => tag.toLowerCase().contains(lowerQuery));
-          if (found) {
-            vids.add(vid);
-          }
-        });
-      }
-    });
-    return vids;
   }
 }

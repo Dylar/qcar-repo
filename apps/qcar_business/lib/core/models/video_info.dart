@@ -14,10 +14,8 @@ class VideoInfo extends HiveObject {
     required this.model,
     required this.category,
     required this.name,
-    required this.filePath,
-    required this.imagePath,
-    required this.description,
-    required this.tags,
+    required this.categoryImagePath,
+    required this.videoImagePath,
   });
 
   static List<VideoInfo> fromList(List<dynamic> list) =>
@@ -30,10 +28,8 @@ class VideoInfo extends HiveObject {
         model: map[FIELD_MODEL] ?? "",
         category: map[FIELD_CATEGORY] ?? "",
         name: map[FIELD_NAME] ?? "",
-        filePath: map[FIELD_FILE_PATH] ?? "",
-        imagePath: map[FIELD_IMAGE_PATH] ?? "",
-        description: map[FIELD_DESC] ?? "",
-        tags: List<String>.from(map[FIELD_TAGS] ?? <String>[]),
+        categoryImagePath: map[FIELD_CATEGORY_IMAGE_PATH] ?? "",
+        videoImagePath: map[FIELD_VIDEO_IMAGE_PATH] ?? "",
       );
 
   Map<String, dynamic> toMap() => {
@@ -41,17 +37,17 @@ class VideoInfo extends HiveObject {
         FIELD_MODEL: model,
         FIELD_CATEGORY: category,
         FIELD_NAME: name,
-        FIELD_FILE_PATH: filePath,
-        FIELD_IMAGE_PATH: imagePath,
-        FIELD_DESC: description,
-        FIELD_TAGS: tags,
+        FIELD_CATEGORY_IMAGE_PATH: categoryImagePath,
+        FIELD_VIDEO_IMAGE_PATH: videoImagePath,
       };
 
   String toJson() => jsonEncode(toMap());
 
-  String get vidUrl => "https://${EnvironmentConfig.domain}/videos/$filePath";
+  String get categoryImageUrl =>
+      "https://${EnvironmentConfig.domain}/videos/$categoryImagePath";
 
-  String get picUrl => "https://${EnvironmentConfig.domain}/videos/$imagePath";
+  String get videoImageUrl =>
+      "https://${EnvironmentConfig.domain}/videos/$videoImagePath";
 
   @HiveField(0)
   String brand = "";
@@ -62,11 +58,7 @@ class VideoInfo extends HiveObject {
   @HiveField(3)
   String name = "";
   @HiveField(4)
-  String filePath = "";
+  String categoryImagePath = "";
   @HiveField(5)
-  String imagePath = "";
-  @HiveField(6)
-  String description = "";
-  @HiveField(7)
-  List<String> tags = [];
+  String videoImagePath = "";
 }

@@ -13,6 +13,8 @@ class SellerInfo extends HiveObject {
     required this.name,
   });
 
+  static SellerInfo empty() => fromMap({});
+
   static SellerInfo fromMap(Map<String, dynamic> map) => SellerInfo(
         dealer: map[FIELD_DEALER] ?? "",
         name: map[FIELD_NAME] ?? "",

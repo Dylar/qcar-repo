@@ -59,7 +59,9 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
+  # UI
   settings_ui: ^2.0.2
+  grouped_list: ^5.1.2
 
 dev_dependencies:
   hive_generator: ^1.1.2

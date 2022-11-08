@@ -6,6 +6,7 @@ const CATEGORY_INFO_TYPE_ID = 5;
 const SELL_KEY_TYPE_ID = 6;
 const SELL_VIDEO_INFO_TYPE_ID = 7;
 const SELLER_INFO_TYPE_ID = 8;
+const CUSTOMER_INFO_TYPE_ID = 9;
 
 const ARGS_VIEW_MODEL = "ARGS_VIEW_MODEL";
 
@@ -31,8 +32,18 @@ const FIELD_DESC = "description";
 
 const FIELD_ORDER = "order";
 const FIELD_IMAGE_PATH = "imagePath";
+const FIELD_CATEGORY_IMAGE_PATH = "categoryImagePath";
+const FIELD_VIDEO_IMAGE_PATH = "videoImagePath";
 const FIELD_FILE_PATH = "filePath";
 
 const FIELD_VIDEO = "video";
 const FIELD_VIDEOS = "videos";
 const FIELD_TAGS = "tags";
+
+const FIELD_LAST_NAME = "lastName";
+const FIELD_GENDER = "gender";
+const FIELD_BIRTHDAY = "birthday";
+const FIELD_EMAIL = "email";
+
+const FIELD_CAR = "car";
+const FIELD_CUSTOMER = "customer";

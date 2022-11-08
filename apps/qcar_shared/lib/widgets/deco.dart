@@ -26,10 +26,22 @@ GradientText qcarGradientText(
   BuildContext context,
   String text, {
   TextStyle? style,
+  double textScaling = 1.0,
 }) {
   return GradientText(
     text,
     style: style,
     gradient: qcarGradient,
+    textScaling: textScaling,
   );
 }
+
+InkWell inkTap({
+  required void Function() onTap,
+  required Widget child,
+}) =>
+    InkWell(
+        highlightColor: BaseColors.zergPurple.withOpacity(0.4),
+        splashColor: BaseColors.babyBlue.withOpacity(0.5),
+        onTap: onTap,
+        child: child);

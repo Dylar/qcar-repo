@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:qcar_business/ui/notify/snackbars.dart';
+import 'package:qcar_business/ui/screens/login/login_page.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/widgets/deco.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-// Add a ListView to the drawer. This ensures the user can scroll
-// through the options in the drawer if there isn't enough vertical
-// space to fit everything.
       child: ListView(
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
+          DrawerHeader(
+            decoration: BoxDecoration(color: Colors.black),
+            child: Center(
+              child: qcarGradientText(
+                context,
+                'QCar-Business',
+                textScaling: 2.0,
+              ),
             ),
-            child: Text('Drawer Header'),
           ),
           ListTile(
-            title: const Text('Item 1'),
-            onTap: () {},
+            title: const Text('Ausloggen'),
+            onTap: () => Navigate.to(context, LoginPage.onLogout()),
           ),
           ListTile(
-            title: const Text('Item 2'),
-            onTap: () {},
+            title: const Text('Information'),
+            onTap: () => showNothingToSeeSnackBar(context),
           ),
         ],
       ),

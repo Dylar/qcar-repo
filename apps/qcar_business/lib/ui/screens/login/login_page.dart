@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:qcar_business/core/environment_config.dart';
-import 'package:qcar_business/core/misc/constants/asset_paths.dart';
 import 'package:qcar_business/core/models/seller_info.dart';
 import 'package:qcar_business/ui/screens/login/login_vm.dart';
-import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_business/ui/widgets/app_bar.dart';
+import 'package:qcar_shared/core/app_routing.dart';
+import 'package:qcar_shared/core/app_theme.dart';
 import 'package:qcar_shared/core/app_view.dart';
 import 'package:qcar_shared/widgets/deco.dart';
 import 'package:qcar_shared/widgets/rounded_widget.dart';
@@ -12,9 +12,15 @@ import 'package:qcar_shared/widgets/rounded_widget.dart';
 class LoginPage extends View<LoginViewModel> {
   static const String routeName = "/login";
 
-  static AppRouteSpec pushIt() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.pushTo,
+  static RoutingSpec pushIt() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.pushTo,
+      );
+
+  static RoutingSpec onLogout() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.replaceAllWith,
+        transitionType: TransitionType.leftRight,
       );
 
   LoginPage(
@@ -34,29 +40,8 @@ class _LoginPageState extends ViewState<LoginPage, LoginViewModel> {
     // final title = AppLocalizations.of(context)!.homoPageTitle;
     final title = "Login";
     return Scaffold(
-      appBar: _buildAppBar(title),
+      appBar: buildAppBar(title),
       body: buildLoginPage(context),
-    );
-  }
-
-  AppBar _buildAppBar(String title) {
-    return AppBar(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title),
-          qcarGradientText(
-            context,
-            EnvironmentConfig.APP_NAME,
-            style: Theme.of(context).textTheme.headline6!,
-          ),
-          SizedBox(
-              height: 48,
-              width: 48,
-              //TODO load from car path
-              child: Image.asset(homePageCarLogoImagePath)),
-        ],
-      ),
     );
   }
 
@@ -69,16 +54,19 @@ class _LoginPageState extends ViewState<LoginPage, LoginViewModel> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: RoundedWidget(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
-                      "Das ist die Business-App.\nBitte melden Sie sich an.")),
+                      "Das ist die Business-App.\nBitte melden Sie sich an."),
+                ),
+              ),
             ),
             DropdownButton<SellerInfo>(
+              dropdownColor: BaseColors.darkGrey,
               items: _buildDropdownItems(),
               hint: Text("Bitte wählen Sie einen Benutzer"),
-              value: null,
               onChanged: (value) => viewModel.userSelected(value!),
             ),
           ],

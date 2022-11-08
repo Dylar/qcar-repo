@@ -11,10 +11,11 @@ abstract class SellInfoDatabase {
 mixin SellInfoDB implements SellInfoDatabase {
   Box<SellInfo> get sellInfoBox => Hive.box<SellInfo>(BOX_SELL_INFO);
 
+  //TODO make heil
   @override
   Future<void> upsertSellInfo(SellInfo sellInfo) async {
     await sellInfoBox.put(
-      sellInfo.brand + sellInfo.model,
+      sellInfo.car.brand + sellInfo.car.model,
       sellInfo,
     );
   }
