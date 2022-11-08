@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_business/core/misc/constants/urls.dart';
-import 'package:qcar_business/core/models/Feedback.dart' as fb;
 import 'package:qcar_business/core/models/Tracking.dart';
 import 'package:qcar_business/core/models/car_info.dart';
 import 'package:qcar_business/core/models/category_info.dart';
@@ -71,17 +70,6 @@ class ServerClient implements DownloadClient, UploadClient {
       }
     }
     return Response.ok(jsonMap: car.toMap());
-  }
-
-  @override
-  Future<Response> sendFeedback(fb.Feedback feedback) async {
-    return await NetworkService.sendRequest(
-      Request(
-        requestType: RequestType.post,
-        url: FEEDBACK_URL,
-        body: feedback.toJson(),
-      ),
-    );
   }
 
   @override

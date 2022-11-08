@@ -32,6 +32,8 @@ dependencies:
   # network
   http: ^0.13.5
 
+  url_launcher: ^6.1.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

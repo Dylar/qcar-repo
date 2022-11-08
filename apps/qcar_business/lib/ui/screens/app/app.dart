@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:qcar_business/core/datasource/car_data_source.dart';
 import 'package:qcar_business/core/datasource/database.dart';
-import 'package:qcar_business/core/datasource/favorite_data_source.dart';
 import 'package:qcar_business/core/datasource/sell_data_source.dart';
 import 'package:qcar_business/core/datasource/settings_data_source.dart';
 import 'package:qcar_business/core/environment_config.dart';
@@ -42,14 +41,12 @@ class AppInfrastructure {
     SettingsDataSource? settingsDataSource,
     CarInfoDataSource? carInfoDataSource,
     SellInfoDataSource? sellInfoDataSource,
-    FavoriteDataSource? favoriteDataSource,
     AuthenticationService? authenticationService,
     TrackingService? trackingService,
   }) {
     final db = database ?? AppDatabase();
     final carSource = carInfoDataSource ?? CarInfoDS(db);
     final sellSource = sellInfoDataSource ?? SellInfoDS(db);
-    final favSource = favoriteDataSource ?? FavoriteDS(db);
     final settingsSource = settingsDataSource ?? SettingsDS(db);
     final downClient = downloadClient ?? ServerClient();
     //TODO make this not doppelt
@@ -65,7 +62,7 @@ class AppInfrastructure {
       settingsService: settingsService,
       carInfoDataSource: carSource,
       sellInfoDataSource: sellSource,
-      infoService: InfoService(downClient, carSource, sellSource, favSource),
+      infoService: InfoService(),
       authService: authService,
       trackingService: trackService,
     );
@@ -109,30 +106,25 @@ class _AppState extends ViewState<App, AppViewModel> {
           final env = EnvironmentConfig.ENV == Env.PROD.name
               ? ""
               : "(${EnvironmentConfig.ENV}) ";
-          return EnvironmentConfig.ENV != Env.PROD.name
-              ? fixView(Container(
-                  alignment: Alignment.center,
-                  child: Text("${env}Dies wird die Business App"),
-                ))
-              : Services(
-                  infra: widget.viewModel.infra,
-                  child: MaterialApp(
-                    title: env + EnvironmentConfig.APP_NAME,
-                    theme: appTheme,
-                    darkTheme: appTheme,
-                    initialRoute: viewModel.firstRoute,
-                    onGenerateInitialRoutes: AppRouter.generateInitRoute,
-                    onGenerateRoute: AppRouter.generateRoute,
-                    navigatorObservers: [Navigate.routeObserver],
-                    supportedLocales: const [Locale('en'), Locale('de')],
-                    localizationsDelegates: const [
-                      AppLocalizations.delegate,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                    ],
-                  ),
-                );
+          return Services(
+            infra: widget.viewModel.infra,
+            child: MaterialApp(
+              title: env + EnvironmentConfig.APP_NAME,
+              theme: appTheme,
+              darkTheme: appTheme,
+              initialRoute: viewModel.firstRoute,
+              onGenerateInitialRoutes: AppRouter.generateInitRoute,
+              onGenerateRoute: AppRouter.generateRoute,
+              navigatorObservers: [Navigate.routeObserver],
+              supportedLocales: const [Locale('en'), Locale('de')],
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+            ),
+          );
         });
   }
 

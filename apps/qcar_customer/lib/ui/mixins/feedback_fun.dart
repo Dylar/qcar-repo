@@ -4,7 +4,7 @@ import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/notify/dialog.dart';
 import 'package:qcar_customer/ui/notify/snackbars.dart';
 import 'package:qcar_shared/network_service.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:qcar_shared/utils/handle_utils.dart' as handle;
 
 abstract class FeedbackViewModel {
   void sendFeedback(String text, int rating);
@@ -38,9 +38,6 @@ mixin FeedbackFun implements FeedbackViewModel {
 
   @override
   Future sendEmail({String? email}) async {
-    final uri = Uri.parse("mailto:${email ?? "feedback@qcar.de"}");
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    }
+    await handle.sendEmail(email: email);
   }
 }

@@ -33,6 +33,7 @@ abstract class ViewModel {
   void finishInit() {
     if (!_initializer.isCompleted) {
       _initializer.complete();
+      notifyListeners();
     }
   }
 

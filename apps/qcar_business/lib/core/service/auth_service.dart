@@ -1,14 +1,17 @@
+import 'package:qcar_business/core/models/seller_info.dart';
+
 class AuthenticationService {
   AuthenticationService();
 
+  SellerInfo? currentUser;
+
   Future<void> signOut() async {}
 
-  Future<bool> signInAnon() async {
-    return true;
+  Future<bool> isSignedIn() async {
+    return currentUser != null;
   }
 
-  Future<String> signIn(
-      {required String email, required String password}) async {
-    return "Signed in";
+  Future<void> signIn(SellerInfo user) async {
+    currentUser = user;
   }
 }

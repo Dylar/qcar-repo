@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_business/core/environment_config.dart';
-import 'package:qcar_business/core/models/Feedback.dart' as fb;
 import 'package:qcar_business/core/models/Tracking.dart';
 import 'package:qcar_business/core/models/car_info.dart';
 import 'package:qcar_business/core/models/category_info.dart';
@@ -20,8 +19,6 @@ abstract class DownloadClient {
 }
 
 abstract class UploadClient {
-  Future<Response> sendFeedback(fb.Feedback feedback);
-
   Future<Response> sendTracking(TrackEvent event);
 }
 

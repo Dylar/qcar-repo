@@ -1,38 +1,16 @@
 import 'dart:async';
 
-import 'package:qcar_business/core/service/info_service.dart';
 import 'package:qcar_business/core/service/settings_service.dart';
-import 'package:qcar_business/core/service/tracking_service.dart';
-import 'package:qcar_business/ui/mixins/feedback_fun.dart';
-import 'package:qcar_business/ui/widgets/video_widget.dart';
 import 'package:qcar_shared/core/app_viewmodel.dart';
-import 'package:qcar_shared/utils/logger.dart';
 
-abstract class HomeViewModel extends ViewModel
-    implements VideoWidgetViewModel, FeedbackViewModel {}
+abstract class HomeViewModel extends ViewModel {}
 
-class HomeVM extends HomeViewModel with FeedbackFun {
-  HomeVM(this.settingsService, this.trackingService, this.infoService);
-
-  @override
-  TrackingService trackingService;
-  final InfoService infoService;
+class HomeVM extends HomeViewModel {
+  HomeVM(this.settingsService);
 
   @override
   SettingsService settingsService;
 
-  String url = "";
-
   @override
-  Future init() async {
-    url = await infoService.getIntroVideo();
-    Logger.logI("Intro: ${url}");
-    notifyListeners();
-  }
-
-  @override
-  void onVideoEnd() {}
-
-  @override
-  void onVideoStart() {}
+  Future init() async {}
 }

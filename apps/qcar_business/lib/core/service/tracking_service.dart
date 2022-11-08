@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:qcar_business/core/environment_config.dart';
-import 'package:qcar_business/core/models/Feedback.dart';
 import 'package:qcar_business/core/models/Tracking.dart';
 import 'package:qcar_business/core/network/load_client.dart';
 import 'package:qcar_business/core/service/services.dart';
 import 'package:qcar_business/core/service/settings_service.dart';
-import 'package:qcar_shared/network_service.dart';
 import 'package:qcar_shared/utils/logger.dart';
 
 void sendTracking(BuildContext context, TrackType? type, String? text) {
@@ -17,11 +15,6 @@ class TrackingService {
 
   SettingsService _settingsService;
   UploadClient _uploadClient;
-
-  Future<Response> sendFeedback(String? text, int? rating) async {
-    final feedback = Feedback(DateTime.now(), text ?? '', rating ?? 0);
-    return _uploadClient.sendFeedback(feedback);
-  }
 
   void sendTracking(TrackType? type, String? text) {
     if (EnvironmentConfig.isDev) {

@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_business/core/environment_config.dart';
 import 'package:qcar_business/core/misc/constants/asset_paths.dart';
-import 'package:qcar_business/ui/navigation/app_navigation.dart';
 import 'package:qcar_business/ui/screens/settings/debug_page.dart';
 import 'package:qcar_business/ui/screens/settings/settings_vm.dart';
-import 'package:qcar_business/ui/screens/settings/video_settings_page.dart';
 import 'package:qcar_shared/core/app_navigate.dart';
 import 'package:qcar_shared/core/app_view.dart';
+import 'package:qcar_shared/utils/handle_utils.dart';
 import 'package:qcar_shared/widgets/error_widget.dart';
 import 'package:qcar_shared/widgets/loading_overlay.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -64,7 +63,6 @@ class _SettingsPageState extends ViewState<SettingsPage, SettingsViewModel> {
             }
             return _buildPage(l10n);
           }),
-      bottomNavigationBar: AppNavigation(viewModel, SettingsPage.routeName),
     );
   }
 
@@ -84,12 +82,6 @@ class _SettingsPageState extends ViewState<SettingsPage, SettingsViewModel> {
         SettingsSection(
           title: Text("Menu"),
           tiles: <SettingsTile>[
-            _buildButton(
-              l10n.videoMenu,
-              Icons.call_to_action_outlined,
-              (context) =>
-                  Navigate.to(context, VideoSettingsPage.pushIt(viewModel)),
-            ),
             if (showDebug)
               _buildButton(
                 l10n.debugMenu,
@@ -113,8 +105,7 @@ class _SettingsPageState extends ViewState<SettingsPage, SettingsViewModel> {
                       alignment: Alignment.centerRight,
                       padding: EdgeInsets.only(top: 15),
                       child: InkWell(
-                          onTap: () =>
-                              viewModel.sendEmail(email: 'info@qcar.com'),
+                          onTap: () => sendEmail(email: 'info@qcar.com'),
                           child: Text('info@qcar.com')),
                     )
                   ]),
