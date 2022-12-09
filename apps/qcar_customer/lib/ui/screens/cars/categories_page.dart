@@ -7,7 +7,7 @@ import 'package:qcar_customer/ui/navigation/app_navigation.dart';
 import 'package:qcar_customer/ui/screens/cars/categories_list_item.dart';
 import 'package:qcar_customer/ui/screens/cars/categories_vm.dart';
 import 'package:qcar_customer/ui/screens/cars/favorites_button.dart';
-import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_routing.dart';
 import 'package:qcar_shared/core/app_theme.dart';
 import 'package:qcar_shared/core/app_view.dart';
 import 'package:qcar_shared/widgets/scroll_list_view.dart';
@@ -16,10 +16,10 @@ class CategoriesPage extends View<CategoriesViewModel> {
   static const String routeName = "/categoriesPage";
   static const String ARG_CAR = "car";
 
-  static AppRouteSpec pushIt(CarInfo carInfo) => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.pushTo,
-        arguments: {ARG_CAR: carInfo},
+  static RoutingSpec pushIt(CarInfo carInfo) => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.pushTo,
+        args: {ARG_CAR: carInfo},
       );
 
   CategoriesPage(CategoriesViewModel viewModel) : super.model(viewModel);

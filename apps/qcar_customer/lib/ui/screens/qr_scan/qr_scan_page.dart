@@ -5,6 +5,7 @@ import 'package:qcar_customer/ui/navigation/app_navigation.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_vm.dart';
 import 'package:qcar_customer/ui/widgets/qr_camera_view.dart';
 import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_routing.dart';
 import 'package:qcar_shared/core/app_view.dart';
 import 'package:qcar_shared/widgets/info_widget.dart';
 
@@ -13,14 +14,14 @@ class QrScanPage extends View<QRViewModel> {
 
   static const String routeName = "/qrScanPage";
 
-  static AppRouteSpec pushIt() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.pushTo,
+  static RoutingSpec pushIt() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.pushTo,
       );
 
-  static AppRouteSpec popAndPush() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.popAndPushTo,
+  static RoutingSpec popAndPush() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.popAndPushTo,
       );
 
   @override

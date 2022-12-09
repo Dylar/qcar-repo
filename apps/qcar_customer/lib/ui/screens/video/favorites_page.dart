@@ -6,6 +6,7 @@ import 'package:qcar_customer/ui/navigation/app_navigation.dart';
 import 'package:qcar_customer/ui/screens/video/favorites_vm.dart';
 import 'package:qcar_customer/ui/screens/video/video_list_item.dart';
 import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_routing.dart';
 import 'package:qcar_shared/core/app_view.dart';
 import 'package:qcar_shared/widgets/error_widget.dart';
 import 'package:qcar_shared/widgets/scroll_list_view.dart';
@@ -14,10 +15,10 @@ class FavoritesPage extends View<FavoritesViewModel> {
   static const String routeName = "/favoritesPage";
   static const ARG_CAR = "cardInfo";
 
-  static AppRouteSpec pushIt(CarInfo carInfo) => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.pushTo,
-        arguments: {
+  static RoutingSpec pushIt(CarInfo carInfo) => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.pushTo,
+        args: {
           ARG_CAR: carInfo,
         },
       );

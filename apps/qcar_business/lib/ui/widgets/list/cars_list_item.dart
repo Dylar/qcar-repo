@@ -12,30 +12,33 @@ class CarInfoListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Logger.logI(carInfo.picUrl);
-    return Card(
-      elevation: 4,
-      margin: const EdgeInsets.all(2.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          RoundedWidget(
-              child:
-                  PicWidget(carInfo.picUrl)), //PicWidget(carInfo.imagePath)),
-          Spacer(flex: 5),
-          Expanded(
-            flex: 95,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Marke: ${carInfo.brand}',
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
-                Text('Model: ${carInfo.model}'),
-              ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 4,
+        margin: const EdgeInsets.all(2.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            RoundedWidget(
+                child:
+                    PicWidget(carInfo.picUrl)), //PicWidget(carInfo.imagePath)),
+            Spacer(flex: 5),
+            Expanded(
+              flex: 95,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Marke: ${carInfo.brand}',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Text('Model: ${carInfo.model}'),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

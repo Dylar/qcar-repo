@@ -7,6 +7,7 @@ import 'package:qcar_customer/ui/screens/settings/debug_page.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_vm.dart';
 import 'package:qcar_customer/ui/screens/settings/video_settings_page.dart';
 import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_routing.dart';
 import 'package:qcar_shared/core/app_view.dart';
 import 'package:qcar_shared/widgets/error_widget.dart';
 import 'package:qcar_shared/widgets/loading_overlay.dart';
@@ -15,14 +16,14 @@ import 'package:settings_ui/settings_ui.dart';
 class SettingsPage extends View<SettingsViewModel> {
   static const String routeName = "/settingsPage";
 
-  static AppRouteSpec pushIt() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.pushTo,
+  static RoutingSpec pushIt() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.pushTo,
       );
 
-  static AppRouteSpec popAndPush() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.popAndPushTo,
+  static RoutingSpec popAndPush() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.popAndPushTo,
       );
 
   SettingsPage(SettingsViewModel viewModel) : super.model(viewModel);

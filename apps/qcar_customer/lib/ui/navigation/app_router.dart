@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/models/model_data.dart';
 import 'package:qcar_customer/core/service/services.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
@@ -22,35 +21,8 @@ import 'package:qcar_customer/ui/screens/video/video_overview_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_overview_vm.dart';
 import 'package:qcar_customer/ui/screens/video/video_page.dart';
 import 'package:qcar_customer/ui/screens/video/video_vm.dart';
+import 'package:qcar_shared/core/app_routing.dart';
 import 'package:qcar_shared/utils/logger.dart';
-
-abstract class AppRoute<T> extends Route<T> {
-  String get appName;
-
-  String? get viewName;
-}
-
-class RouteWrapper<T> extends MaterialPageRoute<T> implements AppRoute<T> {
-  RouteWrapper({
-    required WidgetBuilder builder,
-    required RouteSettings settings,
-  }) : super(builder: builder, settings: settings);
-
-  @override
-  String get appName => EnvironmentConfig.APP_NAME;
-
-  @override
-  String? get viewName => settings.name;
-
-  @override //TODO do into args/settings
-  Duration get transitionDuration => Duration.zero;
-
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    return child;
-  }
-}
 
 class AppRouter {
   static List<Route<dynamic>> generateInitRoute(String initialRoute) {
@@ -69,7 +41,7 @@ class AppRouter {
     return [_wrapRoute(RouteSettings(name: initialRoute), builder)];
   }
 
-  static AppRoute<dynamic> generateRoute(RouteSettings settings) {
+  static RouteWrapper generateRoute(RouteSettings settings) {
     final arguments = settings.arguments as Map<String, dynamic>? ?? {};
     Logger.logI("Route: ${settings.name}");
 

@@ -7,6 +7,7 @@ import 'package:qcar_customer/core/service/services.dart';
 import 'package:qcar_customer/ui/navigation/app_router.dart';
 import 'package:qcar_customer/ui/screens/app/app.dart';
 import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_routing.dart';
 import 'package:qcar_shared/core/app_theme.dart';
 
 import '../builder/app_builder.dart';
@@ -21,7 +22,7 @@ Future loadApp(WidgetTester tester, {AppInfrastructure? infra}) async {
 
 Future pushPage(
   WidgetTester tester, {
-  required AppRouteSpec routeSpec,
+  required RoutingSpec routeSpec,
   required Widget Function(Widget pushButton) wrapWith,
 }) async {
   await prepareTest();
