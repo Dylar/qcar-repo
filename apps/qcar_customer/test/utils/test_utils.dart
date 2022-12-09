@@ -39,6 +39,7 @@ Future pushPage(
 
   await tester.tap(find.byType(TextButton));
   await tester.pump(const Duration(milliseconds: 10));
+  await tester.pump(const Duration(milliseconds: 10));
 }
 
 Widget wrapWidget(Widget widget, {AppInfrastructure? testInfra}) {

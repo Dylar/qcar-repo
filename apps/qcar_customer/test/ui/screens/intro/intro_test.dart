@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
+import 'package:qcar_shared/widgets/info_dialog.dart';
 
 import '../../../builder/entity_builder.dart';
 import '../../../utils/test_l10n.dart';
@@ -35,6 +36,7 @@ void main() {
 
     expect(find.text(l10n.scanError), findsNothing);
     await scanOnIntroPage(tester, "Bullshit");
+    expect(find.byType(InfoDialog), findsOneWidget);
     expect(find.text(l10n.scanError), findsOneWidget);
   });
 
@@ -48,6 +50,7 @@ void main() {
 
     expect(find.text(l10n.scanError), findsNothing);
     await scanOnIntroPage(tester, "{}");
+    expect(find.byType(InfoDialog), findsOneWidget);
     expect(find.text(l10n.scanError), findsOneWidget);
   });
 

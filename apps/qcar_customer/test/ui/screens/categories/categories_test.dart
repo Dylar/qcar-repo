@@ -69,6 +69,7 @@ void main() {
         isVisible: false);
     await tester.tap(find.byType(FavoritesButton));
     await tester.pump();
+    await tester.pump();
     checkInfoDialog(l10n.noFavoritesTitle, l10n.noFavoritesMessage,
         isVisible: false);
 

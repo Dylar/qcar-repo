@@ -101,19 +101,14 @@ class _VideoSettingsPageState
 
   Future<bool> _openConfirmDialog(
       BuildContext context, AppLocalizations l10n) async {
-    print("_openConfirmDialog");
     if (mapEquals(settingsMap, viewModel.settings.videos)) {
-      print("nothign changed");
       return true;
     }
-    print("save it?");
     final save = await openConfirmDialog(
         context, l10n.notSavedTitle, l10n.notSavedMessage);
     if (save) {
-      print("save it!");
       await viewModel.saveVideoSettings(settingsMap!);
     }
-    print("_openConfirmDialog done");
     return true;
   }
 }
