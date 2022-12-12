@@ -29,6 +29,7 @@ class AppRouter {
         builder = _navigateToHome;
         break;
     }
+
     return [_wrapRoute(RouteSettings(name: initialRoute), builder)];
   }
 
