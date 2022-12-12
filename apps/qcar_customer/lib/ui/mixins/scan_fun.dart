@@ -46,7 +46,7 @@ mixin ScanFun implements ScanViewModel {
           await infoService.isOldCar(sellInfo!.brand, sellInfo!.model);
       qrState = isOldCar ? QrScanState.OLD : QrScanState.NEW;
     } on Exception catch (e) {
-      Logger.logE("scan error: ${e.toString()}");
+      Logger.logE("Scan error: ${e.toString()}");
       qrState = QrScanState.DAFUQ;
     }
 
