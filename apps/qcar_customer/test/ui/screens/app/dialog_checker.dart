@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcar_customer/ui/notify/confirm_dialog.dart';
-import 'package:qcar_customer/ui/notify/info_dialog.dart';
+import 'package:qcar_shared/widgets/confirm_dialog.dart';
+import 'package:qcar_shared/widgets/info_dialog.dart';
 
 import '../../../utils/test_l10n.dart';
 

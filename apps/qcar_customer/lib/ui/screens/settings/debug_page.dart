@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/environment_config.dart';
-import 'package:qcar_customer/ui/navigation/navi.dart';
+import 'package:qcar_shared/core/app_routing.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class DebugPage extends StatefulWidget {
   static const String routeName = "/debugPage";
 
-  static AppRouteSpec pushIt() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.pushTo,
+  static RoutingSpec pushIt() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.pushTo,
       );
 
   @override

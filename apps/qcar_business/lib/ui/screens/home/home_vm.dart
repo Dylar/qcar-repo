@@ -1,38 +1,25 @@
-import 'dart:async';
-
-import 'package:qcar_business/core/misc/helper/logger.dart';
+import 'package:qcar_business/core/models/sell_info.dart';
+import 'package:qcar_business/core/service/auth_service.dart';
 import 'package:qcar_business/core/service/info_service.dart';
-import 'package:qcar_business/core/service/settings_service.dart';
-import 'package:qcar_business/core/service/tracking_service.dart';
-import 'package:qcar_business/ui/app_viewmodel.dart';
-import 'package:qcar_business/ui/mixins/feedback_fun.dart';
-import 'package:qcar_business/ui/widgets/video_widget.dart';
+import 'package:qcar_shared/core/app_viewmodel.dart';
 
-abstract class HomeViewModel extends ViewModel
-    implements VideoWidgetViewModel, FeedbackViewModel {}
+abstract class HomeViewModel extends ViewModel {
+  List<SellInfo> get sellInfos;
+}
 
-class HomeVM extends HomeViewModel with FeedbackFun {
-  HomeVM(this.settingsService, this.trackingService, this.infoService);
+class HomeVM extends HomeViewModel {
+  HomeVM(this.authService, this.infoService);
 
-  @override
-  TrackingService trackingService;
   final InfoService infoService;
+  final AuthenticationService authService;
 
   @override
-  SettingsService settingsService;
-
-  String url = "";
+  List<SellInfo> get sellInfos =>
+      infoService.getSellInfos(authService.currentUser);
 
   @override
-  Future init() async {
-    url = await infoService.getIntroVideo();
-    Logger.logI("Intro: ${url}");
+  void routingDidPush() {
+    super.routingDidPush();
     notifyListeners();
   }
-
-  @override
-  void onVideoEnd() {}
-
-  @override
-  void onVideoStart() {}
 }

@@ -1,4 +1,4 @@
-import 'package:qcar_customer/core/network/network_service.dart';
+import 'package:qcar_shared/network_service.dart';
 
 Response okResponse({Map<String, dynamic>? jsonMap}) {
   return Response(ResponseStatus.OK, jsonMap: jsonMap);

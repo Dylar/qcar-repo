@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcar_customer/ui/notify/confirm_dialog.dart';
 import 'package:qcar_customer/ui/screens/settings/settings_page.dart';
 import 'package:qcar_customer/ui/screens/settings/video_settings_page.dart';
+import 'package:qcar_shared/widgets/confirm_dialog.dart';
 
 import '../../../utils/test_l10n.dart';
 import '../app/app_checker.dart';

@@ -1,37 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:qcar_business/core/environment_config.dart';
-import 'package:qcar_business/core/misc/constants/asset_paths.dart';
-import 'package:qcar_business/ui/app_viewmodel.dart';
-import 'package:qcar_business/ui/navigation/app_navigation.dart';
-import 'package:qcar_business/ui/navigation/navi.dart';
+import 'package:qcar_business/core/models/sell_info.dart';
+import 'package:qcar_business/ui/navigation/app_drawer.dart';
+import 'package:qcar_business/ui/notify/snackbars.dart';
+import 'package:qcar_business/ui/screens/form/form_cars_page.dart';
 import 'package:qcar_business/ui/screens/home/home_vm.dart';
-import 'package:qcar_business/ui/widgets/deco.dart';
-import 'package:qcar_business/ui/widgets/info_widget.dart';
-import 'package:qcar_business/ui/widgets/rounded_widget.dart';
-import 'package:qcar_business/ui/widgets/video_widget.dart';
+import 'package:qcar_business/ui/widgets/app_bar.dart';
+import 'package:qcar_business/ui/widgets/list/sell_list_item.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_routing.dart';
+import 'package:qcar_shared/core/app_theme.dart';
+import 'package:qcar_shared/core/app_view.dart';
+import 'package:qcar_shared/widgets/deco.dart';
+import 'package:qcar_shared/widgets/rounded_widget.dart';
+import 'package:qcar_shared/widgets/scroll_list_view.dart';
 
 class HomePage extends View<HomeViewModel> {
   static const String routeName = "/home";
 
-  static AppRouteSpec pushIt() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.pushTo,
+  static RoutingSpec popAndPush() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.popAndPushTo,
+        transitionTime: const Duration(milliseconds: 300),
+        transitionType: TransitionType.fading,
       );
 
-  static AppRouteSpec popAndPush() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.popAndPushTo,
-      );
-
-  static AppRouteSpec poopToRoot() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.popUntilRoot,
-      );
-
-  static AppRouteSpec replaceWith() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.replaceWith,
+  static RoutingSpec onSellSaving() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.replaceAllWith,
+        transitionType: TransitionType.leftRight,
       );
 
   HomePage(
@@ -50,29 +47,14 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
   Widget build(BuildContext context) {
     final title = AppLocalizations.of(context)!.homoPageTitle;
     return Scaffold(
-      appBar: _buildAppBar(title),
+      appBar: buildAppBar(title),
+      drawer: AppDrawer(),
       body: buildHomePage(context),
-      bottomNavigationBar: AppNavigation(viewModel, HomePage.routeName),
-    );
-  }
-
-  AppBar _buildAppBar(String title) {
-    return AppBar(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title),
-          qcarGradientText(
-            context,
-            EnvironmentConfig.APP_NAME,
-            style: Theme.of(context).textTheme.headline6!,
-          ),
-          SizedBox(
-              height: 48,
-              width: 48,
-              //TODO load from car path
-              child: Image.asset(homePageCarLogoImagePath)),
-        ],
+      floatingActionButton: FloatingActionButton(
+        foregroundColor: BaseColors.zergPurple,
+        backgroundColor: BaseColors.babyBlue,
+        child: Icon(Icons.add_shopping_cart),
+        onPressed: () => Navigate.to(context, FormCarsPage.pushIt()),
       ),
     );
   }
@@ -81,24 +63,34 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
     final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: qcarGradientBox,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
+      alignment: Alignment.topCenter,
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        children: [
+          RoundedWidget(
+            child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
-              child: RoundedWidget(child: VideoWidget(viewModel: viewModel)),
+              child: Text("Das ist die Business-App"),
             ),
-            // Spacer(flex: 10),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InfoWidget(
-                  l10n.homoPageSubGreetings + "\n\n" + l10n.homoPageMessage),
+          ),
+          ScrollListView<SellInfo>(
+            emptyWidget: RoundedWidget(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+                child: Text("Keine verkauften Autos - los geh anschaffen"),
+              ),
             ),
-            // Spacer(flex: 10),
-          ],
-        ),
+            items: viewModel.sellInfos,
+            buildItemWidget: (int index, item) {
+              return SellInfoListItem(
+                item,
+                onTap: () => showNothingToSeeSnackBar(context),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

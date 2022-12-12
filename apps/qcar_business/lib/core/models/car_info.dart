@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
-import 'package:qcar_business/core/models/category_info.dart';
+import 'package:qcar_business/core/environment_config.dart';
 
 import 'model_data.dart';
 
@@ -13,25 +13,25 @@ class CarInfo extends HiveObject {
     required this.brand,
     required this.model,
     required this.imagePath,
-    required this.categories,
   });
+
+  static CarInfo empty() => fromMap({});
 
   static CarInfo fromMap(Map<String, dynamic> map) => CarInfo(
         brand: map[FIELD_BRAND] ?? "",
         model: map[FIELD_MODEL] ?? "",
         imagePath: map[FIELD_IMAGE_PATH] ?? "",
-        categories: CategoryInfo.fromList(
-            map[FIELD_CATEGORIES] ?? <Map<String, dynamic>>[]),
       );
 
   Map<String, dynamic> toMap() => {
         FIELD_BRAND: brand,
         FIELD_MODEL: model,
         FIELD_IMAGE_PATH: imagePath,
-        FIELD_CATEGORIES: categories.map((e) => e.toMap()).toList(),
       };
 
   String toJson() => jsonEncode(toMap());
+
+  String get picUrl => "https://${EnvironmentConfig.domain}/videos/$imagePath";
 
   @HiveField(0)
   String brand = "";
@@ -39,6 +39,4 @@ class CarInfo extends HiveObject {
   String model = "";
   @HiveField(2)
   String imagePath = "";
-  @HiveField(3)
-  List<CategoryInfo> categories = [];
 }

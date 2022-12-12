@@ -2,9 +2,9 @@ import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/core/models/video_info.dart';
 import 'package:qcar_customer/core/service/info_service.dart';
 import 'package:qcar_customer/core/service/tracking_service.dart';
-import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
 import 'package:qcar_customer/ui/navigation/app_bar.dart';
+import 'package:qcar_shared/core/app_viewmodel.dart';
 
 abstract class FavoritesViewModel extends ViewModel
     implements AppBarViewModel, FeedbackViewModel {

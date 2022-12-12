@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/ui/widgets/error_builder.dart';
+import 'package:qcar_shared/widgets/error_builder.dart';
 
 class PicWidget extends StatelessWidget {
   const PicWidget(this.url);

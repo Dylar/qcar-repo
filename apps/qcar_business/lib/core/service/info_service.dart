@@ -1,116 +1,84 @@
-import 'package:flutter/src/foundation/change_notifier.dart';
-import 'package:qcar_business/core/datasource/car_data_source.dart';
-import 'package:qcar_business/core/datasource/favorite_data_source.dart';
-import 'package:qcar_business/core/datasource/sell_data_source.dart';
-import 'package:qcar_business/core/misc/helper/logger.dart';
-import 'package:qcar_business/core/misc/helper/tuple.dart';
 import 'package:qcar_business/core/models/car_info.dart';
-import 'package:qcar_business/core/models/favorite.dart';
 import 'package:qcar_business/core/models/sell_info.dart';
-import 'package:qcar_business/core/models/sell_key.dart';
+import 'package:qcar_business/core/models/seller_info.dart';
 import 'package:qcar_business/core/models/video_info.dart';
-import 'package:qcar_business/core/network/load_client.dart';
-import 'package:qcar_business/core/network/network_service.dart';
 
 class InfoService {
-  InfoService(
-    this._loadClient,
-    this._carInfoDataSource,
-    this._sellInfoDataSource,
-    this._favoriteDataSource,
-  );
+  Map<String, List<SellInfo>> sellInfos = {};
+  List<CarInfo> cars = [
+    CarInfo(
+      brand: "Opel",
+      model: "Corsa",
+      imagePath: "Toyota/CorollaTSGR/CorollaTSGR.jpg",
+    ),
+    CarInfo(
+      brand: "Toyota",
+      model: "Corolla",
+      imagePath: "Toyota/CorollaTSGR/CorollaTSGR.jpg",
+    ),
+  ];
+  List<VideoInfo> videos = [];
 
-  final DownloadClient _loadClient;
-  final CarInfoDataSource _carInfoDataSource;
-  final SellInfoDataSource _sellInfoDataSource;
-  final FavoriteDataSource _favoriteDataSource;
+  List<VideoInfo> getVideos() {
+    if (videos.isEmpty) {
+      final car1 = cars.first;
+      videos.add(VideoInfo(
+        brand: car1.brand,
+        model: car1.model,
+        category: "Sicherheit",
+        name: "Smart-Key, Keyless Go",
+        categoryImagePath: "Toyota/CorollaTSGR/Sicherheit/Sicherheit.jpg",
+        videoImagePath:
+            "Toyota/CorollaTSGR/Sicherheit/Smart-Key, Keyless Go/Smart-Key, Keyless Go.jpg",
+      ));
+      videos.add(VideoInfo(
+        brand: car1.brand,
+        model: car1.model,
+        category: "Sicherheit",
+        name: "Gurt",
+        categoryImagePath: "Toyota/CorollaTSGR/Sicherheit/Sicherheit.jpg",
+        videoImagePath:
+            "Toyota/CorollaTSGR/Sicherheit/Smart-Key, Keyless Go/Smart-Key, Keyless Go.jpg",
+      ));
 
-  ValueNotifier<Tuple<double, double>> get progressValue =>
-      _loadClient.progressValue;
+      videos.add(VideoInfo(
+        brand: car1.brand,
+        model: car1.model,
+        category: "Räder & Reifen",
+        name: "Reifenreparaturset",
+        categoryImagePath: "Toyota/CorollaTSGR/Räder & Reifen/Reifen.jpg",
+        videoImagePath:
+            "Toyota/CorollaTSGR/Sicherheit/Räder & Reifen/reifenreparatur.jpg",
+      ));
 
-  Future<List<CarInfo>> getAllCars() => _carInfoDataSource.getAllCars();
-
-  Stream<List<CarInfo>> watchCarsInfo() => _carInfoDataSource.watchCarInfo();
-
-  Stream<CarInfo> watchCarInfo(CarInfo selectedCar) {
-    return _carInfoDataSource.watchCarInfo().map((event) {
-      return event.firstWhere((car) =>
-          car.model == selectedCar.model && car.brand == selectedCar.brand);
-    });
-  }
-
-  Future<bool> hasCars() async {
-    final List<CarInfo> cars = await _carInfoDataSource.getAllCars();
-    final List<SellInfo> sells = await _sellInfoDataSource.getAllSellInfos();
-    return cars.isNotEmpty && sells.isNotEmpty; //TODO test both empty
-  }
-
-  Future<String> getIntroVideo() async {
-    final sells = await _sellInfoDataSource.getAllSellInfos();
-    return fixIntroPath(sells.first); //TODO remember last selected
-  }
-
-  Future<SellInfo> loadSellInfo(String scan) async {
-    final key = SellKey.fromScan(scan);
-    final response = await _loadClient.loadSellInfo(key);
-    if (response.status == ResponseStatus.OK) {
-      return SellInfo.fromMap(response.jsonMap!);
-    } //TODO on error
-    throw Exception("ERROR ON SELL INFO LOAD");
-  }
-
-  Future loadCarInfo(SellInfo info) async {
-    final car = await _loadClient.loadCarInfo(info);
-    if (car.status == ResponseStatus.OK) {
-      return await _carInfoDataSource.addCarInfo(CarInfo.fromMap(car.jsonMap!));
-    } //TODO on error
-    throw Exception("ERROR ON CAR INFO LOAD");
-  }
-
-  Future<bool> isOldCar(String brand, String model) async {
-    final cars = await _carInfoDataSource.getAllCars();
-    final List<SellInfo> sells = await _sellInfoDataSource.getAllSellInfos();
-    return cars.any((car) => car.brand == brand && car.model == model) &&
-        sells.any((sell) => sell.brand == brand && sell.model == model);
-  }
-
-  Future refreshCarInfos() async {
-    final infos = await _sellInfoDataSource.getAllSellInfos();
-    for (final info in infos) {
-      Logger.logI("Refresh Car: ${info.brand} ${info.model}");
-      return await loadCarInfo(info);
+      final car2 = cars.last;
+      videos.add(VideoInfo(
+        brand: car2.brand,
+        model: car2.model,
+        category: "Sicherheit",
+        name: "Rückfahrkamera",
+        categoryImagePath: "Toyota/CorollaTSGR/Sicherheit/Sicherheit.jpg",
+        videoImagePath:
+            "Toyota/CorollaTSGR/Sicherheit/Rückfahrkamera/Rückfahrkamera.jpg",
+      ));
     }
+    return videos;
   }
 
-  Future<List<VideoInfo>> searchVideo(String query) async {
-    return await _carInfoDataSource.findVideos(query);
+  List<SellerInfo> getSeller() {
+    return [
+      SellerInfo(dealer: "Autohaus", name: "Maxi"),
+      SellerInfo(dealer: "Autohaus", name: "Kolja"),
+    ];
   }
 
-  Future upsertSellInfo(SellInfo sellInfo) async {
-    _sellInfoDataSource.addSellInfo(sellInfo);
+  List<SellInfo> getSellInfos(SellerInfo sellerInfo) {
+    return sellInfos[sellerInfo.name] ?? [];
   }
 
-  Future<bool> isFavorite(VideoInfo video) async =>
-      (await _favoriteDataSource.getFavorite(
-          video.brand, video.model, video.category, video.name)) !=
-      null;
-
-  Future<List<Favorite>> getFavorites(CarInfo car) async =>
-      (await _favoriteDataSource.getFavorites(car.brand, car.model));
-
-  Stream<Iterable<Favorite>> watchFavorites(CarInfo selectedCar) async* {
-    yield* _favoriteDataSource.watchFavorites().map((event) {
-      return event.where((fav) =>
-          fav.brand == selectedCar.brand && fav.model == selectedCar.model);
-    });
-  }
-
-  void toggleFavorite(VideoInfo video, bool isFavorite) {
-    final favorite = video.toFavorite;
-    if (isFavorite) {
-      _favoriteDataSource.upsertFavorite(favorite);
-    } else {
-      _favoriteDataSource.deleteFavorite(favorite);
-    }
+  void sellCar(SellInfo info) {
+    final soldCars = sellInfos[info.seller.name] ?? [];
+    soldCars.add(info);
+    sellInfos[info.seller.name] = soldCars;
   }
 }

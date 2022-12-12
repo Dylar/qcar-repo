@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:qcar_customer/ui/app_theme.dart';
 import 'package:qcar_customer/ui/mixins/feedback_fun.dart';
-import 'package:qcar_customer/ui/navigation/navi.dart';
-import 'package:qcar_customer/ui/widgets/deco.dart';
+import 'package:qcar_shared/core/app_navigate.dart';
+import 'package:qcar_shared/core/app_theme.dart';
+import 'package:qcar_shared/widgets/deco.dart';
 
 class FeedbackDialog extends StatefulWidget {
   const FeedbackDialog(this._viewModel);
@@ -38,7 +38,7 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: BaseColors.grey),
-                  color: BaseColors.darkGrey,
+                  color: BaseColors.veryDarkGrey,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -108,12 +108,12 @@ class _FeedbackDialogState extends State<FeedbackDialog> {
         ),
         actions: <Widget>[
           TextButton(
-            style: TextButton.styleFrom(primary: BaseColors.lightGrey),
+            style: TextButton.styleFrom(foregroundColor: BaseColors.lightGrey),
             child: Text(l10n.cancel),
             onPressed: () => Navigate.pop(context),
           ),
           TextButton(
-            style: TextButton.styleFrom(primary: BaseColors.green),
+            style: TextButton.styleFrom(foregroundColor: BaseColors.green),
             child: Text(l10n.send),
             onPressed: () {
               Navigate.pop(context);

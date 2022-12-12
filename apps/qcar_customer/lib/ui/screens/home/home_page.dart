@@ -2,36 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/misc/constants/asset_paths.dart';
-import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/navigation/app_navigation.dart';
-import 'package:qcar_customer/ui/navigation/navi.dart';
 import 'package:qcar_customer/ui/screens/home/home_vm.dart';
-import 'package:qcar_customer/ui/widgets/deco.dart';
-import 'package:qcar_customer/ui/widgets/info_widget.dart';
-import 'package:qcar_customer/ui/widgets/rounded_widget.dart';
 import 'package:qcar_customer/ui/widgets/video_widget.dart';
+import 'package:qcar_shared/core/app_routing.dart';
+import 'package:qcar_shared/core/app_view.dart';
+import 'package:qcar_shared/widgets/deco.dart';
+import 'package:qcar_shared/widgets/info_widget.dart';
+import 'package:qcar_shared/widgets/rounded_widget.dart';
 
 class HomePage extends View<HomeViewModel> {
   static const String routeName = "/home";
 
-  static AppRouteSpec pushIt() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.pushTo,
+  static RoutingSpec pushIt() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.pushTo,
       );
 
-  static AppRouteSpec popAndPush() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.popAndPushTo,
+  static RoutingSpec popAndPush() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.popAndPushTo,
       );
 
-  static AppRouteSpec poopToRoot() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.popUntilRoot,
+  static RoutingSpec poopToRoot() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.popUntilRoot,
       );
 
-  static AppRouteSpec replaceWith() => AppRouteSpec(
-        name: routeName,
-        action: AppRouteAction.replaceWith,
+  static RoutingSpec replaceWith() => RoutingSpec(
+        routeName: routeName,
+        action: RouteAction.replaceWith,
       );
 
   HomePage(

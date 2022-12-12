@@ -22,7 +22,7 @@ if (flutterVersionName == null) {
 }
 
 def dartEnvironmentVariables = [
-        APP_NAME: "QCar-Business",
+        APP_NAME: "BCar",
         ENV     : "DEV",
         FLAVOR  : "",
 ];

@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:qcar_customer/core/misc/helper/time_utils.dart';
-import 'package:qcar_customer/core/misc/helper/tuple.dart';
 import 'package:qcar_customer/core/models/Tracking.dart';
-import 'package:qcar_customer/ui/app_viewmodel.dart';
 import 'package:qcar_customer/ui/screens/app/app.dart';
 import 'package:qcar_customer/ui/screens/home/home_page.dart';
 import 'package:qcar_customer/ui/screens/intro/intro_page.dart';
+import 'package:qcar_shared/core/app_viewmodel.dart';
+import 'package:qcar_shared/tuple.dart';
+import 'package:qcar_shared/utils/time_utils.dart';
 
 abstract class AppViewModel extends ViewModel {
   ValueNotifier<Tuple<double, double>>? get progressValue;
@@ -31,25 +31,25 @@ class AppVM extends AppViewModel {
 
   @override
   Future init() async {
-    final start = DateTime.now();
-    final infra = await _initInfrastructure();
+    await atLeast(() async {
+      final infra = await _initInfrastructure();
 
-    progressValue = infrastructure!.infoService.progressValue;
-    final signedIn = await infra.authService.signInAnon();
-    if (!signedIn) {
-      firstRoute = IntroPage.routeName;
-    } else {
-      final hasCars = await infra.infoService.hasCars();
-      if (hasCars) {
-        await infra.infoService.refreshCarInfos();
-        firstRoute = HomePage.routeName;
-      } else {
+      progressValue = infrastructure!.infoService.progressValue;
+      final signedIn = await infra.authService.signInAnon();
+      if (!signedIn) {
         firstRoute = IntroPage.routeName;
+      } else {
+        final hasCars = await infra.infoService.hasCars();
+        if (hasCars) {
+          await infra.infoService.refreshCarInfos();
+          firstRoute = HomePage.routeName;
+        } else {
+          firstRoute = IntroPage.routeName;
+        }
       }
-    }
-    infra.trackingService
-        .sendTracking(TrackType.INFO, "App started: $firstRoute");
-    await waitDiff(start);
+      infra.trackingService
+          .sendTracking(TrackType.INFO, "App started: $firstRoute");
+    }());
   }
 
   Future<AppInfrastructure> _initInfrastructure() async {

@@ -52,18 +52,16 @@ dependencies:
   linter: ^1.27.0
   json_schema2: ^2.0.2+9
 
+  qcar_shared:
+    path: ../qcar_shared
+
   # database
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
-  # network
-  http: ^0.13.5
-
-  # app dependency
-  better_player: ^0.0.83
-  qr_code_scanner: ^1.0.1
-
+  # UI
   settings_ui: ^2.0.2
+  grouped_list: ^5.1.2
 
 dev_dependencies:
   hive_generator: ^1.1.2

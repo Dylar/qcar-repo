@@ -1,78 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_business/core/environment_config.dart';
-import 'package:qcar_business/core/misc/helper/logger.dart';
 import 'package:qcar_business/core/models/model_data.dart';
 import 'package:qcar_business/core/service/services.dart';
-import 'package:qcar_business/ui/screens/cars/cars_page.dart';
-import 'package:qcar_business/ui/screens/cars/cars_vm.dart';
-import 'package:qcar_business/ui/screens/cars/categories_page.dart';
-import 'package:qcar_business/ui/screens/cars/categories_vm.dart';
+import 'package:qcar_business/ui/screens/form/form_cars_page.dart';
+import 'package:qcar_business/ui/screens/form/form_customer_page.dart';
+import 'package:qcar_business/ui/screens/form/form_videos_page.dart';
+import 'package:qcar_business/ui/screens/form/form_vm.dart';
 import 'package:qcar_business/ui/screens/home/home_page.dart';
 import 'package:qcar_business/ui/screens/home/home_vm.dart';
-import 'package:qcar_business/ui/screens/intro/intro_page.dart';
-import 'package:qcar_business/ui/screens/intro/intro_vm.dart';
-import 'package:qcar_business/ui/screens/qr_scan/qr_scan_page.dart';
-import 'package:qcar_business/ui/screens/qr_scan/qr_vm.dart';
+import 'package:qcar_business/ui/screens/login/login_page.dart';
+import 'package:qcar_business/ui/screens/login/login_vm.dart';
 import 'package:qcar_business/ui/screens/settings/debug_page.dart';
 import 'package:qcar_business/ui/screens/settings/settings_page.dart';
 import 'package:qcar_business/ui/screens/settings/settings_vm.dart';
-import 'package:qcar_business/ui/screens/settings/video_settings_page.dart';
-import 'package:qcar_business/ui/screens/video/favorites_page.dart';
-import 'package:qcar_business/ui/screens/video/favorites_vm.dart';
-import 'package:qcar_business/ui/screens/video/video_overview_page.dart';
-import 'package:qcar_business/ui/screens/video/video_overview_vm.dart';
-import 'package:qcar_business/ui/screens/video/video_page.dart';
-import 'package:qcar_business/ui/screens/video/video_vm.dart';
-
-abstract class AppRoute<T> extends Route<T> {
-  String get appName;
-
-  String? get viewName;
-}
-
-class RouteWrapper<T> extends MaterialPageRoute<T> implements AppRoute<T> {
-  RouteWrapper({
-    required WidgetBuilder builder,
-    required RouteSettings settings,
-  }) : super(builder: builder, settings: settings);
-
-  @override
-  String get appName => EnvironmentConfig.APP_NAME;
-
-  @override
-  String? get viewName => settings.name;
-
-  @override //TODO do into args/settings
-  Duration get transitionDuration => Duration.zero;
-
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    return child;
-  }
-}
+import 'package:qcar_shared/core/app_routing.dart';
+import 'package:qcar_shared/utils/logger.dart';
 
 class AppRouter {
-  static final RouteObserver<ModalRoute> routeObserver =
-      RouteObserver<ModalRoute>();
-
   static List<Route<dynamic>> generateInitRoute(String initialRoute) {
     late WidgetBuilder builder;
     switch (initialRoute) {
       case DebugPage.routeName:
         builder = _navigateToDebug;
         break;
-      case IntroPage.routeName:
-        builder = _navigateToIntro;
+      case LoginPage.routeName:
+        builder = _navigateToLogin;
         break;
       case HomePage.routeName:
         builder = _navigateToHome;
         break;
     }
+
     return [_wrapRoute(RouteSettings(name: initialRoute), builder)];
   }
 
-  static AppRoute<dynamic> generateRoute(RouteSettings settings) {
+  static RouteWrapper generateRoute(RouteSettings settings) {
     final arguments = settings.arguments as Map<String, dynamic>? ?? {};
     Logger.logI("Route: ${settings.name}");
 
@@ -84,32 +45,20 @@ class AppRouter {
       case SettingsPage.routeName:
         builder = _navigateToSettings;
         break;
-      case VideoSettingsPage.routeName:
-        builder = (context) => _navigateToVideoSettings(context, arguments);
-        break;
-      case IntroPage.routeName:
-        builder = _navigateToIntro;
+      case LoginPage.routeName:
+        builder = _navigateToLogin;
         break;
       case HomePage.routeName:
         builder = _navigateToHome;
         break;
-      case QrScanPage.routeName:
-        builder = _navigateToQrScan;
+      case FormCarsPage.routeName:
+        builder = _navigateToFormCars;
         break;
-      case CarsPage.routeName:
-        builder = _navigateToCars;
+      case FormVideosPage.routeName:
+        builder = (context) => _navigateToFormVideos(context, arguments);
         break;
-      case VideoOverviewPage.routeName:
-        builder = (context) => _navigateToVideoOverview(context, arguments);
-        break;
-      case CategoriesPage.routeName:
-        builder = (context) => _navigateToDirs(context, arguments);
-        break;
-      case VideoPage.routeName:
-        builder = (context) => _navigateToVideo(context, arguments);
-        break;
-      case FavoritesPage.routeName:
-        builder = (context) => _navigateToFavorites(context, arguments);
+      case FormCustomerPage.routeName:
+        builder = (context) => _navigateToFormCustomer(context, arguments);
         break;
       default:
         throw Exception('Route ${settings.name} not implemented');
@@ -135,93 +84,32 @@ Widget _navigateToSettings(BuildContext context) {
   final services = Services.of(context)!;
   return SettingsPage(SettingsVM(
     services.settingsService,
-    services.trackingService,
   ));
 }
 
-Widget _navigateToVideoSettings(
-  BuildContext context,
-  Map<String, dynamic> arguments,
-) {
-  return VideoSettingsPage(arguments[ARGS_VIEW_MODEL]);
-}
-
-Widget _navigateToIntro(BuildContext context) {
+Widget _navigateToLogin(BuildContext context) {
   final services = Services.of(context)!;
-  return IntroPage(IntroVM(services.settingsService, services.infoService));
+  return LoginPage(LoginVM(services.authService, services.infoService));
 }
 
 Widget _navigateToHome(BuildContext context) {
   final services = Services.of(context)!;
-  return HomePage(HomeVM(
-    services.settingsService,
-    services.trackingService,
-    services.infoService,
-  ));
+  return HomePage(HomeVM(services.authService, services.infoService));
 }
 
-Widget _navigateToCars(BuildContext context) {
+Widget _navigateToFormCars(BuildContext context) {
   final services = Services.of(context)!;
-  return CarsPage(CarsVM(
-    services.trackingService,
-    services.infoService,
-  ));
+  return FormCarsPage(FormVM(services.authService, services.infoService));
 }
 
-Widget _navigateToVideoOverview(
-    BuildContext context, Map<String, dynamic> arguments) {
-  final services = Services.of(context)!;
-  return VideoOverviewPage(
-    VideoOverVM(
-      services.trackingService,
-      arguments[VideoOverviewPage.ARG_CAR],
-      arguments[VideoOverviewPage.ARG_CATEGORY],
-    ),
-  );
-}
+Widget _navigateToFormVideos(
+  BuildContext context,
+  Map<String, dynamic> arguments,
+) =>
+    FormVideosPage(arguments[ARGS_VIEW_MODEL]!);
 
-Widget _navigateToFavorites(
-    BuildContext context, Map<String, dynamic> arguments) {
-  final services = Services.of(context)!;
-  return FavoritesPage(
-    FavoritesVM(
-      services.trackingService,
-      services.infoService,
-      arguments[VideoOverviewPage.ARG_CAR],
-    ),
-  );
-}
-
-Widget _navigateToQrScan(BuildContext context) {
-  final services = Services.of(context)!;
-  return QrScanPage(QrVM(
-    services.trackingService,
-    services.infoService,
-  ));
-}
-
-Widget _navigateToDirs(BuildContext context, Map<String, dynamic> arguments) {
-  final services = Services.of(context)!;
-  return CategoriesPage(
-    CategoriesVM(
-      services.trackingService,
-      services.infoService,
-      arguments[CategoriesPage.ARG_CAR],
-    ),
-  );
-}
-
-Widget _navigateToVideo(BuildContext context, Map<String, dynamic> arguments) {
-  final width = MediaQuery.of(context).size.width;
-  final height = MediaQuery.of(context).size.height;
-  final services = Services.of(context)!;
-  return VideoPage(
-    VideoVM(
-      services.settingsService,
-      services.trackingService,
-      services.infoService,
-      arguments[VideoPage.ARG_VIDEO]!,
-    ),
-    aspectRatio: width / height / 3, //16 / 9
-  );
-}
+Widget _navigateToFormCustomer(
+  BuildContext context,
+  Map<String, dynamic> arguments,
+) =>
+    FormCustomerPage(arguments[ARGS_VIEW_MODEL]!);

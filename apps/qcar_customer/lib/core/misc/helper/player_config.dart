@@ -1,5 +1,5 @@
 import 'package:better_player/better_player.dart';
-import 'package:qcar_customer/ui/widgets/error_widget.dart';
+import 'package:qcar_shared/widgets/error_widget.dart';
 
 BetterPlayerConfiguration playerConfigFromMap(Map<String, bool> map) {
   return BetterPlayerConfiguration(

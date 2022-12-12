@@ -3,7 +3,6 @@ import 'package:qcar_customer/core/datasource/car_database.dart';
 import 'package:qcar_customer/core/datasource/favorite_database.dart';
 import 'package:qcar_customer/core/datasource/sell_database.dart';
 import 'package:qcar_customer/core/datasource/settings_database.dart';
-import 'package:qcar_customer/core/misc/helper/logger.dart';
 import 'package:qcar_customer/core/misc/helper/player_config.dart';
 import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/core/models/category_info.dart';
@@ -11,6 +10,7 @@ import 'package:qcar_customer/core/models/favorite.dart';
 import 'package:qcar_customer/core/models/sell_info.dart';
 import 'package:qcar_customer/core/models/settings.dart';
 import 'package:qcar_customer/core/models/video_info.dart';
+import 'package:qcar_shared/utils/logger.dart';
 
 const String BOX_SETTINGS = "SettingsBox";
 const String BOX_CAR_INFO = "CarInfoBox";
