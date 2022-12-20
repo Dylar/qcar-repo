@@ -1,9 +1,18 @@
 import 'package:qcar_business/core/models/car_info.dart';
+import 'package:qcar_business/core/models/customer_info.dart';
 import 'package:qcar_business/core/models/sell_info.dart';
 import 'package:qcar_business/core/models/seller_info.dart';
 import 'package:qcar_business/core/models/video_info.dart';
 
 class InfoService {
+  List<CustomerInfo> customer = [
+    CustomerInfo(
+        name: "Peter",
+        lastName: "Lustig",
+        gender: Gender.DIVERS,
+        birthday: "Jo hat er",
+        email: "peter.lustig@gmx.de")
+  ];
   Map<String, List<SellInfo>> sellInfos = {};
   List<CarInfo> cars = [
     CarInfo(
@@ -17,12 +26,12 @@ class InfoService {
       imagePath: "Toyota/CorollaTSGR/CorollaTSGR.jpg",
     ),
   ];
-  List<VideoInfo> videos = [];
+  List<VideoInfo> _videos = [];
 
   List<VideoInfo> getVideos() {
-    if (videos.isEmpty) {
+    if (_videos.isEmpty) {
       final car1 = cars.first;
-      videos.add(VideoInfo(
+      _videos.add(VideoInfo(
         brand: car1.brand,
         model: car1.model,
         category: "Sicherheit",
@@ -31,7 +40,7 @@ class InfoService {
         videoImagePath:
             "Toyota/CorollaTSGR/Sicherheit/Smart-Key, Keyless Go/Smart-Key, Keyless Go.jpg",
       ));
-      videos.add(VideoInfo(
+      _videos.add(VideoInfo(
         brand: car1.brand,
         model: car1.model,
         category: "Sicherheit",
@@ -41,7 +50,7 @@ class InfoService {
             "Toyota/CorollaTSGR/Sicherheit/Smart-Key, Keyless Go/Smart-Key, Keyless Go.jpg",
       ));
 
-      videos.add(VideoInfo(
+      _videos.add(VideoInfo(
         brand: car1.brand,
         model: car1.model,
         category: "Räder & Reifen",
@@ -52,7 +61,7 @@ class InfoService {
       ));
 
       final car2 = cars.last;
-      videos.add(VideoInfo(
+      _videos.add(VideoInfo(
         brand: car2.brand,
         model: car2.model,
         category: "Sicherheit",
@@ -62,7 +71,7 @@ class InfoService {
             "Toyota/CorollaTSGR/Sicherheit/Rückfahrkamera/Rückfahrkamera.jpg",
       ));
     }
-    return videos;
+    return _videos;
   }
 
   List<SellerInfo> getSeller() {
@@ -73,7 +82,27 @@ class InfoService {
   }
 
   List<SellInfo> getSellInfos(SellerInfo sellerInfo) {
-    return sellInfos[sellerInfo.name] ?? [];
+    final selectedVideos = <String, List<VideoInfo>>{};
+    getVideos().forEach((video) {
+      final list = selectedVideos[video.category] ?? [];
+      list.add(video);
+      selectedVideos[video.category] = list;
+    });
+    return sellInfos[sellerInfo.name] ??
+        [
+          SellInfo(
+            seller: sellerInfo,
+            car: cars.first,
+            videos: selectedVideos,
+            customer: customer.first,
+          ),
+          SellInfo(
+            seller: sellerInfo,
+            car: cars.last,
+            videos: selectedVideos,
+            customer: customer.first,
+          )
+        ];
   }
 
   void sellCar(SellInfo info) {

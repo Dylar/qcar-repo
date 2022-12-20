@@ -62,6 +62,7 @@ dependencies:
   # UI
   settings_ui: ^2.0.2
   grouped_list: ^5.1.2
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   hive_generator: ^1.1.2

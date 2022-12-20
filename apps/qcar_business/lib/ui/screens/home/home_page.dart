@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_business/core/models/sell_info.dart';
 import 'package:qcar_business/ui/navigation/app_drawer.dart';
-import 'package:qcar_business/ui/notify/snackbars.dart';
 import 'package:qcar_business/ui/screens/form/form_cars_page.dart';
 import 'package:qcar_business/ui/screens/home/home_vm.dart';
+import 'package:qcar_business/ui/screens/sold/sold_page.dart';
 import 'package:qcar_business/ui/widgets/app_bar.dart';
 import 'package:qcar_business/ui/widgets/list/sell_list_item.dart';
 import 'package:qcar_shared/core/app_navigate.dart';
@@ -86,7 +86,7 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
             buildItemWidget: (int index, item) {
               return SellInfoListItem(
                 item,
-                onTap: () => showNothingToSeeSnackBar(context),
+                onTap: () => Navigate.to(context, SoldPage.pushIt(item)),
               );
             },
           ),

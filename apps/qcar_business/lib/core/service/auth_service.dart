@@ -3,7 +3,7 @@ import 'package:qcar_business/core/models/seller_info.dart';
 class AuthenticationService {
   AuthenticationService();
 
-  SellerInfo? _loggedInUser;
+  SellerInfo? _loggedInUser = SellerInfo(dealer: "Autohaus", name: "Maxi");
   SellerInfo get currentUser => _loggedInUser!;
 
   Future<void> signOut() async {}

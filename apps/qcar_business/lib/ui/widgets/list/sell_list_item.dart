@@ -5,10 +5,10 @@ import 'package:qcar_shared/widgets/deco.dart';
 import 'package:qcar_shared/widgets/rounded_widget.dart';
 
 class SellInfoListItem extends StatelessWidget {
-  const SellInfoListItem(this.sell, {required this.onTap});
+  const SellInfoListItem(this.sell, {this.onTap});
 
   final SellInfo sell;
-  final void Function() onTap;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +25,10 @@ class SellInfoListItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                RoundedWidget(
-                    child:
-                        PicWidget(sell.car.picUrl)), //PicWidget(video.picUrl)),
+                Hero(
+                  tag: sell.car.model,
+                  child: RoundedWidget(child: PicWidget(sell.car.picUrl)),
+                ),
                 Spacer(flex: 5),
                 Expanded(
                   flex: 95,

@@ -12,6 +12,7 @@ abstract class ScanViewModel {
   QrScanState get qrState;
 
   Future onScan(Barcode scan);
+
   void doOnScanState(QrScanState qrState);
 }
 

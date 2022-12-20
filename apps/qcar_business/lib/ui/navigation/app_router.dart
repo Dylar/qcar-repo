@@ -12,6 +12,8 @@ import 'package:qcar_business/ui/screens/login/login_vm.dart';
 import 'package:qcar_business/ui/screens/settings/debug_page.dart';
 import 'package:qcar_business/ui/screens/settings/settings_page.dart';
 import 'package:qcar_business/ui/screens/settings/settings_vm.dart';
+import 'package:qcar_business/ui/screens/sold/sold_page.dart';
+import 'package:qcar_business/ui/screens/sold/sold_vm.dart';
 import 'package:qcar_shared/core/app_routing.dart';
 import 'package:qcar_shared/utils/logger.dart';
 
@@ -50,6 +52,9 @@ class AppRouter {
         break;
       case HomePage.routeName:
         builder = _navigateToHome;
+        break;
+      case SoldPage.routeName:
+        builder = (context) => _navigateToSold(context, arguments);
         break;
       case FormCarsPage.routeName:
         builder = _navigateToFormCars;
@@ -95,6 +100,17 @@ Widget _navigateToLogin(BuildContext context) {
 Widget _navigateToHome(BuildContext context) {
   final services = Services.of(context)!;
   return HomePage(HomeVM(services.authService, services.infoService));
+}
+
+Widget _navigateToSold(
+  BuildContext context,
+  Map<String, dynamic> arguments,
+) {
+  final services = Services.of(context)!;
+  return SoldPage(SoldVM(
+    services.infoService,
+    arguments[ARGS_SELL_INFO],
+  ));
 }
 
 Widget _navigateToFormCars(BuildContext context) {

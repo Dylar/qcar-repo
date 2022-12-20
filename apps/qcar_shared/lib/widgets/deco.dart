@@ -37,7 +37,7 @@ GradientText qcarGradientText(
 }
 
 InkWell inkTap({
-  required void Function() onTap,
+  required void Function()? onTap,
   required Widget child,
 }) =>
     InkWell(

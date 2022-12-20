@@ -9,6 +9,7 @@ const SELLER_INFO_TYPE_ID = 8;
 const CUSTOMER_INFO_TYPE_ID = 9;
 
 const ARGS_VIEW_MODEL = "ARGS_VIEW_MODEL";
+const ARGS_SELL_INFO = "ARGS_SELL_INFO";
 
 const FIELD_DATE = "date";
 const FIELD_TEXT = "text";
