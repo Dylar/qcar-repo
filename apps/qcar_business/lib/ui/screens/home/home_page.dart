@@ -84,7 +84,7 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
             ),
             items: viewModel.sellInfos,
             buildItemWidget: (int index, item) {
-              return SellInfoListItem(
+              return SellListItem(
                 item,
                 onTap: () => Navigate.to(context, SoldPage.pushIt(item)),
               );

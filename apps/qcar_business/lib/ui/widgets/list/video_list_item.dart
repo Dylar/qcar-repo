@@ -4,15 +4,14 @@ import 'package:qcar_business/ui/widgets/pic_widget.dart';
 import 'package:qcar_shared/widgets/deco.dart';
 import 'package:qcar_shared/widgets/rounded_widget.dart';
 
-class VideoInfoListItem extends StatelessWidget {
-  const VideoInfoListItem(this.video, {required this.onTap});
+class VideoListItem extends StatelessWidget {
+  const VideoListItem(this.video, {required this.onTap});
 
   final VideoInfo video;
   final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    print(video.videoImageUrl);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: inkTap(

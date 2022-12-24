@@ -48,7 +48,7 @@ class _FormCarPageState extends ViewState<FormCarsPage, FormViewModel> {
         items: viewModel.cars,
         buildItemWidget: (_, car) => inkTap(
           onTap: () => viewModel.selectCar(car),
-          child: CarInfoListItem(car),
+          child: CarListItem(car),
         ),
       ),
     );

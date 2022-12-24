@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_business/core/models/car_info.dart';
 import 'package:qcar_business/ui/widgets/pic_widget.dart';
-import 'package:qcar_shared/utils/logger.dart';
 import 'package:qcar_shared/widgets/rounded_widget.dart';
 
-class CarInfoListItem extends StatelessWidget {
-  const CarInfoListItem(this.carInfo);
+class CarListItem extends StatelessWidget {
+  const CarListItem(this.carInfo);
 
   final CarInfo carInfo;
 
   @override
   Widget build(BuildContext context) {
-    Logger.logI(carInfo.picUrl);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(

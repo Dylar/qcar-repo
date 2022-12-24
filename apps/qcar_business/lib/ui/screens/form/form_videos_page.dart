@@ -81,7 +81,7 @@ class _FormVideoPageState extends ViewState<FormVideosPage, FormViewModel> {
           Flexible(
             child: SizedBox(
               height: 72,
-              child: VideoInfoListItem(video,
+              child: VideoListItem(video,
                   onTap: () => viewModel.selectVideo(video.category, video)),
             ),
           ),

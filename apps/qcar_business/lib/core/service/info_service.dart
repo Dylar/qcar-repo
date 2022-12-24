@@ -9,8 +9,8 @@ class InfoService {
     CustomerInfo(
         name: "Peter",
         lastName: "Lustig",
-        gender: Gender.DIVERS,
-        birthday: "Jo hat er",
+        gender: Gender.MALE,
+        birthday: "2001-09-11 09:35:00.000",
         email: "peter.lustig@gmx.de")
   ];
   Map<String, List<SellInfo>> sellInfos = {};
@@ -106,8 +106,19 @@ class InfoService {
   }
 
   void sellCar(SellInfo info) {
+    if (!customer.contains(info.customer)) {
+      customer.add(info.customer);
+    }
     final soldCars = sellInfos[info.seller.name] ?? [];
     soldCars.add(info);
     sellInfos[info.seller.name] = soldCars;
+  }
+
+  List<CustomerInfo> searchCustomer(String query) {
+    final Set<CustomerInfo> result = {};
+    result.addAll(customer.where((c) => c.lastName.contains(query)));
+    result.addAll(customer.where((c) => c.email.contains(query)));
+    result.addAll(customer.where((c) => c.name.contains(query)));
+    return result.toList();
   }
 }

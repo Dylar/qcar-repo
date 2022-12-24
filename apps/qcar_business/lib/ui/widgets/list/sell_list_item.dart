@@ -4,8 +4,8 @@ import 'package:qcar_business/ui/widgets/pic_widget.dart';
 import 'package:qcar_shared/widgets/deco.dart';
 import 'package:qcar_shared/widgets/rounded_widget.dart';
 
-class SellInfoListItem extends StatelessWidget {
-  const SellInfoListItem(this.sell, {this.onTap});
+class SellListItem extends StatelessWidget {
+  const SellListItem(this.sell, {this.onTap});
 
   final SellInfo sell;
   final void Function()? onTap;

@@ -10,6 +10,6 @@ class CarDetailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RoundedWidget(child: CarInfoListItem(car));
+    return RoundedWidget(child: CarListItem(car));
   }
 }

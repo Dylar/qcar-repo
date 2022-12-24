@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_business/core/models/customer_info.dart';
 import 'package:qcar_business/core/models/model_data.dart';
+import 'package:qcar_business/core/service/services.dart';
+import 'package:qcar_business/ui/screens/form/customer_search.dart';
 import 'package:qcar_business/ui/screens/form/form_vm.dart';
 import 'package:qcar_business/ui/widgets/app_bar.dart';
 import 'package:qcar_shared/core/app_routing.dart';
@@ -60,12 +62,40 @@ class _FormCustomerPageState
       body: buildFormPage(context),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: _saveButton(),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _selectCustomer(context),
+            _saveButton(),
+          ],
+        ),
       ),
     );
   }
 
-  ElevatedButton _saveButton() {
+  Widget _selectCustomer(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        final customer = await showSearch<CustomerInfo?>(
+          context: context,
+          delegate: CustomerSearchDelegate(Services.of(context)!.infoService),
+        );
+        if (customer != null) {
+          setState(() {
+            nameController.text = customer.name;
+            lastNameController.text = customer.lastName;
+            emailController.text = customer.email;
+            selectedBirthday = parseDate(customer.birthday);
+            selectedGender = customer.gender;
+          });
+        }
+      },
+      child: Text("Kunde auswählen"),
+    );
+  }
+
+  Widget _saveButton() {
     return ElevatedButton(
       onPressed: () {
         final customer = CustomerInfo(

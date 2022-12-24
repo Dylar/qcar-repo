@@ -12,6 +12,9 @@ const DAY_PER_YEAR = HOUR_PER_DAY * 365;
 String formatDate(DateTime date) =>
     DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(date);
 
+DateTime parseDate(String string) =>
+    DateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(string);
+
 String formatBirthday(DateTime date) => DateFormat("dd-MM-yyyy").format(date);
 
 // Helper functions that not only awaits a future but also ensures
