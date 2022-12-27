@@ -16,6 +16,7 @@ class CustomerInfo extends HiveObject {
     required this.gender,
     required this.birthday,
     required this.email,
+    required this.phone,
   });
 
   static CustomerInfo empty() => fromMap({});
@@ -29,6 +30,7 @@ class CustomerInfo extends HiveObject {
           orElse: () => Gender.DIVERS,
         ),
         email: map[FIELD_EMAIL] ?? "",
+        phone: map[FIELD_PHONE] ?? "",
       );
 
   Map<String, dynamic> toMap() => {
@@ -37,9 +39,12 @@ class CustomerInfo extends HiveObject {
         FIELD_BIRTHDAY: birthday,
         FIELD_GENDER: gender.name,
         FIELD_EMAIL: email,
+        FIELD_PHONE: phone,
       };
 
   String toJson() => jsonEncode(toMap());
+
+  String get fullName => "$name $lastName";
 
   @HiveField(0)
   String name = "";
@@ -51,4 +56,6 @@ class CustomerInfo extends HiveObject {
   String birthday = "";
   @HiveField(4)
   String email = "";
+  @HiveField(5)
+  String phone = "";
 }

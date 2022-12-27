@@ -7,11 +7,13 @@ import 'package:qcar_business/core/models/video_info.dart';
 class InfoService {
   List<CustomerInfo> customer = [
     CustomerInfo(
-        name: "Peter",
-        lastName: "Lustig",
-        gender: Gender.MALE,
-        birthday: "2001-09-11 09:35:00.000",
-        email: "peter.lustig@gmx.de")
+      name: "Peter",
+      lastName: "Lustig",
+      gender: Gender.MALE,
+      birthday: "2001-09-11 09:35:00.000",
+      phone: "0190666666",
+      email: "peter.lustig@gmx.de",
+    )
   ];
   Map<String, List<SellInfo>> sellInfos = {};
   List<CarInfo> cars = [

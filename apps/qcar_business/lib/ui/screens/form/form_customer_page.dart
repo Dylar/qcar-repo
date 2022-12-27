@@ -39,6 +39,7 @@ class _FormCustomerPageState
   final TextEditingController nameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
 
   Gender selectedGender = Gender.DIVERS;
   DateTime? selectedBirthday;
@@ -86,6 +87,7 @@ class _FormCustomerPageState
             nameController.text = customer.name;
             lastNameController.text = customer.lastName;
             emailController.text = customer.email;
+            phoneController.text = customer.phone;
             selectedBirthday = parseDate(customer.birthday);
             selectedGender = customer.gender;
           });
@@ -105,6 +107,7 @@ class _FormCustomerPageState
           birthday:
               selectedBirthday == null ? "" : formatDate(selectedBirthday!),
           email: emailController.text,
+          phone: phoneController.text,
         );
         viewModel.saveSellInfo(customer);
       },
@@ -124,14 +127,13 @@ class _FormCustomerPageState
               buildTextField(nameController, Icons.person, "Name"),
               buildTextField(lastNameController, null, "Familienname"),
               buildTextField(emailController, Icons.email, "Email"),
+              buildTextField(phoneController, Icons.phone, "Telefon"),
             ].map((child) => Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 30).copyWith(bottom: 10),
+                  padding: EdgeInsets.fromLTRB(30, 0, 30, 10),
                   child: child,
                 )),
             Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: 30).copyWith(bottom: 10),
+              padding: EdgeInsets.fromLTRB(30, 0, 30, 10),
               child: GestureDetector(
                   onTap: () => _selectDate(context),
                   child: Padding(
@@ -179,7 +181,9 @@ class _FormCustomerPageState
       controller: controller,
       keyboardType: controller == emailController
           ? TextInputType.emailAddress
-          : TextInputType.name,
+          : controller == phoneController
+              ? TextInputType.phone
+              : TextInputType.name,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         errorStyle: TextStyle(height: 0),

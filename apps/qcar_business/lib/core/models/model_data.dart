@@ -45,6 +45,7 @@ const FIELD_LAST_NAME = "lastName";
 const FIELD_GENDER = "gender";
 const FIELD_BIRTHDAY = "birthday";
 const FIELD_EMAIL = "email";
+const FIELD_PHONE = "phone";
 
 const FIELD_CAR = "car";
 const FIELD_CUSTOMER = "customer";

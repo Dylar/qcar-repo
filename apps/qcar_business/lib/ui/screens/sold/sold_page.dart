@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_business/core/models/model_data.dart';
 import 'package:qcar_business/core/models/sell_info.dart';
-import 'package:qcar_business/ui/screens/sold/car_detail_widget.dart';
-import 'package:qcar_business/ui/screens/sold/customer_detail_widget.dart';
 import 'package:qcar_business/ui/screens/sold/sold_vm.dart';
 import 'package:qcar_business/ui/widgets/app_bar.dart';
 import 'package:qcar_business/ui/widgets/pic_widget.dart';
 import 'package:qcar_shared/core/app_routing.dart';
 import 'package:qcar_shared/core/app_theme.dart';
 import 'package:qcar_shared/core/app_view.dart';
-import 'package:qcar_shared/widgets/deco.dart';
 import 'package:qcar_shared/widgets/rounded_widget.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -37,294 +34,201 @@ class SoldPage extends View<SoldViewModel> {
 class _SoldPageState extends ViewState<SoldPage, SoldViewModel> {
   _SoldPageState(SoldViewModel viewModel) : super(viewModel);
 
+  late ScrollController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = ScrollController();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final title = AppLocalizations.of(context)!.homoPageTitle;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: buildAppBar("Der Verkauf"),
-      body: buildBla(),
+      body: HeaderWidget(child: _buildInfos),
     );
   }
 
-  Widget buildSoldPage(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    return Container(
-      decoration: qcarGradientBox,
-      alignment: Alignment.topCenter,
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Hero(
-            tag: viewModel.sellInfo.car.model,
-            child: CarDetailWidget(viewModel.sellInfo.car),
-          ),
-          CustomerDetailWidget(viewModel.sellInfo.customer),
-          Flexible(
-            child: Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.all(32.0),
-              color: BaseColors.veryLightGrey,
-              child: QrImage(
-                data:
-                    "https://google.gprivate.com/search.php?search?q=DickButt",
-                version: QrVersions.auto,
-                size: 200.0,
+  Widget _buildInfos() {
+    final customer = viewModel.sellInfo.customer;
+    return Scrollbar(
+      controller: controller,
+      child: SingleChildScrollView(
+        controller: controller,
+        child: Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.fromLTRB(25, 10, 25, 10),
+          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+          child: Column(
+            children: [
+              SizedBox(height: 20),
+              Hero(
+                tag: viewModel.sellInfo.car.model,
+                child: RoundedWidget(
+                    child: PicWidget(viewModel.sellInfo.car.picUrl)),
               ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildBla() {
-    return SingleChildScrollView(
-      child: Stack(
-        children: [
-          Container(
-            height: 100,
-            child: HeaderWidget(100, false, Icons.house_rounded),
-          ),
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.fromLTRB(25, 10, 25, 10),
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(width: 5, color: Colors.white),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 20,
-                        offset: const Offset(5, 5),
-                      ),
-                    ],
-                  ),
-                  child: Hero(
-                    tag: viewModel.sellInfo.car.model,
-                    child: RoundedWidget(
-                        child: PicWidget(viewModel.sellInfo.car.picUrl)),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Mr. Donald Trump',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Former President',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
+              SizedBox(height: 20),
+              Text(
+                customer.fullName,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Column(
+                  children: <Widget>[
+                    Card(
+                      child: Container(
                         alignment: Alignment.topLeft,
-                        child: Text(
-                          "User Information",
-                          style: TextStyle(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.left,
+                        padding: EdgeInsets.all(15),
+                        child: Column(
+                          children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                ...ListTile.divideTiles(
+                                  color: Colors.grey,
+                                  tiles: [
+                                    ListTile(
+                                      leading: Icon(Icons.email),
+                                      title: Text("Email"),
+                                      subtitle: Text(customer.email),
+                                    ),
+                                    ListTile(
+                                      leading: Icon(Icons.phone),
+                                      title: Text("Phone"),
+                                      subtitle: Text(customer.phone),
+                                    ),
+                                    ListTile(
+                                      leading: Icon(Icons.person),
+                                      title: Text("Geburtstag"),
+                                      subtitle: Text(customer.birthday),
+                                    ),
+                                    ListTile(
+                                      leading: Icon(Icons.person),
+                                      title: Text("Geschlecht"),
+                                      subtitle: Text(customer.gender.name),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                          ],
                         ),
                       ),
-                      Card(
-                        child: Container(
-                          alignment: Alignment.topLeft,
-                          padding: EdgeInsets.all(15),
-                          child: Column(
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  ...ListTile.divideTiles(
-                                    color: Colors.grey,
-                                    tiles: [
-                                      ListTile(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 12, vertical: 4),
-                                        leading: Icon(Icons.my_location),
-                                        title: Text("Location"),
-                                        subtitle: Text("USA"),
-                                      ),
-                                      ListTile(
-                                        leading: Icon(Icons.email),
-                                        title: Text("Email"),
-                                        subtitle: Text("donaldtrump@gmail.com"),
-                                      ),
-                                      ListTile(
-                                        leading: Icon(Icons.phone),
-                                        title: Text("Phone"),
-                                        subtitle: Text("99--99876-56"),
-                                      ),
-                                      ListTile(
-                                        leading: Icon(Icons.person),
-                                        title: Text("About Me"),
-                                        subtitle: Text(
-                                            "This is a about me link and you can khow about me in this section."),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.all(32.0),
+                color: BaseColors.veryLightGrey,
+                child: QrImage(
+                  data:
+                      "https://google.gprivate.com/search.php?search?q=DickButt",
+                  version: QrVersions.auto,
+                  size: 200.0,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
 class HeaderWidget extends StatefulWidget {
-  final double _height;
-  final bool _showIcon;
-  final IconData _icon;
+  const HeaderWidget({required this.child, Key? key}) : super(key: key);
 
-  const HeaderWidget(this._height, this._showIcon, this._icon, {Key? key})
-      : super(key: key);
+  final Widget Function() child;
 
   @override
-  _HeaderWidgetState createState() =>
-      _HeaderWidgetState(_height, _showIcon, _icon);
+  _HeaderWidgetState createState() => _HeaderWidgetState();
 }
 
 class _HeaderWidgetState extends State<HeaderWidget> {
-  double _height;
-  bool _showIcon;
-  IconData _icon;
+  final double _height = 100;
 
-  _HeaderWidgetState(this._height, this._showIcon, this._icon);
+  _HeaderWidgetState();
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-
-    return Container(
-      child: Stack(
-        children: [
-          ClipPath(
-            child: Container(
-              decoration: new BoxDecoration(
-                gradient: new LinearGradient(
-                    colors: [
-                      Theme.of(context).primaryColor.withOpacity(0.4),
-                      Theme.of(context).accentColor.withOpacity(0.4),
-                    ],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp),
-              ),
-            ),
-            clipper: new ShapeClipper([
-              Offset(width / 5, _height),
-              Offset(width / 10 * 5, _height - 60),
-              Offset(width / 5 * 4, _height + 20),
-              Offset(width, _height - 18)
-            ]),
-          ),
-          ClipPath(
-            child: Container(
-              decoration: new BoxDecoration(
-                gradient: new LinearGradient(
-                    colors: [
-                      Theme.of(context).primaryColor.withOpacity(0.4),
-                      Theme.of(context).accentColor.withOpacity(0.4),
-                    ],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp),
-              ),
-            ),
-            clipper: new ShapeClipper([
-              Offset(width / 3, _height + 20),
-              Offset(width / 10 * 8, _height - 60),
-              Offset(width / 5 * 4, _height - 60),
-              Offset(width, _height - 20)
-            ]),
-          ),
-          ClipPath(
-            child: Container(
-              decoration: new BoxDecoration(
-                gradient: new LinearGradient(
-                    colors: [
-                      Theme.of(context).primaryColor,
-                      Theme.of(context).accentColor,
-                    ],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp),
-              ),
-            ),
-            clipper: new ShapeClipper([
-              Offset(width / 5, _height),
-              Offset(width / 2, _height - 40),
-              Offset(width / 5 * 4, _height - 80),
-              Offset(width, _height - 20)
-            ]),
-          ),
-          Visibility(
-            visible: _showIcon,
-            child: Container(
-              height: _height - 40,
-              child: Center(
-                child: Container(
-                  margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.only(
-                    left: 5.0,
-                    top: 20.0,
-                    right: 5.0,
-                    bottom: 20.0,
-                  ),
-                  decoration: BoxDecoration(
-                    // borderRadius: BorderRadius.circular(20),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(100),
-                      topRight: Radius.circular(100),
-                      bottomLeft: Radius.circular(60),
-                      bottomRight: Radius.circular(60),
-                    ),
-                    border: Border.all(width: 5, color: Colors.white),
-                  ),
-                  child: Icon(
-                    _icon,
-                    color: Colors.white,
-                    size: 40.0,
-                  ),
-                ),
-              ),
+    final primaryColor = BaseColors.babyBlue;
+    final accentColor = BaseColors.zergPurple;
+    return Stack(
+      children: [
+        ClipPath(
+          child: Container(
+            height: _height,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [
+                    primaryColor.withOpacity(0.2),
+                    accentColor.withOpacity(0.2),
+                  ],
+                  begin: const FractionalOffset(0.0, 0.0),
+                  end: const FractionalOffset(1.0, 0.0),
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.clamp),
             ),
           ),
-        ],
-      ),
+          clipper: ShapeClipper([
+            Offset(width / 5, _height),
+            Offset(width / 10 * 5, _height - 60),
+            Offset(width / 5 * 4, _height + 20),
+            Offset(width, _height - 18)
+          ]),
+        ),
+        ClipPath(
+          child: Container(
+            height: _height,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [
+                    primaryColor.withOpacity(0.5),
+                    accentColor.withOpacity(0.5),
+                  ],
+                  begin: const FractionalOffset(0.0, 0.0),
+                  end: const FractionalOffset(1.0, 0.0),
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.clamp),
+            ),
+          ),
+          clipper: ShapeClipper([
+            Offset(width / 3, _height + 20),
+            Offset(width / 10 * 8, _height - 60),
+            Offset(width / 5 * 4, _height - 60),
+            Offset(width, _height - 20)
+          ]),
+        ),
+        widget.child(),
+        ClipPath(
+          child: Container(
+            height: _height,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [
+                    primaryColor.withOpacity(1),
+                    accentColor.withOpacity(1),
+                  ],
+                  begin: const FractionalOffset(0.0, 0.0),
+                  end: const FractionalOffset(1.0, 0.0),
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.clamp),
+            ),
+          ),
+          clipper: ShapeClipper([
+            Offset(width / 5, _height),
+            Offset(width / 2, _height - 40),
+            Offset(width / 5 * 4, _height - 80),
+            Offset(width, _height - 20)
+          ]),
+        ),
+      ],
     );
   }
 }
@@ -336,7 +240,7 @@ class ShapeClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    var path = new Path();
+    final path = Path();
 
     path.lineTo(0.0, size.height - 20);
 

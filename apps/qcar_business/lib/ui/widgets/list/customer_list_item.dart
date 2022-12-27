@@ -23,7 +23,7 @@ class CustomerListItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Name: ${customer.name} ${customer.lastName} ',
+                  'Name: ${customer.fullName} ',
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text('Email: ${customer.email}'),
