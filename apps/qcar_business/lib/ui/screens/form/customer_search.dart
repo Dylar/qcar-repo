@@ -43,11 +43,12 @@ class CustomerSearchDelegate extends SearchDelegate<CustomerInfo?> {
   Widget _buildResult() => FutureBuilder<List<CustomerInfo>>(
         future: _doSearch(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          final l10n = AppLocalizations.of(context)!;
           return ScrollListView<CustomerInfo>(
             items: snapshot.data,
             emptyWidget: _buildFullScreenText(
               context,
-              "Suchen Sie nach einem Kunden",
+              l10n.searchStartText,
             ),
             buildItemWidget: (int index, item) => CustomerListItem(
               item,

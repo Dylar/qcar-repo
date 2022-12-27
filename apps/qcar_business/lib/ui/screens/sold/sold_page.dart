@@ -46,12 +46,13 @@ class _SoldPageState extends ViewState<SoldPage, SoldViewModel> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: buildAppBar("Der Verkauf"),
+      appBar: buildAppBar(l10n.soldTitle),
       body: HeaderWidget(child: _buildInfos),
     );
   }
 
-  Widget _buildInfos() {
+  Widget _buildInfos(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final customer = viewModel.sellInfo.customer;
     return Scrollbar(
       controller: controller,
@@ -92,22 +93,22 @@ class _SoldPageState extends ViewState<SoldPage, SoldViewModel> {
                                   tiles: [
                                     ListTile(
                                       leading: Icon(Icons.email),
-                                      title: Text("Email"),
+                                      title: Text(l10n.customerEmail),
                                       subtitle: Text(customer.email),
                                     ),
                                     ListTile(
                                       leading: Icon(Icons.phone),
-                                      title: Text("Phone"),
+                                      title: Text(l10n.customerPhone),
                                       subtitle: Text(customer.phone),
                                     ),
                                     ListTile(
                                       leading: Icon(Icons.person),
-                                      title: Text("Geburtstag"),
+                                      title: Text(l10n.customerBirthday),
                                       subtitle: Text(customer.birthday),
                                     ),
                                     ListTile(
                                       leading: Icon(Icons.person),
-                                      title: Text("Geschlecht"),
+                                      title: Text(l10n.customerGender),
                                       subtitle: Text(customer.gender.name),
                                     ),
                                   ],
@@ -143,7 +144,7 @@ class _SoldPageState extends ViewState<SoldPage, SoldViewModel> {
 class HeaderWidget extends StatefulWidget {
   const HeaderWidget({required this.child, Key? key}) : super(key: key);
 
-  final Widget Function() child;
+  final Widget Function(BuildContext) child;
 
   @override
   _HeaderWidgetState createState() => _HeaderWidgetState();
@@ -205,7 +206,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
             Offset(width, _height - 20)
           ]),
         ),
-        widget.child(),
+        widget.child(context),
         ClipPath(
           child: Container(
             height: _height,

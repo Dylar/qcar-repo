@@ -45,11 +45,11 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    final title = AppLocalizations.of(context)!.homoPageTitle;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: buildAppBar(title),
+      appBar: buildAppBar(l10n.homoPageTitle),
       drawer: AppDrawer(),
-      body: buildHomePage(context),
+      body: buildHomePage(context, l10n),
       floatingActionButton: FloatingActionButton(
         foregroundColor: BaseColors.zergPurple,
         backgroundColor: BaseColors.babyBlue,
@@ -59,8 +59,7 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
     );
   }
 
-  Widget buildHomePage(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+  Widget buildHomePage(BuildContext context, AppLocalizations l10n) {
     return Container(
       decoration: qcarGradientBox,
       alignment: Alignment.topCenter,
@@ -79,7 +78,7 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
-                child: Text("Keine verkauften Autos - los geh anschaffen"),
+                child: Text(l10n.homoPageEmptySells),
               ),
             ),
             items: viewModel.sellInfos,

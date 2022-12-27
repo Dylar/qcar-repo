@@ -59,23 +59,23 @@ class _FormCustomerPageState
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: buildAppBar("Kunde"),
-      body: buildFormPage(context),
+      appBar: buildAppBar(l10n.formCustomerTitle),
+      body: buildFormPage(context, l10n),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _selectCustomer(context),
-            _saveButton(),
+            _selectCustomer(context, l10n),
+            _saveButton(l10n),
           ],
         ),
       ),
     );
   }
 
-  Widget _selectCustomer(BuildContext context) {
+  Widget _selectCustomer(BuildContext context, AppLocalizations l10n) {
     return ElevatedButton(
       onPressed: () async {
         final customer = await showSearch<CustomerInfo?>(
@@ -93,11 +93,11 @@ class _FormCustomerPageState
           });
         }
       },
-      child: Text("Kunde auswählen"),
+      child: Text(l10n.formSelectCustomer),
     );
   }
 
-  Widget _saveButton() {
+  Widget _saveButton(AppLocalizations l10n) {
     return ElevatedButton(
       onPressed: () {
         final customer = CustomerInfo(
@@ -111,11 +111,11 @@ class _FormCustomerPageState
         );
         viewModel.saveSellInfo(customer);
       },
-      child: Text("Speichern"),
+      child: Text(l10n.save),
     );
   }
 
-  Widget buildFormPage(BuildContext context) {
+  Widget buildFormPage(BuildContext context, AppLocalizations l10n) {
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -124,10 +124,10 @@ class _FormCustomerPageState
         child: Column(
           children: [
             ...[
-              buildTextField(nameController, Icons.person, "Name"),
-              buildTextField(lastNameController, null, "Familienname"),
-              buildTextField(emailController, Icons.email, "Email"),
-              buildTextField(phoneController, Icons.phone, "Telefon"),
+              buildTextField(nameController, Icons.person, l10n.customerName),
+              buildTextField(lastNameController, null, l10n.customerLastName),
+              buildTextField(emailController, Icons.email, l10n.customerEmail),
+              buildTextField(phoneController, Icons.phone, l10n.customerPhone),
             ].map((child) => Padding(
                   padding: EdgeInsets.fromLTRB(30, 0, 30, 10),
                   child: child,
@@ -155,7 +155,7 @@ class _FormCustomerPageState
                           ),
                           selectedBirthday != null
                               ? Text(formatBirthday(selectedBirthday!))
-                              : Text("Geburstag auswählen"),
+                              : Text(l10n.formSelectBirthday),
                         ],
                       ),
                     ),
@@ -164,9 +164,9 @@ class _FormCustomerPageState
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _genderButton(Gender.MALE, "Mann"),
-                _genderButton(Gender.FEMALE, "Frau"),
-                _genderButton(Gender.DIVERS, "Freak"),
+                _genderButton(Gender.MALE, l10n.genderMale),
+                _genderButton(Gender.FEMALE, l10n.genderFemale),
+                _genderButton(Gender.DIVERS, l10n.genderDiverse),
               ],
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_shared/core/handle_snackbars.dart';
 
 void showNothingToSeeSnackBar(BuildContext context) {
@@ -6,5 +7,6 @@ void showNothingToSeeSnackBar(BuildContext context) {
 }
 
 void showNonOptionalErrorSnackBar(BuildContext context) {
-  showSnackBar(context, 'Es sind nicht alle Felder ausgefüllt', duration: 2);
+  final l10n = AppLocalizations.of(context)!;
+  showSnackBar(context, l10n.formFieldsWrong, duration: 2);
 }

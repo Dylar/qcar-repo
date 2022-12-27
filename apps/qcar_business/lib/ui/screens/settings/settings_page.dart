@@ -20,11 +20,6 @@ class SettingsPage extends View<SettingsViewModel> {
         action: RouteAction.pushTo,
       );
 
-  static RoutingSpec popAndPush() => RoutingSpec(
-        routeName: routeName,
-        action: RouteAction.popAndPushTo,
-      );
-
   SettingsPage(SettingsViewModel viewModel) : super.model(viewModel);
 
   @override

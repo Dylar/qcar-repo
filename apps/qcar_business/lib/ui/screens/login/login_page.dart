@@ -37,16 +37,14 @@ class _LoginPageState extends ViewState<LoginPage, LoginViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    // final title = AppLocalizations.of(context)!.homoPageTitle;
-    final title = "Login";
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: buildAppBar(title),
-      body: buildLoginPage(context),
+      appBar: buildAppBar(l10n.loginTitle),
+      body: buildLoginPage(context, l10n),
     );
   }
 
-  Widget buildLoginPage(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+  Widget buildLoginPage(BuildContext context, AppLocalizations l10n) {
     return Container(
       decoration: qcarGradientBox,
       child: Center(
@@ -58,15 +56,14 @@ class _LoginPageState extends ViewState<LoginPage, LoginViewModel> {
               child: RoundedWidget(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                      "Das ist die Business-App.\nBitte melden Sie sich an."),
+                  child: Text(l10n.loginText),
                 ),
               ),
             ),
             DropdownButton<SellerInfo>(
               dropdownColor: BaseColors.darkGrey,
               items: _buildDropdownItems(),
-              hint: Text("Bitte wählen Sie einen Benutzer"),
+              hint: Text(l10n.loginSelectUser),
               onChanged: (value) => viewModel.userSelected(value!),
             ),
           ],

@@ -1,67 +1,53 @@
 {
-
   "@_GENERIC": {},
-  "yes": "Ja",
-  "no": "Nein",
-  "ok": "Ok",
-  "cancel": "Abbrechen",
-  "refuse": "Ablehnen",
-
-  "@_DIALOG": {},
   "errorTitle": "Fehler",
-  "notSavedTitle": "Änderung speichern?",
-  "notSavedMessage": "Änderungen wurden noch nicht gespeichert. Wollen Sie speichern?",
-  "decideTrackingTitle": "Tracking aktivieren?",
-  "decideTrackingMessage": "Wir würden gerne wissen, wie die App verwendet wird.\nHierzu möchten wir einige Daten sammeln um Probleme schneller lösen zu können.\nWenn Sie das nicht wollen drücken sie bitte auf Ablehnen.\nDie Entscheidung kann jederzeit in den Einstellungen geändert werden.",
-
-  "@_SCAN": {},
-  "scanError": "Beim scannen ist ein Fehler aufgetreten.\nBitten scannen Sie erneut.",
-  "oldCarScanned": "Dieses Auto hast du schon registriert",
 
   "@_BUTTONS": {},
-  "send": "Senden",
+  "ok": "Ok",
   "save": "Speichern",
+  "continueButton": "Weiter",
+
+  "@_DRAWER": {},
+  "drawerAppTitle": "QCar-Business",
+  "drawerLogout": "Ausloggen",
+  "drawerSettings": "Einstellungen",
+
+  "@_LOGIN_PAGE": {},
+  "loginTitle": "Login",
+  "loginText": "Das ist die Business-App.\nBitte melden Sie sich an.",
+  "loginSelectUser": "Bitte wählen Sie einen Benutzer",
 
   "@_HOME_PAGE": {},
   "homoPageTitle": "Home",
-  "homoPageSubGreetings": "Herzlich Willkommen in der Digitalen Auslieferung (Fahrzeugtutorial) für dein neues Auto!",
-  "homoPageMessage": "Diese App dient dazu dich in deinem Fahrzeug digital zu Orientieren, finde alles wichtige was du brauchst um sicher durch den Alltag zu kommen.",
+  "homoPageEmptySells": "Keine verkauften Autos - los geh anschaffen",
 
-  "@_INTRO_PAGE": {},
-  "introPageTitle": "Willkommen",
-  "introPageMessage": "Bitte scannen Sie einen gültigen QR-Code um fortzufahren.",
-  "introPageMessageScanning": "Daten werden geladen...",
+  "@_FORM_PAGE": {},
+  "formFieldsWrong": "Es sind nicht alle Felder ausgefüllt",
+  "formCarTitle": "Autos",
+  "formVideoTitle": "Videos",
+  "formCustomerTitle": "Kunde",
+  "formSelectBirthday": "Geburtstag auswählen",
+  "formSelectCustomer": "Kunde auswählen",
 
-  "@_QR_SCAN_PAGE": {},
-  "qrScanPageTitle": "Bitte scannen",
-  "qrScanPageMessage": "Bitte scannen Sie einen gültigen QR-Code.",
+  "customerName": "Name",
+  "customerLastName": "Familienname",
+  "customerEmail": "Email",
+  "customerPhone": "Telefon",
+  "customerGender": "Geschlecht",
+  "customerBirthday": "Geburtstag",
 
-  "@_CARS_PAGE": {},
-  "carOverViewPageTitle": "Übersicht",
+  "genderMale": "Mann",
+  "genderFemale": "Frau",
+  "genderDiverse": "Freak",
 
-  "@_CATEGORIES_PAGE": {},
-  "favoritesButton": "Favoriten",
+  "@_CUSTOMER_SEARCH": {},
+  "searchStartText": "Sie können hier nach Kunden suchen",
 
-  "@_FAVORITES_PAGE": {},
-  "favoritesPageTitle": "Favoriten",
-  "noFavoritesTitle": "Keine Favoriten",
-  "noFavoritesMessage": "Es sind noch keine Videos favorisiert.\nUm Videos zu den Favoriten hinzuzufügen einfach den Stern beim entsprechenden Video aktivieren.",
-
-  "@_SEARCH": {},
-  "searchStartText": "Sie können hier nach Videos suchen",
-  "searchEmptyText": "Leider wurde kein Ergebnisse gefunden",
+  "@_SOLD_PAGE": {},
+  "soldTitle": "Verkauf",
 
   "@_SETTINGS_PAGE": {},
   "settingsPageTitle": "Einstellungen",
   "debugMenu": "Debug Menu",
-  "videoMenu": "Video Menu",
   "aboutDialog": "Informationen",
-  "autoPlay": "Automatisch",
-
-  "@_FEEDBACK": {},
-  "feedbackTitle": "Feedback",
-  "feedbackHint": "Bitte geben Sie uns Feedback.",
-  "feedbackThanks": "Danke für das Feedback",
-  "feedbackError": "Beim versenden ist ein Fehler aufgetreten:\n\n"
-
 }

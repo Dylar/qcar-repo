@@ -33,14 +33,14 @@ class _FormCarPageState extends ViewState<FormCarsPage, FormViewModel> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: buildAppBar("Autos"),
+      appBar: buildAppBar(l10n.formCarTitle),
       body: buildFormPage(context),
     );
   }
 
   Widget buildFormPage(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: qcarGradientBox,
       alignment: Alignment.topCenter,

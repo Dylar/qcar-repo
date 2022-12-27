@@ -40,22 +40,22 @@ class _FormVideoPageState extends ViewState<FormVideosPage, FormViewModel> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: buildAppBar("Videos"),
+      appBar: buildAppBar(l10n.formVideoTitle),
       body: buildFormPage(context),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ElevatedButton(
           onPressed: () =>
               Navigate.to(context, FormCustomerPage.pushIt(viewModel)),
-          child: Text("Weiter"),
+          child: Text(l10n.continueButton),
         ),
       ),
     );
   }
 
   Widget buildFormPage(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return GroupedListView<VideoInfo, Tuple<String, String>>(
       shrinkWrap: true,
       elements: viewModel.videos,

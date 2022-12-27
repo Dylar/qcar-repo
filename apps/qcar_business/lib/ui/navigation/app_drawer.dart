@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_business/ui/notify/snackbars.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_business/ui/screens/login/login_page.dart';
+import 'package:qcar_business/ui/screens/settings/settings_page.dart';
 import 'package:qcar_shared/core/app_navigate.dart';
 import 'package:qcar_shared/widgets/deco.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Drawer(
       child: ListView(
-        // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
@@ -17,18 +18,18 @@ class AppDrawer extends StatelessWidget {
             child: Center(
               child: qcarGradientText(
                 context,
-                'QCar-Business',
+                l10n.drawerAppTitle,
                 textScaling: 2.0,
               ),
             ),
           ),
           ListTile(
-            title: const Text('Ausloggen'),
+            title: Text(l10n.drawerLogout),
             onTap: () => Navigate.to(context, LoginPage.onLogout()),
           ),
           ListTile(
-            title: const Text('Information'),
-            onTap: () => showNothingToSeeSnackBar(context),
+            title: Text(l10n.drawerSettings),
+            onTap: () => Navigate.to(context, SettingsPage.pushIt()),
           ),
         ],
       ),
