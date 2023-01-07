@@ -1,9 +1,10 @@
 #run in service_name folder -> sh ../scripts/deploy.sh
 
+sh ../scripts/increaseVersion.sh
+
 SERVICE_NAME=$(./gradlew -q getName)
 SERVICE_VERSION=$(./gradlew -q getVersion)
 JAR_PATH="/build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar"
-
 DOCKER_IMAGE="dylar/qcar-${SERVICE_NAME}:${SERVICE_VERSION}"
 
 ./gradlew build &&

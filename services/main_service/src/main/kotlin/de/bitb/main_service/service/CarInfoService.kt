@@ -1,5 +1,6 @@
 package de.bitb.main_service.service
 
+import LinkCar
 import de.bitb.main_service.datasource.car_info.CAR_REPOSITORY_IN_USE
 import de.bitb.main_service.datasource.car_info.CarInfoDataSource
 import de.bitb.main_service.datasource.sell_info.SELL_REPOSITORY_IN_USE
@@ -25,7 +26,7 @@ class CarInfoService @Autowired constructor(
     private val log: Logger = LoggerFactory.getLogger(CarInfoService::class.java)
 
     @Throws(SellInfoException.UnknownKeyException::class, CarInfoException.UnknownCarException::class)
-    fun getSoldCarInfo(key: String): CarInfo {
+    fun getSoldCarInfo(key: String): CarInfo { //TODO use me?
         val sellInfo = sellDS.getSellInfo(key) ?: throw SellInfoException.UnknownKeyException(key)
         return carDS.getCarInfo(sellInfo.brand, sellInfo.model)
                 ?: throw CarInfoException.UnknownCarException(sellInfo.brand, sellInfo.model)
@@ -41,6 +42,15 @@ class CarInfoService @Autowired constructor(
     fun addCarInfo(info: CarInfo) {
         validateCarInfo(info)
         carDS.addCarInfo(info)
+    }
+
+    fun getCarInfos(dealer: String): List<CarInfo> {
+
+        return mutableListOf()
+    }
+
+    fun linkCarToDealer(info: LinkCar): List<CarInfo> {
+
     }
 
 }

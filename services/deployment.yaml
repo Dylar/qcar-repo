@@ -40,6 +40,8 @@ spec:
   type: LoadBalancer
   selector:
     app: qcar
+  externalIPs:
+  - 192.168.64.2
   ports:
   - name: backend
     port: 1110

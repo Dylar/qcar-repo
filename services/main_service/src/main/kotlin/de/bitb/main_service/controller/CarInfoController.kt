@@ -1,5 +1,6 @@
 package de.bitb.main_service.controller
 
+import LinkCar
 import de.bitb.main_service.exceptions.CarInfoException
 import de.bitb.main_service.models.CarInfo
 import de.bitb.main_service.service.CarInfoService
@@ -36,11 +37,23 @@ class CarInfoController @Autowired constructor(
         return service.getCarInfo(brand, model)
     }
 
-    @PostMapping
+    @GetMapping("/all/{dealer}")
+    fun getCarInfos(@PathVariable dealer: String): List<CarInfo> {
+        log.info("getCarInfos") //TODO test me
+        return service.getCarInfos(dealer)
+    }
+
+    @PostMapping("/addCar")
     @ResponseStatus(HttpStatus.CREATED)
     fun addCarInfo(@RequestBody info: CarInfo) {
         log.info("addCarInfo: $info")
         service.addCarInfo(info)
     }
 
+    @PostMapping("/linkCar")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun linkCarToDealer(@RequestBody info: LinkCar) {
+        log.info("linkCarToDealer") //TODO test me
+        service.linkCarToDealer(info)
+    }
 }
