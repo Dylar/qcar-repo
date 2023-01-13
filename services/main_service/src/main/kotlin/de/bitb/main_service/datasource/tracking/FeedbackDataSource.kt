@@ -28,7 +28,7 @@ class TrackingFirestoreApi(override val firestore: Firestore) : FirestoreApi<Tra
     }
 
     fun getCollectionPath(): String {
-        return "events/tracking"
+        return "tracking"
     }
 }
 
@@ -39,7 +39,7 @@ class DBTrackingDataSource @Autowired constructor(
 
     override fun getTracking(): List<Tracking> {
         val path = firestoreApi.getCollectionPath()
-        return firestoreApi.readCollection(path) { it }
+        return firestoreApi.readCollection(path)
     }
 
     override fun addTracking(tracking: Tracking) {

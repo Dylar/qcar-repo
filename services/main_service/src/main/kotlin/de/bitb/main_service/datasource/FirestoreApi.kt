@@ -12,22 +12,18 @@ abstract class FirestoreApi<T : Any> {
 
     abstract fun getDocumentPath(obj: T): String
 
-    fun addVersion(path: String) = "$API_VERSION_V1/$path"
-
     @Throws(ExecutionException::class, InterruptedException::class)
     inline fun <reified T : Any> readDocument(
         collectionPath: String,
-        whereCondition: (CollectionReference) -> Query,
+        whereCondition: (CollectionReference) -> Query = { it },
     ): T? {
-        var path = ""
         return try {
-            path = addVersion(collectionPath)
             val apiFuture: ApiFuture<QuerySnapshot> =
-                whereCondition(firestore.collection(path)).get()
+                whereCondition(firestore.collection(collectionPath)).get()
             val documentSnapshot: DocumentSnapshot = apiFuture.get().documents.first()
             documentSnapshot.toObject(T::class.java)
         } catch (e: Exception) {
-            log.error("readDocument; path: $path  error: ${e.message}")
+            log.error("readDocument; path: $collectionPath  error: ${e.message}")
             null
         }
     }
@@ -35,7 +31,7 @@ abstract class FirestoreApi<T : Any> {
     @Throws(ExecutionException::class, InterruptedException::class)
     inline fun <reified T : Any> findDocument(
         collectionId: String,
-        whereCondition: (CollectionGroup) -> Query,
+        whereCondition: (CollectionGroup) -> Query = { it },
     ): T? {
         return try {
             val apiFuture: ApiFuture<QuerySnapshot> =
@@ -52,7 +48,7 @@ abstract class FirestoreApi<T : Any> {
     fun writeDocument(obj: T) {
         var path = "PATH ERROR"
         try {
-            path = addVersion(getDocumentPath(obj))
+            path = getDocumentPath(obj)
             val apiFuture: ApiFuture<WriteResult> = firestore.document(path).set(obj)
             apiFuture.get()
         } catch (e: Exception) {
@@ -64,7 +60,7 @@ abstract class FirestoreApi<T : Any> {
     fun updateDocument(obj: T) {
         var path = "PATH ERROR"
         try {
-            path = addVersion(getDocumentPath(obj))
+            path = getDocumentPath(obj)
             log.info("updateDocument: $path")
             val apiFuture: ApiFuture<WriteResult> = firestore.document(path)
                 .set(obj)
@@ -80,7 +76,7 @@ abstract class FirestoreApi<T : Any> {
         try {
             // document deletion does not delete its sub collections
             // see https://firebase.google.com/docs/firestore/manage-data/delete-data#collections
-            path = addVersion(getDocumentPath(obj))
+            path = getDocumentPath(obj)
             val apiFuture: ApiFuture<WriteResult> = firestore.document(path).delete()
             apiFuture.get()
         } catch (e: Exception) {
@@ -91,11 +87,11 @@ abstract class FirestoreApi<T : Any> {
     @Throws(ExecutionException::class, InterruptedException::class)
     inline fun <reified T : Any> readCollection(
         collectionPath: String,
-        whereCondition: (CollectionReference) -> Query,
+        whereCondition: (CollectionReference) -> Query = { it },
     ): List<T> {
         var path = ""
         return try {
-            path = addVersion(collectionPath)
+            path = collectionPath
             val apiFuture: ApiFuture<QuerySnapshot> =
                 whereCondition(firestore.collection(path)).get()
             val documentsSnapshot: List<DocumentSnapshot> = apiFuture.get().documents

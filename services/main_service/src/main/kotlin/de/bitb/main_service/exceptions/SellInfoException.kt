@@ -1,5 +1,13 @@
 package de.bitb.main_service.exceptions
 
+sealed class DealerInfoException(msg: String) : Exception(msg) {
+    class UnknownDealerException(name: String) :
+        DealerInfoException("Unknown dealer ($name)")
+
+    class EmptyNameException : DealerInfoException("Dealer name is empty")
+    class EmptyAddressException : DealerInfoException("Address is empty")
+}
+
 sealed class SellerInfoException(msg: String) : Exception(msg) {
     class UnknownSellerException(dealer: String, name: String) :
         SellerInfoException("Unknown seller ($name) for dealer ($dealer)")

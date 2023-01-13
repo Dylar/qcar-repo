@@ -22,13 +22,9 @@ interface CarInfoDataSource {
 class CarInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<CarInfo>() {
     override val log: Logger = LoggerFactory.getLogger(CarInfoFirestoreApi::class.java)
 
-    override fun getDocumentPath(obj: CarInfo): String {
-        return "${getCollectionPath(obj.brand)}/${obj.model}"
-    }
+    override fun getDocumentPath(obj: CarInfo): String = getDocumentPath(obj.brand, obj.model)
 
-    fun getCollectionPath(brand: String): String {
-        return "car/${brand}"
-    }
+    fun getDocumentPath(brand: String, model:String): String = "car/${brand}/model/${model}"
 }
 
 @Repository(CAR_REPOSITORY)
@@ -38,10 +34,8 @@ class DBCarInfoDataSource @Autowired constructor(
     val log: Logger = LoggerFactory.getLogger(DBCarInfoDataSource::class.java)
 
     override fun getCarInfo(brand: String, model: String): CarInfo? {
-        val path = firestoreApi.getCollectionPath(brand)
-        return firestoreApi.readDocument(path) {
-            it.whereEqualTo("model", model)
-        }
+        val path = firestoreApi.getDocumentPath(brand, model)
+        return firestoreApi.readDocument(path)
     }
 
     override fun addCarInfo(info: CarInfo) {

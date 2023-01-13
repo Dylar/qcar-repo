@@ -24,11 +24,11 @@ class SellerInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<S
     override val log: Logger = LoggerFactory.getLogger(SellerInfoFirestoreApi::class.java)
 
     override fun getDocumentPath(obj: SellerInfo): String {
-        return "${getCollectionPath(obj.dealer)}/${obj.name}"
+        return getDocumentPath(obj.dealer,obj.name)
     }
 
-    fun getCollectionPath(dealer: String): String {
-        return "dealer/$dealer"
+    fun getDocumentPath(dealer: String, name:String): String {
+        return "dealer/$dealer/seller/$name"
     }
 }
 
@@ -38,9 +38,8 @@ class DBSellerInfoDataSource @Autowired constructor(
 ) : SellerInfoDataSource {
 
     override fun getSellerInfo(dealer: String, name :String): SellerInfo? {
-        return firestoreApi.findDocument(dealer) {
-            it.whereEqualTo("name", name)
-        }
+        val path = firestoreApi.getDocumentPath(dealer, name)
+        return firestoreApi.readDocument(path)
     }
 
     override fun addSellerInfo(info: SellerInfo) {

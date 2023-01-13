@@ -89,17 +89,6 @@ fun buildSellerInfo(jsonFile: String = TEST_SELLER_INFO): SellerInfo {
 //    throw JSONValidationException.SellInfoValidationException(jsonFile)
 }
 
-fun buildEmptyIntroInfo(): IntroInfo = IntroInfo()
-
-fun buildIntroInfo(jsonFile: String = TEST_INTRO_INFO): IntroInfo {
-    val json = loadTestDealerFile(jsonFile)
-//    val isValid = validateFeedbackJson(json)
-//    if (isValid) {
-    return objMapper.readValue(json, IntroInfo::class.java)
-//    }
-//    throw JSONValidationException.FeedbackValidationException(jsonFile)
-}
-
 fun buildEmptyFeedback(): Feedback = Feedback()
 
 fun buildFeedback(jsonFile: String = TEST_FEEDBACK): Feedback {

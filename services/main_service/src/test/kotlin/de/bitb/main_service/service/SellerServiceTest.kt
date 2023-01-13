@@ -2,6 +2,7 @@ package de.bitb.main_service.service
 
 import de.bitb.main_service.builder.buildEmptySellerInfo
 import de.bitb.main_service.builder.buildSellerInfo
+import de.bitb.main_service.datasource.dealer_info.DealerInfoDataSource
 import de.bitb.main_service.datasource.seller_info.SellerInfoDataSource
 import de.bitb.main_service.exceptions.SellerInfoException
 import io.mockk.every
@@ -16,25 +17,27 @@ import java.lang.Exception
 
 internal class SellerServiceTest {
 
-    private lateinit var dataSource: SellerInfoDataSource
+    private lateinit var dealerDS: DealerInfoDataSource
+    private lateinit var sellerDS: SellerInfoDataSource
     private lateinit var service: SellerInfoService
 
     @BeforeEach
     fun setUp() {
-        dataSource = mockk(relaxed = true)
-        every { dataSource.getSellerInfo(any(), any()) }.returns(null)
-        service = SellerInfoService(dataSource)
+        dealerDS = mockk(relaxed = true)
+        sellerDS = mockk(relaxed = true)
+        every { sellerDS.getSellerInfo(any(), any()) }.returns(null)
+        service = SellerInfoService(dealerDS, sellerDS)
     }
 
     @Test
     fun `get seller from service`() {
         //given
         val testInfo = buildSellerInfo()
-        every { dataSource.getSellerInfo(testInfo.dealer, testInfo.name) }.returns(testInfo)
+        every { sellerDS.getSellerInfo(testInfo.dealer, testInfo.name) }.returns(testInfo)
         //when
         val info = service.getSellerInfo(testInfo.dealer, testInfo.name)
         //then
-        verify(exactly = 1) { dataSource.getSellerInfo(testInfo.dealer, testInfo.name) }
+        verify(exactly = 1) { sellerDS.getSellerInfo(testInfo.dealer, testInfo.name) }
         assertThat(info == testInfo)
     }
 
@@ -61,7 +64,7 @@ internal class SellerServiceTest {
 
         emptyInfo = emptyInfo.copy(dealer = "Hamburger Autos")
         service.addSellerInfo(emptyInfo)
-        verify(exactly = 1) { dataSource.addSellerInfo(any()) }
+        verify(exactly = 1) { sellerDS.addSellerInfo(any()) }
     }
 
 }

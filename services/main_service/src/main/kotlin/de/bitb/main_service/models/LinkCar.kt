@@ -1,1 +1,0 @@
-data class LinkCar(val dealer: String, val brand: String, val model: String)

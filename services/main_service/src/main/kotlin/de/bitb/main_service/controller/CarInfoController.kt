@@ -1,8 +1,8 @@
 package de.bitb.main_service.controller
 
-import LinkCar
 import de.bitb.main_service.exceptions.CarInfoException
 import de.bitb.main_service.models.CarInfo
+import de.bitb.main_service.models.CarLink
 import de.bitb.main_service.service.CarInfoService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -52,7 +52,7 @@ class CarInfoController @Autowired constructor(
 
     @PostMapping("/linkCar")
     @ResponseStatus(HttpStatus.CREATED)
-    fun linkCarToDealer(@RequestBody info: LinkCar) {
+    fun linkCarToDealer(@RequestBody info: CarLink) {
         log.info("linkCarToDealer") //TODO test me
         service.linkCarToDealer(info)
     }

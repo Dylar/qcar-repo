@@ -2,6 +2,19 @@ package de.bitb.main_service.models
 
 import de.bitb.main_service.exceptions.*
 
+@Throws(CarLinkException::class)
+fun validateCarLink(info: CarLink) {
+    if (info.dealer.isBlank()) {
+        throw CarLinkException.EmptyDealerException()
+    }
+    if (info.brand.isBlank()) {
+        throw CarLinkException.EmptyBrandException()
+    }
+    if (info.model.isBlank()) {
+        throw CarLinkException.EmptyModelException()
+    }
+}
+
 @Throws(CarInfoException::class)
 fun validateCarInfo(info: CarInfo) {
     if (info.brand.isBlank()) {
@@ -89,6 +102,16 @@ fun validateSellInfo(info: SellInfo) {
         if (it.value.isEmpty()) {
             throw SellInfoException.NoVideosForCategoryException(it.key)
         }
+    }
+}
+
+@Throws(DealerInfoException::class)
+fun validateDealerInfo(info: DealerInfo) {
+    if (info.name.isBlank()) {
+        throw DealerInfoException.EmptyNameException()
+    }
+    if (info.address.isBlank()) {
+        throw DealerInfoException.EmptyAddressException()
     }
 }
 

@@ -26,11 +26,11 @@ class VideoFirestoreApi(override val firestore: Firestore) : FirestoreApi<VideoI
     override val log: Logger = LoggerFactory.getLogger(VideoFirestoreApi::class.java)
 
     override fun getDocumentPath(obj: VideoInfo): String {
-        return "${getCollectionPath(obj.brand, obj.model, obj.category)}/${obj.name}"
+        return getCollectionPath(obj.brand, obj.model, obj.category, obj.name)
     }
 
-    fun getCollectionPath(brand: String, model: String, category: String): String {
-        return "car/${brand}/${model}/category/${category}/video"
+    fun getCollectionPath(brand: String, model: String, category: String, name :String): String {
+        return "car/${brand}/model/${model}/category/${category}/video/${name}"
     }
 }
 
@@ -44,10 +44,8 @@ class DBVideoInfoInfoDataSource @Autowired constructor(
         category: String,
         name: String
     ): VideoInfo? {
-        val path = firestoreApi.getCollectionPath(brand, model, category)
-        return firestoreApi.readDocument(path) {
-            it.whereEqualTo("name", name)
-        }
+        val path = firestoreApi.getCollectionPath(brand, model, category, name)
+        return firestoreApi.readDocument(path)
     }
 
     override fun addVideoInfo(info: VideoInfo) {

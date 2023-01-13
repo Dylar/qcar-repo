@@ -28,7 +28,7 @@ class CategoryFirestoreApi(override val firestore: Firestore) : FirestoreApi<Cat
     }
 
     fun getCollectionPath(brand: String, model: String): String {
-        return "car/${brand}/${model}/category"
+        return "car/${brand}/model/${model}/category"
     }
 }
 

@@ -28,7 +28,7 @@ class FeedbackFirestoreApi(override val firestore: Firestore) : FirestoreApi<Fee
     }
 
     fun getCollectionPath(): String {
-        return "events/feedback"
+        return "feedback"
     }
 }
 
@@ -39,7 +39,7 @@ class DBFeedbackDataSource @Autowired constructor(
 
     override fun getFeedback(): List<Feedback> {
         val path = firestoreApi.getCollectionPath()
-        return firestoreApi.readCollection(path) { it }
+        return firestoreApi.readCollection(path)
     }
 
     override fun addFeedback(feedback: Feedback) {
