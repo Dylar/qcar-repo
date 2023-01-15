@@ -23,6 +23,9 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 
+private fun getVideoURL(brand: String, model: String, category: String, name: String): String =
+    "$CAR_URL_V1/brand/${brand}/model/${model}/category/${category}/video/${name}"
+
 @SpringBootTest
 @AutoConfigureMockMvc
 internal class VideoInfoControllerTest @Autowired constructor(
@@ -50,7 +53,7 @@ internal class VideoInfoControllerTest @Autowired constructor(
                     )
                 }
 
-            mockMvc.get("$CAR_URL_V1/${info.brand}/${info.model}/${info.category}/${info.name}")
+            mockMvc.get(getVideoURL(info.brand, info.model, info.category, info.name))
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
@@ -71,7 +74,7 @@ internal class VideoInfoControllerTest @Autowired constructor(
             every { service.getVideoInfo(info.brand, info.model, info.category, info.name) }
                 .answers { info }
 
-            mockMvc.get("$CAR_URL_V1/${info.brand}/${info.model}/${info.category}/${info.name}")
+            mockMvc.get(getVideoURL(info.brand, info.model, info.category, info.name))
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -103,7 +106,7 @@ internal class VideoInfoControllerTest @Autowired constructor(
 
             //when
             mockMvc
-                .post(CAR_URL_V1) {
+                .post("$CAR_URL_V1/addVideo") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -123,7 +126,7 @@ internal class VideoInfoControllerTest @Autowired constructor(
 
             //when
             val result = mockMvc
-                .post(CAR_URL_V1) {
+                .post("$CAR_URL_V1/addVideo") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -139,7 +142,7 @@ internal class VideoInfoControllerTest @Autowired constructor(
         fun `send no data - throw exception`() {
             //when
             mockMvc
-                .post(CAR_URL_V1) {
+                .post("$CAR_URL_V1/addVideo") {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
                 }
@@ -155,7 +158,7 @@ internal class VideoInfoControllerTest @Autowired constructor(
 
             //when
             mockMvc
-                .post(CAR_URL_V1) {
+                .post("$CAR_URL_V1/addVideo") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(category)
                 }

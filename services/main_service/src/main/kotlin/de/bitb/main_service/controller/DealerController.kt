@@ -60,13 +60,13 @@ class DealerController @Autowired constructor(
     }
 
     // SELL
-    @GetMapping("(/{key}")
+    @GetMapping("(/key/{key}")
     fun getSellInfo(@PathVariable key: String): SellInfo {
         log.info("getSellInfo: $key")
         return sellService.getSellInfo(key)
     }
 
-    @PostMapping
+    @PostMapping("/addSell")
     @ResponseStatus(HttpStatus.CREATED)
     fun addSellInfo(@RequestBody info: SellInfo) {
         log.info("addSellInfo: $info")

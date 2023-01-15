@@ -65,7 +65,7 @@ class CarController @Autowired constructor(
         return videoService.getVideoInfo(brand, model, category, name)
     }
 
-    @PostMapping
+    @PostMapping("/addVideo")
     @ResponseStatus(HttpStatus.CREATED)
     fun addVideoInfo(@RequestBody info: VideoInfo) {
         log.info("addVideoInfo: $info")

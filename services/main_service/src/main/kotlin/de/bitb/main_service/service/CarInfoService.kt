@@ -25,7 +25,6 @@ class CarInfoService @Autowired constructor(
         SellInfoException.UnknownKeyException::class,
         CarInfoException.UnknownCarException::class
     )
-
     fun getSoldCarInfo(key: String): CarInfo { //TODO use me?
         val sellInfo = sellDS.getSellInfo(key) ?: throw SellInfoException.UnknownKeyException(key)
         return carDS.getCarInfo(sellInfo.brand, sellInfo.model)
