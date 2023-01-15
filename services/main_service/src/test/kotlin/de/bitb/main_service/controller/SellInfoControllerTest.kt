@@ -23,9 +23,9 @@ import org.springframework.test.web.servlet.post
 @SpringBootTest
 @AutoConfigureMockMvc
 internal class SellInfoControllerTest @Autowired constructor(
-        val mockMvc: MockMvc,
-        val mapper: ObjectMapper,
-        @MockkBean(relaxed = true) private val service: SellInfoService
+    val mockMvc: MockMvc,
+    val mapper: ObjectMapper,
+    @MockkBean(relaxed = true) private val service: SellInfoService
 ) {
 
     @Nested

@@ -23,6 +23,7 @@ class DealerController @Autowired constructor(
         log.info("getDealerInfo: $name") //TODO test me
         return service.getDealerInfo(name)
     }
+//    V2VubkR1RGFzRW50c2NobMO8c3NlbHN0TWF4aSxiaXN0ZVNjaG9uR3V0OlAK
 
     @PostMapping("/addDealer")
     @ResponseStatus(HttpStatus.CREATED)
@@ -41,7 +42,7 @@ class DealerController @Autowired constructor(
     @PostMapping("/addSeller")
     @ResponseStatus(HttpStatus.CREATED)
     fun addSellerInfo(@RequestBody info: SellerInfo) {
-        log.info("addSellerInfo: $info") //TODO
+        log.info("addSellerInfo: $info")
         service.addSellerInfo(info)
     }
 
@@ -60,7 +61,7 @@ class DealerController @Autowired constructor(
     }
 
     // SELL
-    @GetMapping("(/key/{key}")
+    @GetMapping("/key/{key}")
     fun getSellInfo(@PathVariable key: String): SellInfo {
         log.info("getSellInfo: $key")
         return sellService.getSellInfo(key)
