@@ -1,13 +1,13 @@
 package de.bitb.main_service.datasource.mock
 
 import de.bitb.main_service.builder.buildSellInfo
-import de.bitb.main_service.datasource.sell_info.MockSellInfoDataSource
+import de.bitb.main_service.datasource.dealer.SellInfoDataSourceMock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class MockSellerInfoDataSourceTest {
 
-    private val dataSource = MockSellInfoDataSource()
+    private val dataSource = SellInfoDataSourceMock()
 
     @Test
     fun `get no sell info from data source`() {

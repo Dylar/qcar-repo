@@ -1,7 +1,7 @@
-package de.bitb.main_service.datasource.car_info
+package de.bitb.main_service.datasource.car
 
 import com.google.cloud.firestore.Firestore
-import de.bitb.main_service.datasource.FirestoreApi
+import de.bitb.main_service.datasource.firestore.FirestoreApi
 import de.bitb.main_service.models.CarInfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -22,9 +22,10 @@ interface CarInfoDataSource {
 class CarInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<CarInfo>() {
     override val log: Logger = LoggerFactory.getLogger(CarInfoFirestoreApi::class.java)
 
-    override fun getDocumentPath(obj: CarInfo): String = getDocumentPath(obj.brand, obj.model)
+    override fun getDocumentPath(obj: CarInfo): String =
+        "${getCollectionPath(obj.brand)}/${obj.model}"
 
-    fun getDocumentPath(brand: String, model:String): String = "car/${brand}/model/${model}"
+    fun getCollectionPath(brand: String): String = "car/${brand}/model"
 }
 
 @Repository(CAR_REPOSITORY)
@@ -34,8 +35,10 @@ class DBCarInfoDataSource @Autowired constructor(
     val log: Logger = LoggerFactory.getLogger(DBCarInfoDataSource::class.java)
 
     override fun getCarInfo(brand: String, model: String): CarInfo? {
-        val path = firestoreApi.getDocumentPath(brand, model)
-        return firestoreApi.readDocument(path)
+        val path = firestoreApi.getCollectionPath(brand)
+        return firestoreApi.readDocument(path) {
+            it.whereEqualTo("brand", brand).whereEqualTo("model", model)
+        }
     }
 
     override fun addCarInfo(info: CarInfo) {

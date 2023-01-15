@@ -2,7 +2,7 @@ package de.bitb.main_service.service
 
 import de.bitb.main_service.builder.buildEmptyFeedback
 import de.bitb.main_service.builder.buildFeedback
-import de.bitb.main_service.datasource.feedback.FeedbackDataSource
+import de.bitb.main_service.datasource.FeedbackDataSource
 import de.bitb.main_service.exceptions.FeedbackException
 import io.mockk.every
 import io.mockk.mockk

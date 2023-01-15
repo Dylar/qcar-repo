@@ -1,7 +1,7 @@
-package de.bitb.main_service.datasource.feedback
+package de.bitb.main_service.datasource
 
 import com.google.cloud.firestore.Firestore
-import de.bitb.main_service.datasource.FirestoreApi
+import de.bitb.main_service.datasource.firestore.FirestoreApi
 import de.bitb.main_service.models.Feedback
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

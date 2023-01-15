@@ -1,13 +1,13 @@
 package de.bitb.main_service.datasource.mock
 
 import de.bitb.main_service.builder.buildVideoInfo
-import de.bitb.main_service.datasource.video_info.MockVideoInfoDataSource
+import de.bitb.main_service.datasource.car.VideoInfoDataSourceMock
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.junit.jupiter.api.Test
 
 internal class MockVideoInfoDataSourceTest {
 
-    private val dataSource = MockVideoInfoDataSource()
+    private val dataSource = VideoInfoDataSourceMock()
 
     @Test
     fun `get no video info from data source`() {

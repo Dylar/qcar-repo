@@ -1,10 +1,10 @@
 package de.bitb.main_service.service
 
-import de.bitb.main_service.datasource.category_info.CATEGORY_REPOSITORY_IN_USE
-import de.bitb.main_service.datasource.category_info.CategoryInfoDataSource
+import de.bitb.main_service.datasource.car.CATEGORY_REPOSITORY_IN_USE
+import de.bitb.main_service.datasource.car.CategoryInfoDataSource
 import de.bitb.main_service.exceptions.CategoryInfoException
 import de.bitb.main_service.models.CategoryInfo
-import de.bitb.main_service.models.validateCategoryInfo
+import de.bitb.main_service.exceptions.validateCategoryInfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

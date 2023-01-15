@@ -3,7 +3,7 @@ package de.bitb.main_service.service
 import de.bitb.main_service.datasource.tracking.*
 import de.bitb.main_service.exceptions.TrackingException
 import de.bitb.main_service.models.Tracking
-import de.bitb.main_service.models.validateTracking
+import de.bitb.main_service.exceptions.validateTracking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,14 +1,14 @@
 package de.bitb.main_service.datasource.mock
 
 import de.bitb.main_service.builder.buildCarInfo
-import de.bitb.main_service.datasource.car_info.MockCarInfoDataSource
+import de.bitb.main_service.datasource.car.CarInfoDataSourceMock
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.junit.jupiter.api.Test
 
 
 internal class MockCarInfoDataSourceTest {
 
-    private val dataSource = MockCarInfoDataSource()
+    private val dataSource = CarInfoDataSourceMock()
 
     @Test
     fun `get no car info from data source`() {

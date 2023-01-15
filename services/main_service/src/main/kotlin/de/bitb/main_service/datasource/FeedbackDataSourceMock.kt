@@ -1,4 +1,4 @@
-package de.bitb.main_service.datasource.feedback
+package de.bitb.main_service.datasource
 
 import de.bitb.main_service.models.*
 import org.slf4j.Logger
@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 
 @Repository(FEEDBACK_REPOSITORY_MOCK)
-class MockFeedbackDataSource : FeedbackDataSource {
+class FeedbackDataSourceMock : FeedbackDataSource {
 
-    private val log: Logger = LoggerFactory.getLogger(MockFeedbackDataSource::class.java)
+    private val log: Logger = LoggerFactory.getLogger(FeedbackDataSourceMock::class.java)
 
     private val feedbackDb = mutableListOf<Feedback>()
 

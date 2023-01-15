@@ -1,10 +1,10 @@
-package de.bitb.main_service.datasource.video_info
+package de.bitb.main_service.datasource.car
 
 import de.bitb.main_service.models.*
 import org.springframework.stereotype.Repository
 
 @Repository(VIDEO_REPOSITORY_MOCK)
-class MockVideoInfoDataSource : VideoInfoDataSource {
+class VideoInfoDataSourceMock : VideoInfoDataSource {
 
     private val videoInfoDB = mutableListOf<VideoInfo>()
 

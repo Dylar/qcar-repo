@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import de.bitb.main_service.builder.*
 import de.bitb.main_service.exceptions.SellInfoException
+import de.bitb.main_service.exceptions.validateSellInfo
 import de.bitb.main_service.models.*
 import de.bitb.main_service.service.SellInfoService
 import io.mockk.every
@@ -44,7 +45,7 @@ internal class SellInfoControllerTest @Autowired constructor(
                     )
                 }
 
-            mockMvc.get("$SELL_INFO_URL_V1/${info.key}")
+            mockMvc.get("$DEALER_URL_V1/${info.key}")
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
@@ -58,7 +59,7 @@ internal class SellInfoControllerTest @Autowired constructor(
             every { service.getSellInfo(info.key) }
                 .answers { info }
 
-            mockMvc.get("$SELL_INFO_URL_V1/${info.key}")
+            mockMvc.get("$DEALER_URL_V1/${info.key}")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -83,7 +84,7 @@ internal class SellInfoControllerTest @Autowired constructor(
 
             //when
             mockMvc
-                .post(SELL_INFO_URL_V1) {
+                .post(DEALER_URL_V1) {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -103,7 +104,7 @@ internal class SellInfoControllerTest @Autowired constructor(
 
             //when
             val result = mockMvc
-                .post(SELL_INFO_URL_V1) {
+                .post(DEALER_URL_V1) {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -125,7 +126,7 @@ internal class SellInfoControllerTest @Autowired constructor(
 
             //when
             val result = mockMvc
-                .post(SELL_INFO_URL_V1) {
+                .post(DEALER_URL_V1) {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -141,7 +142,7 @@ internal class SellInfoControllerTest @Autowired constructor(
         fun `send no data - throw exception`() {
             //when
             mockMvc
-                .post(SELL_INFO_URL_V1) {
+                .post(DEALER_URL_V1) {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
                 }

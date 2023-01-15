@@ -1,7 +1,7 @@
 package de.bitb.main_service.controller.car_info
 
 import de.bitb.main_service.models.CarInfo
-import de.bitb.main_service.models.validateCarInfo
+import de.bitb.main_service.exceptions.validateCarInfo
 import org.springframework.validation.Errors
 import org.springframework.validation.Validator
 

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*
 class FeedbackController @Autowired constructor(
     private val service: FeedbackService
 ) {
-
     private val log: Logger = LoggerFactory.getLogger(FeedbackController::class.java)
 
     @ExceptionHandler(FeedbackException::class)

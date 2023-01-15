@@ -2,9 +2,9 @@ package de.bitb.main_service.service
 
 import de.bitb.main_service.builder.buildCarInfo
 import de.bitb.main_service.builder.buildEmptyCarInfo
-import de.bitb.main_service.datasource.car_info.CarInfoDataSource
-import de.bitb.main_service.datasource.car_link.CarLinkDataSource
-import de.bitb.main_service.datasource.sell_info.SellInfoDataSource
+import de.bitb.main_service.datasource.car.CarInfoDataSource
+import de.bitb.main_service.datasource.dealer.CarLinkDataSource
+import de.bitb.main_service.datasource.dealer.SellInfoDataSource
 import de.bitb.main_service.exceptions.CarInfoException
 import io.mockk.every
 import io.mockk.mockk
@@ -21,14 +21,12 @@ internal class CarServiceTest {
     private lateinit var service: CarInfoService
     private lateinit var sellDataSource: SellInfoDataSource
     private lateinit var carDataSource: CarInfoDataSource
-    private lateinit var carLinkDataSource: CarLinkDataSource
 
     @BeforeEach
     fun setUp() {
         carDataSource = mockk(relaxed = true)
         sellDataSource = mockk(relaxed = true)
-        carLinkDataSource = mockk(relaxed = true)
-        service = CarInfoService(carDataSource, carLinkDataSource, sellDataSource)
+        service = CarInfoService(carDataSource, sellDataSource)
     }
 
     @Test

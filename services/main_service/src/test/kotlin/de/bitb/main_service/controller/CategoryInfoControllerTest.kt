@@ -6,8 +6,8 @@ import de.bitb.main_service.builder.buildCategoryInfo
 import de.bitb.main_service.builder.buildEmptyCategoryInfo
 import de.bitb.main_service.builder.buildVideoInfo
 import de.bitb.main_service.exceptions.CategoryInfoException
+import de.bitb.main_service.exceptions.validateCategoryInfo
 import de.bitb.main_service.models.*
-import de.bitb.main_service.service.CarInfoService
 import de.bitb.main_service.service.CategoryInfoService
 import io.mockk.every
 import io.mockk.verify
@@ -21,6 +21,9 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
+
+private fun getCategoryURL(brand: String, model: String, name: String): String =
+    "$CAR_URL_V1/brand/$brand/model/$model/category/$name"
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -47,7 +50,7 @@ internal class CategoryInfoControllerTest @Autowired constructor(
                     )
                 }
 
-            mockMvc.get("$CATEGORY_INFO_URL_V1/${info.brand}/${info.model}/${info.name}")
+            mockMvc.get(getCategoryURL(info.brand, info.model, info.name))
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
@@ -61,7 +64,7 @@ internal class CategoryInfoControllerTest @Autowired constructor(
             every { service.getCategoryInfo(info.brand, info.model, info.name) }
                 .answers { info }
 
-            mockMvc.get("$CATEGORY_INFO_URL_V1/${info.brand}/${info.model}/${info.name}")
+            mockMvc.get(getCategoryURL(info.brand, info.model, info.name))
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -86,7 +89,7 @@ internal class CategoryInfoControllerTest @Autowired constructor(
 
             //when
             mockMvc
-                .post(CATEGORY_INFO_URL_V1) {
+                .post("$CAR_URL_V1/addCategory") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -106,7 +109,7 @@ internal class CategoryInfoControllerTest @Autowired constructor(
 
             //when
             val result = mockMvc
-                .post(CATEGORY_INFO_URL_V1) {
+                .post("$CAR_URL_V1/addCategory") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -122,7 +125,7 @@ internal class CategoryInfoControllerTest @Autowired constructor(
         fun `send no data - throw exception`() {
             //when
             mockMvc
-                .post(CATEGORY_INFO_URL_V1) {
+                .post("$CAR_URL_V1/addCategory") {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
                 }
@@ -141,7 +144,7 @@ internal class CategoryInfoControllerTest @Autowired constructor(
 
             //when
             mockMvc
-                .post(CATEGORY_INFO_URL_V1) {
+                .post("$CAR_URL_V1/addCategory") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(video)
                 }

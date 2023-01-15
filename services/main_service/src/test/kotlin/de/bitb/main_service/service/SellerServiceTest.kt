@@ -2,8 +2,10 @@ package de.bitb.main_service.service
 
 import de.bitb.main_service.builder.buildEmptySellerInfo
 import de.bitb.main_service.builder.buildSellerInfo
-import de.bitb.main_service.datasource.dealer_info.DealerInfoDataSource
-import de.bitb.main_service.datasource.seller_info.SellerInfoDataSource
+import de.bitb.main_service.datasource.car.CarInfoDataSource
+import de.bitb.main_service.datasource.dealer.CarLinkDataSource
+import de.bitb.main_service.datasource.dealer.DealerInfoDataSource
+import de.bitb.main_service.datasource.dealer.SellerInfoDataSource
 import de.bitb.main_service.exceptions.SellerInfoException
 import io.mockk.every
 import io.mockk.mockk
@@ -17,16 +19,21 @@ import java.lang.Exception
 
 internal class SellerServiceTest {
 
+    private lateinit var service: SellerInfoService
+
     private lateinit var dealerDS: DealerInfoDataSource
     private lateinit var sellerDS: SellerInfoDataSource
-    private lateinit var service: SellerInfoService
+    private lateinit var carDS: CarInfoDataSource
+    private lateinit var linkDS: CarLinkDataSource
 
     @BeforeEach
     fun setUp() {
         dealerDS = mockk(relaxed = true)
         sellerDS = mockk(relaxed = true)
+        carDS = mockk(relaxed = true)
+        linkDS = mockk(relaxed = true)
         every { sellerDS.getSellerInfo(any(), any()) }.returns(null)
-        service = SellerInfoService(dealerDS, sellerDS)
+        service = SellerInfoService(dealerDS, sellerDS, carDS, linkDS)
     }
 
     @Test

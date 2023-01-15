@@ -1,6 +1,5 @@
 package de.bitb.main_service.builder
 
-import de.bitb.main_service.models.validateCarInfo
 import org.junit.jupiter.api.Test
 
 //internal class SchemaValidatorTest {

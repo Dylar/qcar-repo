@@ -2,7 +2,7 @@ package de.bitb.main_service.service
 
 import de.bitb.main_service.builder.buildCategoryInfo
 import de.bitb.main_service.builder.buildEmptyCategoryInfo
-import de.bitb.main_service.datasource.category_info.CategoryInfoDataSource
+import de.bitb.main_service.datasource.car.CategoryInfoDataSource
 import de.bitb.main_service.exceptions.CategoryInfoException
 import io.mockk.every
 import io.mockk.mockk

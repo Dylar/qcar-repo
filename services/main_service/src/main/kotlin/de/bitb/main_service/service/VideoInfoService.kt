@@ -1,10 +1,10 @@
 package de.bitb.main_service.service
 
-import de.bitb.main_service.datasource.video_info.VIDEO_REPOSITORY_IN_USE
-import de.bitb.main_service.datasource.video_info.VideoInfoDataSource
+import de.bitb.main_service.datasource.car.VIDEO_REPOSITORY_IN_USE
+import de.bitb.main_service.datasource.car.VideoInfoDataSource
 import de.bitb.main_service.exceptions.VideoInfoException
 import de.bitb.main_service.models.VideoInfo
-import de.bitb.main_service.models.validateVideoInfo
+import de.bitb.main_service.exceptions.validateVideoInfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

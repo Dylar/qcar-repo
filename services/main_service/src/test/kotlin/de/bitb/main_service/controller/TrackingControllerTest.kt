@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import de.bitb.main_service.builder.*
 import de.bitb.main_service.exceptions.TrackingException
+import de.bitb.main_service.exceptions.validateTracking
 import de.bitb.main_service.models.*
 import de.bitb.main_service.service.TrackingService
 import io.mockk.every

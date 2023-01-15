@@ -1,7 +1,7 @@
 package de.bitb.main_service.datasource.tracking
 
 import com.google.cloud.firestore.Firestore
-import de.bitb.main_service.datasource.FirestoreApi
+import de.bitb.main_service.datasource.firestore.FirestoreApi
 import de.bitb.main_service.models.Tracking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -26,7 +26,7 @@ class TrackingFirestoreApi(override val firestore: Firestore) : FirestoreApi<Tra
     override fun getDocumentPath(obj: Tracking): String {
         return "${getCollectionPath()}/${obj.date}"
     }
-
+//TODO customer specific path
     fun getCollectionPath(): String {
         return "tracking"
     }

@@ -1,7 +1,7 @@
-package de.bitb.main_service.datasource.seller_info
+package de.bitb.main_service.datasource.dealer
 
 import com.google.cloud.firestore.Firestore
-import de.bitb.main_service.datasource.FirestoreApi
+import de.bitb.main_service.datasource.firestore.FirestoreApi
 import de.bitb.main_service.models.SellerInfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -23,13 +23,10 @@ interface SellerInfoDataSource {
 class SellerInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<SellerInfo>() {
     override val log: Logger = LoggerFactory.getLogger(SellerInfoFirestoreApi::class.java)
 
-    override fun getDocumentPath(obj: SellerInfo): String {
-        return getDocumentPath(obj.dealer,obj.name)
-    }
+    override fun getDocumentPath(obj: SellerInfo): String =
+        "${getCollectionPath(obj.dealer)}/${obj.name}"
 
-    fun getDocumentPath(dealer: String, name:String): String {
-        return "dealer/$dealer/seller/$name"
-    }
+    fun getCollectionPath(dealer: String): String = "dealer/$dealer/seller"
 }
 
 @Repository(SELLER_REPOSITORY)
@@ -37,9 +34,11 @@ class DBSellerInfoDataSource @Autowired constructor(
     val firestoreApi: SellerInfoFirestoreApi,
 ) : SellerInfoDataSource {
 
-    override fun getSellerInfo(dealer: String, name :String): SellerInfo? {
-        val path = firestoreApi.getDocumentPath(dealer, name)
-        return firestoreApi.readDocument(path)
+    override fun getSellerInfo(dealer: String, name: String): SellerInfo? {
+        val path = firestoreApi.getCollectionPath(dealer)
+        return firestoreApi.readDocument(path) {
+            it.whereEqualTo("name", name)
+        }
     }
 
     override fun addSellerInfo(info: SellerInfo) {

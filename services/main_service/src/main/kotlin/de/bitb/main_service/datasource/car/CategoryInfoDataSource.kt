@@ -1,7 +1,7 @@
-package de.bitb.main_service.datasource.category_info
+package de.bitb.main_service.datasource.car
 
 import com.google.cloud.firestore.Firestore
-import de.bitb.main_service.datasource.FirestoreApi
+import de.bitb.main_service.datasource.firestore.FirestoreApi
 import de.bitb.main_service.models.CategoryInfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

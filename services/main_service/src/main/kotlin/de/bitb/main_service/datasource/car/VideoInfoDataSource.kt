@@ -1,9 +1,7 @@
-package de.bitb.main_service.datasource.video_info
+package de.bitb.main_service.datasource.car
 
 import com.google.cloud.firestore.Firestore
-import de.bitb.main_service.datasource.FirestoreApi
-import de.bitb.main_service.datasource.category_info.CategoryFirestoreApi
-import de.bitb.main_service.models.CategoryInfo
+import de.bitb.main_service.datasource.firestore.FirestoreApi
 import de.bitb.main_service.models.VideoInfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -25,13 +23,11 @@ interface VideoInfoDataSource {
 class VideoFirestoreApi(override val firestore: Firestore) : FirestoreApi<VideoInfo>() {
     override val log: Logger = LoggerFactory.getLogger(VideoFirestoreApi::class.java)
 
-    override fun getDocumentPath(obj: VideoInfo): String {
-        return getCollectionPath(obj.brand, obj.model, obj.category, obj.name)
-    }
+    override fun getDocumentPath(obj: VideoInfo): String =
+        "${getCollectionPath(obj.brand, obj.model, obj.category)}/${obj.name}"
 
-    fun getCollectionPath(brand: String, model: String, category: String, name :String): String {
-        return "car/${brand}/model/${model}/category/${category}/video/${name}"
-    }
+    fun getCollectionPath(brand: String, model: String, category: String): String =
+        "car/${brand}/model/${model}/category/${category}/video"
 }
 
 @Repository(VIDEO_REPOSITORY)
@@ -44,8 +40,10 @@ class DBVideoInfoInfoDataSource @Autowired constructor(
         category: String,
         name: String
     ): VideoInfo? {
-        val path = firestoreApi.getCollectionPath(brand, model, category, name)
-        return firestoreApi.readDocument(path)
+        val path = firestoreApi.getCollectionPath(brand, model, category)
+        return firestoreApi.readDocument(path) {
+            it.whereEqualTo("name", name)
+        }
     }
 
     override fun addVideoInfo(info: VideoInfo) {

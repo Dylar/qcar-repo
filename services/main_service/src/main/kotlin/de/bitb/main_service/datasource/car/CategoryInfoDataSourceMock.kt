@@ -1,10 +1,10 @@
-package de.bitb.main_service.datasource.category_info
+package de.bitb.main_service.datasource.car
 
 import de.bitb.main_service.models.*
 import org.springframework.stereotype.Repository
 
 @Repository(CATEGORY_REPOSITORY_MOCK)
-class MockCategoryInfoDataSource : CategoryInfoDataSource {
+class CategoryInfoDataSourceMock : CategoryInfoDataSource {
 
     private val categoryInfoDB = mutableListOf<CategoryInfo>()
 

@@ -1,4 +1,4 @@
-package de.bitb.main_service.datasource.dealer_info
+package de.bitb.main_service.datasource.dealer
 
 import de.bitb.main_service.models.*
 import org.slf4j.Logger
@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 
 @Repository(DEALER_REPOSITORY_MOCK)
-class MockDealerInfoDataSource : DealerInfoDataSource {
+class DealerInfoDataSourceMock : DealerInfoDataSource {
 
-    private val log: Logger = LoggerFactory.getLogger(MockDealerInfoDataSource::class.java)
+    private val log: Logger = LoggerFactory.getLogger(DealerInfoDataSourceMock::class.java)
 
     private val dealerInfoDb = mutableMapOf<String, DealerInfo>()
 

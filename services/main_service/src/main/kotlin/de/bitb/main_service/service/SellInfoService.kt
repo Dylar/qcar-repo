@@ -1,17 +1,15 @@
 package de.bitb.main_service.service
 
-import de.bitb.main_service.datasource.sell_info.SELL_REPOSITORY_IN_USE
-import de.bitb.main_service.datasource.sell_info.SellInfoDataSource
-import de.bitb.main_service.exceptions.CarInfoException
+import de.bitb.main_service.datasource.dealer.SELL_REPOSITORY_IN_USE
+import de.bitb.main_service.datasource.dealer.SellInfoDataSource
 import de.bitb.main_service.exceptions.SellInfoException
 import de.bitb.main_service.models.SellInfo
-import de.bitb.main_service.models.validateSellInfo
+import de.bitb.main_service.exceptions.validateSellInfo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class SellInfoService(

@@ -1,15 +1,10 @@
 package de.bitb.main_service.service
 
-import de.bitb.main_service.datasource.dealer_info.DEALER_REPOSITORY_IN_USE
-import de.bitb.main_service.datasource.dealer_info.DealerInfoDataSource
-import de.bitb.main_service.datasource.seller_info.SELLER_REPOSITORY_IN_USE
-import de.bitb.main_service.datasource.seller_info.SellerInfoDataSource
-import de.bitb.main_service.exceptions.DealerInfoException
-import de.bitb.main_service.exceptions.SellerInfoException
-import de.bitb.main_service.models.DealerInfo
-import de.bitb.main_service.models.SellerInfo
-import de.bitb.main_service.models.validateDealerInfo
-import de.bitb.main_service.models.validateSellerInfo
+import de.bitb.main_service.datasource.car.CAR_REPOSITORY_IN_USE
+import de.bitb.main_service.datasource.car.CarInfoDataSource
+import de.bitb.main_service.datasource.dealer.*
+import de.bitb.main_service.exceptions.*
+import de.bitb.main_service.models.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,7 +14,9 @@ import org.springframework.stereotype.Service
 @Service
 class SellerInfoService(
     @Qualifier(DEALER_REPOSITORY_IN_USE) @Autowired val dealerDS: DealerInfoDataSource,
-    @Qualifier(SELLER_REPOSITORY_IN_USE) @Autowired val sellerDS: SellerInfoDataSource
+    @Qualifier(SELLER_REPOSITORY_IN_USE) @Autowired val sellerDS: SellerInfoDataSource,
+    @Qualifier(CAR_REPOSITORY_IN_USE) @Autowired val carDS: CarInfoDataSource,
+    @Qualifier(CAR_LINK_REPOSITORY_IN_USE) @Autowired val carLinkDS: CarLinkDataSource,
 ) {
     private val log: Logger = LoggerFactory.getLogger(SellerInfoService::class.java)
 
@@ -43,7 +40,17 @@ class SellerInfoService(
 
     @Throws(DealerInfoException.UnknownDealerException::class)
     fun getDealerInfo(name: String): DealerInfo {
-        return dealerDS.getDealerInfo( name)
-            ?: throw DealerInfoException.UnknownDealerException( name)
+        return dealerDS.getDealerInfo(name)
+            ?: throw DealerInfoException.UnknownDealerException(name)
+    }
+
+    fun getCarInfos(dealer: String): List<CarInfo> {
+        val links = carLinkDS.getLinks(dealer)
+        return links?.mapNotNull { carDS.getCarInfo(it.brand, it.model) } ?: mutableListOf()
+    }
+
+    fun linkCarToDealer(info: CarLink) {
+        validateCarLink(info)
+        carLinkDS.addLink(info)
     }
 }

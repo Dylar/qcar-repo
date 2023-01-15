@@ -5,8 +5,8 @@ import com.ninjasquad.springmockk.MockkBean
 import de.bitb.main_service.builder.buildCarInfo
 import de.bitb.main_service.builder.buildEmptyCarInfo
 import de.bitb.main_service.exceptions.CarInfoException
+import de.bitb.main_service.exceptions.validateCarInfo
 import de.bitb.main_service.models.CarInfo
-import de.bitb.main_service.models.validateCarInfo
 import de.bitb.main_service.service.CarInfoService
 import io.mockk.every
 import io.mockk.verify
@@ -20,6 +20,8 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
+
+private fun getCarURL(brand:String, model:String): String = "$CAR_URL_V1/brand/$brand/model/$model"
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -47,7 +49,7 @@ internal class CarInfoControllerTest @Autowired constructor(
                     )
                 }
 
-            mockMvc.get("$CAR_INFO_URL_V1/${info.brand}/${info.model}")
+            mockMvc.get(getCarURL(info.brand, info.model))
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
@@ -61,7 +63,7 @@ internal class CarInfoControllerTest @Autowired constructor(
             every { service.getCarInfo(info.brand, info.model) }
                 .answers { info }
 
-            mockMvc.get("$CAR_INFO_URL_V1/${info.brand}/${info.model}")
+            mockMvc.get(getCarURL(info.brand, info.model))
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -86,7 +88,7 @@ internal class CarInfoControllerTest @Autowired constructor(
 
             //when
             mockMvc
-                .post("$CAR_INFO_URL_V1/addCar") {
+                .post("$CAR_URL_V1/addCar") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -106,7 +108,7 @@ internal class CarInfoControllerTest @Autowired constructor(
 
             //when
             val result = mockMvc
-                .post("$CAR_INFO_URL_V1/addCar") {
+                .post("$CAR_URL_V1/addCar") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -122,7 +124,7 @@ internal class CarInfoControllerTest @Autowired constructor(
         fun `send no data - throw exception`() {
             //when
             mockMvc
-                .post("$CAR_INFO_URL_V1/addCar") {
+                .post("$CAR_URL_V1/addCar") {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
                 }

@@ -2,7 +2,7 @@ package de.bitb.main_service.service
 
 import de.bitb.main_service.builder.buildEmptyVideoInfo
 import de.bitb.main_service.builder.buildVideoInfo
-import de.bitb.main_service.datasource.video_info.VideoInfoDataSource
+import de.bitb.main_service.datasource.car.VideoInfoDataSource
 import de.bitb.main_service.exceptions.VideoInfoException
 import io.mockk.every
 import io.mockk.mockk

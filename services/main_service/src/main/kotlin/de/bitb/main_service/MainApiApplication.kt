@@ -34,7 +34,7 @@ class MainApiApplication @Autowired constructor(
     @Throws(Exception::class)
     fun run(restTemplate: RestTemplate): CommandLineRunner =
         CommandLineRunner {
-            log.info("Run MainApiApplication: v${buildProperties.version}")
+            log.info("Run Service: v${buildProperties.version}")
             if (FirebaseApp.getApps().isEmpty()) {
                 val options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.getApplicationDefault())

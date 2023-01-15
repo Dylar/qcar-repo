@@ -1,13 +1,13 @@
 package de.bitb.main_service.datasource.mock
 
 import de.bitb.main_service.builder.buildCategoryInfo
-import de.bitb.main_service.datasource.category_info.MockCategoryInfoDataSource
+import de.bitb.main_service.datasource.car.CategoryInfoDataSourceMock
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.junit.jupiter.api.Test
 
 internal class MockCategoryInfoDataSourceTest {
 
-    private val dataSource = MockCategoryInfoDataSource()
+    private val dataSource = CategoryInfoDataSourceMock()
 
     @Test
     fun `get no category info from data source`() {

@@ -2,8 +2,7 @@ package de.bitb.main_service.service
 
 import de.bitb.main_service.builder.buildInvalidSellInfo
 import de.bitb.main_service.builder.buildSellInfo
-import de.bitb.main_service.builder.buildVideoInfo
-import de.bitb.main_service.datasource.sell_info.SellInfoDataSource
+import de.bitb.main_service.datasource.dealer.SellInfoDataSource
 import de.bitb.main_service.exceptions.SellInfoException
 import de.bitb.main_service.models.SellInfo
 import io.mockk.every

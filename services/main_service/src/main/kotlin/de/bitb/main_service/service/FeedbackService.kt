@@ -1,10 +1,10 @@
 package de.bitb.main_service.service
 
-import de.bitb.main_service.datasource.feedback.FEEDBACK_REPOSITORY_IN_USE
-import de.bitb.main_service.datasource.feedback.FeedbackDataSource
+import de.bitb.main_service.datasource.FEEDBACK_REPOSITORY_IN_USE
+import de.bitb.main_service.datasource.FeedbackDataSource
 import de.bitb.main_service.exceptions.FeedbackException
 import de.bitb.main_service.models.Feedback
-import de.bitb.main_service.models.validateFeedback
+import de.bitb.main_service.exceptions.validateFeedback
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

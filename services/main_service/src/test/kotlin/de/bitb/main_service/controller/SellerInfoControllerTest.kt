@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import de.bitb.main_service.builder.*
 import de.bitb.main_service.exceptions.SellerInfoException
+import de.bitb.main_service.exceptions.validateSellerInfo
 import de.bitb.main_service.models.*
 import de.bitb.main_service.service.SellerInfoService
 import io.mockk.every
@@ -45,7 +46,7 @@ internal class SellerInfoControllerTest @Autowired constructor(
                     )
                 }
 
-            mockMvc.get("$SELLER_INFO_URL_V1/${info.dealer}/${info.name}")
+            mockMvc.get("$DEALER_URL_V1/dealer/${info.dealer}/seller/${info.name}")
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
@@ -59,7 +60,7 @@ internal class SellerInfoControllerTest @Autowired constructor(
             every { service.getSellerInfo(info.dealer, info.name) }
                 .answers { info }
 
-            mockMvc.get("$SELLER_INFO_URL_V1/${info.dealer}/${info.name}")
+            mockMvc.get("$DEALER_URL_V1/dealer/${info.dealer}/seller/${info.name}")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -84,7 +85,7 @@ internal class SellerInfoControllerTest @Autowired constructor(
 
             //when
             mockMvc
-                .post(SELLER_INFO_URL_V1) {
+                .post("$DEALER_URL_V1/addSeller") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -104,7 +105,7 @@ internal class SellerInfoControllerTest @Autowired constructor(
 
             //when
             val result = mockMvc
-                .post(SELLER_INFO_URL_V1) {
+                .post("$DEALER_URL_V1/addSeller") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -120,7 +121,7 @@ internal class SellerInfoControllerTest @Autowired constructor(
         fun `send no data - throw exception`() {
             //when
             mockMvc
-                .post(SELLER_INFO_URL_V1) {
+                .post("$DEALER_URL_V1/addSeller") {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
                 }

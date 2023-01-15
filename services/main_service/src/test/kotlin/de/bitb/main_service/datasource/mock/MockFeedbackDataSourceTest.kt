@@ -1,13 +1,13 @@
 package de.bitb.main_service.datasource.mock
 
 import de.bitb.main_service.builder.buildFeedback
-import de.bitb.main_service.datasource.feedback.MockFeedbackDataSource
+import de.bitb.main_service.datasource.FeedbackDataSourceMock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class MockFeedbackDataSourceTest {
 
-    private val dataSource = MockFeedbackDataSource()
+    private val dataSource = FeedbackDataSourceMock()
 
     @Test
     fun `get no sell info from data source`() {

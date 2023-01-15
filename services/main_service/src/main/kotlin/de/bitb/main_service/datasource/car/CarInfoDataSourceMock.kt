@@ -1,4 +1,4 @@
-package de.bitb.main_service.datasource.car_info
+package de.bitb.main_service.datasource.car
 
 import de.bitb.main_service.models.*
 import org.slf4j.Logger
@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 
 @Repository(CAR_REPOSITORY_MOCK)
-class MockCarInfoDataSource : CarInfoDataSource {
-    private val log: Logger = LoggerFactory.getLogger(MockCarInfoDataSource::class.java)
+class CarInfoDataSourceMock : CarInfoDataSource {
+    private val log: Logger = LoggerFactory.getLogger(CarInfoDataSourceMock::class.java)
 
     private val carInfoDB = mutableListOf<CarInfo>()
 

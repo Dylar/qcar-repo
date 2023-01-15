@@ -1,8 +1,7 @@
-package de.bitb.main_service.datasource
+package de.bitb.main_service.datasource.firestore
 
 import com.google.api.core.ApiFuture
 import com.google.cloud.firestore.*
-import de.bitb.main_service.controller.API_VERSION_V1
 import org.slf4j.Logger
 import java.util.concurrent.ExecutionException
 
