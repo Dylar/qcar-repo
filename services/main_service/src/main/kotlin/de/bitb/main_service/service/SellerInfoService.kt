@@ -44,13 +44,15 @@ class SellerInfoService(
             ?: throw DealerInfoException.UnknownDealerException(name)
     }
 
-    fun getCarInfos(dealer: String): List<CarInfo> {
-        val links = carLinkDS.getLinks(dealer)
-        return links?.mapNotNull { carDS.getCarInfo(it.brand, it.model) } ?: mutableListOf()
-    }
-
     fun linkCarToDealer(info: CarLink) {
         validateCarLink(info)
         carLinkDS.addLink(info)
     }
+
+    fun getCarInfos(dealer: String): List<CarInfo> {
+        val links = carLinkDS.getLinks(dealer)
+        return links?.mapNotNull { carDS.getCarInfo(it.brand, it.model) }
+            ?: throw CarLinkException.NoCarLinkException(dealer)
+    }
+
 }

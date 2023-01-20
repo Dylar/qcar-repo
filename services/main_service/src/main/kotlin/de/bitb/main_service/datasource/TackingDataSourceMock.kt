@@ -1,5 +1,7 @@
-package de.bitb.main_service.datasource.tracking
+package de.bitb.main_service.datasource
 
+import de.bitb.main_service.datasource.tracking.TRACKING_REPOSITORY_MOCK
+import de.bitb.main_service.datasource.tracking.TrackingDataSource
 import de.bitb.main_service.models.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -12,10 +14,10 @@ class MockTrackingDataSource : TrackingDataSource {
 
     private val feedbackDb = mutableListOf<Tracking>()
 
-    override fun getTracking(): List<Tracking> = feedbackDb
+    override fun getTracking(customer:String): List<Tracking> = feedbackDb
 
-    override fun addTracking(feedback: Tracking) {
-        feedbackDb.add(feedback)
+    override fun addTracking(tracking: Tracking) {
+        feedbackDb.add(tracking)
     }
 
 }

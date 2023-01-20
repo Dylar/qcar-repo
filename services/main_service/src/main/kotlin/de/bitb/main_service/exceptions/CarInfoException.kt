@@ -1,6 +1,9 @@
 package de.bitb.main_service.exceptions
 
 sealed class CarLinkException(msg: String) : Exception(msg) {
+    class NoCarLinkException(dealer: String) :
+        CarLinkException("Dealer ($dealer) has no cars")
+
     class EmptyDealerException : CarLinkException("Dealer is empty")
     class EmptyBrandException : CarLinkException("Brand is empty")
     class EmptyModelException : CarLinkException("Model is empty")

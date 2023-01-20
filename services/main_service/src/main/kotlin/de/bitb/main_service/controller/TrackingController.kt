@@ -30,10 +30,10 @@ class TrackingController @Autowired constructor(
         return ResponseEntity(e.message, HttpStatus.NOT_FOUND)
     }
 
-    @GetMapping
-    fun getTracking(): List<Tracking> {
+    @GetMapping("/{customer}")
+    fun getTracking(@PathVariable customer: String): List<Tracking> {
         log.info("getTracking")
-        return service.getTracking()
+        return service.getTracking(customer)
     }
 
     @PostMapping

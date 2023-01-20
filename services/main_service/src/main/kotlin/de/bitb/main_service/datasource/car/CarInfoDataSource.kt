@@ -25,7 +25,7 @@ class CarInfoFirestoreApi(override val firestore: Firestore) : FirestoreApi<CarI
     override fun getDocumentPath(obj: CarInfo): String =
         "${getCollectionPath(obj.brand)}/${obj.model}"
 
-    fun getCollectionPath(brand: String): String = "car/${brand}/model"
+    fun getCollectionPath(brand: String): String = "car/$brand/model"
 }
 
 @Repository(CAR_REPOSITORY)
@@ -36,8 +36,9 @@ class DBCarInfoDataSource @Autowired constructor(
 
     override fun getCarInfo(brand: String, model: String): CarInfo? {
         val path = firestoreApi.getCollectionPath(brand)
-        return firestoreApi.readDocument(path) {
-            it.whereEqualTo("brand", brand).whereEqualTo("model", model)
+        return firestoreApi.getDocument(path) {
+            it.whereEqualTo("brand", brand)
+                .whereEqualTo("model", model)
         }
     }
 

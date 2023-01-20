@@ -1,6 +1,5 @@
 package de.bitb.main_service.exceptions
 
-import de.bitb.main_service.exceptions.*
 import de.bitb.main_service.models.*
 
 @Throws(CarLinkException::class)

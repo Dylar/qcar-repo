@@ -24,7 +24,7 @@ class FeedbackService(
     }
 
     @Throws(FeedbackException.NoFeedbackException::class)
-    fun getFeedback(): List<Feedback> =
-        feedbackDS.getFeedback().ifEmpty { throw FeedbackException.NoFeedbackException() }
+    fun getFeedback(customer: String): List<Feedback> =
+        feedbackDS.getFeedback(customer).ifEmpty { throw FeedbackException.NoFeedbackException() }
 
 }

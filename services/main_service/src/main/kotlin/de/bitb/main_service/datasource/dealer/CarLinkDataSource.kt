@@ -22,13 +22,10 @@ interface CarLinkDataSource {
 class CarLinkFirestoreApi(override val firestore: Firestore) : FirestoreApi<CarLink>() {
     override val log: Logger = LoggerFactory.getLogger(CarLinkFirestoreApi::class.java)
 
-    override fun getDocumentPath(obj: CarLink): String {
-        return getCollectionPath(obj.dealer) //TODO wrong?
-    }
+    override fun getDocumentPath(obj: CarLink): String =
+        getCollectionPath(obj.dealer)+"/${obj.brand}_${obj.model}"
 
-    fun getCollectionPath(dealer: String): String {
-        return "dealer/${dealer}/cars"
-    }
+    fun getCollectionPath(dealer: String): String = "dealer/${dealer}/cars"
 }
 
 @Repository(CAR_LINK_REPOSITORY)
@@ -39,7 +36,7 @@ class DBCarLinkDataSource @Autowired constructor(
 
     override fun getLinks(dealer: String): List<CarLink>? {
         val path = firestoreApi.getCollectionPath(dealer)
-        return firestoreApi.readCollection(path)
+        return firestoreApi.getCollection(path)
     }
 
     override fun addLink(link: CarLink) {

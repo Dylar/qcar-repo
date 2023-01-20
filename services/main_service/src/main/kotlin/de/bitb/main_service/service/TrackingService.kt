@@ -23,7 +23,7 @@ class TrackingService(
     }
 
     @Throws(TrackingException.NoTrackingException::class)
-    fun getTracking(): List<Tracking> =
-        trackingDS.getTracking().ifEmpty { throw TrackingException.NoTrackingException() }
+    fun getTracking(customer: String): List<Tracking> =
+        trackingDS.getTracking(customer).ifEmpty { throw TrackingException.NoTrackingException() }
 
 }

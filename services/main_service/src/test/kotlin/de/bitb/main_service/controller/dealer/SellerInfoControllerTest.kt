@@ -1,13 +1,13 @@
-package de.bitb.main_service.controller
+package de.bitb.main_service.controller.dealer
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
-import de.bitb.main_service.builder.buildCarInfo
-import de.bitb.main_service.builder.buildEmptyCarInfo
-import de.bitb.main_service.exceptions.CarInfoException
-import de.bitb.main_service.exceptions.validateCarInfo
-import de.bitb.main_service.models.CarInfo
-import de.bitb.main_service.service.CarInfoService
+import de.bitb.main_service.builder.*
+import de.bitb.main_service.controller.DEALER_URL_V1
+import de.bitb.main_service.exceptions.SellerInfoException
+import de.bitb.main_service.exceptions.validateSellerInfo
+import de.bitb.main_service.models.*
+import de.bitb.main_service.service.SellerInfoService
 import io.mockk.every
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -21,49 +21,50 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 
-private fun getCarURL(brand:String, model:String): String = "$CAR_URL_V1/brand/$brand/model/$model"
+private fun getSellerURL(dealer: String, seller: String): String =
+    "$DEALER_URL_V1/dealer/$dealer/seller/$seller"
 
 @SpringBootTest
 @AutoConfigureMockMvc
-internal class CarInfoControllerTest @Autowired constructor(
-    private val mapper: ObjectMapper,
-    private val mockMvc: MockMvc,
-    @MockkBean(relaxed = true) private val service: CarInfoService
+internal class SellerInfoControllerTest @Autowired constructor(
+    val mockMvc: MockMvc,
+    val mapper: ObjectMapper,
+    @MockkBean(relaxed = true) private val service: SellerInfoService
 ) {
 
     @Nested
-    @DisplayName("GET car info")
+    @DisplayName("GET seller info")
     @TestInstance(Lifecycle.PER_CLASS)
-    inner class GETCarInfo {
+    inner class GETSellerInfo {
 
         @Test
-        fun `get no car info`() {
-            val info = buildCarInfo()
+        fun `get no seller info`() {
+            val info = buildSellerInfo()
 
-            every { service.getCarInfo(any(), any()) }
+            every { service.getSellerInfo(any(), any()) }
                 .answers {
                     val args = it.invocation.args
-                    throw CarInfoException.UnknownCarException(
+                    throw SellerInfoException.UnknownSellerException(
                         args.first() as String,
-                        args.last() as String
+                        args.last() as String,
                     )
                 }
 
-            mockMvc.get(getCarURL(info.brand, info.model))
+            mockMvc.get(getSellerURL(info.dealer, info.name))
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
-            verify(exactly = 1) { service.getCarInfo(info.brand, info.model) }
+            verify(exactly = 1) { service.getSellerInfo(info.dealer, info.name) }
         }
 
         @Test
-        fun `get car info`() {
-            val info = buildCarInfo()
+        fun `get seller info`() {
+            val info = buildSellerInfo()
 
-            every { service.getCarInfo(info.brand, info.model) }
+            every { service.getSellerInfo(info.dealer, info.name) }
                 .answers { info }
 
-            mockMvc.get(getCarURL(info.brand, info.model))
+            mockMvc.get(getSellerURL(info.dealer, info.name))
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -73,42 +74,42 @@ internal class CarInfoControllerTest @Autowired constructor(
                     }
                 }
 
-            verify(exactly = 1) { service.getCarInfo(info.brand, info.model) }
+            verify(exactly = 1) { service.getSellerInfo(info.dealer, info.name) }
         }
     }
 
     @Nested
-    @DisplayName("POST car info")
+    @DisplayName("POST seller info")
     @TestInstance(Lifecycle.PER_CLASS)
-    inner class POSTCarInfo {
+    inner class POSTSellerInfo {
         @Test
-        fun `add car info`() {
+        fun `add seller info`() {
             //given
-            val info = buildCarInfo()
+            val info = buildSellerInfo()
 
             //when
             mockMvc
-                .post("$CAR_URL_V1/addCar") {
+                .post("$DEALER_URL_V1/addSeller") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
                 .andDo { print() }
                 .andExpect { status { isCreated() } }
 
-            verify(exactly = 1) { service.addCarInfo(info) }
+            verify(exactly = 1) { service.addSellerInfo(info) }
         }
 
         @Test
-        fun `try adding empty car info - throw exception`() {
+        fun `try adding empty seller info - throw exception`() {
             //given
-            val info = buildEmptyCarInfo()
+            val info = buildEmptySellerInfo()
 
-            every { service.addCarInfo(any()) }
-                .answers { validateCarInfo(args.first() as CarInfo) }
+            every { service.addSellerInfo(any()) }
+                .answers { validateSellerInfo(args.first() as SellerInfo) }
 
             //when
             val result = mockMvc
-                .post("$CAR_URL_V1/addCar") {
+                .post("$DEALER_URL_V1/addSeller") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -116,22 +117,22 @@ internal class CarInfoControllerTest @Autowired constructor(
                 .andExpect { status { isBadRequest() } }
                 .andReturn().response.contentAsString
 
-            verify(exactly = 1) { service.addCarInfo(info) }
-            assertThat(result).isEqualTo(CarInfoException.EmptyBrandException().message)
+            verify(exactly = 1) { service.addSellerInfo(info) }
+            assertThat(result).isEqualTo(SellerInfoException.EmptyDealerException().message)
         }
 
         @Test
         fun `send no data - throw exception`() {
             //when
             mockMvc
-                .post("$CAR_URL_V1/addCar") {
+                .post("$DEALER_URL_V1/addSeller") {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
                 }
                 .andDo { print() }
                 .andExpect { status { isBadRequest() } }
 
-            verify(exactly = 0) { service.addCarInfo(any()) }
+            verify(exactly = 0) { service.addSellerInfo(any()) }
         }
     }
 

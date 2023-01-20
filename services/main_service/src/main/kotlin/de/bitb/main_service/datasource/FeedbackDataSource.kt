@@ -14,7 +14,7 @@ const val FEEDBACK_REPOSITORY = "feedback_database"
 const val FEEDBACK_REPOSITORY_IN_USE = FEEDBACK_REPOSITORY
 
 interface FeedbackDataSource {
-    fun getFeedback(): List<Feedback>
+    fun getFeedback(customer: String): List<Feedback>
 
     fun addFeedback(feedback: Feedback)
 }
@@ -24,12 +24,10 @@ class FeedbackFirestoreApi(override val firestore: Firestore) : FirestoreApi<Fee
     override val log: Logger = LoggerFactory.getLogger(FeedbackFirestoreApi::class.java)
 
     override fun getDocumentPath(obj: Feedback): String {
-        return "${getCollectionPath()}/${obj.date}"
+        return "${getCollectionPath(obj.customerName)}/${obj.date}"
     }
 
-    fun getCollectionPath(): String {
-        return "feedback"
-    }
+    fun getCollectionPath(name: String): String = "customer/$name/feedback"
 }
 
 @Repository(FEEDBACK_REPOSITORY)
@@ -37,9 +35,9 @@ class DBFeedbackDataSource @Autowired constructor(
     val firestoreApi: FeedbackFirestoreApi,
 ) : FeedbackDataSource {
 
-    override fun getFeedback(): List<Feedback> {
-        val path = firestoreApi.getCollectionPath()
-        return firestoreApi.readCollection(path)
+    override fun getFeedback(customer: String): List<Feedback> {
+        val path = firestoreApi.getCollectionPath(customer)
+        return firestoreApi.getCollection(path)
     }
 
     override fun addFeedback(feedback: Feedback) {

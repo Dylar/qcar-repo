@@ -22,7 +22,7 @@ internal class TrackingServiceTest {
     @BeforeEach
     fun setUp() {
         dataSource = mockk(relaxed = true)
-        every { dataSource.getTracking() }.returns(listOf())
+        every { dataSource.getTracking(any()) }.returns(listOf())
         service = TrackingService(dataSource)
     }
 
@@ -30,18 +30,18 @@ internal class TrackingServiceTest {
     fun `get tracking from service`() {
         //given
         val testTracking = buildTracking()
-        every { dataSource.getTracking() }.returns(listOf(testTracking))
+        every { dataSource.getTracking(any()) }.returns(listOf(testTracking))
         //when
-        val tracking = service.getTracking()
+        val tracking = service.getTracking("customer")
         //then
-        verify(exactly = 1) { dataSource.getTracking() }
+        verify(exactly = 1) { dataSource.getTracking(any()) }
         assertThat(tracking.first() == testTracking)
     }
 
     @Test
     fun `get no tracking from datasource - throw NoTrackingException`() {
         //when
-        val exceptionNoTracking: Exception = assertThrows { service.getTracking() }
+        val exceptionNoTracking: Exception = assertThrows { service.getTracking("customer") }
         //then
         AssertionsForInterfaceTypes.assertThat(exceptionNoTracking is TrackingException.NoTrackingException)
     }

@@ -1,10 +1,11 @@
-package de.bitb.main_service.controller
+package de.bitb.main_service.controller.dealer
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import de.bitb.main_service.builder.*
-import de.bitb.main_service.exceptions.SellerInfoException
-import de.bitb.main_service.exceptions.validateSellerInfo
+import de.bitb.main_service.controller.DEALER_URL_V1
+import de.bitb.main_service.exceptions.CarLinkException
+import de.bitb.main_service.exceptions.validateCarLink
 import de.bitb.main_service.models.*
 import de.bitb.main_service.service.SellerInfoService
 import io.mockk.every
@@ -22,90 +23,90 @@ import org.springframework.test.web.servlet.post
 
 @SpringBootTest
 @AutoConfigureMockMvc
-internal class SellerInfoControllerTest @Autowired constructor(
-        val mockMvc: MockMvc,
-        val mapper: ObjectMapper,
-        @MockkBean(relaxed = true) private val service: SellerInfoService
+internal class CarLinkControllerTest @Autowired constructor(
+    val mockMvc: MockMvc,
+    val mapper: ObjectMapper,
+    @MockkBean(relaxed = true) private val service: SellerInfoService
 ) {
 
     @Nested
-    @DisplayName("GET seller info")
+    @DisplayName("GET dealer cars")
     @TestInstance(Lifecycle.PER_CLASS)
-    inner class GETSellerInfo {
+    inner class GETCarLink {
 
         @Test
-        fun `get no seller info`() {
-            val info = buildSellerInfo()
+        fun `get no car links`() {
+            val info = buildCarLink()
 
-            every { service.getSellerInfo(any(),any()) }
+            every { service.getCarInfos(any()) }
                 .answers {
                     val args = it.invocation.args
-                    throw SellerInfoException.UnknownSellerException(
+                    throw CarLinkException.NoCarLinkException(
                         args.first() as String,
-                        args.last() as String,
                     )
                 }
 
-            mockMvc.get("$DEALER_URL_V1/dealer/${info.dealer}/seller/${info.name}")
+            mockMvc.get("$DEALER_URL_V1/getCars/${info.dealer}")
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
-            verify(exactly = 1) { service.getSellerInfo(info.dealer, info.name) }
+            verify(exactly = 1) { service.getCarInfos(info.dealer) }
         }
 
         @Test
-        fun `get seller info`() {
-            val info = buildSellerInfo()
+        fun `get car links`() {
+            val info = buildCarLink()
+            val result = listOf(buildCarInfo())
 
-            every { service.getSellerInfo(info.dealer, info.name) }
-                .answers { info }
+            every { service.getCarInfos(info.dealer) }
+                .answers { result }
 
-            mockMvc.get("$DEALER_URL_V1/dealer/${info.dealer}/seller/${info.name}")
+            mockMvc.get("$DEALER_URL_V1/getCars/${info.dealer}")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
                     content {
                         contentType(MediaType.APPLICATION_JSON)
-                        json(mapper.writeValueAsString(info))
+                        json(mapper.writeValueAsString(result))
                     }
                 }
 
-            verify(exactly = 1) { service.getSellerInfo(info.dealer, info.name) }
+            verify(exactly = 1) { service.getCarInfos(info.dealer) }
         }
     }
 
     @Nested
-    @DisplayName("POST seller info")
+    @DisplayName("POST dealer cars")
     @TestInstance(Lifecycle.PER_CLASS)
-    inner class POSTSellerInfo {
+    inner class POSTCarLink {
         @Test
-        fun `add seller info`() {
+        fun `add dealer cars`() {
             //given
-            val info = buildSellerInfo()
+            val info = buildCarLink()
 
             //when
             mockMvc
-                .post("$DEALER_URL_V1/addSeller") {
+                .post("$DEALER_URL_V1/linkCar") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
                 .andDo { print() }
                 .andExpect { status { isCreated() } }
 
-            verify(exactly = 1) { service.addSellerInfo(info) }
+            verify(exactly = 1) { service.linkCarToDealer(info) }
         }
 
         @Test
-        fun `try adding empty seller info - throw exception`() {
+        fun `try adding empty car links - throw exception`() {
             //given
-            val info = buildEmptySellerInfo()
+            val info = buildEmptyCarLink()
 
-            every { service.addSellerInfo(any()) }
-                .answers { validateSellerInfo(args.first() as SellerInfo) }
+            every { service.linkCarToDealer(any()) }
+                .answers { validateCarLink(args.first() as CarLink) }
 
             //when
             val result = mockMvc
-                .post("$DEALER_URL_V1/addSeller") {
+                .post("$DEALER_URL_V1/linkCar") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -113,22 +114,22 @@ internal class SellerInfoControllerTest @Autowired constructor(
                 .andExpect { status { isBadRequest() } }
                 .andReturn().response.contentAsString
 
-            verify(exactly = 1) { service.addSellerInfo(info) }
-            assertThat(result).isEqualTo(SellerInfoException.EmptyDealerException().message)
+            verify(exactly = 1) { service.linkCarToDealer(info) }
+            assertThat(result).isEqualTo(CarLinkException.EmptyDealerException().message)
         }
 
         @Test
         fun `send no data - throw exception`() {
             //when
             mockMvc
-                .post("$DEALER_URL_V1/addSeller") {
+                .post("$DEALER_URL_V1/linkCar") {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
                 }
                 .andDo { print() }
                 .andExpect { status { isBadRequest() } }
 
-            verify(exactly = 0) { service.addSellerInfo(any()) }
+            verify(exactly = 0) { service.linkCarToDealer(any()) }
         }
     }
 

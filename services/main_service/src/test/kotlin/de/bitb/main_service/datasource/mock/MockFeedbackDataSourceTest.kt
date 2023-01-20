@@ -12,7 +12,7 @@ internal class MockFeedbackDataSourceTest {
     @Test
     fun `get no sell info from data source`() {
         //when
-        val entries = dataSource.getFeedback()
+        val entries = dataSource.getFeedback("Customer")
         //then
         assertThat(entries.isEmpty())
     }
@@ -23,7 +23,7 @@ internal class MockFeedbackDataSourceTest {
         val dbFeedback = buildFeedback()
         dataSource.addFeedback(dbFeedback)
         //when
-        val feedback = dataSource.getFeedback()
+        val feedback = dataSource.getFeedback("Customer")
         //then
         assertThat(feedback.first() == dbFeedback)
     }

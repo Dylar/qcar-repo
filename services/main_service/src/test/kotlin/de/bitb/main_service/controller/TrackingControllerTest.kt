@@ -35,23 +35,25 @@ internal class TrackingControllerTest @Autowired constructor(
 
         @Test
         fun `get no tracking`() {
-            every { service.getTracking() }
+            val customer = "customer"
+            every { service.getTracking(customer) }
                 .answers { throw TrackingException.NoTrackingException() }
 
-            mockMvc.get(TRACKING_URL_V1)
+            mockMvc.get("$TRACKING_URL_V1/$customer")
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
-            verify(exactly = 1) { service.getTracking() }
+            verify(exactly = 1) { service.getTracking(customer) }
         }
 
         @Test
         fun `get tracking`() {
+            val customer = "customer"
             val tracking = listOf(buildTracking())
 
-            every { service.getTracking() }.answers { tracking }
+            every { service.getTracking(customer) }.answers { tracking }
 
-            mockMvc.get(TRACKING_URL_V1)
+            mockMvc.get("$TRACKING_URL_V1/$customer")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -61,7 +63,7 @@ internal class TrackingControllerTest @Autowired constructor(
                     }
                 }
 
-            verify(exactly = 1) { service.getTracking() }
+            verify(exactly = 1) { service.getTracking(customer) }
         }
     }
 

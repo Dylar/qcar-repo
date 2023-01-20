@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>QCar</title>
@@ -11,6 +11,10 @@
     <p style="color:white; text-shadow:2px 2px black;">Diese Begrüßung wurde
         maschinell erstellt und ist auch ohne Unterschrift
         gültig</p>
+</div>
+<div style="position:absolute; bottom:20px; left:20px;">
+    <p style="color:white; text-shadow:2px 2px black;">Version: <span
+            th:utext="${version}"></span></p>
 </div>
 </body>
 </html>

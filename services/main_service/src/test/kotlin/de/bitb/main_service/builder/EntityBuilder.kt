@@ -8,12 +8,13 @@ import de.bitb.main_service.loadJsonFile
 import de.bitb.main_service.models.*
 
 const val BASE_TESTDATA_PATH = "../../testdata"
+const val TEST_DEALER_INFO = "dealer_info.json"
+const val TEST_CAR_LINK = "car_link.json"
+const val TEST_SELLER_INFO = "seller_info.json"
 const val TEST_SELL_INFO = "sell_info.json"
 const val TEST_SELL_INFO_WITHOUT_KEY = "sell_info_without_key.json"
-const val TEST_SELLER_INFO = "seller_info.json"
-const val TEST_INTRO_INFO = "intro_info.json"
-const val TEST_CAR_FULL = "car_info_full.json"
 
+const val TEST_CAR_FULL = "car_info_full.json"
 const val TEST_CAR_INFO = "car_info.json"
 const val TEST_VIDEO_INFO = "video_info.json"
 const val TEST_CATEGORY_INFO = "category_info.json"
@@ -34,41 +35,43 @@ private fun loadTestDealerFile(jsonFile: String): String =
 private fun loadTestTrackingFile(jsonFile: String): String =
     loadJsonFile("$BASE_TESTDATA_PATH/tracking/$jsonFile")
 
+fun buildEmptyCarInfo(): CarInfo = CarInfo()
 fun buildCarInfo(jsonFile: String = TEST_CAR_INFO): CarInfo {
     val json = loadTestCustomerFile(jsonFile)
-//    val isValid = validateCarInfoJson(json)
-//    if (isValid) {
     return objMapper.readValue(json, CarInfo::class.java)
-//    }
-//    throw JSONValidationException.CarInfoValidationException(jsonFile)
-}
-
-fun buildEmptyCarInfo(): CarInfo = CarInfo()
-
-fun buildCategoryInfo(jsonFile: String = TEST_CATEGORY_INFO): CategoryInfo {
-    val json = loadTestCustomerFile(jsonFile)
-//    val isValid = validateCategoryInfoJson(json)
-//    if (isValid) {
-    return objMapper.readValue(json, CategoryInfo::class.java)
-//    }
-//    throw JSONValidationException.CarInfoValidationException(jsonFile)
 }
 
 fun buildEmptyCategoryInfo(): CategoryInfo = CategoryInfo()
-
-fun buildVideoInfo(jsonFile: String = TEST_VIDEO_INFO): VideoInfo {
+fun buildCategoryInfo(jsonFile: String = TEST_CATEGORY_INFO): CategoryInfo {
     val json = loadTestCustomerFile(jsonFile)
-//    val isValid = validateCategoryInfoJson(json)
-//    if (isValid) {
-    return objMapper.readValue(json, VideoInfo::class.java)
-//    }
-//    throw JSONValidationException.CarInfoValidationException(jsonFile)
+    return objMapper.readValue(json, CategoryInfo::class.java)
 }
 
 fun buildEmptyVideoInfo(): VideoInfo = VideoInfo()
+fun buildVideoInfo(jsonFile: String = TEST_VIDEO_INFO): VideoInfo {
+    val json = loadTestCustomerFile(jsonFile)
+    return objMapper.readValue(json, VideoInfo::class.java)
+}
+
+fun buildEmptyDealerInfo(): DealerInfo = DealerInfo()
+fun buildDealerInfo(jsonFile: String = TEST_DEALER_INFO): DealerInfo {
+    val json = loadTestDealerFile(jsonFile)
+    return objMapper.readValue(json, DealerInfo::class.java)
+}
+
+fun buildEmptyCarLink(): CarLink = CarLink()
+fun buildCarLink(jsonFile: String = TEST_CAR_LINK): CarLink {
+    val json = loadTestDealerFile(jsonFile)
+    return objMapper.readValue(json, CarLink::class.java)
+}
+
+fun buildEmptySellerInfo(): SellerInfo = SellerInfo()
+fun buildSellerInfo(jsonFile: String = TEST_SELLER_INFO): SellerInfo {
+    val json = loadTestDealerFile(jsonFile)
+    return objMapper.readValue(json, SellerInfo::class.java)
+}
 
 fun buildInvalidSellInfo(): SellInfo = SellInfo(key = "THIS IS A KEY")
-
 fun buildSellInfo(jsonFile: String = TEST_SELL_INFO_WITHOUT_KEY): SellInfo {
     val json = loadTestDealerFile(jsonFile)
     val isValid = validateSellInfoJson(json)
@@ -78,35 +81,14 @@ fun buildSellInfo(jsonFile: String = TEST_SELL_INFO_WITHOUT_KEY): SellInfo {
     throw JSONValidationException.SellInfoValidationException(jsonFile)
 }
 
-fun buildEmptySellerInfo(): SellerInfo = SellerInfo()
-
-fun buildSellerInfo(jsonFile: String = TEST_SELLER_INFO): SellerInfo {
-    val json = loadTestDealerFile(jsonFile)
-//    val isValid = validateSellerInfoJson(json)
-//    if (isValid) {
-    return objMapper.readValue(json, SellerInfo::class.java)
-//    }
-//    throw JSONValidationException.SellInfoValidationException(jsonFile)
-}
-
 fun buildEmptyFeedback(): Feedback = Feedback()
-
 fun buildFeedback(jsonFile: String = TEST_FEEDBACK): Feedback {
     val json = loadTestTrackingFile(jsonFile)
-//    val isValid = validateFeedbackJson(json)
-//    if (isValid) {
     return objMapper.readValue(json, Feedback::class.java)
-//    }
-//    throw JSONValidationException.FeedbackValidationException(jsonFile)
 }
 
 fun buildEmptyTracking(): Tracking = Tracking()
-
 fun buildTracking(jsonFile: String = TEST_TRACKING): Tracking {
     val json = loadTestTrackingFile(jsonFile)
-//    val isValid = validateFeedbackJson(json)
-//    if (isValid) {
     return objMapper.readValue(json, Tracking::class.java)
-//    }
-//    throw JSONValidationException.FeedbackValidationException(jsonFile)
 }

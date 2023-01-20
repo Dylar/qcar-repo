@@ -14,7 +14,7 @@ const val TRACKING_REPOSITORY = "tracking_database"
 const val TRACKING_REPOSITORY_IN_USE = TRACKING_REPOSITORY
 
 interface TrackingDataSource {
-    fun getTracking(): List<Tracking>
+    fun getTracking(customer: String): List<Tracking>
 
     fun addTracking(tracking: Tracking)
 }
@@ -24,12 +24,11 @@ class TrackingFirestoreApi(override val firestore: Firestore) : FirestoreApi<Tra
     override val log: Logger = LoggerFactory.getLogger(TrackingFirestoreApi::class.java)
 
     override fun getDocumentPath(obj: Tracking): String {
-        return "${getCollectionPath()}/${obj.date}"
+        return "${getCollectionPath(obj.customerName)}/${obj.date}"
     }
-//TODO customer specific path
-    fun getCollectionPath(): String {
-        return "tracking"
-    }
+
+    //TODO customer specific path
+    fun getCollectionPath(name: String): String = "customer/$name/tracking"
 }
 
 @Repository(TRACKING_REPOSITORY)
@@ -37,9 +36,9 @@ class DBTrackingDataSource @Autowired constructor(
     val firestoreApi: TrackingFirestoreApi,
 ) : TrackingDataSource {
 
-    override fun getTracking(): List<Tracking> {
-        val path = firestoreApi.getCollectionPath()
-        return firestoreApi.readCollection(path)
+    override fun getTracking(customer: String): List<Tracking> {
+        val path = firestoreApi.getCollectionPath(customer)
+        return firestoreApi.getCollection(path)
     }
 
     override fun addTracking(tracking: Tracking) {

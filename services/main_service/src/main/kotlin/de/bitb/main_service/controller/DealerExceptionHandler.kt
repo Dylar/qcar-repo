@@ -1,5 +1,6 @@
 package de.bitb.main_service.controller
 
+import de.bitb.main_service.exceptions.CarLinkException
 import de.bitb.main_service.exceptions.DealerInfoException
 import de.bitb.main_service.exceptions.SellInfoException
 import de.bitb.main_service.exceptions.SellerInfoException
@@ -18,7 +19,15 @@ class DealerExceptionHandler : BaseExceptionHandler() {
     fun handleException(e: DealerInfoException): ResponseEntity<String> = badRequest(e.message!!)
 
     @ExceptionHandler(DealerInfoException.UnknownDealerException::class)
-    fun handleUnknownDealerException(e: DealerInfoException): ResponseEntity<String> =
+    fun handleException(e: DealerInfoException.UnknownDealerException): ResponseEntity<String> =
+        notFound(e.message!!)
+
+    // CARS
+    @ExceptionHandler(CarLinkException::class)
+    fun handleException(e: CarLinkException): ResponseEntity<String> = badRequest(e.message!!)
+
+    @ExceptionHandler(CarLinkException.NoCarLinkException::class)
+    fun handleException(e: CarLinkException.NoCarLinkException): ResponseEntity<String> =
         notFound(e.message!!)
 
     // SELLER
@@ -26,7 +35,7 @@ class DealerExceptionHandler : BaseExceptionHandler() {
     fun handleException(e: SellerInfoException): ResponseEntity<String> = badRequest(e.message!!)
 
     @ExceptionHandler(SellerInfoException.UnknownSellerException::class)
-    fun handleUnknownSellerException(e: SellerInfoException): ResponseEntity<String> =
+    fun handleException(e: SellerInfoException.UnknownSellerException): ResponseEntity<String> =
         notFound(e.message!!)
 
     // SELL
@@ -34,7 +43,7 @@ class DealerExceptionHandler : BaseExceptionHandler() {
     fun handleException(e: SellInfoException): ResponseEntity<String> = badRequest(e.message!!)
 
     @ExceptionHandler(SellInfoException.UnknownKeyException::class)
-    fun handleUnknownKeyException(e: SellInfoException): ResponseEntity<String> =
+    fun handleException(e: SellInfoException.UnknownKeyException): ResponseEntity<String> =
         notFound(e.message!!)
 
 }

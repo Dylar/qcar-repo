@@ -40,7 +40,7 @@ class DBSellInfoDataSource @Autowired constructor(
 ) : SellInfoDataSource {
 
     override fun getSellInfo(key: String): SellInfo? {
-        return firestoreApi.findDocument(firestoreApi.keyCollection()) {
+        return firestoreApi.findDocumentInCollection(firestoreApi.keyCollection()) {
             it.whereEqualTo("key", key)
         }
     }

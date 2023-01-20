@@ -1,10 +1,11 @@
-package de.bitb.main_service.controller
+package de.bitb.main_service.controller.car
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import de.bitb.main_service.builder.buildCategoryInfo
 import de.bitb.main_service.builder.buildVideoInfo
 import de.bitb.main_service.builder.buildEmptyVideoInfo
+import de.bitb.main_service.controller.CAR_URL_V1
 import de.bitb.main_service.exceptions.CarInfoException
 import de.bitb.main_service.exceptions.VideoInfoException
 import de.bitb.main_service.exceptions.validateVideoInfo

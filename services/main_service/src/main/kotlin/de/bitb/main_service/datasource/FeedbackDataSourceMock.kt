@@ -12,7 +12,7 @@ class FeedbackDataSourceMock : FeedbackDataSource {
 
     private val feedbackDb = mutableListOf<Feedback>()
 
-    override fun getFeedback(): List<Feedback> = feedbackDb
+    override fun getFeedback(customer: String): List<Feedback> = feedbackDb
 
     override fun addFeedback(feedback: Feedback) {
         feedbackDb.add(feedback)

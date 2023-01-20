@@ -38,7 +38,7 @@ class DBCategoryInfoDataSource @Autowired constructor(
 ) : CategoryInfoDataSource {
     override fun getCategoryInfo(brand: String, model: String, name: String): CategoryInfo? {
         val path = firestoreApi.getCollectionPath(brand, model)
-        return firestoreApi.readDocument(path) {
+        return firestoreApi.getDocument(path) {
             it.whereEqualTo("name", name)
         }
     }

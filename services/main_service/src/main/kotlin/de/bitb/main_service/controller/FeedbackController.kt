@@ -29,10 +29,10 @@ class FeedbackController @Autowired constructor(
         return ResponseEntity(e.message, HttpStatus.NOT_FOUND)
     }
 
-    @GetMapping
-    fun getFeedback(): List<Feedback> {
+    @GetMapping("/{customer}")
+    fun getFeedback(@PathVariable customer: String): List<Feedback> {
         log.info("getFeedback")
-        return service.getFeedback()
+        return service.getFeedback(customer)
     }
 
     @PostMapping

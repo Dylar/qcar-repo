@@ -20,7 +20,7 @@ class DealerController @Autowired constructor(
     // DEALER
     @GetMapping("/dealer/{name}")
     fun getDealerInfo(@PathVariable name: String): DealerInfo {
-        log.info("getDealerInfo: $name") //TODO test me
+        log.info("getDealerInfo: $name")
         return service.getDealerInfo(name)
     }
 //    V2VubkR1RGFzRW50c2NobMO8c3NlbHN0TWF4aSxiaXN0ZVNjaG9uR3V0OlAK
@@ -30,6 +30,20 @@ class DealerController @Autowired constructor(
     fun addDealerInfo(@RequestBody info: DealerInfo) {
         log.info("addDealerInfo: $info")
         service.addDealerInfo(info)
+    }
+
+    // CARS
+    @GetMapping("/getCars/{dealer}")
+    fun getCarInfos(@PathVariable dealer: String): List<CarInfo> {
+        log.info("getCarInfos")
+        return service.getCarInfos(dealer)
+    }
+
+    @PostMapping("/linkCar")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun linkCarToDealer(@RequestBody info: CarLink) {
+        log.info("linkCarToDealer")
+        service.linkCarToDealer(info)
     }
 
     //SELLER
@@ -44,20 +58,6 @@ class DealerController @Autowired constructor(
     fun addSellerInfo(@RequestBody info: SellerInfo) {
         log.info("addSellerInfo: $info")
         service.addSellerInfo(info)
-    }
-
-    // CARS
-    @GetMapping("/getCars/{dealer}")
-    fun getCarInfos(@PathVariable dealer: String): List<CarInfo> {
-        log.info("getCarInfos") //TODO test me
-        return service.getCarInfos(dealer)
-    }
-
-    @PostMapping("/linkCar")
-    @ResponseStatus(HttpStatus.CREATED)
-    fun linkCarToDealer(@RequestBody info: CarLink) {
-        log.info("linkCarToDealer") //TODO test me
-        service.linkCarToDealer(info)
     }
 
     // SELL

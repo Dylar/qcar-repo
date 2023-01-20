@@ -1,8 +1,9 @@
-package de.bitb.main_service.controller
+package de.bitb.main_service.controller.dealer
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import de.bitb.main_service.builder.*
+import de.bitb.main_service.controller.DEALER_URL_V1
 import de.bitb.main_service.exceptions.SellInfoException
 import de.bitb.main_service.exceptions.validateSellInfo
 import de.bitb.main_service.models.*

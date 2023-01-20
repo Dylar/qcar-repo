@@ -22,26 +22,27 @@ internal class FeedbackServiceTest {
     @BeforeEach
     fun setUp() {
         dataSource = mockk(relaxed = true)
-        every { dataSource.getFeedback() }.returns(listOf())
+        every { dataSource.getFeedback(any()) }.returns(listOf())
         service = FeedbackService(dataSource)
     }
 
     @Test
     fun `get feedback from service`() {
         //given
+        val customer = "Customer"
         val testFeedback = buildFeedback()
-        every { dataSource.getFeedback() }.returns(listOf(testFeedback))
+        every { dataSource.getFeedback(customer) }.returns(listOf(testFeedback))
         //when
-        val feedback = service.getFeedback()
+        val feedback = service.getFeedback(customer)
         //then
-        verify(exactly = 1) { dataSource.getFeedback() }
+        verify(exactly = 1) { dataSource.getFeedback(customer) }
         assertThat(feedback.first() == testFeedback)
     }
 
     @Test
     fun `get no feedback from datasource - throw NoFeedbackException`() {
         //when
-        val exceptionNoFeedback: Exception = assertThrows { service.getFeedback() }
+        val exceptionNoFeedback: Exception = assertThrows { service.getFeedback("customer") }
         //then
         AssertionsForInterfaceTypes.assertThat(exceptionNoFeedback is FeedbackException.NoFeedbackException)
     }

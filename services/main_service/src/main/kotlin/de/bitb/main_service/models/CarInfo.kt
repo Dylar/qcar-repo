@@ -1,29 +1,33 @@
 package de.bitb.main_service.models
 
 data class CarInfo(
-        val brand: String = "",
-        val model: String = "",
-        val imagePath: String = "",
+    val brand: String = "",
+    val model: String = "",
+    val imagePath: String = "",
 )
 
 data class CategoryInfo(
-        val brand: String = "",
-        val model: String = "",
-        val name: String = "",
-        val order: String = "",
-        val description: String = "",
-        val imagePath: String = "",
+    val brand: String = "",
+    val model: String = "",
+    val name: String = "",
+    val order: String = "",
+    val description: String = "",
+    val imagePath: String = "",
 )
 
 data class VideoInfo(
-        val brand: String = "",
-        val model: String = "",
-        val category: String = "",
-        val name: String = "",
-        val description: String = "",
-        val filePath: String = "",
-        val imagePath: String = "",
-        val tags: List<String> = listOf(),
+    val brand: String = "",
+    val model: String = "",
+    val category: String = "",
+    val name: String = "",
+    val description: String = "",
+    val filePath: String = "",
+    val imagePath: String = "",
+    val tags: List<String> = listOf(),
 )
 
-data class CarLink(val dealer: String, val brand: String, val model: String)
+data class CarLink(
+    val dealer: String = "",
+    val brand: String = "",
+    val model: String = "",
+)

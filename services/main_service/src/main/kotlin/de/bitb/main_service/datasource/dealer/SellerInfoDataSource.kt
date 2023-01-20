@@ -36,7 +36,7 @@ class DBSellerInfoDataSource @Autowired constructor(
 
     override fun getSellerInfo(dealer: String, name: String): SellerInfo? {
         val path = firestoreApi.getCollectionPath(dealer)
-        return firestoreApi.readDocument(path) {
+        return firestoreApi.getDocument(path) {
             it.whereEqualTo("name", name)
         }
     }

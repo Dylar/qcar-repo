@@ -41,7 +41,7 @@ class DBVideoInfoInfoDataSource @Autowired constructor(
         name: String
     ): VideoInfo? {
         val path = firestoreApi.getCollectionPath(brand, model, category)
-        return firestoreApi.readDocument(path) {
+        return firestoreApi.getDocument(path) {
             it.whereEqualTo("name", name)
         }
     }

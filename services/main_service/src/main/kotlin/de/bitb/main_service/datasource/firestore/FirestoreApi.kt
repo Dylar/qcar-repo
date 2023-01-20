@@ -12,7 +12,7 @@ abstract class FirestoreApi<T : Any> {
     abstract fun getDocumentPath(obj: T): String
 
     @Throws(ExecutionException::class, InterruptedException::class)
-    inline fun <reified T : Any> readDocument(
+    inline fun <reified T : Any> getDocument(
         collectionPath: String,
         whereCondition: (CollectionReference) -> Query = { it },
     ): T? {
@@ -22,24 +22,42 @@ abstract class FirestoreApi<T : Any> {
             val documentSnapshot: DocumentSnapshot = apiFuture.get().documents.first()
             documentSnapshot.toObject(T::class.java)
         } catch (e: Exception) {
-            log.error("readDocument; path: $collectionPath  error: ${e.message}")
+            log.error("getDocument; path: $collectionPath  error: ${e.message}")
             null
         }
     }
 
     @Throws(ExecutionException::class, InterruptedException::class)
-    inline fun <reified T : Any> findDocument(
-        collectionId: String,
+    inline fun <reified T : Any> findDocumentInCollection(
+        collectionName: String,
         whereCondition: (CollectionGroup) -> Query = { it },
     ): T? {
         return try {
             val apiFuture: ApiFuture<QuerySnapshot> =
-                whereCondition(firestore.collectionGroup(collectionId)).get()
+                whereCondition(firestore.collectionGroup(collectionName)).get()
             val documentSnapshot: DocumentSnapshot = apiFuture.get().documents.first()
             documentSnapshot.toObject(T::class.java)
         } catch (e: Exception) {
-            log.error("findDocument; collectionId: $collectionId  error: ${e.message}")
+            log.error("findDocumentInCollection; collectionName: $collectionName  error: ${e.message}")
             null
+        }
+    }
+
+    @Throws(ExecutionException::class, InterruptedException::class)
+    inline fun <reified T : Any> getCollection(
+        collectionPath: String,
+        whereCondition: (CollectionReference) -> Query = { it },
+    ): List<T> {
+        var path = ""
+        return try {
+            path = collectionPath
+            val apiFuture: ApiFuture<QuerySnapshot> =
+                whereCondition(firestore.collection(path)).get()
+            val documentsSnapshot: List<DocumentSnapshot> = apiFuture.get().documents
+            documentsSnapshot.map { it.toObject(T::class.java)!! }
+        } catch (e: Exception) {
+            log.error("getCollection; path: $path  error: ${e.message}")
+            emptyList()
         }
     }
 
@@ -80,24 +98,6 @@ abstract class FirestoreApi<T : Any> {
             apiFuture.get()
         } catch (e: Exception) {
             log.error("deleteDocument; path: $path  error: ${e.message}")
-        }
-    }
-
-    @Throws(ExecutionException::class, InterruptedException::class)
-    inline fun <reified T : Any> readCollection(
-        collectionPath: String,
-        whereCondition: (CollectionReference) -> Query = { it },
-    ): List<T> {
-        var path = ""
-        return try {
-            path = collectionPath
-            val apiFuture: ApiFuture<QuerySnapshot> =
-                whereCondition(firestore.collection(path)).get()
-            val documentsSnapshot: List<DocumentSnapshot> = apiFuture.get().documents
-            documentsSnapshot.map { it.toObject(T::class.java)!! }
-        } catch (e: Exception) {
-            log.error("readDocument; path: $path  error: ${e.message}")
-            emptyList()
         }
     }
 }

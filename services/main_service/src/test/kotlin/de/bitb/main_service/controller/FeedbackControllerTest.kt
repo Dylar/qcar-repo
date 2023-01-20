@@ -35,23 +35,25 @@ internal class FeedbackControllerTest @Autowired constructor(
 
         @Test
         fun `get no feedback`() {
-            every { service.getFeedback() }
+            val customer = "customer"
+            every { service.getFeedback(customer) }
                 .answers { throw FeedbackException.NoFeedbackException() }
 
-            mockMvc.get(FEEDBACK_URL_V1)
+            mockMvc.get("$FEEDBACK_URL_V1/$customer")
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
-            verify(exactly = 1) { service.getFeedback() }
+            verify(exactly = 1) { service.getFeedback(customer) }
         }
 
         @Test
         fun `get feedback`() {
+            val customer = "customer"
             val feedback = listOf(buildFeedback())
 
-            every { service.getFeedback() }.answers { feedback }
+            every { service.getFeedback(customer) }.answers { feedback }
 
-            mockMvc.get(FEEDBACK_URL_V1)
+            mockMvc.get("$FEEDBACK_URL_V1/$customer")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -61,7 +63,7 @@ internal class FeedbackControllerTest @Autowired constructor(
                     }
                 }
 
-            verify(exactly = 1) { service.getFeedback() }
+            verify(exactly = 1) { service.getFeedback(customer) }
         }
     }
 
