@@ -1,9 +1,10 @@
-package de.bitb.main_service.service
+package de.bitb.main_service.service.car
 
 import de.bitb.main_service.builder.buildEmptyVideoInfo
 import de.bitb.main_service.builder.buildVideoInfo
 import de.bitb.main_service.datasource.car.VideoInfoDataSource
 import de.bitb.main_service.exceptions.VideoInfoException
+import de.bitb.main_service.service.CarInfoService
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -16,14 +17,14 @@ import java.lang.Exception
 
 internal class VideoServiceTest {
 
+    private lateinit var service: CarInfoService
     private lateinit var dataSource: VideoInfoDataSource
-    private lateinit var service: VideoInfoService
 
     @BeforeEach
     fun setUp() {
         dataSource = mockk(relaxed = true)
         every { dataSource.getVideoInfo(any(), any(), any(), any()) }.returns(null)
-        service = VideoInfoService(dataSource)
+        service = CarInfoService(mockk(relaxed = true), mockk(relaxed = true), dataSource)
     }
 
     @Test

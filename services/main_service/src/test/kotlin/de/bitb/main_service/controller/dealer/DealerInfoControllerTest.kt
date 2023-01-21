@@ -7,7 +7,7 @@ import de.bitb.main_service.controller.DEALER_URL_V1
 import de.bitb.main_service.exceptions.DealerInfoException
 import de.bitb.main_service.exceptions.validateDealerInfo
 import de.bitb.main_service.models.*
-import de.bitb.main_service.service.SellerInfoService
+import de.bitb.main_service.service.DealerInfoService
 import io.mockk.every
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -28,7 +28,7 @@ private fun getDealerURL(name: String): String = "$DEALER_URL_V1/dealer/$name"
 internal class DealerInfoControllerTest @Autowired constructor(
     val mockMvc: MockMvc,
     val mapper: ObjectMapper,
-    @MockkBean(relaxed = true) private val service: SellerInfoService
+    @MockkBean(relaxed = true) private val service: DealerInfoService
 ) {
 
     @Nested

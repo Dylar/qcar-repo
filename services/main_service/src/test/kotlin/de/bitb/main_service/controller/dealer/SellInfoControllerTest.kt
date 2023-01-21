@@ -7,7 +7,7 @@ import de.bitb.main_service.controller.DEALER_URL_V1
 import de.bitb.main_service.exceptions.SellInfoException
 import de.bitb.main_service.exceptions.validateSellInfo
 import de.bitb.main_service.models.*
-import de.bitb.main_service.service.SellInfoService
+import de.bitb.main_service.service.DealerInfoService
 import io.mockk.every
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.post
 internal class SellInfoControllerTest @Autowired constructor(
     val mockMvc: MockMvc,
     val mapper: ObjectMapper,
-    @MockkBean(relaxed = true) private val service: SellInfoService
+    @MockkBean(relaxed = true) private val service: DealerInfoService
 ) {
 
     @Nested

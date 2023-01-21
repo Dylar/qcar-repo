@@ -1,9 +1,10 @@
-package de.bitb.main_service.service
+package de.bitb.main_service.service.car
 
 import de.bitb.main_service.builder.buildCategoryInfo
 import de.bitb.main_service.builder.buildEmptyCategoryInfo
 import de.bitb.main_service.datasource.car.CategoryInfoDataSource
 import de.bitb.main_service.exceptions.CategoryInfoException
+import de.bitb.main_service.service.CarInfoService
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -16,14 +17,14 @@ import java.lang.Exception
 
 internal class CategoryServiceTest {
 
+    private lateinit var service: CarInfoService
     private lateinit var dataSource: CategoryInfoDataSource
-    private lateinit var service: CategoryInfoService
 
     @BeforeEach
     fun setUp() {
         dataSource = mockk(relaxed = true)
         every { dataSource.getCategoryInfo(any(), any(), any()) }.returns(null)
-        service = CategoryInfoService(dataSource)
+        service = CarInfoService(mockk(relaxed = true), dataSource, mockk(relaxed = true))
     }
 
     @Test

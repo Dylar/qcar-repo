@@ -1,11 +1,10 @@
-package de.bitb.main_service.service
+package de.bitb.main_service.service.car
 
 import de.bitb.main_service.builder.buildCarInfo
 import de.bitb.main_service.builder.buildEmptyCarInfo
 import de.bitb.main_service.datasource.car.CarInfoDataSource
-import de.bitb.main_service.datasource.dealer.CarLinkDataSource
-import de.bitb.main_service.datasource.dealer.SellInfoDataSource
 import de.bitb.main_service.exceptions.CarInfoException
+import de.bitb.main_service.service.CarInfoService
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -19,32 +18,30 @@ import org.junit.jupiter.api.Assertions.assertEquals
 internal class CarServiceTest {
 
     private lateinit var service: CarInfoService
-    private lateinit var sellDataSource: SellInfoDataSource
-    private lateinit var carDataSource: CarInfoDataSource
+    private lateinit var dataSource: CarInfoDataSource
 
     @BeforeEach
     fun setUp() {
-        carDataSource = mockk(relaxed = true)
-        sellDataSource = mockk(relaxed = true)
-        service = CarInfoService(carDataSource, sellDataSource)
+        dataSource = mockk(relaxed = true)
+        service = CarInfoService(dataSource, mockk(relaxed = true), mockk(relaxed = true))
     }
 
     @Test
     fun `get car from service`() {
         //given
         val testInfo = buildCarInfo()
-        every { carDataSource.getCarInfo(testInfo.brand, testInfo.model) }.returns(testInfo)
+        every { dataSource.getCarInfo(testInfo.brand, testInfo.model) }.returns(testInfo)
         //when
         val info = service.getCarInfo(testInfo.brand, testInfo.model)
         //then
-        verify(exactly = 1) { carDataSource.getCarInfo(testInfo.brand, testInfo.model) }
+        verify(exactly = 1) { dataSource.getCarInfo(testInfo.brand, testInfo.model) }
         assertEquals(info, testInfo)
     }
 
     @Test
     fun `get no car from datasource - throw UnknownCarException`() {
         //given
-        every { carDataSource.getCarInfo(any(), any()) }.returns(null)
+        every { dataSource.getCarInfo(any(), any()) }.returns(null)
         val testInfo = buildCarInfo()
         //when
         val exceptionNoInfo: Exception =
@@ -60,7 +57,7 @@ internal class CarServiceTest {
         //when
         service.addCarInfo(testInfo)
         //then
-        verify(exactly = 1) { carDataSource.addCarInfo(testInfo) }
+        verify(exactly = 1) { dataSource.addCarInfo(testInfo) }
     }
 
     @Test
@@ -79,6 +76,6 @@ internal class CarServiceTest {
 
         emptyInfo = emptyInfo.copy(imagePath = "path/to/file")
         service.addCarInfo(emptyInfo)
-        verify(exactly = 1) { carDataSource.addCarInfo(emptyInfo) }
+        verify(exactly = 1) { dataSource.addCarInfo(emptyInfo) }
     }
 }

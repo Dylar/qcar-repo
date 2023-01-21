@@ -1,4 +1,4 @@
-package de.bitb.main_service.datasource.mock
+package de.bitb.main_service.datasource.mock.car
 
 import de.bitb.main_service.builder.buildCarInfo
 import de.bitb.main_service.datasource.car.CarInfoDataSourceMock

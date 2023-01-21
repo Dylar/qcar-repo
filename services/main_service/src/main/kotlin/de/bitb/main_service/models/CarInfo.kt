@@ -25,9 +25,3 @@ data class VideoInfo(
     val imagePath: String = "",
     val tags: List<String> = listOf(),
 )
-
-data class CarLink(
-    val dealer: String = "",
-    val brand: String = "",
-    val model: String = "",
-)

@@ -9,7 +9,7 @@ import de.bitb.main_service.controller.CAR_URL_V1
 import de.bitb.main_service.exceptions.CategoryInfoException
 import de.bitb.main_service.exceptions.validateCategoryInfo
 import de.bitb.main_service.models.*
-import de.bitb.main_service.service.CategoryInfoService
+import de.bitb.main_service.service.CarInfoService
 import io.mockk.every
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -31,7 +31,7 @@ private fun getCategoryURL(brand: String, model: String, name: String): String =
 internal class CategoryInfoControllerTest @Autowired constructor(
     private val mapper: ObjectMapper,
     private val mockMvc: MockMvc,
-    @MockkBean(relaxed = true) private val service: CategoryInfoService
+    @MockkBean(relaxed = true) private val service: CarInfoService
 ) {
 
     @Nested

@@ -1,11 +1,11 @@
-package de.bitb.main_service.controller
+package de.bitb.main_service.controller.car
 
+import de.bitb.main_service.controller.BaseExceptionHandler
 import de.bitb.main_service.exceptions.CarInfoException
 import de.bitb.main_service.exceptions.CategoryInfoException
 import de.bitb.main_service.exceptions.VideoInfoException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler

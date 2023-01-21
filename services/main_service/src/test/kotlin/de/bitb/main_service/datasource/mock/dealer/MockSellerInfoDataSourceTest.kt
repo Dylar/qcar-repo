@@ -1,4 +1,4 @@
-package de.bitb.main_service.datasource.mock
+package de.bitb.main_service.datasource.mock.dealer
 
 import de.bitb.main_service.builder.buildSellInfo
 import de.bitb.main_service.datasource.dealer.SellInfoDataSourceMock

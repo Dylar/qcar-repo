@@ -7,7 +7,7 @@ import de.bitb.main_service.controller.DEALER_URL_V1
 import de.bitb.main_service.exceptions.CarLinkException
 import de.bitb.main_service.exceptions.validateCarLink
 import de.bitb.main_service.models.*
-import de.bitb.main_service.service.SellerInfoService
+import de.bitb.main_service.service.DealerInfoService
 import io.mockk.every
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.post
 internal class CarLinkControllerTest @Autowired constructor(
     val mockMvc: MockMvc,
     val mapper: ObjectMapper,
-    @MockkBean(relaxed = true) private val service: SellerInfoService
+    @MockkBean(relaxed = true) private val service: DealerInfoService
 ) {
 
     @Nested

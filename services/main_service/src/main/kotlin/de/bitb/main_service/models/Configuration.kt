@@ -2,7 +2,6 @@ package de.bitb.main_service.models
 
 import com.fasterxml.jackson.annotation.JsonCreator
 
-
 data class ConfigData(
     val type: ConfigType,
     val value: Any,

@@ -10,7 +10,7 @@ import de.bitb.main_service.exceptions.CarInfoException
 import de.bitb.main_service.exceptions.VideoInfoException
 import de.bitb.main_service.exceptions.validateVideoInfo
 import de.bitb.main_service.models.*
-import de.bitb.main_service.service.VideoInfoService
+import de.bitb.main_service.service.CarInfoService
 import io.mockk.every
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -32,7 +32,7 @@ private fun getVideoURL(brand: String, model: String, category: String, name: St
 internal class VideoInfoControllerTest @Autowired constructor(
     private val mapper: ObjectMapper,
     private val mockMvc: MockMvc,
-    @MockkBean(relaxed = true) private val service: VideoInfoService
+    @MockkBean(relaxed = true) private val service: CarInfoService
 ) {
 
     @Nested

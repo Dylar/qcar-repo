@@ -1,10 +1,11 @@
-package de.bitb.main_service.service
+package de.bitb.main_service.service.dealer
 
 import de.bitb.main_service.builder.buildInvalidSellInfo
 import de.bitb.main_service.builder.buildSellInfo
 import de.bitb.main_service.datasource.dealer.SellInfoDataSource
 import de.bitb.main_service.exceptions.SellInfoException
 import de.bitb.main_service.models.SellInfo
+import de.bitb.main_service.service.DealerInfoService
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -19,13 +20,19 @@ import java.lang.Exception
 internal class SellServiceTest {
 
     private lateinit var dataSource: SellInfoDataSource
-    private lateinit var service: SellInfoService
+    private lateinit var service: DealerInfoService
 
     @BeforeEach
     fun setUp() {
         dataSource = mockk(relaxed = true)
         every { dataSource.getSellInfo(any()) }.returns(null)
-        service = SellInfoService(dataSource)
+        service = DealerInfoService(
+            mockk(relaxed = true),
+            mockk(relaxed = true),
+            mockk(relaxed = true),
+            dataSource,
+            mockk(relaxed = true),
+        )
     }
 
     @Test

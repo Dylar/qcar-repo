@@ -1,5 +1,6 @@
-package de.bitb.main_service.controller
+package de.bitb.main_service.controller.dealer
 
+import de.bitb.main_service.controller.BaseExceptionHandler
 import de.bitb.main_service.exceptions.CarLinkException
 import de.bitb.main_service.exceptions.DealerInfoException
 import de.bitb.main_service.exceptions.SellInfoException

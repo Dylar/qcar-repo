@@ -8,6 +8,15 @@ sealed class DealerInfoException(msg: String) : Exception(msg) {
     class EmptyAddressException : DealerInfoException("Address is empty")
 }
 
+sealed class CarLinkException(msg: String) : Exception(msg) {
+    class NoCarLinkException(dealer: String) :
+        CarLinkException("Dealer ($dealer) has no cars")
+
+    class EmptyDealerException : CarLinkException("Dealer is empty")
+    class EmptyBrandException : CarLinkException("Brand is empty")
+    class EmptyModelException : CarLinkException("Model is empty")
+}
+
 sealed class SellerInfoException(msg: String) : Exception(msg) {
     class UnknownSellerException(dealer: String, name: String) :
         SellerInfoException("Unknown seller ($name) for dealer ($dealer)")

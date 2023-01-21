@@ -1,8 +1,8 @@
-package de.bitb.main_service.controller
+package de.bitb.main_service.controller.dealer
 
+import de.bitb.main_service.controller.DEALER_URL_V1
 import de.bitb.main_service.models.*
-import de.bitb.main_service.service.SellInfoService
-import de.bitb.main_service.service.SellerInfoService
+import de.bitb.main_service.service.DealerInfoService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping(DEALER_URL_V1)
 class DealerController @Autowired constructor(
-    private val service: SellerInfoService,
-    private val sellService: SellInfoService
+    private val service: DealerInfoService
 ) {
     private val log: Logger = LoggerFactory.getLogger(DealerController::class.java)
 
@@ -64,14 +63,14 @@ class DealerController @Autowired constructor(
     @GetMapping("/key/{key}")
     fun getSellInfo(@PathVariable key: String): SellInfo {
         log.info("getSellInfo: $key")
-        return sellService.getSellInfo(key)
+        return service.getSellInfo(key)
     }
 
     @PostMapping("/addSell")
     @ResponseStatus(HttpStatus.CREATED)
     fun addSellInfo(@RequestBody info: SellInfo) {
         log.info("addSellInfo: $info")
-        sellService.addSellInfo(info)
+        service.addSellInfo(info)
     }
 
 }
