@@ -28,7 +28,7 @@ dependencies {
 
     implementation("com.google.cloud:spring-cloud-gcp-starter")
     implementation("org.springframework.boot:spring-boot-starter-web:2.5.5")
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:2.5.6")
 
     implementation("com.google.firebase:firebase-admin:8.1.0")
 
@@ -38,8 +38,8 @@ dependencies {
         exclude(module = "mockito-core")
     }
     testImplementation("com.ninja-squad:springmockk:3.1.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
     testImplementation("io.mockk:mockk:1.13.3")
 }
 
