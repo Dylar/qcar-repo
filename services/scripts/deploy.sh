@@ -7,6 +7,7 @@ SERVICE_VERSION=$(./gradlew -q getVersion)
 JAR_PATH="/build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar"
 DOCKER_IMAGE="dylar/qcar-${SERVICE_NAME}:${SERVICE_VERSION}"
 
+echo "Deploy: $SERVICE_VERSION"
 ./gradlew build &&
 docker build --build-arg JAR_FILE=${JAR_PATH} -t ${DOCKER_IMAGE} . &&
 docker push ${DOCKER_IMAGE} &&

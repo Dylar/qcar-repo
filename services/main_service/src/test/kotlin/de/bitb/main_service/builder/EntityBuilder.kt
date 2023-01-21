@@ -20,6 +20,7 @@ const val TEST_VIDEO_INFO = "video_info.json"
 const val TEST_CATEGORY_INFO = "category_info.json"
 
 const val TEST_FEEDBACK = "feedback.json"
+
 //TODO until now feedback and tracking json is the same
 const val TEST_TRACKING = "feedback.json"
 
@@ -74,11 +75,7 @@ fun buildSellerInfo(jsonFile: String = TEST_SELLER_INFO): SellerInfo {
 fun buildInvalidSellInfo(): SellInfo = SellInfo(key = "THIS IS A KEY")
 fun buildSellInfo(jsonFile: String = TEST_SELL_INFO_WITHOUT_KEY): SellInfo {
     val json = loadTestDealerFile(jsonFile)
-    val isValid = validateSellInfoJson(json)
-    if (isValid) {
-        return objMapper.readValue(json, SellInfo::class.java)
-    }
-    throw JSONValidationException.SellInfoValidationException(jsonFile)
+    return objMapper.readValue(json, SellInfo::class.java)
 }
 
 fun buildEmptyFeedback(): Feedback = Feedback()
