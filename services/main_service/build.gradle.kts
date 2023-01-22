@@ -16,7 +16,7 @@ repositories {
     mavenCentral()
 }
 
-extra["springCloudGcpVersion"] = "3.2.1"
+extra["springCloudGcpVersion"] = "3.4.2"
 extra["springCloudVersion"] = "2021.0.1"
 
 dependencies {
@@ -26,13 +26,13 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    implementation("com.google.cloud:spring-cloud-gcp-starter")
-    implementation("org.springframework.boot:spring-boot-starter-web:2.5.5")
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:2.5.6")
+    implementation("com.google.cloud:spring-cloud-gcp-starter:3.4.2")
+    implementation("org.springframework.boot:spring-boot-starter-web:2.7.0")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:2.7.0")
 
-    implementation("com.google.firebase:firebase-admin:8.1.0")
+    implementation("com.google.firebase:firebase-admin:9.1.1")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.5") {
+    testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.0") {
         exclude(module = "junit")
         exclude(module = "junit-vintage-engine")
         exclude(module = "mockito-core")
