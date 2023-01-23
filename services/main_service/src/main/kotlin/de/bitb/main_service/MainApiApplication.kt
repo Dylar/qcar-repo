@@ -16,12 +16,17 @@ import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
+import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import java.io.IOException
+import java.time.LocalDateTime
 
 fun main(args: Array<String>) {
     runApplication<MainApiApplication>(*args)
 }
+
+@Component
+class StartupTime(val startupTime: LocalDateTime = LocalDateTime.now())
 
 @SpringBootApplication
 class MainApiApplication @Autowired constructor(
@@ -49,13 +54,12 @@ class FirestoreConfig {
         if (FirebaseApp.getApps().isEmpty()) {
             val options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.getApplicationDefault())
-                    .setProjectId(env.getProperty("spring.cloud.gcp.project-id"))//TODO make this anders?
-//                    .setCredentials(GoogleCredentials.fromStream(FileInputStream("../../../../../../../../fire.json")))
+                .setProjectId(env.getProperty("spring.cloud.gcp.project-id"))//TODO make this anders?
+//                .setCredentials(GoogleCredentials.fromStream(FileInputStream("../../../../../../../../fire.json")))
 //                .setDatabaseUrl("https://<DATABASE_NAME>.firebaseio.com/")
                 .build()
             FirebaseApp.initializeApp(options)
         }
         return FirestoreClient.getFirestore()
-
     }
 }

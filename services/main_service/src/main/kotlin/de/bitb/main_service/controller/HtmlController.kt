@@ -1,5 +1,8 @@
 package de.bitb.main_service.controller
 
+import de.bitb.main_service.StartupTime
+import de.bitb.main_service.formatDateString
+import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.info.BuildProperties
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -11,7 +14,8 @@ class HtmlController(
 ) {
 
     @GetMapping("/")
-    fun index(model: Model): String {
+    fun index(model: Model, startupTime: StartupTime): String {
+        model.addAttribute("startTime", formatDateString(startupTime.startupTime))
         model.addAttribute("version", buildProperties.version)
         return "index"
     }
