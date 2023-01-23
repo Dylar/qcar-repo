@@ -6,8 +6,11 @@ import de.bitb.main_service.models.Feedback
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
+
 
 const val FEEDBACK_REPOSITORY_MOCK = "feedback_database_mock"
 const val FEEDBACK_REPOSITORY = "feedback_database"

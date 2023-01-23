@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.context.annotation.Bean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
