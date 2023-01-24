@@ -20,6 +20,8 @@ extra["springCloudGcpVersion"] = "3.4.2"
 extra["springCloudVersion"] = "2021.0.1"
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.1")
     implementation("com.fasterxml.jackson.module:jackson-module-jsonSchema:2.14.1")
 

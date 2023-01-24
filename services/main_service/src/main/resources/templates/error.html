@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+    body {
+      background-color: red;
+      color: black;
+      text-align: center;
+    }
+
+
+    </style>
+    <title>Error</title>
+</head>
+<body>
+<h1>Error</h1>
+<p>Sorry, an error has occurred :(</p>
+<p style="color:white; text-shadow:2px 2px black;">Error: <span
+        th:utext="${errorText}"></span></p>
+<div style="text-align: center;">
+    <img src="https://media.tenor.com/YvGr1QEbCiYAAAAM/monkey-typing.gif"
+         alt="helping monkey" style="margin: auto;">
+</div>
+</body>
+</html>
