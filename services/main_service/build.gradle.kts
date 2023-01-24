@@ -8,33 +8,35 @@ plugins {
     kotlin("plugin.spring") version "1.8.0"
 }
 
-group = "de.bitb"
-version = project.property("serviceVersion") ?: "VERSION-ERROR"
-java.sourceCompatibility = JavaVersion.VERSION_17
-
 repositories {
     mavenCentral()
 }
 
+group = "de.bitb"
+version = project.property("serviceVersion") ?: "VERSION-ERROR"
+java.sourceCompatibility = JavaVersion.VERSION_17
+
 extra["springCloudGcpVersion"] = "3.4.2"
 extra["springCloudVersion"] = "2021.0.1"
+val springBootVersion = "3.0.2"
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0")
+
+    implementation("org.springframework.security:spring-security-config:6.0.1")
+    implementation("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
+    implementation("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
+    implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
+
+    implementation("com.google.cloud:spring-cloud-gcp-starter:3.4.2")
+    implementation("com.google.firebase:firebase-admin:9.1.1")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.1")
     implementation("com.fasterxml.jackson.module:jackson-module-jsonSchema:2.14.1")
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
-    implementation("com.google.cloud:spring-cloud-gcp-starter:3.4.2")
-    implementation("org.springframework.boot:spring-boot-starter-web:3.0.2")
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:3.0.2")
-
-    implementation("com.google.firebase:firebase-admin:9.1.1")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test:3.0.2") {
+    testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion") {
         exclude(module = "junit")
         exclude(module = "junit-vintage-engine")
         exclude(module = "mockito-core")

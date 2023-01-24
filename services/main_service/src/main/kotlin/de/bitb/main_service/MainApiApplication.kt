@@ -9,7 +9,9 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
+import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 import org.springframework.boot.info.BuildProperties
 import org.springframework.boot.runApplication
 import org.springframework.boot.web.client.RestTemplateBuilder
@@ -18,7 +20,6 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import java.io.IOException
 import java.time.LocalDateTime
 
@@ -29,7 +30,12 @@ fun main(args: Array<String>) {
 @Component
 class StartupTime(val startupTime: LocalDateTime = LocalDateTime.now())
 
-@SpringBootApplication
+@SpringBootApplication(
+    exclude = [
+        SecurityAutoConfiguration::class,
+        ManagementWebSecurityAutoConfiguration::class,
+    ]
+)
 class MainApiApplication @Autowired constructor(
     private val buildProperties: BuildProperties,
 ) {
