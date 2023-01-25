@@ -27,7 +27,7 @@ class LoginVM extends LoginViewModel {
 
   @override
   Future<void> userSelected(SellerInfo user) async {
-    await authService.signIn(user);
+    await authService.login(user);
     navigateTo(HomePage.popAndPush());
   }
 }

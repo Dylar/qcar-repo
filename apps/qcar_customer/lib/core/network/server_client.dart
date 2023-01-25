@@ -19,8 +19,8 @@ class ServerClient implements DownloadClient, UploadClient {
     return await NetworkService.sendRequest(
       Request(
         requestType: RequestType.get,
-        url: SELL_INFO_URL,
-        urlPath: [key.key], //TODO make with params?
+        url: DEALER_INFO_URL,
+        urlPath: ["key", key.key], //TODO make with params?
       ),
     );
   }
@@ -33,7 +33,7 @@ class ServerClient implements DownloadClient, UploadClient {
         requestType: RequestType.get,
         url: CAR_INFO_URL,
         //TODO make with params?
-        urlPath: [info.brand, info.model],
+        urlPath: _getCarUrlPath(info),
       ),
     );
     final car = CarInfo.fromMap(carResp.jsonMap!);
@@ -45,9 +45,9 @@ class ServerClient implements DownloadClient, UploadClient {
       final catResp = await NetworkService.sendRequest(
         Request(
           requestType: RequestType.get,
-          url: CATEGORY_INFO_URL,
+          url: CAR_INFO_URL,
           //TODO make with params?
-          urlPath: [car.brand, car.model, category],
+          urlPath: _getCategoryUrlPath(info, category),
         ),
       );
       final cat = CategoryInfo.fromMap(catResp.jsonMap!);
@@ -60,9 +60,9 @@ class ServerClient implements DownloadClient, UploadClient {
         final vidResp = await NetworkService.sendRequest(
           Request(
             requestType: RequestType.get,
-            url: VIDEO_INFO_URL,
+            url: CAR_INFO_URL,
             //TODO make with params?
-            urlPath: [car.brand, car.model, category, video],
+            urlPath: _getVideoUrlPath(info, category, video),
           ),
         );
         final vid = VideoInfo.fromMap(vidResp.jsonMap!);
@@ -94,4 +94,20 @@ class ServerClient implements DownloadClient, UploadClient {
       ),
     );
   }
+
+  _getCarUrlPath(SellInfo info) => ["brand", info.brand, "model", info.model];
+
+  _getCategoryUrlPath(SellInfo info, String category) =>
+      ["brand", info.brand, "model", info.model, "category", category];
+
+  _getVideoUrlPath(SellInfo info, String category, String video) => [
+        "brand",
+        info.brand,
+        "model",
+        info.model,
+        "category",
+        category,
+        "video",
+        video
+      ];
 }

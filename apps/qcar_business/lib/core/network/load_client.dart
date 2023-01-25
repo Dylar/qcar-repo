@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_business/core/models/Tracking.dart';
 import 'package:qcar_business/core/models/car_info.dart';
-import 'package:qcar_business/core/models/sell_info.dart';
-import 'package:qcar_business/core/models/sell_key.dart';
+import 'package:qcar_business/core/models/dealer_info.dart';
+import 'package:qcar_business/core/models/seller_info.dart';
 import 'package:qcar_business/core/models/video_info.dart';
 import 'package:qcar_shared/network_service.dart';
 import 'package:qcar_shared/tuple.dart';
@@ -11,12 +11,18 @@ abstract class DownloadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
       ValueNotifier(Tuple(0, 0));
 
-  Future<Response> loadCarInfo(SellInfo info);
+  Future<Response> loadCarInfo(DealerInfo info);
+  Future<Response> loadSellerInfo(DealerInfo info);
+  Future<Response> loadCustomerInfo(DealerInfo info);
 
-  Future<Response> loadSellInfo(SellKey key);
+  Future<Response> loadSellInfo(SellerInfo info);
 }
 
 abstract class UploadClient {
+  //TODO make this
+  // Future<Response> addCustomer(CustomerInfo info);
+  // Future<Response> sellCar(SellInfo info);
+
   Future<Response> sendTracking(TrackEvent event);
 }
 

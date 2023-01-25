@@ -35,18 +35,18 @@ class Request {
 enum ResponseStatus { OK, NOT_FOUND, ERROR, NO_RESPONSE, UNKNOWN }
 
 class Response {
-  Response(this.status, {this.jsonMap});
+  Response(this.status, {this.json = "", this.error = ""});
 
-  Response.ok({Map<String, dynamic>? jsonMap})
-      : this(ResponseStatus.OK, jsonMap: jsonMap);
+  Response.ok({required String json}) : this(ResponseStatus.OK, json: json);
 
-  Response.error(String error)
-      : this(ResponseStatus.ERROR, jsonMap: {"error": error});
+  Response.error(String error) : this(ResponseStatus.ERROR, error: error);
 
   final ResponseStatus status;
-  final Map<String, dynamic>? jsonMap;
+  final String json;
+  final String error;
 
-  String? get error => jsonMap?["error"];
+  Map<String, dynamic> get jsonMap => jsonDecode(json);
+  List<dynamic> get jsonList => jsonDecode(json);
 }
 
 class NetworkService {
@@ -54,15 +54,15 @@ class NetworkService {
 
   static Future<Response> sendRequest(Request request) async {
     try {
-      final service = NetworkService._();
-      final _header = request.header;
-      String _url = service._concatUrlParams(request.url, request.queryParam);
-      _url = service._concatUrl(_url, request.urlPath);
+      const service = NetworkService._();
+      final header = request.header;
+      String url = service._concatUrlParams(request.url, request.queryParam);
+      url = service._concatUrl(url, request.urlPath);
 
       final response = await service._createRequest(
           requestType: request.requestType,
-          uri: Uri.parse(_url),
-          headers: _header,
+          uri: Uri.parse(url),
+          headers: header,
           body: request.body);
 
       return service._evaluateResponse(response);
@@ -92,10 +92,7 @@ class NetworkService {
     if (url.isEmpty || urlPath == null || urlPath.isEmpty) {
       return url;
     }
-    for (var path in urlPath) {
-      url += "/$path";
-    }
-    return url;
+    return "$url/${urlPath.join("/")}";
   }
 
   String _concatUrlParams(String url, Map<String, String>? queryParameters) {
@@ -136,9 +133,7 @@ class NetworkService {
 
     return Response(
       code,
-      jsonMap: response.body.isEmpty
-          ? null
-          : jsonDecode(utf8.decode(response.bodyBytes)),
+      json: response.body.isEmpty ? null : utf8.decode(response.bodyBytes),
     );
   }
 }

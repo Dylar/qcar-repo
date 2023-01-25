@@ -1,3 +1,4 @@
+import 'package:qcar_business/core/models/dealer_info.dart';
 import 'package:qcar_business/core/models/seller_info.dart';
 
 class AuthenticationService {
@@ -6,13 +7,18 @@ class AuthenticationService {
   SellerInfo? _loggedInUser = SellerInfo(dealer: "Autohaus", name: "Maxi");
   SellerInfo get currentUser => _loggedInUser!;
 
-  Future<void> signOut() async {}
+  DealerInfo? _loggedInDealer =
+      DealerInfo(name: "Autohaus", address: "Hamburg");
+  DealerInfo get currentDealer => _loggedInDealer!;
 
-  Future<bool> isSignedIn() async {
-    return _loggedInUser != null;
+  Future<void> logout() async {
+    _loggedInUser = null;
   }
 
-  Future<void> signIn(SellerInfo user) async {
+  Future<bool> isDealerLoggedIn() async => _loggedInDealer != null;
+  Future<bool> isUserLoggedIn() async => _loggedInUser != null;
+
+  Future<void> login(SellerInfo user) async {
     _loggedInUser = user;
   }
 }

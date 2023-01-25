@@ -7,6 +7,7 @@ const SELL_KEY_TYPE_ID = 6;
 const SELL_VIDEO_INFO_TYPE_ID = 7;
 const SELLER_INFO_TYPE_ID = 8;
 const CUSTOMER_INFO_TYPE_ID = 9;
+const DEALER_INFO_TYPE_ID = 10;
 
 const ARGS_VIEW_MODEL = "ARGS_VIEW_MODEL";
 const ARGS_SELL_INFO = "ARGS_SELL_INFO";
@@ -46,6 +47,7 @@ const FIELD_GENDER = "gender";
 const FIELD_BIRTHDAY = "birthday";
 const FIELD_EMAIL = "email";
 const FIELD_PHONE = "phone";
+const FIELD_ADDRESS = "address";
 
 const FIELD_CAR = "car";
 const FIELD_CUSTOMER = "customer";

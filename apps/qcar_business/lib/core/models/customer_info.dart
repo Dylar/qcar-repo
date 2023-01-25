@@ -11,6 +11,7 @@ enum Gender { MALE, FEMALE, DIVERS }
 @HiveType(typeId: CUSTOMER_INFO_TYPE_ID)
 class CustomerInfo extends HiveObject {
   CustomerInfo({
+    required this.dealer,
     required this.name,
     required this.lastName,
     required this.gender,
@@ -22,6 +23,7 @@ class CustomerInfo extends HiveObject {
   static CustomerInfo empty() => fromMap({});
 
   static CustomerInfo fromMap(Map<String, dynamic> map) => CustomerInfo(
+        dealer: map[FIELD_DEALER] ?? "",
         name: map[FIELD_NAME] ?? "",
         lastName: map[FIELD_LAST_NAME] ?? "",
         birthday: map[FIELD_BIRTHDAY] ?? "",
@@ -34,6 +36,7 @@ class CustomerInfo extends HiveObject {
       );
 
   Map<String, dynamic> toMap() => {
+        FIELD_DEALER: dealer,
         FIELD_NAME: name,
         FIELD_LAST_NAME: lastName,
         FIELD_BIRTHDAY: birthday,
@@ -47,15 +50,17 @@ class CustomerInfo extends HiveObject {
   String get fullName => "$name $lastName";
 
   @HiveField(0)
-  String name = "";
+  String dealer = "";
   @HiveField(1)
-  String lastName = "";
+  String name = "";
   @HiveField(2)
-  Gender gender = Gender.DIVERS;
+  String lastName = "";
   @HiveField(3)
-  String birthday = "";
+  Gender gender = Gender.DIVERS;
   @HiveField(4)
-  String email = "";
+  String birthday = "";
   @HiveField(5)
+  String email = "";
+  @HiveField(6)
   String phone = "";
 }

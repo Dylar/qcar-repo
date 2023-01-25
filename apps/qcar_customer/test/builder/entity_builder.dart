@@ -8,7 +8,7 @@ import 'package:qcar_shared/utils/json_loader.dart';
 
 const String BASE_TESTDATA_PATH = "../../testdata";
 const String DEALER_TESTDATA_PATH = "$BASE_TESTDATA_PATH/dealer/";
-const String CUSTOMER_TESTDATA_PATH = "$BASE_TESTDATA_PATH/customer/";
+const String CUSTOMER_TESTDATA_PATH = "$BASE_TESTDATA_PATH/car/";
 const String TEST_CAR_MAJA = "car_info_maja.json";
 const String TEST_CAR_FULL = "car_info_full.json";
 const String TEST_VIDEO_INFO = "video_info.json";

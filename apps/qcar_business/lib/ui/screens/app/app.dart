@@ -7,6 +7,7 @@ import 'package:qcar_business/core/datasource/sell_data_source.dart';
 import 'package:qcar_business/core/datasource/settings_data_source.dart';
 import 'package:qcar_business/core/environment_config.dart';
 import 'package:qcar_business/core/network/load_client.dart';
+import 'package:qcar_business/core/network/mock_client.dart';
 import 'package:qcar_business/core/network/server_client.dart';
 import 'package:qcar_business/core/service/auth_service.dart';
 import 'package:qcar_business/core/service/info_service.dart';
@@ -48,7 +49,8 @@ class AppInfrastructure {
     final carSource = carInfoDataSource ?? CarInfoDS(db);
     final sellSource = sellInfoDataSource ?? SellInfoDS(db);
     final settingsSource = settingsDataSource ?? SettingsDS(db);
-    final downClient = downloadClient ?? ServerClient();
+    final downClient =
+        MockClient(); //downloadClient ?? ServerClient(); //TODO use real client
     //TODO make this not doppelt
     final upClient = uploadClient ?? ServerClient();
     final authService = authenticationService ?? AuthenticationService();
@@ -62,7 +64,7 @@ class AppInfrastructure {
       settingsService: settingsService,
       carInfoDataSource: carSource,
       sellInfoDataSource: sellSource,
-      infoService: InfoService(),
+      infoService: InfoService(downClient),
       authService: authService,
       trackingService: trackService,
     );

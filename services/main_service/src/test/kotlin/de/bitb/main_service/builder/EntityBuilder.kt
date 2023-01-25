@@ -3,7 +3,6 @@ package de.bitb.main_service.builder
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import de.bitb.main_service.exceptions.JSONValidationException
 import de.bitb.main_service.loadJsonFile
 import de.bitb.main_service.models.*
 
@@ -27,8 +26,8 @@ const val TEST_TRACKING = "feedback.json"
 val objMapper: ObjectMapper = ObjectMapper().registerKotlinModule()
     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-private fun loadTestCustomerFile(jsonFile: String): String =
-    loadJsonFile("$BASE_TESTDATA_PATH/customer/$jsonFile")
+private fun loadTestCarFile(jsonFile: String): String =
+    loadJsonFile("$BASE_TESTDATA_PATH/car/$jsonFile")
 
 private fun loadTestDealerFile(jsonFile: String): String =
     loadJsonFile("$BASE_TESTDATA_PATH/dealer/$jsonFile")
@@ -38,19 +37,19 @@ private fun loadTestTrackingFile(jsonFile: String): String =
 
 fun buildEmptyCarInfo(): CarInfo = CarInfo()
 fun buildCarInfo(jsonFile: String = TEST_CAR_INFO): CarInfo {
-    val json = loadTestCustomerFile(jsonFile)
+    val json = loadTestCarFile(jsonFile)
     return objMapper.readValue(json, CarInfo::class.java)
 }
 
 fun buildEmptyCategoryInfo(): CategoryInfo = CategoryInfo()
 fun buildCategoryInfo(jsonFile: String = TEST_CATEGORY_INFO): CategoryInfo {
-    val json = loadTestCustomerFile(jsonFile)
+    val json = loadTestCarFile(jsonFile)
     return objMapper.readValue(json, CategoryInfo::class.java)
 }
 
 fun buildEmptyVideoInfo(): VideoInfo = VideoInfo()
 fun buildVideoInfo(jsonFile: String = TEST_VIDEO_INFO): VideoInfo {
-    val json = loadTestCustomerFile(jsonFile)
+    val json = loadTestCarFile(jsonFile)
     return objMapper.readValue(json, VideoInfo::class.java)
 }
 

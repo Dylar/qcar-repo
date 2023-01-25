@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:qcar_business/core/service/services.dart';
 import 'package:qcar_business/ui/screens/login/login_page.dart';
 import 'package:qcar_business/ui/screens/settings/settings_page.dart';
 import 'package:qcar_shared/core/app_navigate.dart';
@@ -25,7 +26,10 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text(l10n.drawerLogout),
-            onTap: () => Navigate.to(context, LoginPage.onLogout()),
+            onTap: () {
+              Services.of(context)!.authService.logout();
+              Navigate.to(context, LoginPage.onLogout());
+            },
           ),
           ListTile(
             title: Text(l10n.drawerSettings),

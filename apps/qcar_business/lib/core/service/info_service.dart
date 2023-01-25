@@ -1,126 +1,74 @@
 import 'package:qcar_business/core/models/car_info.dart';
 import 'package:qcar_business/core/models/customer_info.dart';
+import 'package:qcar_business/core/models/dealer_info.dart';
 import 'package:qcar_business/core/models/sell_info.dart';
 import 'package:qcar_business/core/models/seller_info.dart';
 import 'package:qcar_business/core/models/video_info.dart';
+import 'package:qcar_business/core/network/load_client.dart';
+import 'package:qcar_shared/network_service.dart';
 
 class InfoService {
-  List<CustomerInfo> customer = [
-    CustomerInfo(
-      name: "Peter",
-      lastName: "Lustig",
-      gender: Gender.MALE,
-      birthday: "2001-09-11 09:35:00.000",
-      phone: "0190666666",
-      email: "peter.lustig@gmx.de",
-    )
-  ];
-  Map<String, List<SellInfo>> sellInfos = {};
-  List<CarInfo> cars = [
-    CarInfo(
-      brand: "Opel",
-      model: "Corsa",
-      imagePath: "Toyota/CorollaTSGR/CorollaTSGR.jpg",
-    ),
-    CarInfo(
-      brand: "Toyota",
-      model: "Corolla",
-      imagePath: "Toyota/CorollaTSGR/CorollaTSGR.jpg",
-    ),
-  ];
-  List<VideoInfo> _videos = [];
+  InfoService(this.downClient);
 
-  List<VideoInfo> getVideos() {
-    if (_videos.isEmpty) {
-      final car1 = cars.first;
-      _videos.add(VideoInfo(
-        brand: car1.brand,
-        model: car1.model,
-        category: "Sicherheit",
-        name: "Smart-Key, Keyless Go",
-        categoryImagePath: "Toyota/CorollaTSGR/Sicherheit/Sicherheit.jpg",
-        videoImagePath:
-            "Toyota/CorollaTSGR/Sicherheit/Smart-Key, Keyless Go/Smart-Key, Keyless Go.jpg",
-      ));
-      _videos.add(VideoInfo(
-        brand: car1.brand,
-        model: car1.model,
-        category: "Sicherheit",
-        name: "Gurt",
-        categoryImagePath: "Toyota/CorollaTSGR/Sicherheit/Sicherheit.jpg",
-        videoImagePath:
-            "Toyota/CorollaTSGR/Sicherheit/Smart-Key, Keyless Go/Smart-Key, Keyless Go.jpg",
-      ));
+  final DownloadClient downClient;
 
-      _videos.add(VideoInfo(
-        brand: car1.brand,
-        model: car1.model,
-        category: "Räder & Reifen",
-        name: "Reifenreparaturset",
-        categoryImagePath: "Toyota/CorollaTSGR/Räder & Reifen/Reifen.jpg",
-        videoImagePath:
-            "Toyota/CorollaTSGR/Sicherheit/Räder & Reifen/reifenreparatur.jpg",
-      ));
+  List<CarInfo> cars = [];
+  List<VideoInfo> videos = [];
 
-      final car2 = cars.last;
-      _videos.add(VideoInfo(
-        brand: car2.brand,
-        model: car2.model,
-        category: "Sicherheit",
-        name: "Rückfahrkamera",
-        categoryImagePath: "Toyota/CorollaTSGR/Sicherheit/Sicherheit.jpg",
-        videoImagePath:
-            "Toyota/CorollaTSGR/Sicherheit/Rückfahrkamera/Rückfahrkamera.jpg",
-      ));
-    }
-    return _videos;
+  List<SellerInfo> sellers = [];
+  List<CustomerInfo> customers = [];
+  List<SellInfo> sellInfos = [];
+
+  Future<void> loadDealerInfos(DealerInfo info) async {
+    await Future.wait([
+      downClient.loadCarInfo(info).then((rsp) {
+        if (rsp.status == ResponseStatus.OK) {
+          cars = rsp.jsonList
+              .map((e) => CarInfo.fromMap(e as Map<String, dynamic>))
+              .toList();
+        }
+      }),
+      downClient.loadSellerInfo(info).then((rsp) {
+        if (rsp.status == ResponseStatus.OK) {
+          sellers = rsp.jsonList
+              .map((e) => SellerInfo.fromMap(e as Map<String, dynamic>))
+              .toList();
+        }
+      }),
+      downClient.loadCustomerInfo(info).then((rsp) {
+        if (rsp.status == ResponseStatus.OK) {
+          customers = rsp.jsonList
+              .map((e) => CustomerInfo.fromMap(e as Map<String, dynamic>))
+              .toList();
+        }
+      }),
+    ]);
   }
 
-  List<SellerInfo> getSeller() {
-    return [
-      SellerInfo(dealer: "Autohaus", name: "Maxi"),
-      SellerInfo(dealer: "Autohaus", name: "Kolja"),
-    ];
-  }
-
-  List<SellInfo> getSellInfos(SellerInfo sellerInfo) {
-    final selectedVideos = <String, List<VideoInfo>>{};
-    getVideos().forEach((video) {
-      final list = selectedVideos[video.category] ?? [];
-      list.add(video);
-      selectedVideos[video.category] = list;
-    });
-    return sellInfos[sellerInfo.name] ??
-        [
-          SellInfo(
-            seller: sellerInfo,
-            car: cars.first,
-            videos: selectedVideos,
-            customer: customer.first,
-          ),
-          SellInfo(
-            seller: sellerInfo,
-            car: cars.last,
-            videos: selectedVideos,
-            customer: customer.first,
-          )
-        ];
+  Future<void> loadSellerInfos(SellerInfo info) async {
+    await Future.wait([
+      downClient.loadSellInfo(info).then((rsp) {
+        if (rsp.status == ResponseStatus.OK) {
+          sellInfos = rsp.jsonList
+              .map((e) => SellInfo.fromMap(e as Map<String, dynamic>))
+              .toList();
+        }
+      }),
+    ]);
   }
 
   void sellCar(SellInfo info) {
-    if (!customer.contains(info.customer)) {
-      customer.add(info.customer);
+    if (!customers.contains(info.customer)) {
+      customers.add(info.customer);
     }
-    final soldCars = sellInfos[info.seller.name] ?? [];
-    soldCars.add(info);
-    sellInfos[info.seller.name] = soldCars;
+    sellInfos.add(info);
   }
 
   List<CustomerInfo> searchCustomer(String query) {
     final Set<CustomerInfo> result = {};
-    result.addAll(customer.where((c) => c.lastName.contains(query)));
-    result.addAll(customer.where((c) => c.email.contains(query)));
-    result.addAll(customer.where((c) => c.name.contains(query)));
+    result.addAll(customers.where((c) => c.lastName.contains(query)));
+    result.addAll(customers.where((c) => c.email.contains(query)));
+    result.addAll(customers.where((c) => c.name.contains(query)));
     return result.toList();
   }
 }
