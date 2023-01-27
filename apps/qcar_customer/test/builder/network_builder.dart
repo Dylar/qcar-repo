@@ -1,11 +1,13 @@
+import 'dart:convert';
+
 import 'package:qcar_shared/network_service.dart';
 
 Response okResponse({Map<String, dynamic>? jsonMap}) {
-  return Response(ResponseStatus.OK, jsonMap: jsonMap);
+  return Response(ResponseStatus.OK, json: jsonEncode(jsonMap));
 }
 
 Response notFoundResponse({Map<String, dynamic>? jsonMap}) {
-  return Response(ResponseStatus.NOT_FOUND, jsonMap: jsonMap);
+  return Response(ResponseStatus.NOT_FOUND, json: jsonEncode(jsonMap));
 }
 
 Response errorResponse(String error) {
@@ -13,9 +15,9 @@ Response errorResponse(String error) {
 }
 
 Response noResponse({Map<String, dynamic>? jsonMap}) {
-  return Response(ResponseStatus.NO_RESPONSE, jsonMap: jsonMap);
+  return Response(ResponseStatus.NO_RESPONSE, json: jsonEncode(jsonMap));
 }
 
 Response unknownResponse({Map<String, dynamic>? jsonMap}) {
-  return Response(ResponseStatus.UNKNOWN, jsonMap: jsonMap);
+  return Response(ResponseStatus.UNKNOWN, json: jsonEncode(jsonMap));
 }

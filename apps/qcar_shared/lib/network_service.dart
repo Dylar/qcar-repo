@@ -133,7 +133,7 @@ class NetworkService {
 
     return Response(
       code,
-      json: response.body.isEmpty ? null : utf8.decode(response.bodyBytes),
+      json: response.body.isEmpty ? "" : utf8.decode(response.bodyBytes),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -42,7 +43,7 @@ DownloadClient mockDownloadClient({List<SellKey> acceptedKeys = const []}) {
         vid.model = car.model;
       });
     });
-    return Response.ok(jsonMap: car.toMap());
+    return Response.ok(json: jsonEncode(car.toMap()));
   });
 
   when(client.loadSellInfo(any)).thenAnswer((inv) async {
@@ -50,13 +51,13 @@ DownloadClient mockDownloadClient({List<SellKey> acceptedKeys = const []}) {
     final key = sellKey.key;
     final sellInfo = await buildSellInfo();
     if (sellInfo.key == key) {
-      return Response.ok(jsonMap: sellInfo.toMap());
+      return Response.ok(json: jsonEncode(sellInfo.toMap()));
     }
     if (acceptedKeys.any((k) => k.key == key)) {
       sellInfo
         ..brand = key
         ..model = key;
-      return Response.ok(jsonMap: sellInfo.toMap());
+      return Response.ok(json: jsonEncode(sellInfo.toMap()));
     }
     throw Exception("WRONG KEY");
   });

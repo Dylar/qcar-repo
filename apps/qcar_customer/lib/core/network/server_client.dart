@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:qcar_customer/core/misc/constants/urls.dart';
 import 'package:qcar_customer/core/models/Feedback.dart' as fb;
@@ -70,7 +72,7 @@ class ServerClient implements DownloadClient, UploadClient {
         cat.videos.add(vid);
       }
     }
-    return Response.ok(jsonMap: car.toMap());
+    return Response.ok(json: jsonEncode(car.toMap()));
   }
 
   @override
