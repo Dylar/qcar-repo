@@ -22,6 +22,8 @@ class CustomerInfo extends HiveObject {
 
   static CustomerInfo empty() => fromMap({});
 
+  String toJson() => jsonEncode(toMap());
+
   static CustomerInfo fromMap(Map<String, dynamic> map) => CustomerInfo(
         dealer: map[FIELD_DEALER] ?? "",
         name: map[FIELD_NAME] ?? "",
@@ -45,7 +47,24 @@ class CustomerInfo extends HiveObject {
         FIELD_PHONE: phone,
       };
 
-  String toJson() => jsonEncode(toMap());
+  CustomerInfo copy({
+    String? dealer,
+    String? name,
+    String? lastName,
+    Gender? gender,
+    String? birthday,
+    String? email,
+    String? phone,
+  }) =>
+      CustomerInfo(
+        dealer: dealer ?? this.dealer,
+        name: name ?? this.name,
+        lastName: lastName ?? this.lastName,
+        gender: gender ?? this.gender,
+        birthday: birthday ?? this.birthday,
+        email: email ?? this.email,
+        phone: phone ?? this.phone,
+      );
 
   String get fullName => "$name $lastName";
 

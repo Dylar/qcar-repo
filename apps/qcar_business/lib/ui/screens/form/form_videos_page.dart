@@ -75,7 +75,7 @@ class _FormVideoPageState extends ViewState<FormVideosPage, FormViewModel> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Checkbox(
-            value: viewModel.isSelected(video.category, video),
+            value: viewModel.isVideoSelected(video.category, video),
             onChanged: (value) => viewModel.selectVideo(video.category, video),
           ),
           Flexible(
@@ -99,7 +99,7 @@ class _FormVideoPageState extends ViewState<FormVideosPage, FormViewModel> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Checkbox(
-            value: viewModel.isSelected(category, null),
+            value: viewModel.isVideoSelected(category, null),
             onChanged: (value) => viewModel.selectVideo(category, null),
           ),
           inkTap(

@@ -10,21 +10,23 @@ import 'package:qcar_business/ui/notify/snackbars.dart';
 import 'package:qcar_business/ui/screens/form/form_videos_page.dart';
 import 'package:qcar_business/ui/screens/home/home_page.dart';
 import 'package:qcar_shared/core/app_viewmodel.dart';
+import 'package:qcar_shared/utils/time_utils.dart';
 
 abstract class FormViewModel extends ViewModel {
   bool get validateError;
 
   List<CarInfo> get cars;
-
-  List<VideoInfo> get videos;
-
-  bool isSelected(String category, VideoInfo? video);
-
   void selectCar(CarInfo car);
 
+  List<VideoInfo> get videos;
   void selectVideo(String category, VideoInfo? video);
+  bool isVideoSelected(String category, VideoInfo? video);
 
-  void saveSellInfo(CustomerInfo customer);
+  CustomerInfo customer = CustomerInfo.empty();
+  DateTime? get selectedBirthday;
+  set selectBirthday(DateTime selectBirthday);
+
+  void saveSellInfo();
 }
 
 class FormVM extends FormViewModel {
@@ -34,6 +36,8 @@ class FormVM extends FormViewModel {
   final InfoService infoService;
 
   List<CarInfo> cars = [];
+  CarInfo? selectedCar;
+
   List<VideoInfo> _videos = [];
 
   List<VideoInfo> get videos => _videos
@@ -41,8 +45,6 @@ class FormVM extends FormViewModel {
           video.model == selectedCar!.model &&
           video.brand == selectedCar!.brand)
       .toList();
-
-  CarInfo? selectedCar;
   Map<String, List<VideoInfo>> selectedVideos = {};
 
   bool validateError = false;
@@ -50,25 +52,12 @@ class FormVM extends FormViewModel {
   @override
   Future init() async {
     if (cars.isEmpty) {
-      cars = infoService.cars;
+      cars = infoService.getCars();
       _videos = infoService.getVideos();
     }
   }
 
-  @override
-  bool isSelected(String category, VideoInfo? video) {
-    final selectedVids = selectedVideos[category] ?? [];
-    if (selectedVids.isEmpty) {
-      return false;
-    }
-
-    if (video == null) {
-      final allVids = videos.where((vid) => vid.category == category);
-      return allVids.length == selectedVids.length;
-    } else {
-      return selectedVids.contains(video);
-    }
-  }
+  //--------CARS--------\\
 
   @override
   void selectCar(CarInfo car) {
@@ -82,22 +71,56 @@ class FormVM extends FormViewModel {
     navigateTo(FormVideosPage.pushIt(this));
   }
 
+  //--------VIDEOS--------\\
+
   @override
   void selectVideo(String category, VideoInfo? video) {
     final list = selectedVideos[category] ?? [];
     if (video == null) {
-      isSelected(category, video)
+      isVideoSelected(category, video)
           ? list.clear()
           : list.addAll(videos.where((vid) => vid.category == category));
     } else {
-      isSelected(category, video) ? list.remove(video) : list.add(video);
+      isVideoSelected(category, video) ? list.remove(video) : list.add(video);
     }
     selectedVideos[category] = list;
     notifyListeners();
   }
 
   @override
-  void saveSellInfo(CustomerInfo customer) {
+  bool isVideoSelected(String category, VideoInfo? video) {
+    final selectedVids = selectedVideos[category] ?? [];
+    if (selectedVids.isEmpty) {
+      return false;
+    }
+
+    if (video == null) {
+      final allVids = videos.where((vid) => vid.category == category);
+      return allVids.length == selectedVids.length;
+    } else {
+      return selectedVids.contains(video);
+    }
+  }
+
+  //--------CUSTOMER--------\\
+
+  @override
+  DateTime? get selectedBirthday =>
+      customer.birthday.isEmpty ? null : parseDate(customer.birthday);
+
+  @override
+  set selectBirthday(DateTime selectBirthday) {
+    final formatted = formatDate(selectBirthday);
+    if (customer.birthday != formatted) {
+      customer = customer.copy(birthday: formatted);
+      notifyListeners();
+    }
+  }
+
+  //--------SAVE--------\\
+
+  @override
+  void saveSellInfo() {
     if (customer.name.isEmpty ||
         customer.lastName.isEmpty ||
         customer.email.isEmpty ||

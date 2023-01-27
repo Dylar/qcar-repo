@@ -22,7 +22,7 @@ class LoginVM extends LoginViewModel {
 
   @override
   Future init() async {
-    sellers = await infoService.getSeller();
+    sellers = await infoService.getSeller(authService.currentDealer);
   }
 
   @override

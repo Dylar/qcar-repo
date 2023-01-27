@@ -41,18 +41,31 @@ class _FormCustomerPageState
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
-  Gender selectedGender = Gender.DIVERS;
-  DateTime? selectedBirthday;
+  @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+  }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime(2001, 9, 11),
-        firstDate: DateTime(1900, 1, 1),
-        lastDate: DateTime.now());
-    if (picked != null && picked != selectedBirthday) {
-      setState(() => selectedBirthday = picked);
-    }
+  @override
+  void initState() {
+    super.initState();
+    final customer = viewModel.customer;
+    nameController.text = customer.name;
+    lastNameController.text = customer.lastName;
+    emailController.text = customer.email;
+    phoneController.text = customer.phone;
+    nameController.addListener(() => viewModel.customer =
+        viewModel.customer.copy(name: nameController.text));
+    lastNameController.addListener(() => viewModel.customer =
+        viewModel.customer.copy(lastName: lastNameController.text));
+    emailController.addListener(() => viewModel.customer =
+        viewModel.customer.copy(email: emailController.text));
+    phoneController.addListener(() => viewModel.customer =
+        viewModel.customer.copy(phone: phoneController.text));
   }
 
   @override
@@ -83,14 +96,7 @@ class _FormCustomerPageState
           delegate: CustomerSearchDelegate(Services.of(context)!.infoService),
         );
         if (customer != null) {
-          setState(() {
-            nameController.text = customer.name;
-            lastNameController.text = customer.lastName;
-            emailController.text = customer.email;
-            phoneController.text = customer.phone;
-            selectedBirthday = parseDate(customer.birthday);
-            selectedGender = customer.gender;
-          });
+          viewModel.customer = customer;
         }
       },
       child: Text(l10n.formSelectCustomer),
@@ -99,23 +105,13 @@ class _FormCustomerPageState
 
   Widget _saveButton(AppLocalizations l10n) {
     return ElevatedButton(
-      onPressed: () {
-        final customer = CustomerInfo(
-          name: nameController.text,
-          lastName: lastNameController.text,
-          gender: selectedGender,
-          birthday:
-              selectedBirthday == null ? "" : formatDate(selectedBirthday!),
-          email: emailController.text,
-          phone: phoneController.text,
-        );
-        viewModel.saveSellInfo(customer);
-      },
+      onPressed: () => viewModel.saveSellInfo(),
       child: Text(l10n.save),
     );
   }
 
   Widget buildFormPage(BuildContext context, AppLocalizations l10n) {
+    final selectedBirthday = viewModel.selectedBirthday;
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -129,9 +125,7 @@ class _FormCustomerPageState
               buildTextField(emailController, Icons.email, l10n.customerEmail),
               buildTextField(phoneController, Icons.phone, l10n.customerPhone),
             ].map((child) => Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 30, 10),
-                  child: child,
-                )),
+                padding: EdgeInsets.fromLTRB(30, 0, 30, 10), child: child)),
             Padding(
               padding: EdgeInsets.fromLTRB(30, 0, 30, 10),
               child: GestureDetector(
@@ -154,7 +148,7 @@ class _FormCustomerPageState
                             ),
                           ),
                           selectedBirthday != null
-                              ? Text(formatBirthday(selectedBirthday!))
+                              ? Text(formatBirthday(selectedBirthday))
                               : Text(l10n.formSelectBirthday),
                         ],
                       ),
@@ -173,6 +167,17 @@ class _FormCustomerPageState
         ),
       ),
     );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime(2001, 9, 11),
+        firstDate: DateTime(1900, 1, 1),
+        lastDate: DateTime.now());
+    if (picked != null) {
+      viewModel.selectBirthday = picked;
+    }
   }
 
   TextField buildTextField(
@@ -201,8 +206,9 @@ class _FormCustomerPageState
   }
 
   Widget _genderButton(Gender gender, String label) {
+    final selectedGender = viewModel.customer.gender;
     return GestureDetector(
-      onTap: () => setState(() => selectedGender = gender),
+      onTap: () => viewModel.customer = viewModel.customer.copy(gender: gender),
       child: RoundedWidget(
         child: Row(
           children: [
@@ -210,7 +216,7 @@ class _FormCustomerPageState
               value: gender,
               groupValue: selectedGender,
               onChanged: (Gender? value) =>
-                  setState(() => selectedGender = value!),
+                  viewModel.customer = viewModel.customer.copy(gender: value!),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
