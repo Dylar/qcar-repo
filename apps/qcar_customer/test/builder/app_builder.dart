@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 import 'package:qcar_customer/core/datasource/car_data_source.dart';
 import 'package:qcar_customer/core/datasource/favorite_data_source.dart';
-import 'package:qcar_customer/core/datasource/sell_data_source.dart';
+import 'package:qcar_customer/core/datasource/sale_data_source.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/service/tracking_service.dart';
 import 'package:qcar_customer/ui/screens/app/app.dart';
@@ -26,7 +26,7 @@ Future<void> prepareTest() async {
 AppInfrastructure createTestInfra({
   DownloadClient? downloadClient,
   TrackingService? trackingService,
-  SellInfoDataSource? sellDataSource,
+  SaleInfoDataSource? saleDataSource,
   CarInfoDataSource? carDataSource,
   FavoriteDataSource? favoriteDataSource,
 }) {
@@ -35,7 +35,7 @@ AppInfrastructure createTestInfra({
   final uploadClient = mockUploadClient();
   final settingsSource = mockSettings();
   final carSource = carDataSource ?? mockCarSource();
-  final sellSource = sellDataSource ?? mockSellSource();
+  final saleSource = saleDataSource ?? mockSaleSource();
   final authService = mockAuthService();
   final trackService = trackingService ?? mockTrackingService();
   final favDataSource = favoriteDataSource ?? mockFavoriteSource();
@@ -46,7 +46,7 @@ AppInfrastructure createTestInfra({
     settingsDataSource: settingsSource,
     carInfoDataSource: carSource,
     favoriteDataSource: favDataSource,
-    sellInfoDataSource: sellSource,
+    saleInfoDataSource: saleSource,
     authenticationService: authService,
     trackingService: trackService,
   );

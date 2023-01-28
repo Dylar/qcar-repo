@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/models/sell_info.dart';
+import 'package:qcar_customer/core/models/sale_info.dart';
 import 'package:qcar_customer/core/service/info_service.dart';
 import 'package:qcar_customer/core/service/settings_service.dart';
 import 'package:qcar_customer/ui/mixins/scan_fun.dart';
@@ -12,7 +12,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 abstract class IntroViewModel extends ViewModel {
   ValueNotifier<Tuple<double, double>> get progressValue;
 
-  SellInfo? sellInfo;
+  SaleInfo? saleInfo;
 
   Barcode? barcode;
   QrScanState qrState = QrScanState.WAITING;

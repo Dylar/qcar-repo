@@ -4,11 +4,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'model_data.dart';
 
-part 'sell_info.g.dart';
+part 'sale_info.g.dart';
 
-@HiveType(typeId: SELL_INFO_TYPE_ID)
-class SellInfo extends HiveObject {
-  SellInfo({
+@HiveType(typeId: SALE_INFO_TYPE_ID)
+class SaleInfo extends HiveObject {
+  SaleInfo({
     required this.key,
     required this.seller,
     required this.brand,
@@ -18,11 +18,11 @@ class SellInfo extends HiveObject {
     required this.videos,
   });
 
-  static SellInfo fromMap(Map<String, dynamic> map) {
+  static SaleInfo fromMap(Map<String, dynamic> map) {
     final parsedVideosMap = Map<String, List<dynamic>>.from(
             map[FIELD_VIDEOS] ?? <Map<String, dynamic>>{})
         .map((key, value) => MapEntry(key, List<String>.from(value)));
-    return SellInfo(
+    return SaleInfo(
       key: map[FIELD_KEY] ?? "",
       dealer: map[FIELD_DEALER] ?? "",
       seller: map[FIELD_SELLER] ?? "",

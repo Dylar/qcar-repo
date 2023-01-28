@@ -1,11 +1,11 @@
 import 'package:flutter/src/foundation/change_notifier.dart';
 import 'package:qcar_customer/core/datasource/car_data_source.dart';
 import 'package:qcar_customer/core/datasource/favorite_data_source.dart';
-import 'package:qcar_customer/core/datasource/sell_data_source.dart';
+import 'package:qcar_customer/core/datasource/sale_data_source.dart';
 import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/core/models/favorite.dart';
-import 'package:qcar_customer/core/models/sell_info.dart';
-import 'package:qcar_customer/core/models/sell_key.dart';
+import 'package:qcar_customer/core/models/sale_info.dart';
+import 'package:qcar_customer/core/models/sale_key.dart';
 import 'package:qcar_customer/core/models/video_info.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_shared/network_service.dart';
@@ -16,13 +16,13 @@ class InfoService {
   InfoService(
     this._loadClient,
     this._carInfoDataSource,
-    this._sellInfoDataSource,
+    this._saleInfoDataSource,
     this._favoriteDataSource,
   );
 
   final DownloadClient _loadClient;
   final CarInfoDataSource _carInfoDataSource;
-  final SellInfoDataSource _sellInfoDataSource;
+  final SaleInfoDataSource _saleInfoDataSource;
   final FavoriteDataSource _favoriteDataSource;
 
   ValueNotifier<Tuple<double, double>> get progressValue =>
@@ -41,25 +41,25 @@ class InfoService {
 
   Future<bool> hasCars() async {
     final List<CarInfo> cars = await _carInfoDataSource.getAllCars();
-    final List<SellInfo> sells = await _sellInfoDataSource.getAllSellInfos();
-    return cars.isNotEmpty && sells.isNotEmpty; //TODO test both empty
+    final List<SaleInfo> sales = await _saleInfoDataSource.getAllSaleInfos();
+    return cars.isNotEmpty && sales.isNotEmpty; //TODO test both empty
   }
 
   Future<String> getIntroVideo() async {
-    final sells = await _sellInfoDataSource.getAllSellInfos();
-    return fixIntroPath(sells.first); //TODO remember last selected
+    final sales = await _saleInfoDataSource.getAllSaleInfos();
+    return fixIntroPath(sales.first); //TODO remember last selected
   }
 
-  Future<SellInfo> loadSellInfo(String scan) async {
-    final key = SellKey.fromScan(scan);
-    final response = await _loadClient.loadSellInfo(key);
+  Future<SaleInfo> loadSaleInfo(String scan) async {
+    final key = SaleKey.fromScan(scan);
+    final response = await _loadClient.loadSaleInfo(key);
     if (response.status == ResponseStatus.OK) {
-      return SellInfo.fromMap(response.jsonMap!);
+      return SaleInfo.fromMap(response.jsonMap!);
     } //TODO on error
-    throw Exception("ERROR ON SELL INFO LOAD");
+    throw Exception("ERROR ON SALE INFO LOAD");
   }
 
-  Future loadCarInfo(SellInfo info) async {
+  Future loadCarInfo(SaleInfo info) async {
     final car = await _loadClient.loadCarInfo(info);
     if (car.status == ResponseStatus.OK) {
       return await _carInfoDataSource.addCarInfo(CarInfo.fromMap(car.jsonMap!));
@@ -69,13 +69,13 @@ class InfoService {
 
   Future<bool> isOldCar(String brand, String model) async {
     final cars = await _carInfoDataSource.getAllCars();
-    final List<SellInfo> sells = await _sellInfoDataSource.getAllSellInfos();
+    final List<SaleInfo> sales = await _saleInfoDataSource.getAllSaleInfos();
     return cars.any((car) => car.brand == brand && car.model == model) &&
-        sells.any((sell) => sell.brand == brand && sell.model == model);
+        sales.any((sale) => sale.brand == brand && sale.model == model);
   }
 
   Future refreshCarInfos() async {
-    final infos = await _sellInfoDataSource.getAllSellInfos();
+    final infos = await _saleInfoDataSource.getAllSaleInfos();
     for (final info in infos) {
       Logger.logI("Refresh Car: ${info.brand} ${info.model}");
       return await loadCarInfo(info);
@@ -86,8 +86,8 @@ class InfoService {
     return await _carInfoDataSource.findVideos(query);
   }
 
-  Future upsertSellInfo(SellInfo sellInfo) async {
-    _sellInfoDataSource.addSellInfo(sellInfo);
+  Future upsertSaleInfo(SaleInfo saleInfo) async {
+    _saleInfoDataSource.addSaleInfo(saleInfo);
   }
 
   Future<bool> isFavorite(VideoInfo video) async =>

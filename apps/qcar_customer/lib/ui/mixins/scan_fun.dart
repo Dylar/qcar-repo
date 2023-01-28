@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_customer/core/models/sell_info.dart';
+import 'package:qcar_customer/core/models/sale_info.dart';
 import 'package:qcar_customer/core/service/info_service.dart';
 import 'package:qcar_customer/ui/notify/dialog.dart';
 import 'package:qcar_customer/ui/notify/snackbars.dart';
@@ -21,7 +21,7 @@ mixin ScanFun implements ScanViewModel {
 
   QrScanState qrState = QrScanState.WAITING;
   Barcode? barcode;
-  SellInfo? sellInfo;
+  SaleInfo? saleInfo;
 
   late void Function() notifyListeners;
   late Future Function(Function(BuildContext)) openDialog;
@@ -42,9 +42,9 @@ mixin ScanFun implements ScanViewModel {
     await Future.delayed(Duration(milliseconds: 10));
 
     try {
-      sellInfo = await infoService.loadSellInfo(scanValue);
+      saleInfo = await infoService.loadSaleInfo(scanValue);
       final isOldCar =
-          await infoService.isOldCar(sellInfo!.brand, sellInfo!.model);
+          await infoService.isOldCar(saleInfo!.brand, saleInfo!.model);
       qrState = isOldCar ? QrScanState.OLD : QrScanState.NEW;
     } on Exception catch (e) {
       Logger.logE("Scan error: ${e.toString()}");
@@ -53,8 +53,8 @@ mixin ScanFun implements ScanViewModel {
 
     switch (qrState) {
       case QrScanState.NEW:
-        await infoService.loadCarInfo(sellInfo!);
-        await infoService.upsertSellInfo(sellInfo!);
+        await infoService.loadCarInfo(saleInfo!);
+        await infoService.upsertSaleInfo(saleInfo!);
         break;
       case QrScanState.OLD:
         showSnackBar(oldCarScannedSnackBar);

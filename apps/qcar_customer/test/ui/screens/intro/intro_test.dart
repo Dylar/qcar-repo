@@ -62,7 +62,7 @@ void main() {
     await tester.tap(find.text(l10n.ok));
     await tester.pumpAndSettle();
 
-    final key = await buildSellKey();
+    final key = await buildSaleKey();
     final scan = key.encode();
     expect(find.text(l10n.introPageMessage), findsOneWidget);
     expect(find.text(l10n.introPageMessageScanning), findsNothing);

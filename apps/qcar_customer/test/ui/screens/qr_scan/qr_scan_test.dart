@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qcar_customer/core/models/sell_key.dart';
+import 'package:qcar_customer/core/models/sale_key.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_list_item.dart';
 import 'package:qcar_customer/ui/screens/cars/cars_page.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
@@ -64,7 +64,7 @@ void main() {
 
   testWidgets('QRScanPage - scan old key - show error',
       (WidgetTester tester) async {
-    final key = await buildSellKey();
+    final key = await buildSaleKey();
     await pushToQrScan(tester);
 
     final l10n = await getTestL10n();
@@ -75,7 +75,7 @@ void main() {
 
   testWidgets('QRScanPage - scan new key - navi to carsPage',
       (WidgetTester tester) async {
-    final key = SellKey(key: "newKey");
+    final key = SaleKey(key: "newKey");
     final car = await buildCarWith(brand: "hoho", model: "super");
     final infra = await createQRInfra(initialCar: [car], acceptedKeys: [key]);
     await pushToQrScan(tester, infra: infra);

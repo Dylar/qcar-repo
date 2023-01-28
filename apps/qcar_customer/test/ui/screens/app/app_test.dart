@@ -5,7 +5,7 @@ import 'package:mockito/annotations.dart';
 import 'package:qcar_customer/core/datasource/car_data_source.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/datasource/favorite_data_source.dart';
-import 'package:qcar_customer/core/datasource/sell_data_source.dart';
+import 'package:qcar_customer/core/datasource/sale_data_source.dart';
 import 'package:qcar_customer/core/datasource/settings_data_source.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_customer/core/service/auth_service.dart';
@@ -31,7 +31,7 @@ import 'app_checker.dart';
   SettingsDataSource,
   SettingsService,
   CarInfoDataSource,
-  SellInfoDataSource,
+  SaleInfoDataSource,
   FavoriteDataSource,
   AuthenticationService,
   TrackingService,
@@ -53,7 +53,7 @@ void main() {
     await tester.pumpAndSettle();
 
     //scan key
-    final key = await buildSellKey();
+    final key = await buildSaleKey();
     await scanOnIntroPage(tester, key.encode(), settle: false);
     await tester.pump(Duration(milliseconds: 10));
     await tester.pump(Duration(milliseconds: 10));

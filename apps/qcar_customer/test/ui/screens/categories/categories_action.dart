@@ -12,10 +12,10 @@ import '../../../utils/test_utils.dart';
 Future<AppInfrastructure> createCategoriesInfra(
     {List<Favorite>? initialFavorites}) async {
   final car = await buildCarInfo();
-  final sell = await buildSellInfo();
+  final sale = await buildSaleInfo();
   return createTestInfra(
     carDataSource: mockCarSource(initialCars: [car]),
-    sellDataSource: mockSellSource(initialSellInfo: [sell]),
+    saleDataSource: mockSaleSource(initialSaleInfo: [sale]),
     favoriteDataSource: mockFavoriteSource(initialFavorites: initialFavorites),
   );
 }

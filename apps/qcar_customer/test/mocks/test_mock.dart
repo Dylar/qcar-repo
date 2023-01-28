@@ -5,12 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:mockito/mockito.dart';
 import 'package:qcar_customer/core/datasource/car_data_source.dart';
 import 'package:qcar_customer/core/datasource/favorite_data_source.dart';
-import 'package:qcar_customer/core/datasource/sell_data_source.dart';
+import 'package:qcar_customer/core/datasource/sale_data_source.dart';
 import 'package:qcar_customer/core/datasource/settings_data_source.dart';
 import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/core/models/favorite.dart';
-import 'package:qcar_customer/core/models/sell_info.dart';
-import 'package:qcar_customer/core/models/sell_key.dart';
+import 'package:qcar_customer/core/models/sale_info.dart';
+import 'package:qcar_customer/core/models/sale_key.dart';
 import 'package:qcar_customer/core/models/settings.dart';
 import 'package:qcar_customer/core/models/video_info.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
@@ -30,10 +30,10 @@ UploadClient mockUploadClient() {
   return MockUploadClient();
 }
 
-DownloadClient mockDownloadClient({List<SellKey> acceptedKeys = const []}) {
+DownloadClient mockDownloadClient({List<SaleKey> acceptedKeys = const []}) {
   final client = MockDownloadClient();
   when(client.loadCarInfo(any)).thenAnswer((inv) async {
-    final info = inv.positionalArguments[0] as SellInfo;
+    final info = inv.positionalArguments[0] as SaleInfo;
     final car = await buildCarWith(brand: info.brand, model: info.model);
 
     //TODO maybe delete me if we got the urls right
@@ -46,18 +46,18 @@ DownloadClient mockDownloadClient({List<SellKey> acceptedKeys = const []}) {
     return Response.ok(json: jsonEncode(car.toMap()));
   });
 
-  when(client.loadSellInfo(any)).thenAnswer((inv) async {
-    final sellKey = inv.positionalArguments[0] as SellKey;
-    final key = sellKey.key;
-    final sellInfo = await buildSellInfo();
-    if (sellInfo.key == key) {
-      return Response.ok(json: jsonEncode(sellInfo.toMap()));
+  when(client.loadSaleInfo(any)).thenAnswer((inv) async {
+    final saleKey = inv.positionalArguments[0] as SaleKey;
+    final key = saleKey.key;
+    final saleInfo = await buildSaleInfo();
+    if (saleInfo.key == key) {
+      return Response.ok(json: jsonEncode(saleInfo.toMap()));
     }
     if (acceptedKeys.any((k) => k.key == key)) {
-      sellInfo
+      saleInfo
         ..brand = key
         ..model = key;
-      return Response.ok(json: jsonEncode(sellInfo.toMap()));
+      return Response.ok(json: jsonEncode(saleInfo.toMap()));
     }
     throw Exception("WRONG KEY");
   });
@@ -115,14 +115,14 @@ CarInfoDataSource mockCarSource({List<CarInfo>? initialCars}) {
   return source;
 }
 
-SellInfoDataSource mockSellSource({List<SellInfo>? initialSellInfo}) {
-  final source = MockSellInfoDataSource();
-  final sells = initialSellInfo ?? [];
-  when(source.getAllSellInfos()).thenAnswer((_) async => sells);
-  when(source.addSellInfo(any)).thenAnswer((inv) async {
+SaleInfoDataSource mockSaleSource({List<SaleInfo>? initialSaleInfo}) {
+  final source = MockSaleInfoDataSource();
+  final sales = initialSaleInfo ?? [];
+  when(source.getAllSaleInfos()).thenAnswer((_) async => sales);
+  when(source.addSaleInfo(any)).thenAnswer((inv) async {
     final info = inv.positionalArguments.first;
-    if (!sells.any((e) => e.brand == info.brand && e.model == info.model)) {
-      sells.add(info);
+    if (!sales.any((e) => e.brand == info.brand && e.model == info.model)) {
+      sales.add(info);
     }
   });
   return source;

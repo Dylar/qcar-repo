@@ -11,37 +11,37 @@ void main() async {
   test('hasCars - no cars in db', () async {
     final loadClient = mockDownloadClient();
     final carDS = mockCarSource();
-    final sellDS = mockSellSource();
+    final saleDS = mockSaleSource();
     final favDS = mockFavoriteSource();
-    final service = InfoService(loadClient, carDS, sellDS, favDS);
+    final service = InfoService(loadClient, carDS, saleDS, favDS);
 
     final hasCars = await service.hasCars();
     expect(hasCars, isFalse);
   });
 
-  test('hasCars - cars + sell info in db', () async {
+  test('hasCars - cars + sale info in db', () async {
     final loadClient = mockDownloadClient();
     final carDS = mockCarSource(initialCars: [await buildCarInfo()]);
-    final sellDS = mockSellSource(initialSellInfo: [await buildSellInfo()]);
+    final saleDS = mockSaleSource(initialSaleInfo: [await buildSaleInfo()]);
     final favDS = mockFavoriteSource();
-    final service = InfoService(loadClient, carDS, sellDS, favDS);
+    final service = InfoService(loadClient, carDS, saleDS, favDS);
 
     final hasCars = await service.hasCars();
     expect(hasCars, isTrue);
   });
 
-  test('getIntroVideo - get path from sell info', () async {
+  test('getIntroVideo - get path from sale info', () async {
     await prepareTest(); //because we need domain initialized
-    final sellInfo = await buildSellInfo();
+    final saleInfo = await buildSaleInfo();
     final car = await buildCarInfo();
     final loadClient = mockDownloadClient();
     final carDS = mockCarSource(initialCars: [car]);
-    final sellDS = mockSellSource(initialSellInfo: [sellInfo]);
+    final saleDS = mockSaleSource(initialSaleInfo: [saleInfo]);
     final favDS = mockFavoriteSource();
-    final service = InfoService(loadClient, carDS, sellDS, favDS);
+    final service = InfoService(loadClient, carDS, saleDS, favDS);
 
     final introPath = await service.getIntroVideo();
     expect(introPath != "", isTrue);
-    expect(introPath.endsWith(sellInfo.introFilePath), isTrue);
+    expect(introPath.endsWith(saleInfo.introFilePath), isTrue);
   });
 }

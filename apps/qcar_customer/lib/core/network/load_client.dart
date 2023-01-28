@@ -4,8 +4,8 @@ import 'package:qcar_customer/core/models/Feedback.dart' as fb;
 import 'package:qcar_customer/core/models/Tracking.dart';
 import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/core/models/category_info.dart';
-import 'package:qcar_customer/core/models/sell_info.dart';
-import 'package:qcar_customer/core/models/sell_key.dart';
+import 'package:qcar_customer/core/models/sale_info.dart';
+import 'package:qcar_customer/core/models/sale_key.dart';
 import 'package:qcar_customer/core/models/video_info.dart';
 import 'package:qcar_shared/network_service.dart';
 import 'package:qcar_shared/tuple.dart';
@@ -14,9 +14,9 @@ abstract class DownloadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
       ValueNotifier(Tuple(0, 0));
 
-  Future<Response> loadCarInfo(SellInfo info);
+  Future<Response> loadCarInfo(SaleInfo info);
 
-  Future<Response> loadSellInfo(SellKey key);
+  Future<Response> loadSaleInfo(SaleKey key);
 }
 
 abstract class UploadClient {
@@ -28,7 +28,7 @@ abstract class UploadClient {
 //TODO DELETE THE FIX METHODS
 
 //TODO fix me in DB
-String fixIntroPath(SellInfo info) {
+String fixIntroPath(SaleInfo info) {
   return "https://${EnvironmentConfig.domain}/videos/${info.brand}/${info.model}/${info.introFilePath}";
 }
 

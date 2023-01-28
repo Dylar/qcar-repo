@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:qcar_customer/core/datasource/car_data_source.dart';
 import 'package:qcar_customer/core/datasource/database.dart';
 import 'package:qcar_customer/core/datasource/favorite_data_source.dart';
-import 'package:qcar_customer/core/datasource/sell_data_source.dart';
+import 'package:qcar_customer/core/datasource/sale_data_source.dart';
 import 'package:qcar_customer/core/datasource/settings_data_source.dart';
 import 'package:qcar_customer/core/environment_config.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
@@ -29,7 +29,7 @@ class AppInfrastructure {
     required this.settingsSource,
     required this.infoService,
     required this.carInfoDataSource,
-    required this.sellInfoDataSource,
+    required this.saleInfoDataSource,
     required this.authService,
     required this.trackingService,
     required this.settingsService,
@@ -41,14 +41,14 @@ class AppInfrastructure {
     UploadClient? uploadClient,
     SettingsDataSource? settingsDataSource,
     CarInfoDataSource? carInfoDataSource,
-    SellInfoDataSource? sellInfoDataSource,
+    SaleInfoDataSource? saleInfoDataSource,
     FavoriteDataSource? favoriteDataSource,
     AuthenticationService? authenticationService,
     TrackingService? trackingService,
   }) {
     final db = database ?? AppDatabase();
     final carSource = carInfoDataSource ?? CarInfoDS(db);
-    final sellSource = sellInfoDataSource ?? SellInfoDS(db);
+    final saleSource = saleInfoDataSource ?? SaleInfoDS(db);
     final favSource = favoriteDataSource ?? FavoriteDS(db);
     final settingsSource = settingsDataSource ?? SettingsDS(db);
     final downClient = downloadClient ?? ServerClient();
@@ -64,8 +64,8 @@ class AppInfrastructure {
       settingsSource: settingsSource,
       settingsService: settingsService,
       carInfoDataSource: carSource,
-      sellInfoDataSource: sellSource,
-      infoService: InfoService(downClient, carSource, sellSource, favSource),
+      saleInfoDataSource: saleSource,
+      infoService: InfoService(downClient, carSource, saleSource, favSource),
       authService: authService,
       trackingService: trackService,
     );
@@ -78,7 +78,7 @@ class AppInfrastructure {
   final AuthenticationService authService;
   final InfoService infoService;
   final CarInfoDataSource carInfoDataSource;
-  final SellInfoDataSource sellInfoDataSource;
+  final SaleInfoDataSource saleInfoDataSource;
   final SettingsService settingsService;
 }
 

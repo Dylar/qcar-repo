@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qcar_customer/core/models/car_info.dart';
-import 'package:qcar_customer/core/models/sell_key.dart';
+import 'package:qcar_customer/core/models/sale_key.dart';
 import 'package:qcar_customer/ui/screens/app/app.dart';
 import 'package:qcar_customer/ui/screens/qr_scan/qr_scan_page.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -13,13 +13,13 @@ import '../../../utils/test_utils.dart';
 
 Future<AppInfrastructure> createQRInfra({
   List<CarInfo> initialCar = const [],
-  List<SellKey> acceptedKeys = const [],
+  List<SaleKey> acceptedKeys = const [],
 }) async {
   final cars = [await buildCarInfo(), ...initialCar];
-  final sells = [await buildSellInfo()];
+  final sales = [await buildSaleInfo()];
   for (final key in acceptedKeys) {
-    final sell = await buildSellInfo();
-    sells.add(sell
+    final sale = await buildSaleInfo();
+    sales.add(sale
       ..key = key.key
       ..brand = key.key
       ..model = key.key);
@@ -27,7 +27,7 @@ Future<AppInfrastructure> createQRInfra({
 
   return createTestInfra(
     carDataSource: mockCarSource(initialCars: cars),
-    sellDataSource: mockSellSource(initialSellInfo: sells),
+    saleDataSource: mockSaleSource(initialSaleInfo: sales),
     downloadClient: mockDownloadClient(acceptedKeys: acceptedKeys),
   );
 }

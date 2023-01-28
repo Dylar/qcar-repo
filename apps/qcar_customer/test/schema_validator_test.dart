@@ -25,17 +25,17 @@ void main() {
     expect(isValid, true);
   });
 
-  test('validate sell info schema', () async {
+  test('validate sale info schema', () async {
     TestWidgetsFlutterBinding.ensureInitialized();
-    final info = await buildSellInfo();
-    final isValid = await validateSellInfo(info.toMap());
+    final info = await buildSaleInfo();
+    final isValid = await validateSaleInfo(info.toMap());
     expect(isValid, true);
   });
 
-  test('validate sell key schema', () async {
+  test('validate sale key schema', () async {
     TestWidgetsFlutterBinding.ensureInitialized();
-    final key = await buildSellKey();
-    final isValid = await validateSellKey(key.toMap());
+    final key = await buildSaleKey();
+    final isValid = await validateSaleKey(key.toMap());
     expect(isValid, true);
   });
 }

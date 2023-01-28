@@ -1,23 +1,23 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qcar_customer/core/datasource/car_database.dart';
 import 'package:qcar_customer/core/datasource/favorite_database.dart';
-import 'package:qcar_customer/core/datasource/sell_database.dart';
+import 'package:qcar_customer/core/datasource/sale_database.dart';
 import 'package:qcar_customer/core/datasource/settings_database.dart';
 import 'package:qcar_customer/core/misc/helper/player_config.dart';
 import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/core/models/category_info.dart';
 import 'package:qcar_customer/core/models/favorite.dart';
-import 'package:qcar_customer/core/models/sell_info.dart';
+import 'package:qcar_customer/core/models/sale_info.dart';
 import 'package:qcar_customer/core/models/settings.dart';
 import 'package:qcar_customer/core/models/video_info.dart';
 import 'package:qcar_shared/utils/logger.dart';
 
 const String BOX_SETTINGS = "SettingsBox";
 const String BOX_CAR_INFO = "CarInfoBox";
-const String BOX_SELL_INFO = "SellInfoBox";
+const String BOX_SALE_INFO = "SaleInfoBox";
 const String BOX_FAVORITE = "FavoriteBox";
 
-class AppDatabase with SettingsDB, SellInfoDB, CarInfoDB, FavoriteDB {
+class AppDatabase with SettingsDB, SaleInfoDB, CarInfoDB, FavoriteDB {
   Future<void> close() async {
     await Hive.close();
   }
@@ -29,14 +29,14 @@ class AppDatabase with SettingsDB, SellInfoDB, CarInfoDB, FavoriteDB {
       Hive.registerAdapter(VideoInfoAdapter());
       Hive.registerAdapter(CategoryInfoAdapter());
       Hive.registerAdapter(FavoriteAdapter());
-      Hive.registerAdapter(SellInfoAdapter());
+      Hive.registerAdapter(SaleInfoAdapter());
       Hive.registerAdapter(SettingsAdapter());
     } catch (e) {
       Logger.logE("adapter already added");
     }
     await Hive.openBox<Settings>(BOX_SETTINGS);
     await Hive.openBox<CarInfo>(BOX_CAR_INFO);
-    await Hive.openBox<SellInfo>(BOX_SELL_INFO);
+    await Hive.openBox<SaleInfo>(BOX_SALE_INFO);
     await Hive.openBox<Favorite>(BOX_FAVORITE);
 
     await initSettings();

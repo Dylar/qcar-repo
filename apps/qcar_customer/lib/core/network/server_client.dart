@@ -6,8 +6,8 @@ import 'package:qcar_customer/core/models/Feedback.dart' as fb;
 import 'package:qcar_customer/core/models/Tracking.dart';
 import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/core/models/category_info.dart';
-import 'package:qcar_customer/core/models/sell_info.dart';
-import 'package:qcar_customer/core/models/sell_key.dart';
+import 'package:qcar_customer/core/models/sale_info.dart';
+import 'package:qcar_customer/core/models/sale_key.dart';
 import 'package:qcar_customer/core/models/video_info.dart';
 import 'package:qcar_customer/core/network/load_client.dart';
 import 'package:qcar_shared/network_service.dart';
@@ -17,7 +17,7 @@ class ServerClient implements DownloadClient, UploadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
       ValueNotifier(Tuple(0, 0));
 
-  Future<Response> loadSellInfo(SellKey key) async {
+  Future<Response> loadSaleInfo(SaleKey key) async {
     return await NetworkService.sendRequest(
       Request(
         requestType: RequestType.get,
@@ -27,7 +27,7 @@ class ServerClient implements DownloadClient, UploadClient {
     );
   }
 
-  Future<Response> loadCarInfo(SellInfo info) async {
+  Future<Response> loadCarInfo(SaleInfo info) async {
     //TODO make get with one request
 
     final carResp = await NetworkService.sendRequest(
@@ -97,12 +97,12 @@ class ServerClient implements DownloadClient, UploadClient {
     );
   }
 
-  _getCarUrlPath(SellInfo info) => ["brand", info.brand, "model", info.model];
+  _getCarUrlPath(SaleInfo info) => ["brand", info.brand, "model", info.model];
 
-  _getCategoryUrlPath(SellInfo info, String category) =>
+  _getCategoryUrlPath(SaleInfo info, String category) =>
       ["brand", info.brand, "model", info.model, "category", category];
 
-  _getVideoUrlPath(SellInfo info, String category, String video) => [
+  _getVideoUrlPath(SaleInfo info, String category, String video) => [
         "brand",
         info.brand,
         "model",

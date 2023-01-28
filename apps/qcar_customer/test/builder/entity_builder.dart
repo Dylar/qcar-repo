@@ -1,8 +1,8 @@
 import 'package:qcar_customer/core/models/car_info.dart';
 import 'package:qcar_customer/core/models/category_info.dart';
+import 'package:qcar_customer/core/models/sale_info.dart';
+import 'package:qcar_customer/core/models/sale_key.dart';
 import 'package:qcar_customer/core/models/schema_validator.dart';
-import 'package:qcar_customer/core/models/sell_info.dart';
-import 'package:qcar_customer/core/models/sell_key.dart';
 import 'package:qcar_customer/core/models/video_info.dart';
 import 'package:qcar_shared/utils/json_loader.dart';
 
@@ -12,8 +12,8 @@ const String CUSTOMER_TESTDATA_PATH = "$BASE_TESTDATA_PATH/car/";
 const String TEST_CAR_MAJA = "car_info_maja.json";
 const String TEST_CAR_FULL = "car_info_full.json";
 const String TEST_VIDEO_INFO = "video_info.json";
-const String TEST_SELL_INFO = "sell_info.json";
-const String TEST_SELL_KEY = "sell_key.json";
+const String TEST_SALE_INFO = "sale_info.json";
+const String TEST_SALE_KEY = "sale_key.json";
 const String TEST_CATEGORY_INFO = "category_info.json";
 
 Future<CarInfo> buildCarWith({
@@ -62,30 +62,30 @@ Future<CategoryInfo> buildCategoryInfo(
   return CategoryInfo.fromMap(json);
 }
 
-Future<SellInfo> buildSellWith({
+Future<SaleInfo> buildSaleWith({
   String brand = "new",
   String model = "newer",
 }) async {
-  final sell = await buildSellInfo();
-  return sell
+  final sale = await buildSaleInfo();
+  return sale
     ..brand = brand
     ..model = model;
 }
 
-Future<SellInfo> buildSellInfo({String name = TEST_SELL_INFO}) async {
+Future<SaleInfo> buildSaleInfo({String name = TEST_SALE_INFO}) async {
   final json = await loadJsonFile('$DEALER_TESTDATA_PATH$name');
-  final valid = await validateSellInfo(json);
+  final valid = await validateSaleInfo(json);
   if (!valid) {
-    throw Exception("SellInfo(${name}) json invalid: $json");
+    throw Exception("SaleInfo(${name}) json invalid: $json");
   }
-  return SellInfo.fromMap(json);
+  return SaleInfo.fromMap(json);
 }
 
-Future<SellKey> buildSellKey({String name = TEST_SELL_KEY}) async {
+Future<SaleKey> buildSaleKey({String name = TEST_SALE_KEY}) async {
   final json = await loadJsonFile('$DEALER_TESTDATA_PATH$name');
-  final valid = await validateSellKey(json);
+  final valid = await validateSaleKey(json);
   if (!valid) {
-    throw Exception("buildSellKey(${name}) json invalid: $json");
+    throw Exception("buildSaleKey(${name}) json invalid: $json");
   }
-  return SellKey.fromMap(json);
+  return SaleKey.fromMap(json);
 }
