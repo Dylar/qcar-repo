@@ -15,7 +15,7 @@ abstract class DownloadClient {
   Future<Response> loadSellerInfo(DealerInfo info);
   Future<Response> loadCustomerInfo(DealerInfo info);
 
-  Future<Response> loadSellInfo(SellerInfo info);
+  Future<Response> loadSaleInfo(SellerInfo info);
 }
 
 abstract class UploadClient {

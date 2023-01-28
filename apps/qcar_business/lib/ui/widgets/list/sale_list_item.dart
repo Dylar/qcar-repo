@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:qcar_business/core/models/sell_info.dart';
+import 'package:qcar_business/core/models/sale_info.dart';
 import 'package:qcar_business/ui/widgets/pic_widget.dart';
 import 'package:qcar_shared/widgets/deco.dart';
 import 'package:qcar_shared/widgets/rounded_widget.dart';
 
-class SellListItem extends StatelessWidget {
-  const SellListItem(this.sell, {this.onTap});
+class SaleListItem extends StatelessWidget {
+  const SaleListItem(this.sale, {this.onTap});
 
-  final SellInfo sell;
+  final SaleInfo sale;
   final void Function()? onTap;
 
   @override
@@ -26,14 +26,14 @@ class SellListItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Hero(
-                  tag: sell.car.model,
-                  child: RoundedWidget(child: PicWidget(sell.car.picUrl)),
+                  tag: sale.car.model,
+                  child: RoundedWidget(child: PicWidget(sale.car.picUrl)),
                 ),
                 Spacer(flex: 5),
                 Expanded(
                   flex: 95,
                   child: Text(
-                    sell.text,
+                    sale.text,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),

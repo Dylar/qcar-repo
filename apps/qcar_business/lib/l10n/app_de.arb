@@ -19,7 +19,7 @@
 
   "@_HOME_PAGE": {},
   "homoPageTitle": "Home",
-  "homoPageEmptySells": "Keine verkauften Autos - los geh anschaffen",
+  "homoPageEmptySales": "Keine verkauften Autos - los geh anschaffen",
 
   "@_FORM_PAGE": {},
   "formFieldsWrong": "Es sind nicht alle Felder ausgefüllt",
@@ -43,8 +43,8 @@
   "@_CUSTOMER_SEARCH": {},
   "searchStartText": "Sie können hier nach Kunden suchen",
 
-  "@_SOLD_PAGE": {},
-  "soldTitle": "Verkauf",
+  "@_SALE_PAGE": {},
+  "saleTitle": "Verkauf",
 
   "@_SETTINGS_PAGE": {},
   "settingsPageTitle": "Einstellungen",

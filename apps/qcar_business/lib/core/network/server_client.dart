@@ -44,7 +44,7 @@ class ServerClient implements DownloadClient, UploadClient {
   }
 
   @override
-  Future<Response> loadSellInfo(SellerInfo info) async {
+  Future<Response> loadSaleInfo(SellerInfo info) async {
     return await NetworkService.sendRequest(
       Request(
         requestType: RequestType.get,

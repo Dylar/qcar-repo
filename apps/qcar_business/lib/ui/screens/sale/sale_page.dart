@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:qcar_business/core/models/model_data.dart';
-import 'package:qcar_business/core/models/sell_info.dart';
-import 'package:qcar_business/ui/screens/sold/sold_vm.dart';
+import 'package:qcar_business/core/models/sale_info.dart';
+import 'package:qcar_business/ui/screens/sale/sale_vm.dart';
 import 'package:qcar_business/ui/widgets/app_bar.dart';
 import 'package:qcar_business/ui/widgets/pic_widget.dart';
 import 'package:qcar_shared/core/app_routing.dart';
@@ -11,28 +11,28 @@ import 'package:qcar_shared/core/app_view.dart';
 import 'package:qcar_shared/widgets/rounded_widget.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class SoldPage extends View<SoldViewModel> {
-  static const String routeName = "/sold";
+class SalePage extends View<SaleViewModel> {
+  static const String routeName = "/sale";
 
-  static RoutingSpec pushIt(SellInfo item) => RoutingSpec(
+  static RoutingSpec pushIt(SaleInfo item) => RoutingSpec(
         routeName: routeName,
         action: RouteAction.pushTo,
         transitionTime: const Duration(milliseconds: 200),
         transitionType: TransitionType.fading,
-        args: {ARGS_SELL_INFO: item},
+        args: {ARGS_SALE_INFO: item},
       );
 
-  SoldPage(
-    SoldViewModel viewModel, {
+  SalePage(
+    SaleViewModel viewModel, {
     Key? key,
   }) : super.model(viewModel, key: key);
 
   @override
-  State<SoldPage> createState() => _SoldPageState(viewModel);
+  State<SalePage> createState() => _SalePageState(viewModel);
 }
 
-class _SoldPageState extends ViewState<SoldPage, SoldViewModel> {
-  _SoldPageState(SoldViewModel viewModel) : super(viewModel);
+class _SalePageState extends ViewState<SalePage, SaleViewModel> {
+  _SalePageState(SaleViewModel viewModel) : super(viewModel);
 
   late ScrollController controller;
 
@@ -46,14 +46,14 @@ class _SoldPageState extends ViewState<SoldPage, SoldViewModel> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: buildAppBar(l10n.soldTitle),
+      appBar: buildAppBar(l10n.saleTitle),
       body: HeaderWidget(child: _buildInfos),
     );
   }
 
   Widget _buildInfos(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final customer = viewModel.sellInfo.customer;
+    final customer = viewModel.saleInfo.customer;
     return Scrollbar(
       controller: controller,
       child: SingleChildScrollView(
@@ -66,9 +66,9 @@ class _SoldPageState extends ViewState<SoldPage, SoldViewModel> {
             children: [
               SizedBox(height: 20),
               Hero(
-                tag: viewModel.sellInfo.car.model,
+                tag: viewModel.saleInfo.car.model,
                 child: RoundedWidget(
-                    child: PicWidget(viewModel.sellInfo.car.picUrl)),
+                    child: PicWidget(viewModel.saleInfo.car.picUrl)),
               ),
               SizedBox(height: 20),
               Text(

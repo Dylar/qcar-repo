@@ -1,10 +1,10 @@
-import 'package:qcar_business/core/models/sell_info.dart';
+import 'package:qcar_business/core/models/sale_info.dart';
 import 'package:qcar_business/core/service/auth_service.dart';
 import 'package:qcar_business/core/service/info_service.dart';
 import 'package:qcar_shared/core/app_viewmodel.dart';
 
 abstract class HomeViewModel extends ViewModel {
-  List<SellInfo> get sellInfos;
+  List<SaleInfo> get saleInfos;
 }
 
 class HomeVM extends HomeViewModel {
@@ -14,8 +14,8 @@ class HomeVM extends HomeViewModel {
   final AuthenticationService authService;
 
   @override
-  List<SellInfo> get sellInfos =>
-      infoService.getSellInfos(authService.currentUser);
+  List<SaleInfo> get saleInfos =>
+      infoService.getSaleInfos(authService.currentUser);
 
   @override
   void routingDidPush() {

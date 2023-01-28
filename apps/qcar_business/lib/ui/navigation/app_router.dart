@@ -9,11 +9,11 @@ import 'package:qcar_business/ui/screens/home/home_page.dart';
 import 'package:qcar_business/ui/screens/home/home_vm.dart';
 import 'package:qcar_business/ui/screens/login/login_page.dart';
 import 'package:qcar_business/ui/screens/login/login_vm.dart';
+import 'package:qcar_business/ui/screens/sale/sale_page.dart';
+import 'package:qcar_business/ui/screens/sale/sale_vm.dart';
 import 'package:qcar_business/ui/screens/settings/debug_page.dart';
 import 'package:qcar_business/ui/screens/settings/settings_page.dart';
 import 'package:qcar_business/ui/screens/settings/settings_vm.dart';
-import 'package:qcar_business/ui/screens/sold/sold_page.dart';
-import 'package:qcar_business/ui/screens/sold/sold_vm.dart';
 import 'package:qcar_shared/core/app_routing.dart';
 import 'package:qcar_shared/utils/logger.dart';
 
@@ -53,7 +53,7 @@ class AppRouter {
       case HomePage.routeName:
         builder = _navigateToHome;
         break;
-      case SoldPage.routeName:
+      case SalePage.routeName:
         builder = (context) => _navigateToSold(context, arguments);
         break;
       case FormCarsPage.routeName:
@@ -107,9 +107,9 @@ Widget _navigateToSold(
   Map<String, dynamic> arguments,
 ) {
   final services = Services.of(context)!;
-  return SoldPage(SoldVM(
+  return SalePage(SaleVM(
     services.infoService,
-    arguments[ARGS_SELL_INFO],
+    arguments[ARGS_SALE_INFO],
   ));
 }
 

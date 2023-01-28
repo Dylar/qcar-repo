@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:qcar_business/core/models/car_info.dart';
 import 'package:qcar_business/core/models/customer_info.dart';
-import 'package:qcar_business/core/models/sell_info.dart';
+import 'package:qcar_business/core/models/sale_info.dart';
 import 'package:qcar_business/core/models/video_info.dart';
 import 'package:qcar_business/core/service/auth_service.dart';
 import 'package:qcar_business/core/service/info_service.dart';
@@ -26,7 +26,7 @@ abstract class FormViewModel extends ViewModel {
   DateTime? get selectedBirthday;
   set selectBirthday(DateTime selectBirthday);
 
-  void saveSellInfo();
+  void saveSaleInfo();
 }
 
 class FormVM extends FormViewModel {
@@ -120,7 +120,7 @@ class FormVM extends FormViewModel {
   //--------SAVE--------\\
 
   @override
-  void saveSellInfo() {
+  void saveSaleInfo() {
     if (customer.name.isEmpty ||
         customer.lastName.isEmpty ||
         customer.email.isEmpty ||
@@ -131,13 +131,13 @@ class FormVM extends FormViewModel {
       return;
     }
 
-    SellInfo info = SellInfo(
+    SaleInfo info = SaleInfo(
       seller: authService.currentUser,
       car: selectedCar!,
       videos: selectedVideos,
       customer: customer,
     );
     infoService.sellCar(info);
-    navigateTo(HomePage.onSellSaving());
+    navigateTo(HomePage.onSaleSaving());
   }
 }

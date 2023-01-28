@@ -1,7 +1,7 @@
 import 'package:qcar_business/core/models/car_info.dart';
 import 'package:qcar_business/core/models/customer_info.dart';
 import 'package:qcar_business/core/models/dealer_info.dart';
-import 'package:qcar_business/core/models/sell_info.dart';
+import 'package:qcar_business/core/models/sale_info.dart';
 import 'package:qcar_business/core/models/seller_info.dart';
 import 'package:qcar_business/core/models/video_info.dart';
 import 'package:qcar_business/core/network/load_client.dart';
@@ -17,7 +17,7 @@ class InfoService {
 
   List<SellerInfo> _sellers = [];
   List<CustomerInfo> _customers = [];
-  List<SellInfo> _sellInfos = [];
+  List<SaleInfo> _saleInfos = [];
 
   Future<void> loadDealerInfos(DealerInfo info) async {
     await Future.wait([
@@ -47,10 +47,10 @@ class InfoService {
 
   Future<void> loadSellerInfos(SellerInfo info) async {
     await Future.wait([
-      downClient.loadSellInfo(info).then((rsp) {
+      downClient.loadSaleInfo(info).then((rsp) {
         if (rsp.status == ResponseStatus.OK) {
-          _sellInfos = rsp.jsonList
-              .map((e) => SellInfo.fromMap(e as Map<String, dynamic>))
+          _saleInfos = rsp.jsonList
+              .map((e) => SaleInfo.fromMap(e as Map<String, dynamic>))
               .toList();
         }
       }),
@@ -63,8 +63,8 @@ class InfoService {
   List<SellerInfo> getSeller(DealerInfo info) =>
       _sellers.where((element) => element.dealer == info.name).toList();
 
-  List<SellInfo> getSellInfos(SellerInfo currentUser) =>
-      _sellInfos.where((e) => e.seller == currentUser).toList();
+  List<SaleInfo> getSaleInfos(SellerInfo currentUser) =>
+      _saleInfos.where((e) => e.seller == currentUser).toList();
 
   List<CustomerInfo> searchCustomer(String query) {
     final Set<CustomerInfo> result = {};
@@ -74,10 +74,10 @@ class InfoService {
     return result.toList();
   }
 
-  void sellCar(SellInfo info) {
+  void sellCar(SaleInfo info) {
     if (!_customers.contains(info.customer)) {
       _customers.add(info.customer); // TODO upload new customer
     }
-    _sellInfos.add(info); // TODO upload sale
+    _saleInfos.add(info); // TODO upload sale
   }
 }

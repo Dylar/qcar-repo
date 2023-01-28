@@ -105,7 +105,7 @@ class _FormCustomerPageState
 
   Widget _saveButton(AppLocalizations l10n) {
     return ElevatedButton(
-      onPressed: () => viewModel.saveSellInfo(),
+      onPressed: () => viewModel.saveSaleInfo(),
       child: Text(l10n.save),
     );
   }

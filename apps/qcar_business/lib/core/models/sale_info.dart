@@ -8,18 +8,18 @@ import 'package:qcar_business/core/models/video_info.dart';
 
 import 'model_data.dart';
 
-part 'sell_info.g.dart';
+part 'sale_info.g.dart';
 
-@HiveType(typeId: SELL_INFO_TYPE_ID)
-class SellInfo extends HiveObject {
-  SellInfo({
+@HiveType(typeId: SALE_INFO_TYPE_ID)
+class SaleInfo extends HiveObject {
+  SaleInfo({
     required this.seller,
     required this.car,
     required this.videos,
     required this.customer,
   });
 
-  static SellInfo fromMap(Map<String, dynamic> map) {
+  static SaleInfo fromMap(Map<String, dynamic> map) {
     final videosMap = Map<String, List<dynamic>>.from(
       map[FIELD_VIDEOS] ?? <Map<String, dynamic>>{},
     ).map(
@@ -30,7 +30,7 @@ class SellInfo extends HiveObject {
             .toList(),
       ),
     );
-    return SellInfo(
+    return SaleInfo(
       seller: SellerInfo.fromMap(map),
       car: CarInfo.fromMap(map),
       customer: CustomerInfo.fromMap(map),

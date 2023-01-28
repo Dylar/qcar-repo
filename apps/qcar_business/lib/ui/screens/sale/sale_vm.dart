@@ -1,16 +1,16 @@
-import 'package:qcar_business/core/models/sell_info.dart';
+import 'package:qcar_business/core/models/sale_info.dart';
 import 'package:qcar_business/core/service/info_service.dart';
 import 'package:qcar_shared/core/app_viewmodel.dart';
 
-abstract class SoldViewModel extends ViewModel {
-  SellInfo get sellInfo;
+abstract class SaleViewModel extends ViewModel {
+  SaleInfo get saleInfo;
 }
 
-class SoldVM extends SoldViewModel {
-  SoldVM(this.infoService, this.sellInfo);
+class SaleVM extends SaleViewModel {
+  SaleVM(this.infoService, this.saleInfo);
 
   final InfoService infoService;
-  final SellInfo sellInfo;
+  final SaleInfo saleInfo;
 
   @override
   void routingDidPush() {

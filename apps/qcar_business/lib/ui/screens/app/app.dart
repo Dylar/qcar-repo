@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:qcar_business/core/datasource/car_data_source.dart';
 import 'package:qcar_business/core/datasource/database.dart';
-import 'package:qcar_business/core/datasource/sell_data_source.dart';
+import 'package:qcar_business/core/datasource/sale_data_source.dart';
 import 'package:qcar_business/core/datasource/settings_data_source.dart';
 import 'package:qcar_business/core/environment_config.dart';
 import 'package:qcar_business/core/network/load_client.dart';
@@ -29,7 +29,7 @@ class AppInfrastructure {
     required this.settingsSource,
     required this.infoService,
     required this.carInfoDataSource,
-    required this.sellInfoDataSource,
+    required this.saleInfoDataSource,
     required this.authService,
     required this.trackingService,
     required this.settingsService,
@@ -41,13 +41,13 @@ class AppInfrastructure {
     UploadClient? uploadClient,
     SettingsDataSource? settingsDataSource,
     CarInfoDataSource? carInfoDataSource,
-    SellInfoDataSource? sellInfoDataSource,
+    SaleInfoDataSource? saleInfoDataSource,
     AuthenticationService? authenticationService,
     TrackingService? trackingService,
   }) {
     final db = database ?? AppDatabase();
     final carSource = carInfoDataSource ?? CarInfoDS(db);
-    final sellSource = sellInfoDataSource ?? SellInfoDS(db);
+    final saleSource = saleInfoDataSource ?? SaleInfoDS(db);
     final settingsSource = settingsDataSource ?? SettingsDS(db);
     final downClient =
         MockClient(); //downloadClient ?? ServerClient(); //TODO use real client
@@ -63,7 +63,7 @@ class AppInfrastructure {
       settingsSource: settingsSource,
       settingsService: settingsService,
       carInfoDataSource: carSource,
-      sellInfoDataSource: sellSource,
+      saleInfoDataSource: saleSource,
       infoService: InfoService(downClient),
       authService: authService,
       trackingService: trackService,
@@ -77,7 +77,7 @@ class AppInfrastructure {
   final AuthenticationService authService;
   final InfoService infoService;
   final CarInfoDataSource carInfoDataSource;
-  final SellInfoDataSource sellInfoDataSource;
+  final SaleInfoDataSource saleInfoDataSource;
   final SettingsService settingsService;
 }
 

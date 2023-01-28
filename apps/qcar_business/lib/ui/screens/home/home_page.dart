@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:qcar_business/core/models/sell_info.dart';
+import 'package:qcar_business/core/models/sale_info.dart';
 import 'package:qcar_business/ui/navigation/app_drawer.dart';
 import 'package:qcar_business/ui/screens/form/form_cars_page.dart';
 import 'package:qcar_business/ui/screens/home/home_vm.dart';
-import 'package:qcar_business/ui/screens/sold/sold_page.dart';
+import 'package:qcar_business/ui/screens/sale/sale_page.dart';
 import 'package:qcar_business/ui/widgets/app_bar.dart';
-import 'package:qcar_business/ui/widgets/list/sell_list_item.dart';
+import 'package:qcar_business/ui/widgets/list/sale_list_item.dart';
 import 'package:qcar_shared/core/app_navigate.dart';
 import 'package:qcar_shared/core/app_routing.dart';
 import 'package:qcar_shared/core/app_theme.dart';
@@ -25,7 +25,7 @@ class HomePage extends View<HomeViewModel> {
         transitionType: TransitionType.fading,
       );
 
-  static RoutingSpec onSellSaving() => RoutingSpec(
+  static RoutingSpec onSaleSaving() => RoutingSpec(
         routeName: routeName,
         action: RouteAction.replaceAllWith,
         transitionType: TransitionType.leftRight,
@@ -73,19 +73,19 @@ class _HomePageState extends ViewState<HomePage, HomeViewModel> {
               child: Text("Das ist die Business-App"),
             ),
           ),
-          ScrollListView<SellInfo>(
+          ScrollListView<SaleInfo>(
             emptyWidget: RoundedWidget(
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
-                child: Text(l10n.homoPageEmptySells),
+                child: Text(l10n.homoPageEmptySales),
               ),
             ),
-            items: viewModel.sellInfos,
+            items: viewModel.saleInfos,
             buildItemWidget: (int index, item) {
-              return SellListItem(
+              return SaleListItem(
                 item,
-                onTap: () => Navigate.to(context, SoldPage.pushIt(item)),
+                onTap: () => Navigate.to(context, SalePage.pushIt(item)),
               );
             },
           ),

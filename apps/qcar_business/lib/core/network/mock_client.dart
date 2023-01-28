@@ -5,7 +5,7 @@ import 'package:qcar_business/core/models/Tracking.dart';
 import 'package:qcar_business/core/models/car_info.dart';
 import 'package:qcar_business/core/models/customer_info.dart';
 import 'package:qcar_business/core/models/dealer_info.dart';
-import 'package:qcar_business/core/models/sell_info.dart';
+import 'package:qcar_business/core/models/sale_info.dart';
 import 'package:qcar_business/core/models/seller_info.dart';
 import 'package:qcar_business/core/models/video_info.dart';
 import 'package:qcar_business/core/network/load_client.dart';
@@ -29,8 +29,8 @@ class MockClient implements DownloadClient, UploadClient {
       Response.ok(json: jsonEncode(customers.map((e) => e.toMap())));
 
   @override
-  Future<Response> loadSellInfo(SellerInfo info) async =>
-      Response.ok(json: jsonEncode(getSellInfos(info).map((e) => e.toMap())));
+  Future<Response> loadSaleInfo(SellerInfo info) async =>
+      Response.ok(json: jsonEncode(getSaleInfos(info).map((e) => e.toMap())));
 
   @override
   Future<Response> sendTracking(TrackEvent event) async {
@@ -66,7 +66,7 @@ class MockClient implements DownloadClient, UploadClient {
       email: "peter.lustig@gmx.de",
     )
   ];
-  Map<String, List<SellInfo>> sellInfos = {};
+  Map<String, List<SaleInfo>> saleInfos = {};
 
   List<VideoInfo> getVideos() {
     if (_videos.isEmpty) {
@@ -114,22 +114,22 @@ class MockClient implements DownloadClient, UploadClient {
     return _videos;
   }
 
-  List<SellInfo> getSellInfos(SellerInfo sellerInfo) {
+  List<SaleInfo> getSaleInfos(SellerInfo sellerInfo) {
     final selectedVideos = <String, List<VideoInfo>>{};
     getVideos().forEach((video) {
       final list = selectedVideos[video.category] ?? [];
       list.add(video);
       selectedVideos[video.category] = list;
     });
-    return sellInfos[sellerInfo.name] ??
+    return saleInfos[sellerInfo.name] ??
         [
-          SellInfo(
+          SaleInfo(
             seller: sellerInfo,
             car: cars.first,
             videos: selectedVideos,
             customer: customers.first,
           ),
-          SellInfo(
+          SaleInfo(
             seller: sellerInfo,
             car: cars.last,
             videos: selectedVideos,
