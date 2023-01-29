@@ -81,7 +81,7 @@ internal class SaleServiceTest {
 
 
     @Test
-    fun `try adding invalid sell - throw exceptions`() {
+    fun `try adding invalid sale - throw exceptions`() {
         var emptyInfo = buildInvalidSaleInfo()
         var exception: Exception = assertThrows { service.addSaleInfo(emptyInfo) }
         assertThat(exception is SaleInfoException.EmptyBrandException)

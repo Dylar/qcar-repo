@@ -77,9 +77,9 @@ internal class SaleInfoControllerTest @Autowired constructor(
     @Nested
     @DisplayName("POST sale info")
     @TestInstance(Lifecycle.PER_CLASS)
-    inner class POSTSellInfo {
+    inner class POSTSaleInfo {
         @Test
-        fun `add sell info`() {
+        fun `add sale info`() {
             //given
             val info = buildSaleInfo()
 
@@ -96,7 +96,7 @@ internal class SaleInfoControllerTest @Autowired constructor(
         }
 
         @Test
-        fun `try adding empty sell info - throw exception`() {
+        fun `try adding empty sale info - throw exception`() {
             //given
             val info = buildInvalidSaleInfo()
 

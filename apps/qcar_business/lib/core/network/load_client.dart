@@ -21,7 +21,7 @@ abstract class DownloadClient {
 abstract class UploadClient {
   //TODO make this
   // Future<Response> addCustomer(CustomerInfo info);
-  // Future<Response> sellCar(SellInfo info);
+  // Future<Response> sellCar(SaleInfo info);
 
   Future<Response> sendTracking(TrackEvent event);
 }
