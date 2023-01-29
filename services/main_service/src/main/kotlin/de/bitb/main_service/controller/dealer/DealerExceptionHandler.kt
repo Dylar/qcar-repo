@@ -27,8 +27,8 @@ class DealerExceptionHandler : BaseExceptionHandler() {
     @ExceptionHandler(CarLinkException::class)
     fun handleException(e: CarLinkException): ResponseEntity<String> = badRequest(e.message!!)
 
-    @ExceptionHandler(CarLinkException.NoCarLinkException::class)
-    fun handleException(e: CarLinkException.NoCarLinkException): ResponseEntity<String> =
+    @ExceptionHandler(CarLinkException.NoCarLinksException::class)
+    fun handleException(e: CarLinkException.NoCarLinksException): ResponseEntity<String> =
         notFound(e.message!!)
 
     // SELLER

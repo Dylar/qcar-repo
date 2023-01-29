@@ -39,11 +39,11 @@ class DealerInfoService(
         carLinkDS.addLink(info)
     }
 
-    @Throws(CarLinkException.NoCarLinkException::class)
+    @Throws(CarLinkException.NoCarLinksException::class)
     fun getCarInfos(dealer: String): List<CarInfo> {
         val links = carLinkDS.getLinks(dealer)
         return links?.mapNotNull { carDS.getCarInfo(it.brand, it.model) }
-            ?: throw CarLinkException.NoCarLinkException(dealer)
+            ?: throw CarLinkException.NoCarLinksException(dealer)
     }
 
     @Throws(SellerInfoException::class)

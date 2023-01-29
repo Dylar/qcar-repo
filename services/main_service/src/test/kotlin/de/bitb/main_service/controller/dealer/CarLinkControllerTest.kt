@@ -41,7 +41,7 @@ internal class CarLinkControllerTest @Autowired constructor(
             every { service.getCarInfos(any()) }
                 .answers {
                     val args = it.invocation.args
-                    throw CarLinkException.NoCarLinkException(
+                    throw CarLinkException.NoCarLinksException(
                         args.first() as String,
                     )
                 }

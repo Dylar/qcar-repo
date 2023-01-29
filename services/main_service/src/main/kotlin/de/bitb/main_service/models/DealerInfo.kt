@@ -2,8 +2,7 @@ package de.bitb.main_service.models
 
 data class DealerInfo(
     val name: String = "",
-    val address: String = "",
-    val cars: List<CarInfo> = mutableListOf(),
+    val address: String = ""
 )
 
 data class CarLink(

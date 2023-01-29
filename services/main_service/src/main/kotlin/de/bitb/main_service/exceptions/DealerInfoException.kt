@@ -9,7 +9,7 @@ sealed class DealerInfoException(msg: String) : Exception(msg) {
 }
 
 sealed class CarLinkException(msg: String) : Exception(msg) {
-    class NoCarLinkException(dealer: String) :
+    class NoCarLinksException(dealer: String) :
         CarLinkException("Dealer ($dealer) has no cars")
 
     class EmptyDealerException : CarLinkException("Dealer is empty")
