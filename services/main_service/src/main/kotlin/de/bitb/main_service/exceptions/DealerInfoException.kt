@@ -25,15 +25,16 @@ sealed class SellerInfoException(msg: String) : Exception(msg) {
     class EmptySellerException : SellerInfoException("Seller is empty")
 }
 
-sealed class SellInfoException(msg: String) : Exception(msg) {
-    class UnknownKeyException(msg: String) : SellInfoException(msg)
-    class InvalidKeyException(msg: String) : SellInfoException(msg)
-    class EmptyBrandException : SellInfoException("Brand is empty")
-    class EmptyModelException : SellInfoException("Model is empty")
-    class EmptySellerException : SellInfoException("Seller is empty")
-    class EmptyDealerException : SellInfoException("Dealer is empty")
-    class NotEmptyKeyException : SellInfoException("Key is NOT empty")
-    class EmptyIntroException : SellInfoException("Intro path empty")
-    class NoVideosException : SellInfoException("No videos")
-    class NoVideosForCategoryException(category: String) : SellInfoException("No videos for category $category")
+sealed class SaleInfoException(msg: String) : Exception(msg) {
+    class UnknownKeyException(msg: String) : SaleInfoException(msg)
+    class InvalidKeyException(msg: String) : SaleInfoException(msg)
+    class EmptyBrandException : SaleInfoException("Brand is empty")
+    class EmptyModelException : SaleInfoException("Model is empty")
+    class EmptySellerException : SaleInfoException("Seller is empty")
+    class EmptyDealerException : SaleInfoException("Dealer is empty")
+    class NotEmptyKeyException : SaleInfoException("Key is NOT empty")
+    class EmptyIntroException : SaleInfoException("Intro path empty")
+    class NoVideosException : SaleInfoException("No videos")
+    class NoVideosForCategoryException(category: String) :
+        SaleInfoException("No videos for category $category")
 }

@@ -10,8 +10,8 @@ const val BASE_TESTDATA_PATH = "../../testdata"
 const val TEST_DEALER_INFO = "dealer_info.json"
 const val TEST_CAR_LINK = "car_link.json"
 const val TEST_SELLER_INFO = "seller_info.json"
-const val TEST_SELL_INFO = "sell_info.json"
-const val TEST_SELL_INFO_WITHOUT_KEY = "sell_info_without_key.json"
+const val TEST_SALE_INFO = "sale_info.json"
+const val TEST_SALE_INFO_WITHOUT_KEY = "sale_info_without_key.json"
 
 const val TEST_CAR_FULL = "car_info_full.json"
 const val TEST_CAR_INFO = "car_info.json"
@@ -71,10 +71,10 @@ fun buildSellerInfo(jsonFile: String = TEST_SELLER_INFO): SellerInfo {
     return objMapper.readValue(json, SellerInfo::class.java)
 }
 
-fun buildInvalidSellInfo(): SellInfo = SellInfo(key = "THIS IS A KEY")
-fun buildSellInfo(jsonFile: String = TEST_SELL_INFO_WITHOUT_KEY): SellInfo {
+fun buildInvalidSaleInfo(): SaleInfo = SaleInfo(key = "THIS IS A KEY")
+fun buildSaleInfo(jsonFile: String = TEST_SALE_INFO_WITHOUT_KEY): SaleInfo {
     val json = loadTestDealerFile(jsonFile)
-    return objMapper.readValue(json, SellInfo::class.java)
+    return objMapper.readValue(json, SaleInfo::class.java)
 }
 
 fun buildEmptyFeedback(): Feedback = Feedback()

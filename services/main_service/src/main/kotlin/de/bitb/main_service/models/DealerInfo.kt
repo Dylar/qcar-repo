@@ -17,7 +17,7 @@ data class SellerInfo(
     val name: String = "",
 )
 
-data class SellInfo(
+data class SaleInfo(
     val brand: String = "",
     val model: String = "",
     val seller: String = "",

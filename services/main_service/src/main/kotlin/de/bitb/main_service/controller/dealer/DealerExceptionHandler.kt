@@ -3,7 +3,7 @@ package de.bitb.main_service.controller.dealer
 import de.bitb.main_service.controller.BaseExceptionHandler
 import de.bitb.main_service.exceptions.CarLinkException
 import de.bitb.main_service.exceptions.DealerInfoException
-import de.bitb.main_service.exceptions.SellInfoException
+import de.bitb.main_service.exceptions.SaleInfoException
 import de.bitb.main_service.exceptions.SellerInfoException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -40,11 +40,11 @@ class DealerExceptionHandler : BaseExceptionHandler() {
         notFound(e.message!!)
 
     // SELL
-    @ExceptionHandler(SellInfoException::class)
-    fun handleException(e: SellInfoException): ResponseEntity<String> = badRequest(e.message!!)
+    @ExceptionHandler(SaleInfoException::class)
+    fun handleException(e: SaleInfoException): ResponseEntity<String> = badRequest(e.message!!)
 
-    @ExceptionHandler(SellInfoException.UnknownKeyException::class)
-    fun handleException(e: SellInfoException.UnknownKeyException): ResponseEntity<String> =
+    @ExceptionHandler(SaleInfoException.UnknownKeyException::class)
+    fun handleException(e: SaleInfoException.UnknownKeyException): ResponseEntity<String> =
         notFound(e.message!!)
 
 }

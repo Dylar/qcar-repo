@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import de.bitb.main_service.builder.*
 import de.bitb.main_service.controller.DEALER_URL_V1
-import de.bitb.main_service.exceptions.SellInfoException
-import de.bitb.main_service.exceptions.validateSellInfo
+import de.bitb.main_service.exceptions.SaleInfoException
+import de.bitb.main_service.exceptions.validateSaleInfo
 import de.bitb.main_service.models.*
 import de.bitb.main_service.service.DealerInfoService
 import io.mockk.every
@@ -23,25 +23,25 @@ import org.springframework.test.web.servlet.post
 
 @SpringBootTest
 @AutoConfigureMockMvc
-internal class SellInfoControllerTest @Autowired constructor(
+internal class SaleInfoControllerTest @Autowired constructor(
     val mockMvc: MockMvc,
     val mapper: ObjectMapper,
     @MockkBean(relaxed = true) private val service: DealerInfoService
 ) {
 
     @Nested
-    @DisplayName("GET sell info")
+    @DisplayName("GET sale info")
     @TestInstance(Lifecycle.PER_CLASS)
-    inner class GETSellInfo {
+    inner class GETSaleInfo {
 
         @Test
-        fun `get no sell info`() {
-            val info = buildSellInfo(TEST_SELL_INFO)
+        fun `get no sale info`() {
+            val info = buildSaleInfo(TEST_SALE_INFO)
 
-            every { service.getSellInfo(any()) }
+            every { service.getSaleInfo(any()) }
                 .answers {
                     val args = it.invocation.args
-                    throw SellInfoException.UnknownKeyException(
+                    throw SaleInfoException.UnknownKeyException(
                         args.first() as String,
                     )
                 }
@@ -50,14 +50,14 @@ internal class SellInfoControllerTest @Autowired constructor(
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
-            verify(exactly = 1) { service.getSellInfo(info.key) }
+            verify(exactly = 1) { service.getSaleInfo(info.key) }
         }
 
         @Test
-        fun `get sell info`() {
-            val info = buildSellInfo(TEST_SELL_INFO)
+        fun `get sale info`() {
+            val info = buildSaleInfo(TEST_SALE_INFO)
 
-            every { service.getSellInfo(info.key) }
+            every { service.getSaleInfo(info.key) }
                 .answers { info }
 
             mockMvc.get("$DEALER_URL_V1/key/${info.key}")
@@ -70,42 +70,42 @@ internal class SellInfoControllerTest @Autowired constructor(
                     }
                 }
 
-            verify(exactly = 1) { service.getSellInfo(info.key) }
+            verify(exactly = 1) { service.getSaleInfo(info.key) }
         }
     }
 
     @Nested
-    @DisplayName("POST sell info")
+    @DisplayName("POST sale info")
     @TestInstance(Lifecycle.PER_CLASS)
     inner class POSTSellInfo {
         @Test
         fun `add sell info`() {
             //given
-            val info = buildSellInfo()
+            val info = buildSaleInfo()
 
             //when
             mockMvc
-                .post("$DEALER_URL_V1/addSell") {
+                .post("$DEALER_URL_V1/addSale") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
                 .andDo { print() }
                 .andExpect { status { isCreated() } }
 
-            verify(exactly = 1) { service.addSellInfo(info) }
+            verify(exactly = 1) { service.addSaleInfo(info) }
         }
 
         @Test
         fun `try adding empty sell info - throw exception`() {
             //given
-            val info = buildInvalidSellInfo()
+            val info = buildInvalidSaleInfo()
 
-            every { service.addSellInfo(any()) }
-                .answers { validateSellInfo(args.first() as SellInfo) }
+            every { service.addSaleInfo(any()) }
+                .answers { validateSaleInfo(args.first() as SaleInfo) }
 
             //when
             val result = mockMvc
-                .post("$DEALER_URL_V1/addSell") {
+                .post("$DEALER_URL_V1/addSale") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -113,21 +113,21 @@ internal class SellInfoControllerTest @Autowired constructor(
                 .andExpect { status { isBadRequest() } }
                 .andReturn().response.contentAsString
 
-            verify(exactly = 1) { service.addSellInfo(info) }
-            assertThat(result).isEqualTo(SellInfoException.EmptyBrandException().message)
+            verify(exactly = 1) { service.addSaleInfo(info) }
+            assertThat(result).isEqualTo(SaleInfoException.EmptyBrandException().message)
         }
 
         @Test
-        fun `try adding sell info with key - throw exception`() {
+        fun `try adding sale info with key - throw exception`() {
             //given
-            val info = buildSellInfo(TEST_SELL_INFO)
+            val info = buildSaleInfo(TEST_SALE_INFO)
 
-            every { service.addSellInfo(any()) }
-                .answers { validateSellInfo(args.first() as SellInfo) }
+            every { service.addSaleInfo(any()) }
+                .answers { validateSaleInfo(args.first() as SaleInfo) }
 
             //when
             val result = mockMvc
-                .post("$DEALER_URL_V1/addSell") {
+                .post("$DEALER_URL_V1/addSale") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -135,22 +135,22 @@ internal class SellInfoControllerTest @Autowired constructor(
                 .andExpect { status { isBadRequest() } }
                 .andReturn().response.contentAsString
 
-            verify(exactly = 1) { service.addSellInfo(info) }
-            assertThat(result).isEqualTo(SellInfoException.NotEmptyKeyException().message)
+            verify(exactly = 1) { service.addSaleInfo(info) }
+            assertThat(result).isEqualTo(SaleInfoException.NotEmptyKeyException().message)
         }
 
         @Test
         fun `send no data - throw exception`() {
             //when
             mockMvc
-                .post("$DEALER_URL_V1/addSell") {
+                .post("$DEALER_URL_V1/addSale") {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
                 }
                 .andDo { print() }
                 .andExpect { status { isBadRequest() } }
 
-            verify(exactly = 0) { service.addSellInfo(any()) }
+            verify(exactly = 0) { service.addSaleInfo(any()) }
         }
     }
 

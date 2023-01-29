@@ -2,7 +2,7 @@ package de.bitb.main_service.exceptions
 
 import de.bitb.main_service.models.CarLink
 import de.bitb.main_service.models.DealerInfo
-import de.bitb.main_service.models.SellInfo
+import de.bitb.main_service.models.SaleInfo
 import de.bitb.main_service.models.SellerInfo
 
 
@@ -19,32 +19,32 @@ fun validateCarLink(info: CarLink) {
     }
 }
 
-@Throws(SellInfoException::class)
-fun validateSellInfo(info: SellInfo) {
+@Throws(SaleInfoException::class)
+fun validateSaleInfo(info: SaleInfo) {
     if (info.brand.isBlank()) {
-        throw SellInfoException.EmptyBrandException()
+        throw SaleInfoException.EmptyBrandException()
     }
     if (info.model.isBlank()) {
-        throw SellInfoException.EmptyModelException()
+        throw SaleInfoException.EmptyModelException()
     }
     if (info.seller.isBlank()) {
-        throw SellInfoException.EmptySellerException()
+        throw SaleInfoException.EmptySellerException()
     }
     if (info.dealer.isBlank()) {
-        throw SellInfoException.EmptyDealerException()
+        throw SaleInfoException.EmptyDealerException()
     }
     if (info.key.isNotBlank()) {
-        throw SellInfoException.NotEmptyKeyException()
+        throw SaleInfoException.NotEmptyKeyException()
     }
     if (info.intro.isBlank()) {
-        throw SellInfoException.EmptyIntroException()
+        throw SaleInfoException.EmptyIntroException()
     }
     if (info.videos.isEmpty()) {
-        throw SellInfoException.NoVideosException()
+        throw SaleInfoException.NoVideosException()
     }
     info.videos.forEach {
         if (it.value.isEmpty()) {
-            throw SellInfoException.NoVideosForCategoryException(it.key)
+            throw SaleInfoException.NoVideosForCategoryException(it.key)
         }
     }
 }

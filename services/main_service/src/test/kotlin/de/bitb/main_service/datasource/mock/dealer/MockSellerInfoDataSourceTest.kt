@@ -1,32 +1,32 @@
 package de.bitb.main_service.datasource.mock.dealer
 
-import de.bitb.main_service.builder.buildSellInfo
-import de.bitb.main_service.datasource.dealer.SellInfoDataSourceMock
+import de.bitb.main_service.builder.buildSaleInfo
+import de.bitb.main_service.datasource.dealer.SaleInfoDataSourceMock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class MockSellerInfoDataSourceTest {
 
-    private val dataSource = SellInfoDataSourceMock()
+    private val dataSource = SaleInfoDataSourceMock()
 
     @Test
-    fun `get no sell info from data source`() {
+    fun `get no sale info from data source`() {
         //given
         val key = "bullshit"
         //when
-        val exception = dataSource.getSellInfo(key)
+        val exception = dataSource.getSaleInfo(key)
         //then
         assertThat(exception == null)
     }
 
     @Test
-    fun `get sell info by key from data source`() {
+    fun `get sale info by key from data source`() {
         //given
-        val saveInfo = buildSellInfo()
-        dataSource.addSellInfo(saveInfo)
+        val saveInfo = buildSaleInfo()
+        dataSource.addSaleInfo(saveInfo)
         //when
-        val sellInfo = dataSource.getSellInfo(saveInfo.key)
+        val info = dataSource.getSaleInfo(saveInfo.key)
         //then
-        assertThat(sellInfo === saveInfo)
+        assertThat(info === saveInfo)
     }
 }

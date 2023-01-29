@@ -37,10 +37,10 @@ import org.junit.jupiter.api.Test
 //        expect(isValid, true);
 //    });
 //
-//    test('validate sell info schema', () async {
+//    test('validate sale info schema', () async {
 //        TestWidgetsFlutterBinding.ensureInitialized();
-//        final info = await buildSellInfo();
-//        final isValid = await validateSellInfo(info.toMap());
+//        final info = await buildSaleInfo();
+//        final isValid = await validateSaleInfo(info.toMap());
 //        expect(isValid, true);
 //    });
 //}

@@ -5,19 +5,19 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Repository
 
-@Repository(SELL_REPOSITORY_MOCK)
-class SellInfoDataSourceMock : SellInfoDataSource {
+@Repository(SALE_REPOSITORY_MOCK)
+class SaleInfoDataSourceMock : SaleInfoDataSource {
 
-    private val log: Logger = LoggerFactory.getLogger(SellInfoDataSourceMock::class.java)
+    private val log: Logger = LoggerFactory.getLogger(SaleInfoDataSourceMock::class.java)
 
-    private val sellInfoDb = mutableMapOf<String, SellInfo>()
+    private val saleInfoDb = mutableMapOf<String, SaleInfo>()
 
-    override fun getSellInfo(key: String): SellInfo? {
-        return sellInfoDb[key]
+    override fun getSaleInfo(key: String): SaleInfo? {
+        return saleInfoDb[key]
     }
 
-    override fun addSellInfo(info: SellInfo) {
-        sellInfoDb[info.key] = info
+    override fun addSaleInfo(info: SaleInfo) {
+        saleInfoDb[info.key] = info
     }
 
 }

@@ -16,7 +16,7 @@ class DealerInfoService(
     @Qualifier(DEALER_REPOSITORY_IN_USE) @Autowired val dealerDS: DealerInfoDataSource,
     @Qualifier(CAR_LINK_REPOSITORY_IN_USE) @Autowired val carLinkDS: CarLinkDataSource,
     @Qualifier(SELLER_REPOSITORY_IN_USE) @Autowired val sellerDS: SellerInfoDataSource,
-    @Qualifier(SELL_REPOSITORY_IN_USE) @Autowired val sellDS: SellInfoDataSource,
+    @Qualifier(SALE_REPOSITORY_IN_USE) @Autowired val saleDS: SaleInfoDataSource,
     @Qualifier(CAR_REPOSITORY_IN_USE) @Autowired val carDS: CarInfoDataSource,
 ) {
     private val log: Logger = LoggerFactory.getLogger(DealerInfoService::class.java)
@@ -58,21 +58,21 @@ class DealerInfoService(
             ?: throw SellerInfoException.UnknownSellerException(dealer, name)
     }
 
-    @Throws(SellInfoException::class)
-    fun addSellInfo(info: SellInfo) {
-        validateSellInfo(info)
+    @Throws(SaleInfoException::class)
+    fun addSaleInfo(info: SaleInfo) {
+        validateSaleInfo(info)
         val key = generateKey(info)
-        sellDS.addSellInfo(key)
+        saleDS.addSaleInfo(key)
     }
 
-    private fun generateKey(info: SellInfo): SellInfo =
+    private fun generateKey(info: SaleInfo): SaleInfo =
 //        info.copy(key = Base64.getEncoder().encodeToString(UUID.randomUUID().toString().toByteArray()))
         info.copy(key = "V2VubkR1RGFzRW50c2NobMO8c3NlbHN0TWF4aSxiaXN0ZVNjaG9uR3V0OlAK")
 
-    @Throws(SellInfoException.UnknownKeyException::class)
-    fun getSellInfo(key: String): SellInfo {
-        return sellDS.getSellInfo(key)
-            ?: throw SellInfoException.UnknownKeyException(key)
+    @Throws(SaleInfoException.UnknownKeyException::class)
+    fun getSaleInfo(key: String): SaleInfo {
+        return saleDS.getSaleInfo(key)
+            ?: throw SaleInfoException.UnknownKeyException(key)
     }
 
 }

@@ -1,8 +1,8 @@
 package de.bitb.main_service.service
 
 import de.bitb.main_service.datasource.car.*
-import de.bitb.main_service.datasource.dealer.SELL_REPOSITORY_IN_USE
-import de.bitb.main_service.datasource.dealer.SellInfoDataSource
+import de.bitb.main_service.datasource.dealer.SALE_REPOSITORY_IN_USE
+import de.bitb.main_service.datasource.dealer.SaleInfoDataSource
 import de.bitb.main_service.exceptions.*
 import de.bitb.main_service.models.CarInfo
 import de.bitb.main_service.models.CategoryInfo
