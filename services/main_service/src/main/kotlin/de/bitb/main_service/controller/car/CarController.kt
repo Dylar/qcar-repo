@@ -25,7 +25,7 @@ class CarController @Autowired constructor(
         return service.getCarInfo(brand, model)
     }
 
-    @PostMapping("/addCar")
+    @PostMapping("/car")
     @ResponseStatus(HttpStatus.CREATED)
     fun addCarInfo(@RequestBody info: CarInfo) {
         log.info("addCarInfo: $info")
@@ -43,7 +43,7 @@ class CarController @Autowired constructor(
         return service.getCategoryInfo(brand, model, name)
     }
 
-    @PostMapping("/addCategory")
+    @PostMapping("/category")
     @ResponseStatus(HttpStatus.CREATED)
     fun addCategoryInfo(@RequestBody info: CategoryInfo) {
         log.info("addCategoryInfo: $info")
@@ -62,7 +62,7 @@ class CarController @Autowired constructor(
         return service.getVideoInfo(brand, model, category, name)
     }
 
-    @PostMapping("/addVideo")
+    @PostMapping("/video")
     @ResponseStatus(HttpStatus.CREATED)
     fun addVideoInfo(@RequestBody info: VideoInfo) {
         log.info("addVideoInfo: $info")

@@ -1,9 +1,7 @@
 package de.bitb.main_service.exceptions
 
-import de.bitb.main_service.models.CarLink
-import de.bitb.main_service.models.DealerInfo
-import de.bitb.main_service.models.SaleInfo
-import de.bitb.main_service.models.SellerInfo
+import de.bitb.main_service.models.*
+import de.bitb.main_service.parseDateString
 
 
 @Throws(CarLinkException::class)
@@ -66,5 +64,35 @@ fun validateSellerInfo(info: SellerInfo) {
     }
     if (info.name.isBlank()) {
         throw SellerInfoException.EmptySellerException()
+    }
+}
+
+@Throws(CustomerInfoException::class)
+fun validateCustomerInfo(info: CustomerInfo) {
+    if (info.dealer.isBlank()) {
+        throw CustomerInfoException.EmptyDealerException()
+    }
+    if (info.name.isBlank()) {
+        throw CustomerInfoException.EmptyNameException()
+    }
+    if (info.lastName.isBlank()) {
+        throw CustomerInfoException.EmptyLastNameException()
+    }
+    if (info.gender.isBlank()) {
+        throw CustomerInfoException.EmptyGenderException()
+    }
+    if (info.birthday.isBlank()) {
+        throw CustomerInfoException.EmptyBirthdayException()
+    }
+    try{
+        parseDateString(info.birthday)
+    }catch (e: Exception){
+        throw CustomerInfoException.WrongBirthdayFormatException(info.birthday)
+    }
+    if (info.phone.isBlank()) {
+        throw CustomerInfoException.EmptyPhoneException()
+    }
+    if (info.email.isBlank()) {
+        throw CustomerInfoException.EmptyEmailException()
     }
 }

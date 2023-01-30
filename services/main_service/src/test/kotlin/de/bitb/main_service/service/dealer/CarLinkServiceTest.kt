@@ -34,6 +34,7 @@ internal class CarLinkServiceTest {
             carLinkDS,
             mockk(relaxed = true),
             mockk(relaxed = true),
+            mockk(relaxed = true),
             carDS,
         )
     }

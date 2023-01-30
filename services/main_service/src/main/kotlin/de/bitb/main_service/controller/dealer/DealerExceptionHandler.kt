@@ -1,10 +1,7 @@
 package de.bitb.main_service.controller.dealer
 
 import de.bitb.main_service.controller.BaseExceptionHandler
-import de.bitb.main_service.exceptions.CarLinkException
-import de.bitb.main_service.exceptions.DealerInfoException
-import de.bitb.main_service.exceptions.SaleInfoException
-import de.bitb.main_service.exceptions.SellerInfoException
+import de.bitb.main_service.exceptions.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
@@ -45,6 +42,14 @@ class DealerExceptionHandler : BaseExceptionHandler() {
 
     @ExceptionHandler(SaleInfoException.UnknownKeyException::class)
     fun handleException(e: SaleInfoException.UnknownKeyException): ResponseEntity<String> =
+        notFound(e.message!!)
+
+    // CUSTOMER
+    @ExceptionHandler(CustomerInfoException::class)
+    fun handleException(e: CustomerInfoException): ResponseEntity<String> = badRequest(e.message!!)
+
+    @ExceptionHandler(CustomerInfoException.UnknownDealerException::class)
+    fun handleException(e: CustomerInfoException.UnknownDealerException): ResponseEntity<String> =
         notFound(e.message!!)
 
 }

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import de.bitb.main_service.builder.*
 import de.bitb.main_service.controller.DEALER_URL_V1
-import de.bitb.main_service.exceptions.CarLinkException
-import de.bitb.main_service.exceptions.validateCarLink
+import de.bitb.main_service.exceptions.CustomerInfoException
+import de.bitb.main_service.exceptions.validateCustomerInfo
 import de.bitb.main_service.models.*
 import de.bitb.main_service.service.DealerInfoService
 import io.mockk.every
@@ -21,92 +21,95 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 
+private fun getCustomerURL(dealer: String): String =
+    "$DEALER_URL_V1/customers/$dealer"
+
 @SpringBootTest
 @AutoConfigureMockMvc
-internal class CarLinkControllerTest @Autowired constructor(
+internal class CustomerInfoControllerTest @Autowired constructor(
     val mockMvc: MockMvc,
     val mapper: ObjectMapper,
     @MockkBean(relaxed = true) private val service: DealerInfoService
 ) {
 
     @Nested
-    @DisplayName("GET dealer cars")
+    @DisplayName("GET customer info")
     @TestInstance(Lifecycle.PER_CLASS)
-    inner class GETCarLink {
+    inner class GETCustomerInfo {
 
         @Test
-        fun `get no car links`() {
-            val info = buildCarLink()
+        fun `get no customer info`() {
+            val info = buildCustomerInfo()
 
-            every { service.getCarInfos(any()) }
+            every { service.getCustomerInfos(any()) }
                 .answers {
                     val args = it.invocation.args
-                    throw CarLinkException.NoCarLinksException(
+                    throw CustomerInfoException.UnknownDealerException(
                         args.first() as String,
                     )
                 }
 
-            mockMvc.get("$DEALER_URL_V1/cars/${info.dealer}")
+            mockMvc.get(getCustomerURL(info.dealer))
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
-            verify(exactly = 1) { service.getCarInfos(info.dealer) }
+            verify(exactly = 1) { service.getCustomerInfos(info.dealer) }
         }
 
         @Test
-        fun `get car links`() {
-            val info = buildCarLink()
-            val result = listOf(buildCarInfo())
+        fun `get customer infos`() {
+            val info = buildCustomerInfo()
+            val infos = listOf(info)
 
-            every { service.getCarInfos(info.dealer) }
-                .answers { result }
+            every { service.getCustomerInfos(info.dealer) }
+                .answers { infos }
 
-            mockMvc.get("$DEALER_URL_V1/cars/${info.dealer}")
+            mockMvc.get(getCustomerURL(info.dealer))
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
                     content {
                         contentType(MediaType.APPLICATION_JSON)
-                        json(mapper.writeValueAsString(result))
+                        json(mapper.writeValueAsString(infos))
                     }
                 }
 
-            verify(exactly = 1) { service.getCarInfos(info.dealer) }
+            verify(exactly = 1) { service.getCustomerInfos(info.dealer) }
         }
     }
 
     @Nested
-    @DisplayName("POST dealer cars")
+    @DisplayName("POST customer info")
     @TestInstance(Lifecycle.PER_CLASS)
-    inner class POSTCarLink {
+    inner class POSTCustomerInfo {
         @Test
-        fun `add dealer cars`() {
+        fun `add customer info`() {
             //given
-            val info = buildCarLink()
+            val info = buildCustomerInfo()
 
             //when
             mockMvc
-                .post("$DEALER_URL_V1/car") {
+                .post("$DEALER_URL_V1/customer") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
                 .andDo { print() }
                 .andExpect { status { isCreated() } }
 
-            verify(exactly = 1) { service.linkCarToDealer(info) }
+            verify(exactly = 1) { service.addCustomerInfo(info) }
         }
 
         @Test
-        fun `try adding empty car links - throw exception`() {
+        fun `try adding empty customer info - throw exception`() {
             //given
-            val info = buildEmptyCarLink()
+            val info = buildEmptyCustomerInfo()
 
-            every { service.linkCarToDealer(any()) }
-                .answers { validateCarLink(args.first() as CarLink) }
+            every { service.addCustomerInfo(any()) }
+                .answers { validateCustomerInfo(args.first() as CustomerInfo) }
 
             //when
             val result = mockMvc
-                .post("$DEALER_URL_V1/car") {
+                .post("$DEALER_URL_V1/customer") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -114,22 +117,22 @@ internal class CarLinkControllerTest @Autowired constructor(
                 .andExpect { status { isBadRequest() } }
                 .andReturn().response.contentAsString
 
-            verify(exactly = 1) { service.linkCarToDealer(info) }
-            assertThat(result).isEqualTo(CarLinkException.EmptyDealerException().message)
+            verify(exactly = 1) { service.addCustomerInfo(info) }
+            assertThat(result).isEqualTo(CustomerInfoException.EmptyDealerException().message)
         }
 
         @Test
         fun `send no data - throw exception`() {
             //when
             mockMvc
-                .post("$DEALER_URL_V1/car") {
+                .post("$DEALER_URL_V1/customer") {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
                 }
                 .andDo { print() }
                 .andExpect { status { isBadRequest() } }
 
-            verify(exactly = 0) { service.linkCarToDealer(any()) }
+            verify(exactly = 0) { service.addCustomerInfo(any()) }
         }
     }
 

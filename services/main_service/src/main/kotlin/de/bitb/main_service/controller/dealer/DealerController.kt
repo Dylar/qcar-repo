@@ -24,7 +24,7 @@ class DealerController @Autowired constructor(
     }
 //    V2VubkR1RGFzRW50c2NobMO8c3NlbHN0TWF4aSxiaXN0ZVNjaG9uR3V0OlAK
 
-    @PostMapping("/addDealer")
+    @PostMapping("/dealer")
     @ResponseStatus(HttpStatus.CREATED)
     fun addDealerInfo(@RequestBody info: DealerInfo) {
         log.info("addDealerInfo: $info")
@@ -32,13 +32,13 @@ class DealerController @Autowired constructor(
     }
 
     // CARS
-    @GetMapping("/getCars/{dealer}")
+    @GetMapping("/cars/{dealer}")
     fun getCarInfos(@PathVariable dealer: String): List<CarInfo> {
         log.info("getCarInfos")
         return service.getCarInfos(dealer)
     }
 
-    @PostMapping("/linkCar")
+    @PostMapping("/car")
     @ResponseStatus(HttpStatus.CREATED)
     fun linkCarToDealer(@RequestBody info: CarLink) {
         log.info("linkCarToDealer")
@@ -52,7 +52,7 @@ class DealerController @Autowired constructor(
         return service.getSellerInfo(dealer, name)
     }
 
-    @PostMapping("/addSeller")
+    @PostMapping("/seller")
     @ResponseStatus(HttpStatus.CREATED)
     fun addSellerInfo(@RequestBody info: SellerInfo) {
         log.info("addSellerInfo: $info")
@@ -60,17 +60,31 @@ class DealerController @Autowired constructor(
     }
 
     // SALE
-    @GetMapping("/key/{key}")
+    @GetMapping("/sale/{key}")
     fun getSaleInfo(@PathVariable key: String): SaleInfo {
         log.info("getSaleInfo: $key")
         return service.getSaleInfo(key)
     }
 
-    @PostMapping("/addSale")
+    @PostMapping("/sale")
     @ResponseStatus(HttpStatus.CREATED)
     fun addSaleInfo(@RequestBody info: SaleInfo) {
         log.info("addSaleInfo: $info")
         service.addSaleInfo(info)
+    }
+
+    // CUSTOMER
+    @GetMapping("/customers/{dealer}")
+    fun getCustomerInfos(@PathVariable dealer: String): List<CustomerInfo> {
+        log.info("getCustomerInfos: $dealer")
+        return service.getCustomerInfos(dealer)
+    }
+
+    @PostMapping("/customer")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun addCustomerInfo(@RequestBody info: CustomerInfo) {
+        log.info("addCustomerInfo: $info")
+        service.addCustomerInfo(info)
     }
 
 }

@@ -46,7 +46,7 @@ internal class SaleInfoControllerTest @Autowired constructor(
                     )
                 }
 
-            mockMvc.get("$DEALER_URL_V1/key/${info.key}")
+            mockMvc.get("$DEALER_URL_V1/sale/${info.key}")
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
 
@@ -60,7 +60,7 @@ internal class SaleInfoControllerTest @Autowired constructor(
             every { service.getSaleInfo(info.key) }
                 .answers { info }
 
-            mockMvc.get("$DEALER_URL_V1/key/${info.key}")
+            mockMvc.get("$DEALER_URL_V1/sale/${info.key}")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -85,7 +85,7 @@ internal class SaleInfoControllerTest @Autowired constructor(
 
             //when
             mockMvc
-                .post("$DEALER_URL_V1/addSale") {
+                .post("$DEALER_URL_V1/sale") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -105,7 +105,7 @@ internal class SaleInfoControllerTest @Autowired constructor(
 
             //when
             val result = mockMvc
-                .post("$DEALER_URL_V1/addSale") {
+                .post("$DEALER_URL_V1/sale") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -127,7 +127,7 @@ internal class SaleInfoControllerTest @Autowired constructor(
 
             //when
             val result = mockMvc
-                .post("$DEALER_URL_V1/addSale") {
+                .post("$DEALER_URL_V1/sale") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -143,7 +143,7 @@ internal class SaleInfoControllerTest @Autowired constructor(
         fun `send no data - throw exception`() {
             //when
             mockMvc
-                .post("$DEALER_URL_V1/addSale") {
+                .post("$DEALER_URL_V1/sale") {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
                 }

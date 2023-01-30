@@ -38,3 +38,16 @@ sealed class SaleInfoException(msg: String) : Exception(msg) {
     class NoVideosForCategoryException(category: String) :
         SaleInfoException("No videos for category $category")
 }
+
+sealed class CustomerInfoException(msg: String) : Exception(msg) {
+    class UnknownDealerException(msg: String) : CustomerInfoException(msg)
+
+    class EmptyDealerException : CustomerInfoException("Dealer is empty")
+    class EmptyNameException : CustomerInfoException("Name is empty")
+    class EmptyLastNameException : CustomerInfoException("Last name is empty")
+    class EmptyGenderException : CustomerInfoException("Gender is empty")
+    class EmptyBirthdayException : CustomerInfoException("Birthday is empty")
+    class WrongBirthdayFormatException(date:String) : CustomerInfoException("Wrong birthday format ($date)")
+    class EmptyPhoneException : CustomerInfoException("Phone is empty")
+    class EmptyEmailException : CustomerInfoException("Email is empty")
+}

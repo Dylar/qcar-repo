@@ -17,6 +17,7 @@ class DealerInfoService(
     @Qualifier(CAR_LINK_REPOSITORY_IN_USE) @Autowired val carLinkDS: CarLinkDataSource,
     @Qualifier(SELLER_REPOSITORY_IN_USE) @Autowired val sellerDS: SellerInfoDataSource,
     @Qualifier(SALE_REPOSITORY_IN_USE) @Autowired val saleDS: SaleInfoDataSource,
+    @Qualifier(CUSTOMER_REPOSITORY_IN_USE) @Autowired val customerDS: CustomerInfoDataSource,
     @Qualifier(CAR_REPOSITORY_IN_USE) @Autowired val carDS: CarInfoDataSource,
 ) {
     private val log: Logger = LoggerFactory.getLogger(DealerInfoService::class.java)
@@ -73,6 +74,16 @@ class DealerInfoService(
     fun getSaleInfo(key: String): SaleInfo {
         return saleDS.getSaleInfo(key)
             ?: throw SaleInfoException.UnknownKeyException(key)
+    }
+
+    fun getCustomerInfos(dealer: String): List<CustomerInfo> {
+        return customerDS.getCustomers(dealer)
+            ?: throw CustomerInfoException.UnknownDealerException(dealer)
+    }
+
+    fun addCustomerInfo(info: CustomerInfo) {
+        validateCustomerInfo(info)
+        customerDS.addCustomer(info)
     }
 
 }

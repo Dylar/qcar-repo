@@ -12,6 +12,7 @@ const val TEST_CAR_LINK = "car_link.json"
 const val TEST_SELLER_INFO = "seller_info.json"
 const val TEST_SALE_INFO = "sale_info.json"
 const val TEST_SALE_INFO_WITHOUT_KEY = "sale_info_without_key.json"
+const val TEST_CUSTOMER_INFO = "customer_info.json"
 
 const val TEST_CAR_FULL = "car_info_full.json"
 const val TEST_CAR_INFO = "car_info.json"
@@ -75,6 +76,12 @@ fun buildInvalidSaleInfo(): SaleInfo = SaleInfo(key = "THIS IS A KEY")
 fun buildSaleInfo(jsonFile: String = TEST_SALE_INFO_WITHOUT_KEY): SaleInfo {
     val json = loadTestDealerFile(jsonFile)
     return objMapper.readValue(json, SaleInfo::class.java)
+}
+
+fun buildEmptyCustomerInfo(): CustomerInfo = CustomerInfo()
+fun buildCustomerInfo(jsonFile: String = TEST_CUSTOMER_INFO): CustomerInfo {
+    val json = loadTestDealerFile(jsonFile)
+    return objMapper.readValue(json, CustomerInfo::class.java)
 }
 
 fun buildEmptyFeedback(): Feedback = Feedback()

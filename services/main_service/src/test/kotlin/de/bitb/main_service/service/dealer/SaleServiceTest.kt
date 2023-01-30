@@ -32,6 +32,7 @@ internal class SaleServiceTest {
             mockk(relaxed = true),
             dataSource,
             mockk(relaxed = true),
+            mockk(relaxed = true),
         )
     }
 

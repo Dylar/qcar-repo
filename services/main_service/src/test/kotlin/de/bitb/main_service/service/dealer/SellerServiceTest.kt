@@ -30,6 +30,7 @@ internal class SellerServiceTest {
             dataSource,
             mockk(relaxed = true),
             mockk(relaxed = true),
+            mockk(relaxed = true),
         )
     }
 

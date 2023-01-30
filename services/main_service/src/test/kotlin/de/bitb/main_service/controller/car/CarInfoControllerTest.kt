@@ -89,7 +89,7 @@ internal class CarInfoControllerTest @Autowired constructor(
 
             //when
             mockMvc
-                .post("$CAR_URL_V1/addCar") {
+                .post("$CAR_URL_V1/car") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -109,7 +109,7 @@ internal class CarInfoControllerTest @Autowired constructor(
 
             //when
             val result = mockMvc
-                .post("$CAR_URL_V1/addCar") {
+                .post("$CAR_URL_V1/car") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -125,7 +125,7 @@ internal class CarInfoControllerTest @Autowired constructor(
         fun `send no data - throw exception`() {
             //when
             mockMvc
-                .post("$CAR_URL_V1/addCar") {
+                .post("$CAR_URL_V1/car") {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
                 }

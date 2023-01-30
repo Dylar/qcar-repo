@@ -89,7 +89,7 @@ internal class SellerInfoControllerTest @Autowired constructor(
 
             //when
             mockMvc
-                .post("$DEALER_URL_V1/addSeller") {
+                .post("$DEALER_URL_V1/seller") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -109,7 +109,7 @@ internal class SellerInfoControllerTest @Autowired constructor(
 
             //when
             val result = mockMvc
-                .post("$DEALER_URL_V1/addSeller") {
+                .post("$DEALER_URL_V1/seller") {
                     contentType = MediaType.APPLICATION_JSON
                     content = mapper.writeValueAsString(info)
                 }
@@ -125,7 +125,7 @@ internal class SellerInfoControllerTest @Autowired constructor(
         fun `send no data - throw exception`() {
             //when
             mockMvc
-                .post("$DEALER_URL_V1/addSeller") {
+                .post("$DEALER_URL_V1/seller") {
                     contentType = MediaType.APPLICATION_JSON
                     content = ""
                 }

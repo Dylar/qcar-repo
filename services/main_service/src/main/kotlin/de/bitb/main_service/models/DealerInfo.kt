@@ -26,3 +26,13 @@ data class SaleInfo(
     val videos: Map<String, List<String>> = mapOf(),
 )
 
+data class CustomerInfo(
+    val dealer: String = "",
+    val name: String = "",
+    val lastName: String = "",
+    val gender: String = "",
+    val birthday: String = "",
+    val phone: String = "",
+    val email: String = "",
+)
+

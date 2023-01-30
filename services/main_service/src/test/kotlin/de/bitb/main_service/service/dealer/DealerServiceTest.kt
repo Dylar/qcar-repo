@@ -30,6 +30,7 @@ internal class DealerServiceTest {
             mockk(relaxed = true),
             mockk(relaxed = true),
             mockk(relaxed = true),
+            mockk(relaxed = true),
         )
     }
 
