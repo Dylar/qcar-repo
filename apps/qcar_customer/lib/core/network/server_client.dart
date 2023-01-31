@@ -22,7 +22,7 @@ class ServerClient implements DownloadClient, UploadClient {
       Request(
         requestType: RequestType.get,
         url: DEALER_INFO_URL,
-        urlPath: ["key", key.key], //TODO make with params?
+        urlPath: ["sale", key.key], //TODO make with params?
       ),
     );
   }
