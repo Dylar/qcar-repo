@@ -33,6 +33,18 @@ class MockClient implements DownloadClient, UploadClient {
       Response.ok(json: jsonEncode(getSaleInfos(info).map((e) => e.toMap())));
 
   @override
+  Future<Response> sendCustomerInfo(CustomerInfo info) async {
+    Logger.logD(info.toJson());
+    return Response.ok(json: "ok");
+  }
+
+  @override
+  Future<Response> sendSaleInfo(SaleInfo info) async {
+    Logger.logD(info.toJson());
+    return Response.ok(json: "ok");
+  }
+
+  @override
   Future<Response> sendTracking(TrackEvent event) async {
     Logger.logTrack(event.text);
     return Response.ok(json: "ok");

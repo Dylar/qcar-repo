@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_business/core/models/Tracking.dart';
 import 'package:qcar_business/core/models/car_info.dart';
+import 'package:qcar_business/core/models/customer_info.dart';
 import 'package:qcar_business/core/models/dealer_info.dart';
+import 'package:qcar_business/core/models/sale_info.dart';
 import 'package:qcar_business/core/models/seller_info.dart';
 import 'package:qcar_business/core/models/video_info.dart';
 import 'package:qcar_shared/network_service.dart';
@@ -19,10 +21,8 @@ abstract class DownloadClient {
 }
 
 abstract class UploadClient {
-  //TODO make this
-  // Future<Response> addCustomer(CustomerInfo info);
-  // Future<Response> sellCar(SaleInfo info);
-
+  Future<Response> sendCustomerInfo(CustomerInfo info);
+  Future<Response> sendSaleInfo(SaleInfo info);
   Future<Response> sendTracking(TrackEvent event);
 }
 

@@ -6,6 +6,7 @@ import 'package:qcar_business/core/models/sale_info.dart';
 import 'package:qcar_business/core/models/video_info.dart';
 import 'package:qcar_business/core/service/auth_service.dart';
 import 'package:qcar_business/core/service/info_service.dart';
+import 'package:qcar_business/ui/notify/dialog.dart';
 import 'package:qcar_business/ui/notify/snackbars.dart';
 import 'package:qcar_business/ui/screens/form/form_videos_page.dart';
 import 'package:qcar_business/ui/screens/home/home_page.dart';
@@ -16,14 +17,19 @@ abstract class FormViewModel extends ViewModel {
   bool get validateError;
 
   List<CarInfo> get cars;
+
   void selectCar(CarInfo car);
 
   List<VideoInfo> get videos;
+
   void selectVideo(String category, VideoInfo? video);
+
   bool isVideoSelected(String category, VideoInfo? video);
 
   CustomerInfo customer = CustomerInfo.empty();
+
   DateTime? get selectedBirthday;
+
   set selectBirthday(DateTime selectBirthday);
 
   void saveSaleInfo();
@@ -105,6 +111,12 @@ class FormVM extends FormViewModel {
   //--------CUSTOMER--------\\
 
   @override
+  set customer(CustomerInfo info) {
+    super.customer = info.copy(dealer: authService.currentDealer.name);
+    notifyListeners();
+  }
+
+  @override
   DateTime? get selectedBirthday =>
       customer.birthday.isEmpty ? null : parseDate(customer.birthday);
 
@@ -113,7 +125,6 @@ class FormVM extends FormViewModel {
     final formatted = formatDate(selectBirthday);
     if (customer.birthday != formatted) {
       customer = customer.copy(birthday: formatted);
-      notifyListeners();
     }
   }
 
@@ -137,7 +148,13 @@ class FormVM extends FormViewModel {
       videos: selectedVideos,
       customer: customer,
     );
-    infoService.sellCar(info);
-    navigateTo(HomePage.onSaleSaving());
+    infoService.sellCar(info).then((success) {
+      if (success) {
+        navigateTo(HomePage.onSaleSaving());
+      } else {
+        // TODO make real error dialog
+        openDialog((ctx) => openErrorDialog(ctx, "Upload error"));
+      }
+    });
   }
 }

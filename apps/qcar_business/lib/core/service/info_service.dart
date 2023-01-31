@@ -8,9 +8,10 @@ import 'package:qcar_business/core/network/load_client.dart';
 import 'package:qcar_shared/network_service.dart';
 
 class InfoService {
-  InfoService(this.downClient);
+  InfoService(this.downClient, this.upClient);
 
   final DownloadClient downClient;
+  final UploadClient upClient;
 
   List<CarInfo> _cars = [];
   List<VideoInfo> _videos = [];
@@ -58,6 +59,7 @@ class InfoService {
   }
 
   List<CarInfo> getCars() => _cars;
+
   List<VideoInfo> getVideos() => _videos;
 
   List<SellerInfo> getSeller(DealerInfo info) =>
@@ -74,10 +76,22 @@ class InfoService {
     return result.toList();
   }
 
-  void sellCar(SaleInfo info) {
-    if (!_customers.contains(info.customer)) {
-      _customers.add(info.customer); // TODO upload new customer
+  Future<bool> sellCar(SaleInfo info) async {
+    // TODO make real validation + error handling
+
+    final customer = info.customer;
+    if (!_customers.contains(customer)) {
+      final result = await upClient.sendCustomerInfo(customer);
+      if (result.status != ResponseStatus.OK) {
+        return false;
+      }
+      _customers.add(customer);
     }
-    _saleInfos.add(info); // TODO upload sale
+    final result = await upClient.sendSaleInfo(info);
+    if (result.status == ResponseStatus.OK) {
+      _saleInfos.add(info);
+      return true;
+    }
+    return false;
   }
 }

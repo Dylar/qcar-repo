@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:qcar_business/core/misc/constants/urls.dart';
 import 'package:qcar_business/core/models/Tracking.dart';
+import 'package:qcar_business/core/models/customer_info.dart';
 import 'package:qcar_business/core/models/dealer_info.dart';
+import 'package:qcar_business/core/models/sale_info.dart';
 import 'package:qcar_business/core/models/seller_info.dart';
 import 'package:qcar_business/core/network/load_client.dart';
 import 'package:qcar_shared/network_service.dart';
@@ -50,6 +52,30 @@ class ServerClient implements DownloadClient, UploadClient {
         requestType: RequestType.get,
         url: DEALER_INFO_URL,
         urlPath: ["sales", info.name],
+      ),
+    );
+  }
+
+  @override
+  Future<Response> sendCustomerInfo(CustomerInfo info) async {
+    return await NetworkService.sendRequest(
+      Request(
+        requestType: RequestType.post,
+        url: DEALER_INFO_URL,
+        urlPath: ["customer"],
+        body: info.toJson(),
+      ),
+    );
+  }
+
+  @override
+  Future<Response> sendSaleInfo(SaleInfo info) async {
+    return await NetworkService.sendRequest(
+      Request(
+        requestType: RequestType.post,
+        url: DEALER_INFO_URL,
+        urlPath: ["sale"],
+        body: info.toJson(),
       ),
     );
   }
