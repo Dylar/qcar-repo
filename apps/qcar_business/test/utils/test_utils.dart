@@ -11,10 +11,18 @@ import 'package:qcar_shared/core/app_routing.dart';
 import 'package:qcar_shared/core/app_theme.dart';
 
 import '../builder/app_builder.dart';
+import '../mocks/test_mock.dart';
 
 Future loadApp(WidgetTester tester, {AppInfrastructure? infra}) async {
   await prepareTest();
-  final appWidget = App(infrastructure: infra ?? createTestInfra());
+  final infrastructure = infra ??
+      await createTestInfra(
+        authService: await mockAuthService(
+          isDealerLoggedIn: false,
+          isUserLoggedIn: false,
+        ),
+      );
+  final appWidget = App(infrastructure: infrastructure);
   await tester.pumpWidget(appWidget);
   await tester.pump(Duration(seconds: 3));
   await tester.pump();
@@ -23,7 +31,7 @@ Future loadApp(WidgetTester tester, {AppInfrastructure? infra}) async {
 Future pushPage(
   WidgetTester tester, {
   required RoutingSpec routeSpec,
-  required Widget Function(Widget pushButton) wrapWith,
+  required Future<Widget> Function(Widget pushButton) wrapWith,
 }) async {
   await prepareTest();
 //we need to push page because "pushAndRemoveUntil" needs it ....
@@ -32,7 +40,7 @@ Future pushPage(
           onPressed: () => Navigate.to(context, routeSpec),
           child: const Placeholder()));
 
-  final Widget widget = wrapWith(pushButton);
+  final Widget widget = await wrapWith(pushButton);
 
   await tester.pumpWidget(widget);
   await tester.pumpAndSettle(const Duration(milliseconds: 10));
@@ -42,9 +50,9 @@ Future pushPage(
   await tester.pump(const Duration(milliseconds: 10));
 }
 
-Widget wrapWidget(Widget widget, {AppInfrastructure? testInfra}) {
+Future<Widget> wrapWidget(Widget widget, {AppInfrastructure? testInfra}) async {
   return Services(
-    infra: testInfra ?? createTestInfra(),
+    infra: testInfra ?? await createTestInfra(),
     child: MaterialApp(
         title: EnvironmentConfig.APP_NAME,
         theme: appTheme,

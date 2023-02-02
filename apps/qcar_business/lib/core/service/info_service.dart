@@ -16,9 +16,21 @@ class InfoService {
   List<CarInfo> _cars = [];
   List<VideoInfo> _videos = [];
 
+  DealerInfo _dealer = DealerInfo.empty();
   List<SellerInfo> _sellers = [];
   List<CustomerInfo> _customers = [];
   List<SaleInfo> _saleInfos = [];
+
+  Future<ResponseStatus> loadDealer(String name) async {
+    return await downClient.loadDealerInfo(name).then((rsp) {
+      if (rsp.status == ResponseStatus.OK) {
+        _dealer = DealerInfo.fromMap(rsp.jsonMap);
+        return ResponseStatus.OK;
+      } else {
+        return ResponseStatus.NOT_FOUND;
+      }
+    });
+  }
 
   Future<void> loadDealerInfos(DealerInfo info) async {
     await Future.wait([
@@ -46,7 +58,7 @@ class InfoService {
     ]);
   }
 
-  Future<void> loadSellerInfos(SellerInfo info) async {
+  Future<void> loadSaleInfos(SellerInfo info) async {
     await Future.wait([
       downClient.loadSaleInfo(info).then((rsp) {
         if (rsp.status == ResponseStatus.OK) {
@@ -61,6 +73,8 @@ class InfoService {
   List<CarInfo> getCars() => _cars;
 
   List<VideoInfo> getVideos() => _videos;
+
+  DealerInfo getDealer() => _dealer;
 
   List<SellerInfo> getSeller(DealerInfo info) =>
       _sellers.where((element) => element.dealer == info.name).toList();

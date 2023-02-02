@@ -27,23 +27,24 @@ class AppVM extends AppViewModel {
   Future init() async {
     await atLeast(() async {
       final infra = await _initInfrastructure();
-      infra.trackingService
-          .sendTracking(TrackType.INFO, "App started: $firstRoute");
 
       final authService = infra.authService;
       final dealerLoggedIn = await authService.isDealerLoggedIn();
       final sellerLoggedIn = await authService.isUserLoggedIn();
       firstRoute = sellerLoggedIn && dealerLoggedIn
-          ? LoginPage.routeName
-          : HomePage.routeName;
+          ? HomePage.routeName
+          : LoginPage.routeName;
+
+      infra.trackingService
+          .sendTracking(TrackType.INFO, "App started: $firstRoute");
 
       final infoService = infra.infoService;
-      await Future.wait([
-        if (dealerLoggedIn)
-          infoService.loadDealerInfos(authService.currentDealer),
-        if (sellerLoggedIn)
-          infoService.loadSellerInfos(authService.currentUser),
-      ]);
+      if (dealerLoggedIn) {
+        await infoService.loadDealerInfos(authService.currentDealer);
+      }
+      if (sellerLoggedIn) {
+        await infoService.loadSaleInfos(authService.currentSeller);
+      }
     }());
   }
 

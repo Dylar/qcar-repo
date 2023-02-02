@@ -27,7 +27,7 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             title: Text(l10n.drawerLogout),
             onTap: () {
-              Services.of(context)!.authService.logout();
+              Services.of(context)!.authService.logoutSeller();
               Navigate.to(context, LoginPage.onLogout());
             },
           ),

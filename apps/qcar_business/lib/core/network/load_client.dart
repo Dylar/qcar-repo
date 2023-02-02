@@ -13,10 +13,10 @@ abstract class DownloadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
       ValueNotifier(Tuple(0, 0));
 
+  Future<Response> loadDealerInfo(String name);
   Future<Response> loadCarInfo(DealerInfo info);
   Future<Response> loadSellerInfo(DealerInfo info);
   Future<Response> loadCustomerInfo(DealerInfo info);
-
   Future<Response> loadSaleInfo(SellerInfo info);
 }
 

@@ -17,20 +17,28 @@ class MockClient implements DownloadClient, UploadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
       ValueNotifier(Tuple(0, 0));
 
+  @override
+  Future<Response> loadDealerInfo(String name) async {
+    if (dealer.name == name) {
+      return Response.ok(json: dealer.toJson());
+    }
+    return Response(ResponseStatus.NOT_FOUND);
+  }
+
   Future<Response> loadCarInfo(DealerInfo info) async =>
-      Response.ok(json: jsonEncode(cars.map((e) => e.toMap())));
+      Response.ok(json: jsonEncode(cars.map((e) => e.toMap()).toList()));
 
   @override
   Future<Response> loadSellerInfo(DealerInfo info) async =>
-      Response.ok(json: jsonEncode(sellers.map((e) => e.toMap())));
+      Response.ok(json: jsonEncode(sellers.map((e) => e.toMap()).toList()));
 
   @override
   Future<Response> loadCustomerInfo(DealerInfo info) async =>
-      Response.ok(json: jsonEncode(customers.map((e) => e.toMap())));
+      Response.ok(json: jsonEncode(customers.map((e) => e.toMap()).toList()));
 
   @override
-  Future<Response> loadSaleInfo(SellerInfo info) async =>
-      Response.ok(json: jsonEncode(getSaleInfos(info).map((e) => e.toMap())));
+  Future<Response> loadSaleInfo(SellerInfo info) async => Response.ok(
+      json: jsonEncode(getSaleInfos(info).map((e) => e.toMap()).toList()));
 
   @override
   Future<Response> sendCustomerInfo(CustomerInfo info) async {
@@ -50,6 +58,7 @@ class MockClient implements DownloadClient, UploadClient {
     return Response.ok(json: "ok");
   }
 
+  DealerInfo dealer = DealerInfo(name: "Autohaus", address: 'Bla street');
   List<SellerInfo> sellers = [
     SellerInfo(dealer: "Autohaus", name: "Maxi"),
     SellerInfo(dealer: "Autohaus", name: "Kolja"),

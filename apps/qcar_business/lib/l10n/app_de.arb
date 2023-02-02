@@ -6,6 +6,8 @@
   "ok": "Ok",
   "save": "Speichern",
   "continueButton": "Weiter",
+  "yes": "Ja",
+  "no": "Nein",
 
   "@_DRAWER": {},
   "drawerAppTitle": "QCar-Business",

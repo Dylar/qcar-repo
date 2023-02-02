@@ -13,6 +13,7 @@ import 'package:qcar_business/core/service/settings_service.dart';
 import 'package:qcar_business/core/service/tracking_service.dart';
 import 'package:qcar_shared/network_service.dart';
 
+import '../builder/entity_builder.dart';
 import '../ui/screens/app/app_test.mocks.dart';
 import 'http_client_mock.dart';
 
@@ -93,13 +94,17 @@ SaleInfoDataSource mockSaleSource({List<SaleInfo>? initialSaleInfo}) {
   return source;
 }
 
-AuthenticationService mockAuthService({
+Future<AuthenticationService> mockAuthService({
   bool isDealerLoggedIn = true,
   bool isUserLoggedIn = true,
-}) {
+}) async {
+  final dealer = await buildDealerInfo();
+  final seller = await buildSellerInfo();
   final service = MockAuthenticationService();
   when(service.isDealerLoggedIn()).thenAnswer((inv) async => isDealerLoggedIn);
+  when(service.currentDealer).thenAnswer((inv) => dealer);
   when(service.isUserLoggedIn()).thenAnswer((inv) async => isUserLoggedIn);
+  when(service.currentSeller).thenAnswer((inv) => seller);
   return service;
 }
 

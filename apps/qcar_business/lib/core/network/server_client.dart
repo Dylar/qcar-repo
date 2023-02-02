@@ -13,6 +13,17 @@ class ServerClient implements DownloadClient, UploadClient {
   final ValueNotifier<Tuple<double, double>> progressValue =
       ValueNotifier(Tuple(0, 0));
 
+  @override
+  Future<Response> loadDealerInfo(String name) async {
+    return await NetworkService.sendRequest(
+      Request(
+        requestType: RequestType.get,
+        url: DEALER_INFO_URL,
+        urlPath: ["dealer", name],
+      ),
+    );
+  }
+
   Future<Response> loadCarInfo(DealerInfo info) async {
     return await NetworkService.sendRequest(
       Request(

@@ -7,6 +7,7 @@ Linter:
  flutter analyze
 
 Localization:
+    flutter gen-l10n
     if not resolved => Dart Analysis tab -> Restart Dart Analysis Server
 
 Clean:

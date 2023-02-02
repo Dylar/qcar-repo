@@ -143,7 +143,7 @@ class FormVM extends FormViewModel {
     }
 
     SaleInfo info = SaleInfo(
-      seller: authService.currentUser,
+      seller: authService.currentSeller,
       car: selectedCar!,
       videos: selectedVideos,
       customer: customer,

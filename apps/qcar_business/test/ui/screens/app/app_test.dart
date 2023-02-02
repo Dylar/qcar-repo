@@ -10,8 +10,11 @@ import 'package:qcar_business/core/network/load_client.dart';
 import 'package:qcar_business/core/service/auth_service.dart';
 import 'package:qcar_business/core/service/settings_service.dart';
 import 'package:qcar_business/core/service/tracking_service.dart';
+import 'package:qcar_business/ui/screens/home/home_page.dart';
+import 'package:qcar_business/ui/screens/login/login_page.dart';
 
-import '../../../utils/test_l10n.dart';
+import '../../../builder/app_builder.dart';
+import '../../../mocks/test_mock.dart';
 import '../../../utils/test_utils.dart';
 
 @GenerateMocks([
@@ -30,41 +33,41 @@ import '../../../utils/test_utils.dart';
   HttpClientResponse,
 ])
 void main() {
-  // TODO make general test? or app start blubb
-  testWidgets('test what ever', (WidgetTester tester) async {
+  testWidgets('App start - none logged in - show login page',
+      (WidgetTester tester) async {
     await loadApp(tester);
-    final l10n = await getTestL10n();
+    expect(find.byType(LoginPage), findsOneWidget);
+  });
 
-    // //Intro page
-    // expect(find.byType(IntroPage), findsOneWidget);
-    //
-    // //accept tracking dialog
-    // await tester.tap(find.text(l10n.ok));
-    // await tester.pumpAndSettle();
-    //
-    // //scan key
-    // final key = await buildSaleKey();
-    // await scanOnIntroPage(tester, key.encode(), settle: false);
-    // await tester.pump(Duration(milliseconds: 10));
-    // await tester.pump(Duration(milliseconds: 10));
-    //
-    // //Home page - looks nice
-    // expect(find.byType(HomePage), findsOneWidget);
-    // checkNavigationBar(HomePage.routeName);
-    //
-    // //qr scan page - fine fine
-    // await tapNaviIcon(tester, QrScanPage.routeName);
-    // expect(find.byType(QrScanPage), findsOneWidget);
-    // checkNavigationBar(QrScanPage.routeName);
-    //
-    // //car page - nice car
-    // await tapNaviIcon(tester, CategoriesPage.routeName);
-    // expect(find.byType(CategoriesPage), findsOneWidget);
-    // checkNavigationBar(CategoriesPage.routeName);
-    //
-    // //settings page - aaahh die settings
-    // await tapNaviIcon(tester, SettingsPage.routeName);
-    // expect(find.byType(SettingsPage), findsOneWidget);
-    // checkNavigationBar(SettingsPage.routeName);
+  testWidgets('App start - all logged in - show home page',
+      (WidgetTester tester) async {
+    await loadApp(tester, infra: await createTestInfra());
+    expect(find.byType(HomePage), findsOneWidget);
+  });
+
+  testWidgets('App start - only dealer logged in - show Login page',
+      (WidgetTester tester) async {
+    final infra = await createTestInfra(
+      authService: await mockAuthService(
+        isDealerLoggedIn: true,
+        isUserLoggedIn: false,
+      ),
+    );
+
+    await loadApp(tester, infra: infra);
+    expect(find.byType(LoginPage), findsOneWidget);
+  });
+
+  testWidgets('App start - only user logged in - show Login page',
+      (WidgetTester tester) async {
+    final infra = await createTestInfra(
+      authService: await mockAuthService(
+        isDealerLoggedIn: false,
+        isUserLoggedIn: true,
+      ),
+    );
+
+    await loadApp(tester, infra: infra);
+    expect(find.byType(LoginPage), findsOneWidget);
   });
 }

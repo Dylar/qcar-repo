@@ -7,6 +7,7 @@ import 'package:path_provider_platform_interface/path_provider_platform_interfac
 import 'package:qcar_business/core/datasource/car_data_source.dart';
 import 'package:qcar_business/core/datasource/sale_data_source.dart';
 import 'package:qcar_business/core/network/load_client.dart';
+import 'package:qcar_business/core/service/auth_service.dart';
 import 'package:qcar_business/core/service/tracking_service.dart';
 import 'package:qcar_business/ui/screens/app/app.dart';
 
@@ -22,19 +23,20 @@ Future<void> prepareTest() async {
   PathProviderPlatform.instance = FakePathProviderPlatform();
 }
 
-AppInfrastructure createTestInfra({
+Future<AppInfrastructure> createTestInfra({
   DownloadClient? downloadClient,
   TrackingService? trackingService,
   SaleInfoDataSource? saleDataSource,
   CarInfoDataSource? carDataSource,
-}) {
+  AuthenticationService? authService,
+}) async {
   final db = MockAppDatabase();
   final dlClient = downloadClient ?? mockDownloadClient();
   final uploadClient = mockUploadClient();
   final settingsSource = mockSettings();
   final carSource = carDataSource ?? mockCarSource();
   final saleSource = saleDataSource ?? mockSaleSource();
-  final authService = mockAuthService();
+  final authenticationService = authService ?? await mockAuthService();
   final trackService = trackingService ?? mockTrackingService();
   return AppInfrastructure.load(
     downloadClient: dlClient,
@@ -43,7 +45,7 @@ AppInfrastructure createTestInfra({
     settingsDataSource: settingsSource,
     carInfoDataSource: carSource,
     saleInfoDataSource: saleSource,
-    authenticationService: authService,
+    authenticationService: authenticationService,
     trackingService: trackService,
   );
 }

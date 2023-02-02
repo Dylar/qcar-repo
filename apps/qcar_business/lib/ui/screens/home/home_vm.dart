@@ -15,7 +15,7 @@ class HomeVM extends HomeViewModel {
 
   @override
   List<SaleInfo> get saleInfos =>
-      infoService.getSaleInfos(authService.currentUser);
+      infoService.getSaleInfos(authService.currentSeller);
 
   @override
   void routingDidPush() {
