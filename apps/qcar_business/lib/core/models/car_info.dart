@@ -17,6 +17,9 @@ class CarInfo extends HiveObject {
 
   static CarInfo empty() => fromMap({});
 
+  static String toListJson(List<CarInfo> infos) =>
+      jsonEncode(infos.map((e) => e.toMap()).toList());
+
   static CarInfo fromMap(Map<String, dynamic> map) => CarInfo(
         brand: map[FIELD_BRAND] ?? "",
         model: map[FIELD_MODEL] ?? "",

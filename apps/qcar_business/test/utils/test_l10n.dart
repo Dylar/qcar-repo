@@ -26,34 +26,7 @@ class TestAppLocalization {
   String get decideTrackingTitle => _values["decideTrackingTitle"];
   String get decideTrackingMessage => _values["decideTrackingMessage"];
 
-  //------BUTTONS
-  String get send => _values["send"];
-  String get save => _values["save"];
-
-  //------SCAN
-  String get oldCarScanned => _values["oldCarScanned"];
-
-  //------INTRO
-  String get introPageMessage => _values["introPageMessage"];
-  String get scanError => _values["scanError"];
-  String get introPageMessageScanning => _values["introPageMessageScanning"];
-
-  //------SEARCH
-  String get searchStartText => _values["searchStartText"];
-  String get searchEmptyText => _values["searchEmptyText"];
-
-  //------FEEDBACK
-  String get feedbackThanks => _values["feedbackThanks"];
-  String get feedbackError => _values["feedbackError"];
-
-  //------SETTINGS
-  String get settingsPageTitle => _values["settingsPageTitle"];
-  String get debugMenu => _values["debugMenu"];
-  String get videoMenu => _values["videoMenu"];
-  String get aboutDialog => _values["aboutDialog"];
-  String get autoPlay => _values["autoPlay"];
-
-  //------FAVORITES
-  String get noFavoritesTitle => _values["noFavoritesTitle"];
-  String get noFavoritesMessage => _values["noFavoritesMessage"];
+  //------LOGIN
+  String noDealerFound(String name) =>
+      _values["noDealerFound"].toString().replaceFirst("{dealerName}", name);
 }

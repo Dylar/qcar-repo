@@ -12,5 +12,6 @@ void showNonOptionalErrorSnackBar(BuildContext context) {
 }
 
 void showNoDealerFoundSnackBar(BuildContext context, String name) {
-  showSnackBar(context, 'Kein Händler gefunden mit dem Namen $name');
+  final l10n = AppLocalizations.of(context)!;
+  showSnackBar(context, l10n.noDealerFound(name));
 }

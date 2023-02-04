@@ -37,8 +37,12 @@ class LoginVM extends LoginViewModel {
       showSnackBar((ctx) => showNoDealerFoundSnackBar(ctx, name));
       return;
     }
-    await authService.loginDealer(infoService.getDealer());
-    sellers = await infoService.getSeller(authService.currentDealer);
+    final dealer = infoService.getDealer();
+    await authService.loginDealer(dealer);
+    await infoService.loadDealerInfos(dealer);
+    sellers = await infoService.getSeller(dealer);
+    print("dealer: ${dealer.name}");
+    print("SELLERS: ${sellers.length}");
     notifyListeners();
   }
 

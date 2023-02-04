@@ -23,34 +23,6 @@ UploadClient mockUploadClient() {
   return MockUploadClient();
 }
 
-DownloadClient mockDownloadClient() {
-  final client = MockDownloadClient();
-  // when(client.loadCarInfo(any)).thenAnswer((inv) async {
-  //   final info = inv.positionalArguments[0] as SaleInfo;
-  //   final car = await buildCarWith(brand: info.brand, model: info.model);
-  //   return Response.ok(json: jsonEncode(car.toMap()));
-  // });
-  //
-  // when(client.loadSaleInfo(any)).thenAnswer((inv) async {
-  //   final saleKey = inv.positionalArguments[0] as SaleKey;
-  //   final key = saleKey.key;
-  //   final saleInfo = await buildSaleInfo();
-  //   if (saleInfo.key == key) {
-  //     return Response.ok(json: jsonEncode(saleInfo.toMap()));
-  //   }
-  //   if (acceptedKeys.any((k) => k.key == key)) {
-  //     saleInfo
-  //       ..brand = key
-  //       ..model = key;
-  //     return Response.ok(json: jsonEncode(saleInfo.toMap()));
-  //   }
-  //   throw Exception("WRONG KEY");
-  // });
-  //
-  // when(client.progressValue).thenReturn(ValueNotifier(Tuple(1, 1)));
-  return client;
-}
-
 SettingsDataSource mockSettings() {
   final source = MockSettingsDataSource();
   Settings settings = Settings();
@@ -103,7 +75,7 @@ Future<AuthenticationService> mockAuthService({
   final service = MockAuthenticationService();
   when(service.isDealerLoggedIn()).thenAnswer((inv) async => isDealerLoggedIn);
   when(service.currentDealer).thenAnswer((inv) => dealer);
-  when(service.isUserLoggedIn()).thenAnswer((inv) async => isUserLoggedIn);
+  when(service.isSellerLoggedIn()).thenAnswer((inv) async => isUserLoggedIn);
   when(service.currentSeller).thenAnswer((inv) => seller);
   return service;
 }

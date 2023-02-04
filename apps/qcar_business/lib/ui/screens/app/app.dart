@@ -51,8 +51,8 @@ class AppInfrastructure {
 
     // TODO use real down/up client
     // TODO make this not doppelt
-    final downClient = MockClient(); //downloadClient ?? ServerClient();
-    final upClient = MockClient(); //uploadClient ?? ServerClient();
+    final downClient = downloadClient ?? MockClient(); // ServerClient();
+    final upClient = uploadClient ?? MockClient(); // ServerClient();
 
     final authService = authenticationService ?? AuthenticationService();
     final settingsService = SettingsService(settingsSource);

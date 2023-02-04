@@ -17,7 +17,16 @@
   "@_LOGIN_PAGE": {},
   "loginTitle": "Login",
   "loginText": "Das ist die Business-App.\nBitte melden Sie sich an.",
+  "chooseDealerHint": "Bitte geben Sie den Händler ein",
   "loginSelectUser": "Bitte wählen Sie einen Benutzer",
+  "noDealerFound": "Kein Händler gefunden mit dem Namen {dealerName}",
+  "@noDealerFound": {
+      "placeholders": {
+          "dealerName": {
+              "type": "String"
+          }
+      }
+  },
 
   "@_HOME_PAGE": {},
   "homoPageTitle": "Home",

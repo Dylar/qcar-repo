@@ -1,4 +1,5 @@
 import 'package:qcar_business/core/models/car_info.dart';
+import 'package:qcar_business/core/models/customer_info.dart';
 import 'package:qcar_business/core/models/dealer_info.dart';
 import 'package:qcar_business/core/models/sale_info.dart';
 import 'package:qcar_business/core/models/seller_info.dart';
@@ -15,6 +16,7 @@ const String TEST_VIDEO_INFO = "video_info.json";
 
 const String TEST_DEALER_INFO = "dealer_info.json";
 const String TEST_SELLER_INFO = "seller_info.json";
+const String TEST_CUSTOMER_INFO = "customer_info.json";
 const String TEST_SALE_INFO = "sale_info.json";
 const String TEST_SALE_KEY = "sale_key.json";
 
@@ -28,8 +30,8 @@ Future<CarInfo> buildCarWith({
     ..model = model;
 }
 
-Future<CarInfo> buildCarInfo({String name = TEST_CAR_FULL}) async {
-  final json = await loadJsonFile('$CUSTOMER_TESTDATA_PATH$name');
+Future<CarInfo> buildCarInfo({String jsonFile = TEST_CAR_FULL}) async {
+  final json = await loadJsonFile('$CUSTOMER_TESTDATA_PATH$jsonFile');
   // final valid = await validateCarInfo(json);
   // if (!valid) {
   //   throw Exception("Car(${name}) json invalid: $json");
@@ -37,8 +39,8 @@ Future<CarInfo> buildCarInfo({String name = TEST_CAR_FULL}) async {
   return CarInfo.fromMap(json);
 }
 
-Future<VideoInfo> buildVideoInfo({String name = TEST_VIDEO_INFO}) async {
-  final json = await loadJsonFile('$CUSTOMER_TESTDATA_PATH$name');
+Future<VideoInfo> buildVideoInfo({String jsonFile = TEST_VIDEO_INFO}) async {
+  final json = await loadJsonFile('$CUSTOMER_TESTDATA_PATH$jsonFile');
   // final valid = await validateVideoInfo(json);
   // if (!valid) {
   //   throw Exception("Video(${name}) json invalid: $json");
@@ -46,8 +48,8 @@ Future<VideoInfo> buildVideoInfo({String name = TEST_VIDEO_INFO}) async {
   return VideoInfo.fromMap(json);
 }
 
-Future<DealerInfo> buildDealerInfo({String name = TEST_DEALER_INFO}) async {
-  final json = await loadJsonFile('$DEALER_TESTDATA_PATH$name');
+Future<DealerInfo> buildDealerInfo({String jsonFile = TEST_DEALER_INFO}) async {
+  final json = await loadJsonFile('$DEALER_TESTDATA_PATH$jsonFile');
   // final valid = await validateDealerInfo(json);
   // if (!valid) {
   //   throw Exception("Dealer(${name}) json invalid: $json");
@@ -55,8 +57,8 @@ Future<DealerInfo> buildDealerInfo({String name = TEST_DEALER_INFO}) async {
   return DealerInfo.fromMap(json);
 }
 
-Future<SellerInfo> buildSellerInfo({String name = TEST_SELLER_INFO}) async {
-  final json = await loadJsonFile('$DEALER_TESTDATA_PATH$name');
+Future<SellerInfo> buildSellerInfo({String jsonFile = TEST_SELLER_INFO}) async {
+  final json = await loadJsonFile('$DEALER_TESTDATA_PATH$jsonFile');
   // final valid = await validateSellerInfo(json);
   // if (!valid) {
   //   throw Exception("Seller(${name}) json invalid: $json");
@@ -64,15 +66,28 @@ Future<SellerInfo> buildSellerInfo({String name = TEST_SELLER_INFO}) async {
   return SellerInfo.fromMap(json);
 }
 
-Future<SaleInfo> buildSaleWith({
-  CarInfo? car,
-}) async {
-  final sale = await buildSaleInfo();
-  return sale..car = car ?? CarInfo.empty();
+Future<List<SellerInfo>> buildSellerInfos(
+    {String jsonFile = TEST_SELLER_INFO}) async {
+  int index = 1;
+  return [
+    await buildSellerInfo(jsonFile: jsonFile),
+    await buildSellerInfo(jsonFile: jsonFile),
+    await buildSellerInfo(jsonFile: jsonFile),
+  ].map((e) => e.copy(name: "Name: ${index++}")).toList();
 }
 
-Future<SaleInfo> buildSaleInfo({String name = TEST_SALE_INFO}) async {
-  final json = await loadJsonFile('$DEALER_TESTDATA_PATH$name');
+Future<CustomerInfo> buildCustomerInfo(
+    {String jsonFile = TEST_CUSTOMER_INFO}) async {
+  final json = await loadJsonFile('$DEALER_TESTDATA_PATH$jsonFile');
+  // final valid = await validateSellerInfo(json);
+  // if (!valid) {
+  //   throw Exception("Seller(${name}) json invalid: $json");
+  // }
+  return CustomerInfo.fromMap(json);
+}
+
+Future<SaleInfo> buildSaleInfo({String jsonFile = TEST_SALE_INFO}) async {
+  final json = await loadJsonFile('$DEALER_TESTDATA_PATH$jsonFile');
   // final valid = await validateSaleInfo(json);
   // if (!valid) {
   //   throw Exception("SaleInfo(${name}) json invalid: $json");

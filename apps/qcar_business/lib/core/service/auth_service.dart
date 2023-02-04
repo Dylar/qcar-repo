@@ -11,7 +11,7 @@ class AuthenticationService {
   DealerInfo get currentDealer => _loggedInDealer!;
 
   Future<bool> isDealerLoggedIn() async => _loggedInDealer != null;
-  Future<bool> isUserLoggedIn() async => _loggedInSeller != null;
+  Future<bool> isSellerLoggedIn() async => _loggedInSeller != null;
 
   Future<void> loginDealer(DealerInfo dealer) async {
     _loggedInDealer = dealer;

@@ -18,10 +18,10 @@ class VideoInfo extends HiveObject {
     required this.videoImagePath,
   });
 
-  static List<VideoInfo> fromList(List<dynamic> list) =>
-      List<Map<String, dynamic>>.from(list)
-          .map<VideoInfo>((e) => VideoInfo.fromMap(e))
-          .toList();
+  static List<VideoInfo> fromList(List<dynamic> list) => List<String>.from(list)
+      .map<Map<String, dynamic>>((e) => jsonDecode(e))
+      .map<VideoInfo>((e) => VideoInfo.fromMap(e))
+      .toList();
 
   static VideoInfo fromMap(Map<String, dynamic> map) => VideoInfo(
         brand: map[FIELD_BRAND] ?? "",

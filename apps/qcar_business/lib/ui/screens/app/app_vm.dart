@@ -30,7 +30,7 @@ class AppVM extends AppViewModel {
 
       final authService = infra.authService;
       final dealerLoggedIn = await authService.isDealerLoggedIn();
-      final sellerLoggedIn = await authService.isUserLoggedIn();
+      final sellerLoggedIn = await authService.isSellerLoggedIn();
       firstRoute = sellerLoggedIn && dealerLoggedIn
           ? HomePage.routeName
           : LoginPage.routeName;

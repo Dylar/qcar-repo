@@ -35,6 +35,8 @@ class LoginPage extends View<LoginViewModel> {
 class _LoginPageState extends ViewState<LoginPage, LoginViewModel> {
   _LoginPageState(LoginViewModel viewModel) : super(viewModel);
 
+  final dealerController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -45,36 +47,58 @@ class _LoginPageState extends ViewState<LoginPage, LoginViewModel> {
   }
 
   Widget buildLoginPage(BuildContext context, AppLocalizations l10n) {
+    final hasSellers = viewModel.sellers.isNotEmpty;
     return Container(
       decoration: qcarGradientBox,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: RoundedWidget(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(l10n.loginText),
+            if (hasSellers)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: RoundedWidget(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(l10n.loginText),
+                  ),
                 ),
               ),
-            ),
-            DropdownButton<SellerInfo>(
-              dropdownColor: BaseColors.darkGrey,
-              items: _buildDropdownItems(),
-              hint: Text(l10n.loginSelectUser),
-              onChanged: (value) => viewModel.userSelected(value!),
-            ),
+            if (hasSellers)
+              DropdownButton<SellerInfo>(
+                dropdownColor: BaseColors.darkGrey,
+                items: _buildDropdownItems(),
+                hint: Text(l10n.loginSelectUser),
+                onChanged: (value) => viewModel.userSelected(value!),
+              ),
+            if (!hasSellers)
+              TextField(
+                controller: dealerController,
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.done,
+                decoration: InputDecoration(
+                  prefixIconConstraints: BoxConstraints(minWidth: 45),
+                  prefixIcon: Icon(
+                    Icons.car_rental,
+                    color: Colors.white70,
+                    size: 22,
+                  ),
+                  labelText: l10n.chooseDealerHint,
+                ),
+              ),
+            if (!hasSellers)
+              ElevatedButton(
+                onPressed: () =>
+                    viewModel.dealerSelected(dealerController.text),
+                child: Text(l10n.save),
+              ),
           ],
         ),
       ),
     );
   }
 
-  List<DropdownMenuItem<SellerInfo>> _buildDropdownItems() {
-    return viewModel.sellers
-        .map((e) => DropdownMenuItem<SellerInfo>(value: e, child: Text(e.name)))
-        .toList();
-  }
+  List<DropdownMenuItem<SellerInfo>> _buildDropdownItems() => viewModel.sellers
+      .map((e) => DropdownMenuItem<SellerInfo>(value: e, child: Text(e.name)))
+      .toList();
 }

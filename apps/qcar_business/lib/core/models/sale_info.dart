@@ -19,22 +19,19 @@ class SaleInfo extends HiveObject {
     required this.customer,
   });
 
+  static SaleInfo empty() => fromMap({});
+
+  static String toListJson(List<SaleInfo> infos) =>
+      jsonEncode(infos.map((e) => e.toMap()).toList());
+
   static SaleInfo fromMap(Map<String, dynamic> map) {
-    final videosMap = Map<String, List<dynamic>>.from(
-      map[FIELD_VIDEOS] ?? <Map<String, dynamic>>{},
-    ).map(
-      (key, value) => MapEntry(
-        key,
-        List<Map<String, dynamic>>.from(value)
-            .map((e) => VideoInfo.fromMap(e))
-            .toList(),
-      ),
-    );
     return SaleInfo(
       seller: SellerInfo.fromMap(map),
       car: CarInfo.fromMap(map),
       customer: CustomerInfo.fromMap(map),
-      videos: videosMap,
+      videos: Map<String, List<dynamic>>.from(
+        map[FIELD_VIDEOS] ?? <Map<String, dynamic>>{},
+      ).map((key, value) => MapEntry(key, List<String>.from(value))),
     );
   }
 
@@ -42,12 +39,7 @@ class SaleInfo extends HiveObject {
         FIELD_SELLER: seller.toMap(),
         FIELD_CAR: car.toMap(),
         FIELD_CUSTOMER: customer.toMap(),
-        FIELD_VIDEOS: videos.map<String, List<Map<String, dynamic>>>(
-          (key, value) => MapEntry(
-            key,
-            value.map((e) => e.toMap()).toList(),
-          ),
-        ),
+        FIELD_VIDEOS: videos,
       };
 
   String toJson() => jsonEncode(toMap());
@@ -57,7 +49,7 @@ class SaleInfo extends HiveObject {
   @HiveField(1)
   CarInfo car = CarInfo.empty();
   @HiveField(2)
-  Map<String, List<VideoInfo>> videos = {};
+  Map<String, List<String>> videos = {};
   @HiveField(3)
   CustomerInfo customer = CustomerInfo.empty();
 
@@ -69,4 +61,12 @@ class SaleInfo extends HiveObject {
       car.brand +
       " " +
       car.model;
+
+  SaleInfo copy({SellerInfo? seller}) {
+    return SaleInfo(
+        seller: seller ?? this.seller,
+        car: car,
+        videos: videos,
+        customer: customer);
+  }
 }

@@ -31,4 +31,12 @@ class DealerInfo extends HiveObject {
   String name = "";
   @HiveField(1)
   String address = "";
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DealerInfo && name == other.name && address == other.address;
+
+  @override
+  int get hashCode => name.hashCode ^ address.hashCode;
 }

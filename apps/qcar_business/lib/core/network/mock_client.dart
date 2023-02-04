@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:qcar_business/core/models/Tracking.dart';
 import 'package:qcar_business/core/models/car_info.dart';
@@ -26,19 +24,19 @@ class MockClient implements DownloadClient, UploadClient {
   }
 
   Future<Response> loadCarInfo(DealerInfo info) async =>
-      Response.ok(json: jsonEncode(cars.map((e) => e.toMap()).toList()));
+      Response.ok(json: CarInfo.toListJson(cars));
 
   @override
   Future<Response> loadSellerInfo(DealerInfo info) async =>
-      Response.ok(json: jsonEncode(sellers.map((e) => e.toMap()).toList()));
+      Response.ok(json: SellerInfo.toListJson(sellers));
 
   @override
   Future<Response> loadCustomerInfo(DealerInfo info) async =>
-      Response.ok(json: jsonEncode(customers.map((e) => e.toMap()).toList()));
+      Response.ok(json: CustomerInfo.toListJson(customers));
 
   @override
-  Future<Response> loadSaleInfo(SellerInfo info) async => Response.ok(
-      json: jsonEncode(getSaleInfos(info).map((e) => e.toMap()).toList()));
+  Future<Response> loadSaleInfo(SellerInfo info) async =>
+      Response.ok(json: SaleInfo.toListJson(getSaleInfos(info)));
 
   @override
   Future<Response> sendCustomerInfo(CustomerInfo info) async {
@@ -147,13 +145,15 @@ class MockClient implements DownloadClient, UploadClient {
           SaleInfo(
             seller: sellerInfo,
             car: cars.first,
-            videos: selectedVideos,
+            videos: selectedVideos.map((key, value) =>
+                MapEntry(key, value.map((e) => e.name).toList())),
             customer: customers.first,
           ),
           SaleInfo(
             seller: sellerInfo,
             car: cars.last,
-            videos: selectedVideos,
+            videos: selectedVideos.map((key, value) =>
+                MapEntry(key, value.map((e) => e.name).toList())),
             customer: customers.first,
           )
         ];

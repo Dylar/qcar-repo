@@ -145,7 +145,8 @@ class FormVM extends FormViewModel {
     SaleInfo info = SaleInfo(
       seller: authService.currentSeller,
       car: selectedCar!,
-      videos: selectedVideos,
+      videos: selectedVideos.map(
+          (key, value) => MapEntry(key, value.map((e) => e.name).toList())),
       customer: customer,
     );
     infoService.sellCar(info).then((success) {

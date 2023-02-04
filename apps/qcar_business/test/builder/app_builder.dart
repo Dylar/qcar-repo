@@ -31,7 +31,7 @@ Future<AppInfrastructure> createTestInfra({
   AuthenticationService? authService,
 }) async {
   final db = MockAppDatabase();
-  final dlClient = downloadClient ?? mockDownloadClient();
+  final dlClient = downloadClient!; // ?? MockDownloadClient();
   final uploadClient = mockUploadClient();
   final settingsSource = mockSettings();
   final carSource = carDataSource ?? mockCarSource();

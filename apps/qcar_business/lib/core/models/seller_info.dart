@@ -15,6 +15,9 @@ class SellerInfo extends HiveObject {
 
   static SellerInfo empty() => fromMap({});
 
+  static String toListJson(List<SellerInfo> infos) =>
+      jsonEncode(infos.map((e) => e.toMap()).toList());
+
   static SellerInfo fromMap(Map<String, dynamic> map) => SellerInfo(
         dealer: map[FIELD_DEALER] ?? "",
         name: map[FIELD_NAME] ?? "",
@@ -31,4 +34,9 @@ class SellerInfo extends HiveObject {
   String dealer = "";
   @HiveField(1)
   String name = "";
+
+  SellerInfo copy({String? name}) => SellerInfo(
+        dealer: dealer,
+        name: name ?? this.name,
+      );
 }

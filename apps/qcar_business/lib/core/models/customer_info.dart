@@ -24,6 +24,9 @@ class CustomerInfo extends HiveObject {
 
   String toJson() => jsonEncode(toMap());
 
+  static String toListJson(List<CustomerInfo> infos) =>
+      jsonEncode(infos.map((e) => e.toMap()).toList());
+
   static CustomerInfo fromMap(Map<String, dynamic> map) => CustomerInfo(
         dealer: map[FIELD_DEALER] ?? "",
         name: map[FIELD_NAME] ?? "",
