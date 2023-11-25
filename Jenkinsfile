@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        SERVICE_DIR = 'services/main_service'
         SERVICE_NAME = ''
         SERVICE_VERSION = ''
         JAR_PATH = ''
@@ -12,9 +13,11 @@ pipeline {
         stage('Initialize') {
             steps {
                 script {
-                    // Run gradle commands to get the service name and version
-                    SERVICE_NAME = sh(script: './gradlew -q getName', returnStdout: true).trim()
-                    SERVICE_VERSION = sh(script: './gradlew -q getVersion', returnStdout: true).trim()
+                    dir("${SERVICE_DIR}") {
+                        // Run gradle commands to get the service name and version
+                        SERVICE_NAME = sh(script: './gradlew -q getName', returnStdout: true).trim()
+                        SERVICE_VERSION = sh(script: './gradlew -q getVersion', returnStdout: true).trim()
+                    }
                     JAR_PATH = "build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar"
                     DOCKER_IMAGE = "dylar/qcar-${SERVICE_NAME}:${SERVICE_VERSION}"
                 }
