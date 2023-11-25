@@ -40,7 +40,9 @@ pipeline {
     }
     post {
         always {
-            // Here you can clean up or notify someone
+           steps {
+               echo "This will always run regardless of the result of the pipeline."
+           }
         }
     }
 }
