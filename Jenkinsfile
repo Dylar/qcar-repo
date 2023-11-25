@@ -14,6 +14,8 @@ pipeline {
             steps {
                 script {
                     dir("${SERVICE_DIR}") {
+                        sh 'ls -l gradlew'
+                        sh 'chmod +x gradlew'
                         // Run gradle commands to get the service name and version
                         SERVICE_NAME = sh(script: './gradlew -q getName', returnStdout: true).trim()
                         SERVICE_VERSION = sh(script: './gradlew -q getVersion', returnStdout: true).trim()
