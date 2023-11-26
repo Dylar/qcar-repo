@@ -21,8 +21,8 @@ pipeline {
                     JAR_PATH = "build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar"
                     DOCKER_IMAGE = "dylar/qcar-${SERVICE_NAME}:${SERVICE_VERSION}"
 
-                    echo "SERVICE_NAME $SERVICE_NAME"
-                    echo "SERVICE_VERSION $SERVICE_VERSION"
+                    echo "SERVICE_NAME: $SERVICE_NAME"
+                    echo "SERVICE_VERSION: $SERVICE_VERSION"
                 }
             }
         }
@@ -31,11 +31,15 @@ pipeline {
                 sh './gradlew build'
             }
         }
-        stage('Docker Build and Push') {
+        stage('Push Docker') {
             steps {
-                script {
-                    docker.build(DOCKER_IMAGE, "--build-arg JAR_FILE=${JAR_PATH} .")
-                    docker.push(DOCKER_IMAGE)
+                dir("${SERVICE_DIR}") {
+                    sh '''
+                        docker build --build-arg JAR_FILE=${JAR_PATH} -t ${DOCKER_IMAGE} . &&
+                        docker push ${DOCKER_IMAGE}
+                    '''
+//                 docker.build(DOCKER_IMAGE, "--build-arg JAR_FILE=${JAR_PATH} .")
+//                 docker.push(DOCKER_IMAGE)
                 }
             }
         }
