@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         SERVICE_DIR = 'services/main_service'
-        SERVICE_NAME = ''
-        SERVICE_VERSION = ''
+        SERVICE_NAME = 'main_service'
+        SERVICE_VERSION = '0.1'
         JAR_PATH = ''
         DOCKER_IMAGE = ''
     }
@@ -14,13 +14,15 @@ pipeline {
             steps {
                 script {
                     dir("${SERVICE_DIR}") {
-                        sh 'ls -la gradle/wrapper'
                         // Run gradle commands to get the service name and version
                         SERVICE_NAME = sh(script: './gradlew -q getName', returnStdout: true).trim()
                         SERVICE_VERSION = sh(script: './gradlew -q getVersion', returnStdout: true).trim()
                     }
                     JAR_PATH = "build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar"
                     DOCKER_IMAGE = "dylar/qcar-${SERVICE_NAME}:${SERVICE_VERSION}"
+
+                    echo "SERVICE_NAME $SERVICE_NAME"
+                    echo "SERVICE_VERSION $SERVICE_VERSION"
                 }
             }
         }
@@ -31,8 +33,8 @@ pipeline {
         }
         stage('Docker Build and Push') {
             steps {
-                sh "docker build --build-arg JAR_FILE=${JAR_PATH} -t ${DOCKER_IMAGE} ."
-                sh "docker push ${DOCKER_IMAGE}"
+                docker.build(DOCKER_IMAGE, "--build-arg JAR_FILE=${JAR_PATH} .")
+                docker.push(DOCKER_IMAGE)
             }
         }
         stage('Update Kubernetes Deployment') {
