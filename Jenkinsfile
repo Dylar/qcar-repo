@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         SERVICE_DIR = 'services/main_service'
-        SERVICE_NAME = 'main_service'
-        SERVICE_VERSION = '0.1'
+        SERVICE_NAME = ''
+        SERVICE_VERSION = ''
         JAR_PATH = ''
         DOCKER_IMAGE = ''
     }
@@ -33,8 +33,10 @@ pipeline {
         }
         stage('Docker Build and Push') {
             steps {
-                docker.build(DOCKER_IMAGE, "--build-arg JAR_FILE=${JAR_PATH} .")
-                docker.push(DOCKER_IMAGE)
+                script {
+                    docker.build(DOCKER_IMAGE, "--build-arg JAR_FILE=${JAR_PATH} .")
+                    docker.push(DOCKER_IMAGE)
+                }
             }
         }
         stage('Update Kubernetes Deployment') {
