@@ -33,13 +33,13 @@ pipeline {
         }
         stage('Push Docker') {
             steps {
-                dir("${SERVICE_DIR}") {
-                    sh '''
-                        docker build --build-arg JAR_FILE=${JAR_PATH} -t ${DOCKER_IMAGE} . &&
-                        docker push ${DOCKER_IMAGE}
-                    '''
-//                 docker.build(DOCKER_IMAGE, "--build-arg JAR_FILE=${JAR_PATH} .")
-//                 docker.push(DOCKER_IMAGE)
+                script {
+                    dir("${SERVICE_DIR}") {
+                        sh '''
+                            docker build --build-arg JAR_FILE=${JAR_PATH} -t ${DOCKER_IMAGE} . &&
+                            docker push ${DOCKER_IMAGE}
+                        '''
+                    }
                 }
             }
         }
