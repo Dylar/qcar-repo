@@ -6,7 +6,10 @@ pipeline {
         SERVICE_NAME = ''
         SERVICE_VERSION = ''
         JAR_PATH = ''
+
+        DOCKER_NAME = ''
         DOCKER_IMAGE = ''
+        DOCKER_REGISTRY = 'https://hub.docker.com/'
     }
 
     stages {
@@ -19,7 +22,8 @@ pipeline {
                         SERVICE_VERSION = sh(script: './gradlew -q getVersion', returnStdout: true).trim()
                     }
                     JAR_PATH = "build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar"
-                    DOCKER_IMAGE = "dylar/qcar-${SERVICE_NAME}:${SERVICE_VERSION}"
+                    DOCKER_NAME = "dylar/qcar-${SERVICE_NAME}"
+                    DOCKER_IMAGE = "${DOCKER_NAME}:${SERVICE_VERSION}"
 
                     echo "SERVICE_NAME: $SERVICE_NAME"
                     echo "SERVICE_VERSION: $SERVICE_VERSION"
@@ -35,10 +39,10 @@ pipeline {
             steps {
                 script {
                     dir("${SERVICE_DIR}") {
-                        sh '''
-                            docker build --build-arg JAR_FILE=${JAR_PATH} -t ${DOCKER_IMAGE} . &&
-                            docker push ${DOCKER_IMAGE}
-                        '''
+                        docker.build("${DOCKER_IMAGE}","--build-arg JAR_FILE=${env.JAR_PATH} .")
+                        docker.withRegistry("${DOCKER_REGISTRY}", 'docker-credentials') {
+                            docker.image("${DOCKER_IMAGE}").push()
+                        }
                     }
                 }
             }
