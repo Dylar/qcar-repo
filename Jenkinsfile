@@ -7,9 +7,9 @@ pipeline {
         SERVICE_VERSION = ''
         JAR_PATH = ''
 
-        DOCKER_NAME = ''
-        DOCKER_IMAGE = ''
-        DOCKER_REGISTRY = 'https://hub.docker.com/'
+        CONTAINER_NAME = ''
+        CONTAINER_IMAGE = ''
+        CONTAINER_REGISTRY = 'https://hub.docker.com/'
     }
 
     stages {
@@ -22,8 +22,8 @@ pipeline {
                         SERVICE_VERSION = sh(script: './gradlew -q getVersion', returnStdout: true).trim()
                     }
                     JAR_PATH = "build/libs/${SERVICE_NAME}-${SERVICE_VERSION}.jar"
-                    DOCKER_NAME = "dylar/qcar-${SERVICE_NAME}"
-                    DOCKER_IMAGE = "${DOCKER_NAME}:${SERVICE_VERSION}"
+                    CONTAINER_NAME = "dylar/qcar-${SERVICE_NAME}"
+                    CONTAINER_IMAGE = "${CONTAINER_NAME}:${SERVICE_VERSION}"
 
                     echo "SERVICE_NAME: $SERVICE_NAME"
                     echo "SERVICE_VERSION: $SERVICE_VERSION"
@@ -35,22 +35,37 @@ pipeline {
                 sh './gradlew build'
             }
         }
-        stage('Push Docker') {
-            steps {
-                script {
-                    dir("${SERVICE_DIR}") {
-                        docker.build("${DOCKER_IMAGE}","--build-arg JAR_FILE=${env.JAR_PATH} .")
-                        docker.withRegistry("${DOCKER_REGISTRY}", 'docker-credentials') {
-                            docker.image("${DOCKER_IMAGE}").push()
-                        }
+
+    stage('Build & Push Image') {
+        steps {
+            script {
+                podTemplate(containers: [
+                    containerTemplate(
+                        name: 'kaniko',
+                        image: 'gcr.io/kaniko-project/executor:latest',
+                        command: 'cat',
+                        ttyEnabled: true,
+                        volumeMounts: [
+                            volumeMount(
+                                mountPath: '/root/.docker',
+                                name: 'docker-config'
+                            )
+                        ]
+                    )
+                ],
+                volumes: [secretVolume(secretName: 'docker-hub-credentials', mountPath: '/root/.docker')]) {
+                    // Run the Kaniko container
+                    container('kaniko') {
+                        sh "executor --context ${WORKSPACE}/${SERVICE_DIR} --dockerfile ${WORKSPACE}/${SERVICE_DIR}/Dockerfile --destination ${CONTAINER_IMAGE}"
                     }
                 }
             }
         }
+    }
         stage('Update Kubernetes Deployment') {
             steps {
                 // Set the new image in the Kubernetes deployment
-                sh "kubectl set image deployment/${SERVICE_NAME} ${SERVICE_NAME}=${DOCKER_IMAGE}"
+                sh "kubectl set image deployment/${SERVICE_NAME} ${SERVICE_NAME}=${CONTAINER_IMAGE}"
             }
         }
     }
