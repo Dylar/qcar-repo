@@ -65,9 +65,7 @@ pipeline {
     }
     post {
         always {
-           steps {
-               echo "This will always run regardless of the result of the pipeline."
-           }
+           echo "This will always run regardless of the result of the pipeline."
         }
     }
 }
